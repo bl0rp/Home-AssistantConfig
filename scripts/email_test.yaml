@@ -1,0 +1,7 @@
+nma_test:
+  alias: "Spam via E-Mail"
+  sequence:
+    service: notify.email
+    data:
+      title: 'Spam von HA'
+      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'

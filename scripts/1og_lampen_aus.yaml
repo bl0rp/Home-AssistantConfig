@@ -1,0 +1,7 @@
+1og_lampen_aus:
+  alias: "Alle Lampen im 1 OG ausschalten"
+  sequence:
+  - service: switch.turn_off
+    entity_id: switch.wemoswitch1
+  - service: switch.turn_off
+    entity_id: switch.wemoswitch2

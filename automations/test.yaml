@@ -1,0 +1,10 @@
+alias: "test Alarm"
+initial_state: False
+trigger:
+  platform: numeric_state
+  entity_id: sensor.test
+  above: 39.9
+action:
+  - service: notify.pushbullet
+    data:
+      message: '{{ states.sensor.date__time.state }}: TEst bullshit /dev/root:{{ states.sensor.test.state }}%!'

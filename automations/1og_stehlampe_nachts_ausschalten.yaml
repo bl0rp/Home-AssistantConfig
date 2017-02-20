@@ -1,0 +1,9 @@
+alias: "Stehlampe um 23 Uhr ausschalten"
+trigger:
+  platform: time
+  hours: 23
+  minutes: 00
+  seconds: 00
+action:
+  service: switch.turn_off
+  entity_id: switch.wemoswitch2

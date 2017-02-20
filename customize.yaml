@@ -1,0 +1,133 @@
+###GROUP###
+    group.all_automations:
+      hidden: false
+    group.all_devices:
+      hidden: false
+    group.all_lights:
+      hidden: false
+    group.all_scripts:
+      hidden: false
+    group.all_switches:
+      hidden: false
+    group.chrisdata:
+      order: 2
+###SWITCH###
+    switch.katze:
+      friendly_name: Testswitch ohne Funktion
+      entity_picture: /local/cat.jpg
+    switch.110111:
+      friendly_name: Bettlicht
+      icon: mdi:lamp
+    switch.110112:
+      friendly_name: Schreibtischlicht
+      icon: mdi:spotlight-beam
+    switch.110113:
+      friendly_name: Türlicht
+      icon: mdi:spotlight
+    switch.wemoswitch1:
+      friendly_name: Lampe Esszimmer
+      icon: mdi:lamp
+    switch.wemoswitch2:
+      friendly_name: Stehlampe
+      icon: mdi:lamp
+    switch.fibaro_system_fgwpef_wall_plug_gen5_switch_3_0:
+      friendly_name: Universalsteckdose
+      icon: mdi:power-plug
+    switch.wake_on_lan:
+      friendly_name: WOL alekto
+      icon: mdi:power
+###SENSOR###
+#yr.no/wetter->deutsch
+    sun.sun:
+      friendly_name: Sonne
+    sensor.yr_fog:
+      friendly_name: Nebel
+    sensor.yr_cloudiness:
+      friendly_name: Bewölkung
+      icon: mdi:cloud
+    sensor.yr_dewpoint_temperature:
+      friendly_name: Taupunkt
+    sensor.yr_humidity:
+      friendly_name: Luftfeuchtigkeit
+      icon: mdi:water-percent
+    sensor.yr_precipitation:
+      friendly_name: Niederschlag
+      icon: mdi:weather-snowy-rainy
+    sensor.yr_pressure:
+      friendly_name: Luftdruck
+      icon: mdi:gauge
+    sensor.yr_temperature:
+      friendly_name: Außentemperatur
+      icon: mdi:thermometer
+    sensor.yr_wind_speed:
+      friendly_name: Windgeschwindigkeit
+      icon: mdi:weather-windy
+#device_tracker -> sensor
+    sensor.technicolor:
+      icon: mdi:router-wireless
+    sensor.ddwrt:
+      icon: mdi:router-wireless
+    sensor.qnap1:
+      entity_picture: /local/qnap.png
+    sensor.pi1eth:
+      entity_picture: /local/raspi.jpg
+    sensor.pi1wlan:
+      entity_picture: /local/raspi.jpg
+    sensor.pi2kodi:
+      entity_picture: /local/kodi.jpg
+    sensor.chmbp:
+      entity_picture: /local/apple.jpg
+    sensor.ipad:
+      entity_picture: /local/apple.jpg
+    sensor.nexus7:
+      entity_picture: /local/nexus.jpg
+    sensor.wemoswitch1:
+      entity_picture: /local/wemo.jpg
+    sensor.wemoswitch2:
+      entity_picture: /local/wemo.jpg
+
+
+#Fibaro Z-Wave WallPlug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_4:
+      friendly_name: Aktuelle Leistung
+      icon: mdi:power-plug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_8:
+      friendly_name: Maximale Leistung
+      icon: mdi:power-plug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_energy_3_0:
+      friendly_name: Gesamter Verbrauch
+      icon: mdi:currency-eur
+    media_player.kodi:
+      friendly_name: Kodi Wohnzimmer
+#Aeotec Z-Wave Multisensor
+    sensor.aeotec_zw100_multisensor_6_temperature_2_1:
+      friendly_name: Temperatur
+      icon: mdi:thermometer
+    sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5:
+      friendly_name: Luftfeuchtigkeit
+      icon: mdi:water-percent
+    sensor.aeotec_zw100_multisensor_6_luminance_2_3:
+      friendly_name: Helligkeit
+      icon: mdi:theme-light-dark
+    sensor.aeotec_zw100_multisensor_6_burglar_2_10:
+      friendly_name: Status Bewegsungsmelder
+      icon: mdi:alert
+    binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0:
+      friendly_name: Sensorstatus
+    sensor.aeotec_zw100_multisensor_6_ultraviolet_2_27:
+      friendly_name: UV 
+##LIGHTS##
+    switch.megadesk_leds:
+      friendly_name: Megadesk LEDs
+      icon: mdi:led-outline
+    switch.megadesk_fan:
+      friendly_name: Megadesk Fan
+      icon: mdi:fan
+    switch.monitor_light:
+      friendly_name: Monitor Light
+      icon: mdi:led-outline
+    switch.fishstick:
+      friendly_name: FishStick
+      icon: mdi:speaker
+
+

@@ -1,0 +1,262 @@
+####VIEWS####
+
+default_view:
+  view: yes
+  entities:
+    - group.raspberry_systemstatus
+    - group.wetter
+    - group.bitcoin
+    - group.speedtest
+    - group.sabnzbd
+    - group.traveltime
+    - group.qnap1
+
+ELW:
+  name: ELW
+  view: yes
+  entities:
+    - script.elw_lampen_an
+    - script.elw_lampen_aus
+    - script.akkus_laden
+    - automation.bewegungsmelder_elw_licht_zwave
+    - automation.bewegungsmelder_elw_licht_pir_rpi1
+    - automation.akkuladeautomatik
+    - group.zwave_aeotec_multisensor6
+    - group.zwave_fibaro_plug
+    - group.funksteckdosen433mhz
+    - group.chrisdata
+
+1OG:
+  name: 1 OG
+  view: yes
+  entities:
+    - switch.wemoswitch1
+    - switch.wemoswitch2
+    - script.1og_lampen_an
+    - script.1og_lampen_aus
+    - media_player.kodi
+    - group.famdata
+
+Cam:
+  name: Webcam
+  view: yes
+  icon: mdi:camcorder
+  entities:
+    - camera.rpi1_ir_cam
+
+familie:
+  name: Familie
+  view: yes
+  icon: mdi:account-multiple
+  entities:
+   - group.familiegrp
+
+autos:
+  name: Automation
+  view: yes
+  icon: mdi:auto-fix
+  entities:
+    - group.all_automations
+    - group.all_scripts
+
+tab_all:
+  name: 'Everything'
+  view: yes
+  icon: mdi:toggle-switch
+  entities:
+   - group.all_automations
+   - group.all_devices
+   - group.all_lights
+   - group.all_scripts
+   - group.all_switches
+   - media_player.kodi
+
+LAN:
+  name: LAN
+  view: yes
+  icon: mdi:ethernet-cable
+  entities:
+    - group.landev
+
+
+
+
+####Groups###
+chrisdata:
+  name: Diverses
+  entities:
+    - sensor.0x711de_ungelese_emails
+    - sensor.phonebatt
+    - device_tracker.christoph_ip
+    - device_tracker.oneplus3bt
+    - sensor.tasker_chris
+    - input_boolean.chrishome
+
+
+famdata:
+  name: Familie
+  entities:
+    - device_tracker.ewald_ip
+    - device_tracker.traude_ip
+
+familiegrp:
+  name: Familie
+  view: no
+  icon: mdi:account-multiple
+  entities:
+    - input_boolean.chrishome
+    - device_tracker.ewald_ip
+    - device_tracker.traude_ip
+
+
+LANdev:
+  name: Geräte Heimnetz
+  view: no
+  icon: mdi:ethernet-cable
+  entities:
+    - sensor.technicolor
+    - sensor.ddwrt
+    - sensor.qnap1
+    - sensor.pi1eth
+    - sensor.pi1wlan
+    - sensor.pi2kodi
+    - sensor.chmbp
+    - sensor.ipad
+    - sensor.nexus7
+    - sensor.wemoswitch1
+    - sensor.wemoswitch2
+
+
+wetter:
+  name: Wetter
+  icon: mdi:weather-partlycloudy
+  entities:
+    - sun.sun
+    - sensor.moon
+    - sensor.yr_temperature
+    - sensor.yr_symbol
+    - sensor.yr_cloudiness
+    - sensor.yr_dewpoint_temperature
+    - sensor.yr_humidity
+    - sensor.yr_precipitation
+    - sensor.yr_pressure
+    - sensor.yr_wind_speed
+    - sensor.yr_fog
+
+
+bitcoin:
+  name: Bitcoin
+  view: no
+  icon: mdi:speedometer
+  entities:
+    - sensor.exchange_rate_1_btc
+    - sensor.market_price
+    - sensor.mined
+
+sabnzbd:
+  name: SabNZBd
+  view: no
+  icon: mdi:currency-btc
+  entities:
+    - sensor.sabnzbd_status
+    - sensor.sabnzbd_disk
+    - sensor.sabnzbd_disk_free
+    - sensor.sabnzbd_left
+    - sensor.sabnzbd_queue
+    - sensor.sabnzbd_speed
+
+speedtest:
+  name: Speedtest
+  view: no
+  icon: mdi:speedometer
+  entities:
+    - sensor.speedtest_ping
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+
+raspberry_systemstatus:
+  name: Systemstatus
+  view: no
+  icon: mdi:raspberrypi
+  entities:
+    - sensor.cpu_temperature
+    - sensor.cpu_use
+    - sensor.disk_use_
+    - sensor.ipv4_address_eth0
+    - sensor.ipv6_address_eth0
+    - sensor.last_boot
+    - sensor.since_last_boot
+    - sensor.packets_received_eth0
+    - sensor.packets_sent_eth0
+    - sensor.received_eth0
+    - sensor.sent_eth0
+    - sensor.swap_free
+    - sensor.swap_use
+    - sensor.swap_use_2
+    - sensor.ram_free
+    - sensor.ram_use
+    - sensor.ram_use_2
+
+zwave_aeotec_multisensor6:
+  name: Multisensor ELW
+  view: no
+  entities:
+    - sensor.aeotec_zw100_multisensor_6_luminance_2_3
+    - sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5
+    - sensor.aeotec_zw100_multisensor_6_temperature_2_1
+    - sensor.aeotec_zw100_multisensor_6_ultraviolet_2_27
+    - sensor.aeotec_zw100_multisensor_6_burglar_2_10
+    - binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
+
+zwave_fibaro_plug:
+  name: MPD ELW
+  view: no
+  entities:
+    - sensor.mpd_use
+    - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy_3_0
+    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_4
+    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_8
+    - switch.fibaro_system_fgwpef_wall_plug_gen5_switch_3_0
+
+funksteckdosen433mhz:
+  name: Funksteckdosen
+  view: no
+  entities:
+    - switch.110111
+    - switch.110112
+    - switch.110113
+
+qnap1:
+  name: Systemstatus QNAP1
+  view: no
+  entities:
+    - sensor.qnap1
+    - sensor.qnap1_status
+    - sensor.qnap1_cpu_temperature
+    - sensor.qnap1_cpu_usage
+    - sensor.qnap1_cpu_usage
+    - sensor.qnap1_memory_available
+    - sensor.qnap1_memory_usage
+    - sensor.qnap1_memory_usage
+    - sensor.qnap1_network_link_eth0
+    - sensor.qnap1_network_down_eth0
+    - sensor.qnap1_network_up_eth0
+    - sensor.qnap1_smart_status_drive_01
+    - sensor.qnap1_smart_status_drive_02
+    - sensor.qnap1_smart_status_drive_03
+    - sensor.qnap1_smart_status_drive_04
+    - sensor.qnap1_smart_status_drive_05
+    - sensor.qnap1_temperature_drive_01
+    - sensor.qnap1_temperature_drive_02
+    - sensor.qnap1_temperature_drive_03
+    - sensor.qnap1_temperature_drive_04
+    - sensor.qnap1_temperature_drive_05
+
+traveltime:
+  name: Fahrzeit
+  view: no
+  entities:
+    - sensor.daheim__zwa
+    - sensor.stuttgart__berlin
+    - sensor.zuhause__hauptrettungswache
+    - sensor.zuhause__marienhospital

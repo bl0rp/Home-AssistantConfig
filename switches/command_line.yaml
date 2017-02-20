@@ -1,0 +1,11 @@
+platform: command_line
+switches:
+  11011_1:
+    command_on: /home/homeassistant/send 11011 1 1
+    command_off: /home/homeassistant/send 11011 1 0
+  11011_2:
+    command_on: /home/homeassistant/send 11011 2 1
+    command_off: /home/homeassistant/send 11011 2 0
+  11011_3:
+    command_on: /home/homeassistant/send 11011 3 1
+    command_off: /home/homeassistant/send 11011 3 0

@@ -1,0 +1,27 @@
+alias: "Bewegungsmelder ELW Licht PIR RPi1"
+initial_state: False
+trigger:
+  platform: mqtt
+  topic: motion
+  payload: 'on'
+condition:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"
+  - condition: state
+    entity_id: device_tracker.oneplus3bt
+    state: "home"
+  - condition: state
+    entity_id: switch.110113
+    state: "off"
+action:
+  - service: switch.turn_on
+    entity_id: switch.110113
+#  - service: notify.pushbullet
+#    data:
+#      message: 'es werde licht du hund'
+  - delay: 00:00:10
+  - service: switch.turn_off
+    entity_id: switch.110113
+
+

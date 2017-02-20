@@ -1,0 +1,8 @@
+alias: "Stehlampe nach Sonnenuntergang anschalten"
+trigger:
+  platform: sun
+  event: sunset
+  offset: "-00:20:00"
+action:
+  service: switch.turn_on
+  entity_id: switch.wemoswitch2

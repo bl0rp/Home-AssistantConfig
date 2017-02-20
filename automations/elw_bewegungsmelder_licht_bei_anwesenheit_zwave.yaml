@@ -1,0 +1,25 @@
+alias: Bewegungsmelder ELW Licht Z-Wave
+trigger:
+  platform: state
+  entity_id: sensor.aeotec_zw100_multisensor_6_burglar_2_10
+  from: '0'
+  to: '8'
+condition:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"
+  - condition: state
+    entity_id: device_tracker.oneplus3bt
+    state: "home"
+  - condition: state
+    entity_id: switch.110113
+    state: "off"
+action:
+  - service: switch.turn_on
+    entity_id: switch.110113
+#  - service: notify.pushbullet
+#    data:
+#      message: 'es werde licht du hund'
+  - delay: 00:00:30
+  - service: switch.turn_off
+    entity_id: switch.110113

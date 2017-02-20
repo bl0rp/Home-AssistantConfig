@@ -1,0 +1,8 @@
+alias: 'Schreibtischlicht via MQTT'
+trigger:
+  platform: mqtt
+  topic: licht
+  payload: 'schreibtisch an'
+action:
+   service: homeassistant.turn_on
+   entity_id: switch.110112

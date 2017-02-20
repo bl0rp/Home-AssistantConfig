@@ -1,0 +1,9 @@
+elw_lampen_aus:
+  alias: "Alle Lampen in der ELW ausschalten"
+  sequence:
+  - service: switch.turn_off
+    entity_id: switch.110111
+  - service: switch.turn_off
+    entity_id: switch.110112
+  - service: switch.turn_off
+    entity_id: switch.110113

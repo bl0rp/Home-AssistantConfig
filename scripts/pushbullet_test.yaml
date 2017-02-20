@@ -1,0 +1,6 @@
+pushbullet_test:
+  alias: "Spam via PB"
+  sequence:
+    service: notify.pushbullet
+    data:
+      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'
