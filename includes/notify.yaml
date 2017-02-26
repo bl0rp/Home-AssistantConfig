@@ -1,0 +1,15 @@
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret pbapikey
+  - name: nma
+    platform: nma
+    api_key: !secret nma_apikey
+  - name: email
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    sender: !secret ha_mail_user
+    starttls: true
+    username: !secret ha_mail_user
+    password: !secret ha_mail_pw
+    recipient: !secret mail_recipient

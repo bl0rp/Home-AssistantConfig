@@ -6,8 +6,8 @@ trigger:
 action:
   - service: notify.pushbullet
     data:
-      message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! /dev/root: {{ states.sensor.disk_use_.state }}%!'
+      message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
   - service: notify.email
     data:
       title: 'HA: Speicherplatz'
-      message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! /dev/root: {{ states.sensor.disk_use_.state }}%!'
+      message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'

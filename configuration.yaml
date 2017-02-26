@@ -1,245 +1,57 @@
 homeassistant:
-  # Name of the location where Home Assistant is running
   name: !secret name
 
-  # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude
+
   longitude: !secret longitude
 
-  # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 429
 
-  # metric for Metric, imperial for Imperial
   unit_system: metric
 
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Berlin
 
-  customize: !include customize.yaml
+  customize: !include includes/customize.yaml
 
-# Show links to resources in log and frontend
-#introduction:
-
-# Enables the frontend
 frontend:
 
 http:
-  # Uncomment this to add a password (recommended!)
    api_password: !secret api_password
+config:
 
 zwave:
   usb_path: /dev/ttyACM0
+  device_config: !include zwave_device_config.yaml
 #  config_path: /usr/local/lib/python3.4/dist-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
 
-# Checks for available updates
 updater:
 
-# Discover some devices automatically
 discovery:
 
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-# Enables support for tracking state changes over time.
 history:
 
 recorder:
   purge_days: 14
   db_url: !secret mysql_db_path
 
-# View all events in a logbook
 logbook:
 
-# Track the sun
 sun:
 
 # Emulated Hue -> Amazon Echo 
 emulated_hue:
 
-
-sensor zeit:
-  - platform: time_date
-    display_options:
-      - 'time'
-      - 'date'
-      - 'date_time'
-      - 'time_date'
-      - 'time_utc'
-      - 'beat'
-
-sensor Wetter:
-  platform: yr
-  monitored_conditions:
-      - temperature
-      - symbol
-      - precipitation
-      - windSpeed
-      - pressure
-      - humidity
-      - fog
-      - cloudiness
-      - dewpointTemperature
-sensor moon:
-    - platform: moon
-
-sensor BTC:
-  platform: bitcoin
-  display_options:
-    - exchangerate
-    - btc_mined
-    - market_price_usd
-
-
-sensor speedtest:
-  - platform: speedtest
-    monitored_conditions:
-      - ping
-      - download
-      - upload
-
-sensor cputemp:
-  - platform: command_line
-    name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone0/temp"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) }}'
-
-sensor sabnzbd:
-  platform: sabnzbd
-  host: 192.168.0.29
-  port: 8085
-  api_key: !secret sabnzbd_api
-  monitored_variables:
-    - 'current_status'
-    - 'speed'
-    - 'queue_size'
-    - 'queue_remaining'
-    - 'disk_size'
-    - 'disk_free'
-sensor sysmon:
-  platform: systemmonitor
-  resources:
-    - type: disk_use_percent
-      arg: /
-    - type: memory_use_percent
-    - type: memory_use
-    - type: memory_free
-    - type: processor_use
-    - type: swap_use_percent
-    - type: swap_use
-    - type: swap_free
-    - type: last_boot
-    - type: since_last_boot
-    - type: network_in
-      arg: eth0
-    - type: network_out
-      arg: eth0
-    - type: packets_in
-      arg: eth0
-    - type: packets_out
-      arg: eth0
-    - type: ipv4_address
-      arg: eth0
-    - type: ipv6_address
-      arg: eth0
-
-
-
-sensor google_travel_time:
-  - platform: google_travel_time
-    name: Zuhause -> Marienhospital
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: place_id:ChIJHSlDllnbmUcRFTau-VG69RA
-  - platform: google_travel_time
-    name: Zuhause -> Hauptrettungswache
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Neckarstraße 143, Stuttgart, Germany
-  - platform: google_travel_time
-    name: Stuttgart -> Berlin
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Berlin, Germany
-  - platform: google_travel_time
-    name: Daheim -> ZWA
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Leibnizstraße 31, Stuttgart, Germany
-
-sensor:
-  - platform: imap
-    server: !secret imap_host
-    port: 993
-    name: 0x711.de ungelese E-Mails
-    username: !secret imap_user
-    password: !secret imap_pw
-
-sensor template:
-  - platform: template
-    sensors:
-#      solar_angle:
-#        value_template: '{{ states.sun.sun.attributes.elevation }}'
-#        friendly_name: 'Sun angle'
-#        unit_of_measurement: 'degrees'
-#      sunrise:
-#        value_template: '{{ states.sun.sun.attributes.next_rising }}'
-### home->Online für landev
-      technicolor:
-        friendly_name: 'Unitymedia Technicolor Router'
-        value_template: "{{ 'Online' if is_state('device_tracker.technicolor', 'home') else 'Offline' }}"
-      ddwrt:
-        friendly_name: 'DD-WRT Router 1.OG'
-        value_template: "{{ 'Online' if is_state('device_tracker.ddwrt', 'home') else 'Offline' }}"
-      qnap1:
-        friendly_name: 'QNAP TS-563'
-        value_template: "{{ 'Online' if is_state('device_tracker.qnap1', 'home') else 'Offline' }}"
-      pi1wlan:
-        friendly_name: 'RaspberryPi 1 via WLAN'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi1wlan', 'home') else 'Offline' }}"
-      pi1eth:
-        friendly_name: 'RaspberryPi 1 via Ethernet'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi1eth', 'home') else 'Offline' }}"
-      pi2kodi:
-        friendly_name: 'RaspberryPi 2 (Kodi)'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi2kodi', 'home') else 'Offline' }}"
-      chmbp:
-        friendly_name: 'MacBook Pro'
-        value_template: "{{ 'Online' if is_state('device_tracker.chmbp', 'home') else 'Offline' }}"
-      ipad:
-        friendly_name: 'iPad'
-        value_template: "{{ 'Online' if is_state('device_tracker.ipad', 'home') else 'Offline' }}"
-      nexus7:
-        friendly_name: 'Nexus Tablet'
-        value_template: "{{ 'Online' if is_state('device_tracker.nexus7', 'home') else 'Offline' }}"
-      wemoswitch1:
-        friendly_name: 'Wemo Switch 1'
-        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch1', 'home') else 'Offline' }}"
-      wemoswitch2:
-        friendly_name: 'Wemo Switch 2'
-        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch2', 'home') else 'Offline' }}"
-#MPD Dose
-      mpd_use:
-        value_template: "{{ states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_4') | int > 0.2 }}"
-sensor qnap:
-  - platform: qnap
-    host: !secret qnap_ip
-    username: !secret qnap_user
-    password: !secret qnap_pw
-    nics: eth0
-    monitored_conditions:
-      - status
-      - cpu_temp
-      - cpu_usage
-      - memory_free
-      - memory_used
-      - memory_percent_used
-      - network_link_status
-      - network_tx
-      - network_rx
-      - drive_smart_status
-      - drive_temp
-      - volume_size_free
+##################
+#    INCLUDES    #
+##################
+switch: !include_dir_list switches/
+group: !include groups.yaml
+script: !include_dir_merge_named scripts/
+automation: !include_dir_list automations/
+sensor: !include includes/sensors.yaml
+notify: !include includes/notify.yaml
 
 mqtt:
   broker: !secret mqtt_broker
@@ -273,54 +85,50 @@ camera:
   - platform: mjpeg
     mjpeg_url: http://192.168.0.23/html/cam_pic_new.php?
     name: RPi1 IR Cam
+  - platform: generic
+    name: Google Map Stuttgart
+    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center=48.77,9.15&zoom=10&size=500x500&maptype=roadmap
+    limit_refetch_to_url_change: true
 
-notify:
-  - name: pushbullet
-    platform: pushbullet
-    api_key: !secret pbapikey
-  - name: nma
-    platform: nma
-    api_key: !secret nma_apikey
-  - name: email
-    platform: smtp
-    server: !secret smtp_server
-    port: 587
-    sender: !secret ha_mail_user
-    starttls: true
-    username: !secret ha_mail_user
-    password: !secret ha_mail_pw
-    recipient: !secret mail_recipient
+
 #Kodi 1OG
-
 media_player:
   - platform: kodi
     host: 192.168.0.21
     port: 80
-
-
 
 wemo:
   static:
     - 192.168.0.31
     - 192.168.0.33
 
-
-
-###INCLUDES
-
-switch: !include_dir_list switches/
-
-group: !include groups.yaml
-
-script: !include_dir_merge_named scripts/
-
-automation: !include_dir_list automations/
-
-
+##################
+#    INPUT       #
+##################
 input_boolean:
   chrishome:
     name: "Christoph"
     initial: on
     icon: mdi:cellphone-iphone
 
+input_slider:
+  tuerlicht_intervall:
+    name: Türlicht Slider
+    initial: 30
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: seconds
+    icon: mdi:target
 
+input_select:
+  tuerlicht:
+    name: Wie lange soll das Türlicht brennen?
+    options:
+     - 5
+     - 15
+     - 30
+     - 45
+     - 60
+    initial: 30
+    icon: mdi:panda

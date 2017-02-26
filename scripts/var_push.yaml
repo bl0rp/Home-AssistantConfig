@@ -1,0 +1,7 @@
+var_push:
+  alias: "Notify vardata"
+  sequence:
+
+    - service: notify.pushbullet
+      data:
+        message: 'Uhrzeit : {{ states.sensor.date__time.state }} InputSelect: {{ states.input_select.tuerlicht.state }} Sekunden InputSlider: {{ states.input_slider.tuerlicht_intervall.state }} Sekunden '

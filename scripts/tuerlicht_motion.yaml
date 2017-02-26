@@ -3,7 +3,6 @@ tuerlicht_motion:
   sequence:
     - service: switch.turn_on
       entity_id: switch.110113
-#    - service: notify.notify
-    - delay: 00:00:02
+    - delay: 00:00:15
     - service: switch.turn_off
       entity_id: switch.110113

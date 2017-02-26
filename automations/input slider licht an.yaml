@@ -1,0 +1,11 @@
+alias: Licht Slider Licht An
+initial_state: False
+trigger:
+  platform: state
+  entity_id: input_slider.tuerlicht_intervall
+action:
+  - service: switch.turn_on
+    entity_id: switch.110113
+  - delay: '{{ states.input_slider.tuerlicht_intervall.state | int }}'
+  - service: switch.turn_off
+    entity_id: switch.110113

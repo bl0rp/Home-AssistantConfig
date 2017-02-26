@@ -1,0 +1,13 @@
+tuerlicht_def:
+  alias: "Türlicht für definierte Dauer anschalten"
+  sequence:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.110113
+    - service: notify.pushbullet
+      data:
+        message: '{{ states.sensor.date__time.state }}: Das Türlicht wird für {{ states.input_select.tuerlicht.state }} Sekunden angeschaltet! '
+    - delay: '{{ states.input_select.tuerlicht.state | int }}'
+    - service: switch.turn_off
+      data:
+        entity_id: switch.110113

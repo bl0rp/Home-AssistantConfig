@@ -9,3 +9,6 @@ switches:
   11011_3:
     command_on: /home/homeassistant/send 11011 3 1
     command_off: /home/homeassistant/send 11011 3 0
+  ssh_tunnel:
+    command_on: /home/homeassistant/script/tunnel.sh
+    command_off: pkill autossh

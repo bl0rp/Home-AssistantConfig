@@ -17,9 +17,6 @@ condition:
 action:
   - service: switch.turn_on
     entity_id: switch.110113
-#  - service: notify.pushbullet
-#    data:
-#      message: 'es werde licht du hund'
-  - delay: 00:00:30
+  - delay: '{{ states.input_select.tuerlicht.state | int }}'
   - service: switch.turn_off
     entity_id: switch.110113
