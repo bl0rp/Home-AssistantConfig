@@ -1,0 +1,74 @@
+HowTo automatically sync your local backup files the secure way (IMHO;)) with incron and rsync:
+
+1.) Generate a ssh-key for remote login
+
+
+ssh-keygen -b 4096 -f rsync_key
+
+2.) Edit the ~/.ssh/authorized_keys2 file on the remote host:
+
+command="/home/user/dir/rsync_check.sh" ssh-rsa ABCDE123929jhsj[..]Bns44GQtUuKxfSoZYsUk6w==
+
+the ssh-rsa part equals "rsync_key.pub"
+
+
+3.) Create /home/user/dir/rsync_check.sh:
+
+#!/bin/sh
+
+case "$SSH_ORIGINAL_COMMAND" in
+*\&*)
+echo "Rejected"
+;;
+*\(*)
+echo "Rejected"
+;;
+*\{*)
+echo "Rejected"
+;;
+*\;*)
+echo "Rejected"
+;;
+*\<*)
+echo "Rejected"
+;;
+*\>*)
+echo "Rejected"
+;;
+*\`*)
+echo "Rejected"
+;;
+*\|*)
+echo "Rejected"
+;;
+rsync\ --server*)
+$SSH_ORIGINAL_COMMAND
+;;
+*)
+echo "nope. go away."
+;;
+esac
+
+
+4.) On the local machine install incron and edit/create the folliwng files:
+
+/etc/incron.d/watch_backup:
+
+/your/backup/dir IN_CLOSE_WRITE /path/to/your/script/send_backup.sh
+
+
+/path/to/your/script/send_backup.sh:
+
+#!/bin/bash
+rsync -avz -e "ssh -i /home/user/keyfiles/rsync_key" --exclude *.git /your/backup/dir/*  user@remote:/home/remote_user/backup_from_local/
+
+As soon as a file is closed after writing it to the harddrive (IN_CLOSE_WRITE) incron will run /path/to/your/script/send_backup.sh
+
+5.) restart incron (service incron restart) and test everything
+
+touch /your/backup/dir/test.file should upload "test.file" to the remote machine.
+
+ssh -i /home/user/keyfiles/rsync_key user@remote should terminate with
+
+nope. go away.
+Connection to remote closed.
