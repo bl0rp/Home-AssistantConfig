@@ -1,0 +1,10 @@
+traveltime:
+  name: Fahrzeit
+  view: no
+  entities:
+    - sensor.daheim__zwa
+    - sensor.stuttgart__berlin
+    - sensor.zuhause__hauptrettungswache
+    - sensor.zuhause__marienhospital
+    - sensor.daheim__mqtt_standort
+    - sensor.mqtt_standort__daheim

@@ -1,0 +1,11 @@
+  - platform: sabnzbd
+    host: 192.168.0.29
+    port: 8085
+    api_key: !secret sabnzbd_api
+    monitored_variables:
+      - 'current_status'
+      - 'speed'
+      - 'queue_size'
+      - 'queue_remaining'
+      - 'disk_size'
+      - 'disk_free'

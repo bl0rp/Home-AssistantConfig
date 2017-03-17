@@ -1,14 +1,38 @@
 platform: command_line
 switches:
+### send used from https://github.com/xkonni/raspberry-remote to control 433MHz outlets
   11011_1:
     command_on: /home/homeassistant/send 11011 1 1
     command_off: /home/homeassistant/send 11011 1 0
+
   11011_2:
     command_on: /home/homeassistant/send 11011 2 1
     command_off: /home/homeassistant/send 11011 2 0
+
   11011_3:
     command_on: /home/homeassistant/send 11011 3 1
     command_off: /home/homeassistant/send 11011 3 0
+
+  11001_1:
+    command_on: /home/homeassistant/send 11001 1 1
+    command_off: /home/homeassistant/send 11001 1 0
+
+  11001_2:
+    command_on: /home/homeassistant/send 11001 2 1
+    command_off: /home/homeassistant/send 11001 2 0
+
+  11001_3:
+    command_on: /home/homeassistant/send 11001 3 1
+    command_off: /home/homeassistant/send 11001 3 0
+
+### Opening a SSH Tunnel for remote access to the HASS UI
   ssh_tunnel:
     command_on: /home/homeassistant/script/tunnel.sh
     command_off: pkill autossh
+
+  shutdown_pi1:
+    command_off: /home/homeassistant/script/shutdown_pi1.sh
+
+  test_curl1:
+    command_on: curl http://192.168.0.80/socket0On
+    command_off: curl http://192.168.0.80/socket0Off

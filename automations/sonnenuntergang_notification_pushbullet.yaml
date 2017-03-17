@@ -1,0 +1,9 @@
+alias: "Sonnenuntergang an Pushbullet"
+trigger:
+  platform: sun
+  event: sunset
+action:
+  - service: notify.pushbullet
+    data_template:
+      message: >
+         {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Die Sonne geht jetzt in Stuttgart unter!

@@ -1,0 +1,8 @@
+shutdown_rpi1:
+  alias: "Rpi1 IR Kamera herunterfahren"
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.shutdown_pi1
+    - delay: 00:00:30
+    - service: switch.turn_off
+      entity_id: switch.110012

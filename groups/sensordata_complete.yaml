@@ -1,0 +1,28 @@
+status_alle_sensoren:
+  name: Status aller Sensoren im Netzwerk
+  entities:
+    - sensor.multisensor1_battery
+    - binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
+    - sensor.esp8266_01_status_var
+    - sensor.esp8266_02_status_var
+    - sensor.esp8266_03_status_var
+    - sensor.esp8266_04_status_var
+
+status_alle_bewegsungsmelder:
+  name: Status aller Bewegungsmelder im Netzwerk
+  entities:
+    - sensor.multisensor1_motion
+    - sensor.esp8266_01_motion
+    - sensor.esp8266_02_motion
+
+status_alle_umweltsensoren:
+  name: Status aller Umweltsensoren im Netzwerk
+  entities:
+    - sensor.aeotec_zw100_multisensor_6_temperature_2_1
+    - sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5
+    - sensor.temperatur_esp8266_01
+    - sensor.luftfeuchtigkeit_esp8266_01
+    - sensor.temperatur_esp8266_02
+    - sensor.luftfeuchtigkeit_esp8266_02
+    - sensor.temperatur_esp8266_03
+    - sensor.luftfeuchtigkeit_esp8266_03

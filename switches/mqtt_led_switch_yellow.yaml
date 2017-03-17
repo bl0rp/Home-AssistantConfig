@@ -1,0 +1,6 @@
+platform: mqtt
+name: "Gelbe LED"
+state_topic: "gelb/status"
+command_topic: "gelb/switch"
+payload_on: "ON"
+payload_off: "OFF"

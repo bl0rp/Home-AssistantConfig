@@ -1,0 +1,5 @@
+vardata:
+  name: Input Select und Slider
+  entities:
+    - input_slider.tuerlicht_intervall
+    - input_select.tuerlicht

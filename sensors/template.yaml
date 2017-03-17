@@ -1,0 +1,144 @@
+  - platform: template
+    sensors:
+      solar_angle:
+        value_template: '{{ states.sun.sun.attributes.elevation }}'
+        friendly_name: 'Sun angle'
+        unit_of_measurement: 'degrees'
+      sunrise:
+        value_template: '{{ states.sun.sun.attributes.next_rising }}'
+### home->Online für landev group
+      technicolor:
+        friendly_name: 'Unitymedia Technicolor Router'
+        value_template: "{{ 'Online' if is_state('device_tracker.technicolor', 'home') else 'Offline' }}"
+      ddwrt:
+        friendly_name: 'DD-WRT Router 1.OG'
+        value_template: "{{ 'Online' if is_state('device_tracker.ddwrt', 'home') else 'Offline' }}"
+      qnap1:
+        friendly_name: 'QNAP TS-563'
+        value_template: "{{ 'Online' if is_state('device_tracker.qnap1', 'home') else 'Offline' }}"
+      alekto:
+        friendly_name: 'WKS Windows 10'
+        value_template: "{{ 'Online' if is_state('device_tracker.wks_alekto', 'home') else 'Offline' }}"
+      pi1wlan:
+        friendly_name: 'RaspberryPi 1 via WLAN'
+        value_template: "{{ 'Online' if is_state('device_tracker.pi1wlan', 'home') else 'Offline' }}"
+      pi1eth:
+        friendly_name: 'RaspberryPi 1 via Ethernet'
+        value_template: "{{ 'Online' if is_state('device_tracker.pi1eth', 'home') else 'Offline' }}"
+      pi2kodi:
+        friendly_name: 'RaspberryPi 2 (Kodi)'
+        value_template: "{{ 'Online' if is_state('device_tracker.pi2kodi', 'home') else 'Offline' }}"
+      chmbp:
+        friendly_name: 'MacBook Pro'
+        value_template: "{{ 'Online' if is_state('device_tracker.chmbp', 'home') else 'Offline' }}"
+      ipad:
+        friendly_name: 'iPad'
+        value_template: "{{ 'Online' if is_state('device_tracker.ipad', 'home') else 'Offline' }}"
+      nexus7:
+        friendly_name: 'Nexus Tablet'
+        value_template: "{{ 'Online' if is_state('device_tracker.nexus7', 'home') else 'Offline' }}"
+      wemoswitch1:
+        friendly_name: 'Wemo Switch 1'
+        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch1', 'home') else 'Offline' }}"
+      wemoswitch2:
+        friendly_name: 'Wemo Switch 2'
+        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch2', 'home') else 'Offline' }}"
+      esp8266_01:
+        friendly_name: 'ESP8266 #1'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_01', 'home') else 'Offline' }}"
+      esp8266_02:
+        friendly_name: 'ESP8266 #2'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_02', 'home') else 'Offline' }}"
+      esp8266_03:
+        friendly_name: 'ESP8266 #3'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_03', 'home') else 'Offline' }}"
+      esp8266_04:
+        friendly_name: 'ESP8266 #4'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_04', 'home') else 'Offline' }}"
+#Status ESP* -> view esp
+#in short:
+#      esp8266_01_status:
+#        friendly_name: 'ESP8266 #1'
+#        value_template: "{{ states('sensor.esp8266_01_status_2') if is_state('device_tracker.esp8266_01_ping', 'home') else 'Offline' }}"
+      esp8266_01_status_var:
+        friendly_name: "ESP8266 01 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_01_ping', 'home') -%}
+             {{ states.sensor.esp8266_01_status.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+      esp8266_02_status_var:
+        friendly_name: "ESP8266 02 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_02_ping', 'home') -%}
+             {{ states.sensor.esp8266_02_status.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+      esp8266_03_status_var:
+        friendly_name: "ESP8266 03 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_03_ping', 'home') -%}
+             {{ states.sensor.esp8266_03_status.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+      esp8266_04_status_var:
+        friendly_name: "ESP8266 04 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_04_ping', 'home') -%}
+             {{ states.sensor.esp8266_04_status.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+### ESP8266_XX Bewegungsmelder
+      esp8266_01_motion:
+        friendly_name: Bewegungsmelder ESP8266 01
+        value_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+      esp8266_02_motion:
+        friendly_name: Bewegungsmelder ESP8266 02
+        value_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+### systemmonitor
+      process_sshd_format:
+        friendly_name: 'SSH Daemon'
+        value_template: "{{ 'running' if is_state('sensor.process_sshd', 'on') else 'stopped' }}"
+        icon_template: '{% if is_state("sensor.process_sshd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+      process_autossh_format:
+        friendly_name: 'autossh tunnel script'
+        icon_template: '{% if is_state("sensor.process_autossh", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_autossh', 'on') else 'stopped' }}"
+      process_dhcpd_format:
+        friendly_name: 'DHCPD Daemon'
+        icon_template: '{% if is_state("sensor.process_dhcpd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_dhcpd', 'on') else 'stopped' }}"
+      process_mosquitto_format:
+        friendly_name: 'MQTT Daemon'
+        icon_template: '{% if is_state("sensor.process_mosquitto", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_mosquitto', 'on') else 'stopped' }}"
+
+### MPD Dose
+      mpd_use:
+        friendly_name: Steckdose in Benutzung?
+        value_template: "{{ states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_4') | int > 0.2 }}"
+
+### Multisensor1 Battery
+      multisensor1_battery:
+        value_template: >-
+           {%- if states.binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0 != None -%}
+             {{ states.binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0.attributes.battery_level }}
+           {%- else -%}
+             unknown
+           {%- endif -%}
+        unit_of_measurement: '%'
+        friendly_name: "Multisensor 01 Batterie"
+
+### Multisensor1 Bewegungsmelder
+      multisensor1_motion:
+        friendly_name: Bewegungsmelder Multisensor 01
+        value_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar_2_10", "8") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar_2_10", "8") %}mdi:alert{% else %}mdi:eye-off{% endif %}'

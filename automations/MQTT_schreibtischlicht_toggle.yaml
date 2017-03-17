@@ -1,0 +1,12 @@
+alias: 'Schreibtischlicht via MQTT'
+trigger:
+  platform: mqtt
+  topic: licht
+  payload: 'schreibtisch toggle'
+action:
+  - service: homeassistant.toggle
+    entity_id: switch.110112
+  - service: notify.pushbullet
+    data_template:
+      message: >
+         {{ states.sensor.date__time.state }} Licht geschalt0rt {{ now().strftime('%d.%m.%Y %H:%M:%S') }} 

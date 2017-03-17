@@ -1,8 +1,0 @@
-alias: 'Anwesenheit via MQTT'
-trigger:
-  platform: mqtt
-  topic: state
-  payload: 'home'
-action:
-   service: homeassistant.turn_on
-   entity_id: input_boolean.chrishome

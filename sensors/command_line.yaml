@@ -1,0 +1,34 @@
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value|int // 1000 }}'
+
+  - platform: command_line
+    scan_interval: 3600
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: HA release
+
+###
+#process info via systemmonitor is the better choice
+###
+
+#  - platform: command_line
+#    scan_interval: 30
+#    command: /home/homeassistant/script/check_ping.sh
+#    name: Ping Check Test
+
+#  - platform: command_line
+#    scan_interval: 60
+#    command: /home/homeassistant/script/check_autossh.sh
+#    name: autossh
+
+#  - platform: command_line
+#    scan_interval: 60
+#    command: /home/homeassistant/script/check_dhcpd.sh
+#    name: dhcpd
+
+#  - platform: command_line
+#    scan_interval: 60
+#    command: /home/homeassistant/script/check_sshd.sh
+#    name: sshd

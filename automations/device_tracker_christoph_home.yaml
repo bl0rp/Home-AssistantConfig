@@ -1,0 +1,24 @@
+alias: 'DeviceTracker Christoph home'
+condition:
+  condition: state
+  entity_id: input_boolean.chrishome
+  state: 'off'
+trigger:
+  - platform: state
+    entity_id: device_tracker.christoph_ip
+    state: 'home' 
+  - platform: state
+    entity_id: device_tracker.oneplus3bt
+    state: 'home'
+  - platform: state
+    entity_id: device_tracker.chop3_oneplus3
+    state: 'home'
+  - platform: state
+    entity_id: sensor.tasker_chris
+    state: 'home'
+  - platform: state
+    entity_id: switch.christoph_mqtt
+    state: 'on'
+action:
+   service: homeassistant.turn_on
+   entity_id: input_boolean.chrishome

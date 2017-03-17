@@ -1,8 +1,0 @@
-alias: "Sonnenuntergang an Pushbullet"
-trigger:
-  platform: sun
-  event: sunset
-action:
-  service: notify.pushbullet
-  data:
-    message: 'Die Sonne geht jetzt in Stuttgart unter ({{ states.sensor.date__time.state }})!'

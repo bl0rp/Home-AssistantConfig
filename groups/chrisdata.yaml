@@ -1,0 +1,12 @@
+chrisdata:
+  name: Diverses
+  entities:
+    - sensor.0x711de_ungelese_emails
+    - sensor.phonebatt
+    - device_tracker.christoph_ip
+    - device_tracker.oneplus3bt
+    - switch.christoph_mqtt
+    - sensor.tasker_chris
+    - input_boolean.chrishome
+    - sensor.ha_release
+    - sensor.ping_check_test

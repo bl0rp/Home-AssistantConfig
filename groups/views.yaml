@@ -1,0 +1,129 @@
+####VIEWS####
+
+default_view:
+  view: yes
+  entities:
+    - group.raspberry_systemstatus
+    - group.services
+    - group.wetter_all
+    - group.bitcoin
+    - group.speedtest
+    - group.sabnzbd
+    - group.traveltime
+    - group.qnap1
+
+ELW:
+  name: ELW
+  view: yes
+  entities:
+    - script.elw_lampen_an
+    - script.elw_lampen_aus
+    - script.akkus_laden
+    - script.tuerlicht_def
+    - automation.benachrichtigung_alle_bewegunsgmelder
+    - automation.bewegungsmelder_elw_licht_zwave
+    - automation.bewegungsmelder_elw_licht_esp_8266_pir
+    - automation.akkuladeautomatik
+    - group.sensordata_elw
+    - group.zwave_aeotec_multisensor6
+    - group.zwave_fibaro_plug
+    - group.funksteckdosen433mhz_licht
+    - group.funksteckdosen433mhz_plug
+    - group.chrisdata
+    - group.vardata
+
+
+1OG:
+  name: 1 OG
+  view: yes
+  entities:
+    - switch.wemoswitch1
+    - switch.wemoswitch2
+    - script.1og_lampen_an
+    - script.1og_lampen_aus
+    - media_player.kodi
+    - group.sensordata_1og
+
+Cam:
+  name: Webcam
+  view: yes
+  icon: mdi:camcorder
+  entities:
+    - group.camera_control
+    - camera.rpi1_ir_cam
+    - camera.google_map_stuttgart
+
+Sensordaten:
+  name: Daten von Mulisensor, esp, etc.
+  view: yes
+  icon: mdi:chip
+  entities:
+     - group.status_alle_sensoren
+     - group.status_alle_bewegsungsmelder
+     - group.status_alle_umweltsensoren
+
+familie:
+  name: Familie
+  view: yes
+  icon: mdi:account-multiple
+  entities:
+   - group.familiegrp
+
+#Statistik:
+#  name: Statistik
+#  view: yes
+#  icon: mdi:chart-line
+#  entities:
+#   - group.statistik_heute
+#   - group.statistik_gestern
+#   - group.statistik_woche
+#   - group.statistik_30tage
+#   - group.statistik_alltime
+#   - group.statistik_personen
+
+autos:
+  name: Automation
+  view: yes
+  icon: mdi:auto-fix
+  entities:
+    - group.all_automations
+    - group.all_scripts
+
+tab_all:
+  name: 'Everything'
+  view: yes
+  icon: mdi:toggle-switch
+  entities:
+   - group.all_automations
+   - group.all_devices
+   - group.all_lights
+   - group.all_scripts
+   - group.all_switches
+   - media_player.kodi
+
+LAN:
+  name: LAN
+  view: yes
+  icon: mdi:ethernet-cable
+  entities:
+    - group.landev
+
+WETTER:
+  name: Wetter
+  view: yes
+  icon: mdi:weather-partlycloudy
+  entities:
+    - group.wetter_all
+    - group.wetter_yr
+    - group.wetter_darksky
+
+TEST:
+  name: TEST
+  view: yes
+  icon: mdi:delete
+  entities:
+    - group.mqtt_leds
+    - group.test_item
+    - script.file_test
+    - group.wetter_darksky
+    - group.wetter

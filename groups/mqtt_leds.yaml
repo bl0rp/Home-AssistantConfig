@@ -1,0 +1,7 @@
+mqtt_leds:
+  name: LEDs via MQTT
+  view: no
+  entities:
+    - switch.rote_led
+    - switch.gelbe_led
+    - switch.grune_led

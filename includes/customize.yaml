@@ -24,6 +24,15 @@
     switch.110113:
       friendly_name: Türlicht
       icon: mdi:spotlight
+    switch.110011:
+      friendly_name: MPD 433MHz
+      icon: mdi:power-plug
+    switch.110012:
+      friendly_name: RPi IR Cam
+      icon: mdi:raspberrypi
+    switch.110013:
+      friendly_name: IR Strahler
+      icon: mdi:spotlight
     switch.wemoswitch1:
       friendly_name: Lampe Esszimmer
       icon: mdi:lamp
@@ -37,31 +46,77 @@
       friendly_name: WOL alekto
       icon: mdi:power
 ###SENSOR###
-#yr.no/wetter->deutsch
+#yr.no/darksky/wetter->deutsch
     sun.sun:
       friendly_name: Sonne
+###yr.no
     sensor.yr_fog:
-      friendly_name: Nebel
+      friendly_name: Nebel (yr.no)
     sensor.yr_cloudiness:
-      friendly_name: Bewölkung
+      friendly_name: Bewölkung  (yr.no)
       icon: mdi:cloud
     sensor.yr_dewpoint_temperature:
-      friendly_name: Taupunkt
+      friendly_name: Taupunkt  (yr.no)
     sensor.yr_humidity:
-      friendly_name: Luftfeuchtigkeit
+      friendly_name: Luftfeuchtigkeit  (yr.no)
       icon: mdi:water-percent
     sensor.yr_precipitation:
-      friendly_name: Niederschlag
+      friendly_name: Niederschlag  (yr.no)
       icon: mdi:weather-snowy-rainy
     sensor.yr_pressure:
-      friendly_name: Luftdruck
+      friendly_name: Luftdruck  (yr.no)
       icon: mdi:gauge
     sensor.yr_temperature:
-      friendly_name: Außentemperatur
+      friendly_name: Außentemperatur  (yr.no)
       icon: mdi:thermometer
     sensor.yr_wind_speed:
-      friendly_name: Windgeschwindigkeit
+      friendly_name: Windgeschwindigkeit  (yr.no)
       icon: mdi:weather-windy
+###DarkSky
+    sensor.dark_sky_apparent_temperature:
+       friendly_name: Gefühlte Temperatur (DarkSky)
+    sensor.dark_sky_cloud_coverage:
+       friendly_name: Bewölkung (DarkSky)
+    sensor.dark_sky_daily_high_apparent_temperature:
+       friendly_name: Tageshöchsttemperatur (gefühlt) (DarkSky)
+    sensor.dark_sky_daily_high_temperature:
+       friendly_name: Tageshöchsttemperatur (DarkSky)
+    sensor.dark_sky_daily_low_apparent_temperature:
+       friendly_name: Tagesniedrigsttemperatur (gefühlt) (DarkSky)
+    sensor.dark_sky_daily_low_temperature:
+       friendly_name: Tagesniedrigsttemperatur (DarkSky)
+    sensor.dark_sky_daily_max_precip_intensity:
+       friendly_name: Tageshöchstniederschlag (DarkSky)
+    sensor.dark_sky_daily_summary:
+       friendly_name: Tageszusammenfassung (DarkSky)
+    sensor.dark_sky_dew_point:
+       friendly_name: Taupunkt (DarkSky)
+    sensor.dark_sky_hourly_summary:
+       friendly_name: Stündliche Zusammenfassung (DarkSky)
+    sensor.dark_sky_humidity:
+       friendly_name: Luftfeuchtigkeit (DarkSky)
+    sensor.dark_sky_minutely_summary:
+       friendly_name: Minütliche Zusammenfassung (DarkSky)
+    sensor.dark_sky_ozone:
+       friendly_name: Ozon (DarkSky)
+    sensor.dark_sky_precip:
+       friendly_name: Niederschlag (DarkSky)
+    sensor.dark_sky_precip_intensity:
+       friendly_name: Niederschlag Intensität (DarkSky)
+    sensor.dark_sky_precip_probability:
+       friendly_name: Niederschlagswahrscheinlichkeit (DarkSky)
+    sensor.dark_sky_pressure:
+       friendly_name: Luftdruck (DarkSky)
+    sensor.dark_sky_summary:
+       friendly_name: Zusammenfassung (DarkSky)
+    sensor.dark_sky_temperature:
+       friendly_name: Außentemperatur (DarkSky)
+    sensor.dark_sky_visibility:
+       friendly_name: Sichtweite (DarkSky)
+    sensor.dark_sky_wind_bearing:
+       friendly_name: Windrichtung (DarkSky)
+    sensor.dark_sky_wind_speed:
+       friendly_name: Windgeschwindigkeit (DarkSky)
 #device_tracker -> sensor
     sensor.technicolor:
       icon: mdi:router-wireless
@@ -69,6 +124,8 @@
       icon: mdi:router-wireless
     sensor.qnap1:
       entity_picture: /local/qnap.png
+    sensor.alekto:
+      icon: mdi:monitor
     sensor.pi1eth:
       entity_picture: /local/raspi.jpg
     sensor.pi1wlan:
@@ -85,6 +142,14 @@
       entity_picture: /local/wemo.jpg
     sensor.wemoswitch2:
       entity_picture: /local/wemo.jpg
+    sensor.esp8266_01:
+      entity_picture: /local/esp.jpg
+    sensor.esp8266_02:
+      entity_picture: /local/esp.jpg
+    sensor.esp8266_03:
+      entity_picture: /local/esp.jpg
+    sensor.esp8266_04:
+      entity_picture: /local/esp.jpg
 
 
 #Fibaro Z-Wave WallPlug
@@ -100,22 +165,45 @@
     media_player.kodi:
       friendly_name: Kodi Wohnzimmer
 #Aeotec Z-Wave Multisensor
+    sensor.multisensor1_battery:
+      icon: mdi:car-battery
     sensor.aeotec_zw100_multisensor_6_temperature_2_1:
-      friendly_name: Temperatur
+      friendly_name: Temperatur Z-Wave Multisensor 1
       icon: mdi:thermometer
     sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5:
-      friendly_name: Luftfeuchtigkeit
+      friendly_name: Luftfeuchtigkeit Z-Wave Multisensor 1
       icon: mdi:water-percent
     sensor.aeotec_zw100_multisensor_6_luminance_2_3:
-      friendly_name: Helligkeit
+      friendly_name: Helligkeit Z-Wave Multisensor 1
       icon: mdi:theme-light-dark
     sensor.aeotec_zw100_multisensor_6_burglar_2_10:
-      friendly_name: Status Bewegsungsmelder
+      friendly_name: Bewegsungsmelder Z-Wave Multisensor 1
       icon: mdi:alert
     binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0:
-      friendly_name: Sensorstatus
+      friendly_name: Sensorstatus Z-Wave Multisensor 1
     sensor.aeotec_zw100_multisensor_6_ultraviolet_2_27:
-      friendly_name: UV 
+      friendly_name: UV Z-Wave Multisensor 1
+#ESP8266_1
+    sensor.temperatur_esp8266_01:
+      icon: mdi:thermometer
+      friendly_name: Temperatur Wohnzimmer
+    sensor.luftfeuchtigkeit_esp8266_01:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit Wohnzimmer
+#ESP8266_2
+    sensor.temperatur_esp8266_02:
+      icon: mdi:thermometer
+      friendly_name: Temperatur ELW
+    sensor.luftfeuchtigkeit_esp8266_02:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit ELW
+#ESP8266_3
+    sensor.temperatur_esp8266_03:
+      icon: mdi:thermometer
+      friendly_name: Temperatur Wintergarten
+    sensor.luftfeuchtigkeit_esp8266_03:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit Wintergarten
 ##LIGHTS##
     switch.megadesk_leds:
       friendly_name: Megadesk LEDs

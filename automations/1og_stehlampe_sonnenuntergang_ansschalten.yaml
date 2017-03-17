@@ -1,4 +1,5 @@
 alias: "Stehlampe nach Sonnenuntergang anschalten"
+initial_state: False
 trigger:
   platform: sun
   event: sunset

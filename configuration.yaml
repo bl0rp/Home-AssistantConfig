@@ -19,6 +19,9 @@ http:
    api_password: !secret api_password
 config:
 
+logger:
+  default: warn
+
 zwave:
   usb_path: /dev/ttyACM0
   device_config: !include zwave_device_config.yaml
@@ -33,7 +36,7 @@ conversation:
 history:
 
 recorder:
-  purge_days: 14
+  purge_days: 365
   db_url: !secret mysql_db_path
 
 logbook:
@@ -47,10 +50,10 @@ emulated_hue:
 #    INCLUDES    #
 ##################
 switch: !include_dir_list switches/
-group: !include groups.yaml
+group: !include_dir_merge_named groups/
 script: !include_dir_merge_named scripts/
 automation: !include_dir_list automations/
-sensor: !include includes/sensors.yaml
+sensor: !include_dir_merge_list sensors/
 notify: !include includes/notify.yaml
 
 mqtt:
@@ -78,6 +81,10 @@ device_tracker:
   - platform: ping
     hosts:
        WKS_Alekto: 192.168.0.29
+       ESP8266_01_Ping: 192.168.0.80
+       ESP8266_02_Ping: 192.168.0.81
+       ESP8266_03_Ping: 192.168.0.82
+       ESP8266_04_Ping: 192.168.0.83
 #      AmazonEchoDot: 192.168.0.97
 
 #mjpeg stream rpi1 cam / generic ip cam
@@ -132,3 +139,14 @@ input_select:
      - 60
     initial: 30
     icon: mdi:panda
+
+  led_mqtt:
+    name: welche led darf es sein?
+    options:
+     - Rot
+     - Gelb
+     - Grün
+     - Alle
+    initial: Alle
+    icon: mdi:panda
+

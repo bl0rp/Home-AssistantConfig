@@ -1,0 +1,35 @@
+  - platform: google_travel_time
+    name: Zuhause -> Marienhospital
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: place_id:ChIJHSlDllnbmUcRFTau-VG69RA
+
+  - platform: google_travel_time
+    name: Zuhause -> Hauptrettungswache
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: Neckarstraße 143, Stuttgart, Germany
+
+  - platform: google_travel_time
+    name: Stuttgart -> Berlin
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: Berlin, Germany
+
+  - platform: google_travel_time
+    name: Daheim -> ZWA
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: Leibnizstraße 31, Stuttgart, Germany
+
+  - platform: google_travel_time
+    name: Daheim -> MQTT Standort
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: device_tracker.chop3_oneplus3
+
+  - platform: google_travel_time
+    name: MQTT Standort -> Daheim
+    api_key: !secret google_traveltime_apikey
+    origin: device_tracker.chop3_oneplus3
+    destination: zone.home

@@ -1,8 +1,0 @@
-alias: 'Abwesenheit via MQTT'
-trigger:
-  platform: mqtt
-  topic: state
-  payload: 'not_home'
-action:
-   service: homeassistant.turn_off
-   entity_id: input_boolean.chrishome

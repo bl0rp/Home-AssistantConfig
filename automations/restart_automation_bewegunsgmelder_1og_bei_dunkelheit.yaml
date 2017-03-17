@@ -1,0 +1,8 @@
+alias: Restart der Automations bei Sonnenaufgang
+initial_state: True
+trigger:
+  platform: sun
+  event: sunrise
+action:
+  - service: automation.turn_on
+    entity_id: automation.1_og_lampe_esszimmer_bei_erster_bewegung_nach_sonnenuntergang_anschalten

@@ -1,0 +1,5 @@
+  - platform: bitcoin
+    display_options:
+      - exchangerate
+      - btc_mined
+      - market_price_usd

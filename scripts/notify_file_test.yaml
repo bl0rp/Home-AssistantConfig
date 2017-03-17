@@ -1,0 +1,6 @@
+file_test:
+  alias: "Spam 2 File"
+  sequence:
+    service: notify.test
+    data:
+      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'

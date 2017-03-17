@@ -1,0 +1,8 @@
+familiegrp:
+  name: Familie
+  view: no
+  icon: mdi:account-multiple
+  entities:
+    - input_boolean.chrishome
+    - device_tracker.ewald_ip
+    - device_tracker.traude_ip

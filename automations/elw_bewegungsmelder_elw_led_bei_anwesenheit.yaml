@@ -1,8 +1,8 @@
-alias: "Bewegungsmelder ELW Licht ESP 8266 PIR"
+alias: "Bewegungsmelder ELW LED ESP 8266 PIR"
 initial_state: False
 trigger:
   platform: mqtt
-  topic: sensor_esp8266_01/motion
+  topic: sensor_esp8266_02/motion
   payload: 'on'
 condition:
 #  - condition: state
@@ -11,9 +11,6 @@ condition:
   - condition: state
     entity_id: device_tracker.oneplus3bt
     state: "home"
-  - condition: state
-    entity_id: switch.110112
-    state: "off"
 action:
   - service: switch.turn_on
-    entity_id: switch.110112
+    entity_id: switch.grune_led

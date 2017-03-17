@@ -1,0 +1,26 @@
+qnap1:
+  name: Systemstatus QNAP1
+  view: no
+  entities:
+    - sensor.qnap1
+    - sensor.qnap1_status
+    - sensor.qnap1_free_space_datavol1
+    - sensor.qnap1_cpu_temperature
+    - sensor.qnap1_cpu_usage
+    - sensor.qnap1_cpu_usage
+    - sensor.qnap1_memory_available
+    - sensor.qnap1_memory_usage
+    - sensor.qnap1_memory_usage
+    - sensor.qnap1_network_link_eth0
+    - sensor.qnap1_network_down_eth0
+    - sensor.qnap1_network_up_eth0
+    - sensor.qnap1_smart_status_drive_01
+    - sensor.qnap1_smart_status_drive_02
+    - sensor.qnap1_smart_status_drive_03
+    - sensor.qnap1_smart_status_drive_04
+    - sensor.qnap1_smart_status_drive_05
+    - sensor.qnap1_temperature_drive_01
+    - sensor.qnap1_temperature_drive_02
+    - sensor.qnap1_temperature_drive_03
+    - sensor.qnap1_temperature_drive_04
+    - sensor.qnap1_temperature_drive_05

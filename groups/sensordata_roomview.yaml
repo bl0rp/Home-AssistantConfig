@@ -1,0 +1,24 @@
+sensordata_1og:
+  name: Temperatur und Luftfeuchtigkeit
+  entities:
+    - sensor.yr_temperature
+    - sensor.dark_sky_temperature
+    - sensor.temperatur_esp8266_01
+    - sensor.temperatur_esp8266_03
+    - sensor.yr_humidity
+    - sensor.dark_sky_humidity
+    - sensor.luftfeuchtigkeit_esp8266_01
+    - sensor.luftfeuchtigkeit_esp8266_03
+
+
+sensordata_elw:
+  name: Temperatur und Luftfeuchtigkeit
+  entities:
+    - sensor.yr_temperature
+    - sensor.dark_sky_temperature
+    - sensor.temperatur_esp8266_02
+    - sensor.aeotec_zw100_multisensor_6_temperature_2_1
+    - sensor.yr_humidity
+    - sensor.dark_sky_humidity
+    - sensor.luftfeuchtigkeit_esp8266_02
+    - sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5

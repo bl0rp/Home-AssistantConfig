@@ -1,0 +1,6 @@
+platform: mqtt
+name: "Grüne LED"
+state_topic: "gruen/status"
+command_topic: "gruen/switch"
+payload_on: "ON"
+payload_off: "OFF"

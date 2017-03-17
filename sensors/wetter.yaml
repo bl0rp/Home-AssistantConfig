@@ -1,0 +1,41 @@
+#Wetter yr.no (translation in customize.yaml)
+  - platform: yr
+    monitored_conditions:
+        - temperature
+        - symbol
+        - precipitation
+        - windSpeed
+        - pressure
+        - humidity
+        - fog
+        - cloudiness
+        - dewpointTemperature
+#Wetter darksky
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    update_interval: '00:04'
+    monitored_conditions:
+      - summary
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_max
+      - temperature_min
+      - apparent_temperature_max
+      - apparent_temperature_min
+      - precip_intensity_max
+#Moon
+  - platform: moon

@@ -1,0 +1,8 @@
+bitcoin:
+  name: Bitcoin
+  view: no
+  icon: mdi:speedometer
+  entities:
+    - sensor.exchange_rate_1_btc
+    - sensor.market_price
+    - sensor.mined

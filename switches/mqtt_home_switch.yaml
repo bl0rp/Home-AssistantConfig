@@ -1,0 +1,9 @@
+platform: mqtt
+name: "Christoph MQTT"
+state_topic: "state"
+command_topic: "state"
+payload_on: "home"
+payload_off: "not_home"
+optimistic: false
+qos: 0
+retain: true
