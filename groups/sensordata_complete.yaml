@@ -14,6 +14,7 @@ status_alle_bewegsungsmelder:
     - sensor.multisensor1_motion
     - sensor.esp8266_01_motion
     - sensor.esp8266_02_motion
+    - sensor.esp8266_03_motion
 
 status_alle_umweltsensoren:
   name: Status aller Umweltsensoren im Netzwerk

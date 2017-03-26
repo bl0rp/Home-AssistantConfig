@@ -94,14 +94,19 @@
            {%- endif -%}
 ### ESP8266_XX Bewegungsmelder
       esp8266_01_motion:
-        friendly_name: Bewegungsmelder ESP8266 01
+        friendly_name: Bewegungsmelder Wohnzimmer
         value_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
         icon_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
       esp8266_02_motion:
-        friendly_name: Bewegungsmelder ESP8266 02
+        friendly_name: Bewegungsmelder ELW
         value_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
         icon_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+      esp8266_03_motion:
+        friendly_name: Bewegungsmelder Wintergarten
+        value_template: '{% if is_state("sensor.esp8266_03_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_03_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
 ### systemmonitor
       process_sshd_format:

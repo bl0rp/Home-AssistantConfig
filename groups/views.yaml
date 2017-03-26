@@ -31,7 +31,7 @@ ELW:
     - group.funksteckdosen433mhz_plug
     - group.chrisdata
     - group.vardata
-
+    - group.calendar
 
 1OG:
   name: 1 OG

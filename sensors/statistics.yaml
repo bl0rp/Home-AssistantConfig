@@ -1,0 +1,30 @@
+  - platform: statistics
+    name: CPU Nutzung Mittelwert
+    entity_id: sensor.cpu_use
+
+  - platform: statistics
+    entity_id: binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
+
+  - platform: statistics
+    entity_id: sensor.aeotec_zw100_multisensor_6_temperature_2_1
+
+  - platform: statistics
+    entity_id: sensor.average_load_1m
+
+  - platform: statistics
+    entity_id: sensor.luftfeuchtigkeit_esp8266_01
+
+  - platform: statistics
+    entity_id: sensor.luftfeuchtigkeit_esp8266_02
+
+  - platform: statistics
+    entity_id: sensor.luftfeuchtigkeit_esp8266_03
+
+  - platform: statistics
+    entity_id: sensor.temperatur_esp8266_01
+
+  - platform: statistics
+    entity_id: sensor.temperatur_esp8266_02
+
+  - platform: statistics
+    entity_id: sensor.temperatur_esp8266_03

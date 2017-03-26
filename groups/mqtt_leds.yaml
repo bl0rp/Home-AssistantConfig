@@ -5,3 +5,4 @@ mqtt_leds:
     - switch.rote_led
     - switch.gelbe_led
     - switch.grune_led
+    - camera.led_cam

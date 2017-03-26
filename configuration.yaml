@@ -46,6 +46,11 @@ sun:
 # Emulated Hue -> Amazon Echo 
 emulated_hue:
 
+#Google Calender
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_secret
+
 ##################
 #    INCLUDES    #
 ##################
@@ -97,6 +102,10 @@ camera:
     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center=48.77,9.15&zoom=10&size=500x500&maptype=roadmap
     limit_refetch_to_url_change: true
 
+### Android IP Cam OPT
+#android_ip_webcam:
+#  - host: 192.168.0.102
+#    name: LED Cam
 
 #Kodi 1OG
 media_player:
