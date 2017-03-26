@@ -1,15 +1,16 @@
 test_item:
   name: wilde test0rei
   entities:
-    - sensor.stats_mean
-    - sensor.stats_mean_2
-    - sensor.stats_mean_3
-    - sensor.stats_mean_4
-    - sensor.stats_mean_5
-    - sensor.stats_mean_6
-    - sensor.stats_mean_7
-    - sensor.stats_mean_8
-    - sensor.stats_mean_9
+    - automation.traffic_status_to_led
+    - sensor.cpu_nutzung_mittelwert_mean
+    - sensor.load_mittelwert_mean
+    - sensor.luftfeuchtigkeit_elw_mittelwert_mean
+    - sensor.luftfeuchtigkeit_wintergarten_mittelwert_mean
+    - sensor.luftfeuchtigkeit_wohnzimmer_mittelwert_mean
+    - sensor.temperatur_1og_mittelwert_mean
+    - sensor.temperatur_elw_mittelwert_mean
+    - sensor.temperatur_multisensor_mittelwert_mean
+    - sensor.temperatur_wintergarten_mittelwert_mean
     - input_select.led_mqtt
     - sensor.hello_world
     - sensor.intopic

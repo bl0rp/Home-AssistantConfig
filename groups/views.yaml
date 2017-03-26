@@ -20,10 +20,7 @@ ELW:
     - script.elw_lampen_aus
     - script.akkus_laden
     - script.tuerlicht_def
-    - automation.benachrichtigung_alle_bewegunsgmelder
-    - automation.bewegungsmelder_elw_licht_zwave
-    - automation.bewegungsmelder_elw_licht_esp_8266_pir
-    - automation.akkuladeautomatik
+    - group.automation_elw
     - group.sensordata_elw
     - group.zwave_aeotec_multisensor6
     - group.zwave_fibaro_plug
@@ -31,7 +28,7 @@ ELW:
     - group.funksteckdosen433mhz_plug
     - group.chrisdata
     - group.vardata
-    - group.calendar
+
 
 1OG:
   name: 1 OG
@@ -41,6 +38,7 @@ ELW:
     - switch.wemoswitch2
     - script.1og_lampen_an
     - script.1og_lampen_aus
+    - group.automation_1og
     - media_player.kodi
     - group.sensordata_1og
 

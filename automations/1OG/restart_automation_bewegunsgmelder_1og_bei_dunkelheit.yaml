@@ -5,4 +5,4 @@ trigger:
   event: sunrise
 action:
   - service: automation.turn_on
-    entity_id: automation.1_og_lampe_esszimmer_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+    entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten

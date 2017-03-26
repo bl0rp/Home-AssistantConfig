@@ -1,6 +1,6 @@
 ### https://github.com/brahmafear/hass_config/blob/master/yaml/automation/motion_alarm.yaml
 ### Thanks 2 @brahmafear
-alias: Benachrichtigung alle Bewegunsgmelder 
+alias: Benachrichtigung aller Bewegunsgmelder in der ELW 
 trigger:
   - platform: state
     entity_id: sensor.aeotec_zw100_multisensor_6_burglar_2_10

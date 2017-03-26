@@ -1,4 +1,4 @@
-alias: 1 OG Lampe Esszimmer bei erster Bewegung nach Sonnenuntergang anschalten
+alias: 1 OG Stehlampe bei erster Bewegung nach Sonnenuntergang anschalten
 initial_state: True
 trigger:
   platform: state
@@ -13,7 +13,7 @@ action:
   - service: switch.turn_on
     entity_id: switch.wemoswitch2
   - service: automation.turn_off
-    entity_id: automation.1_og_lampe_esszimmer_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+    entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
   - service: notify.pushbullet
     data_template:
       message: >

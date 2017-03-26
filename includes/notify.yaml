@@ -5,11 +5,9 @@
   - name: event
     platform: file
     filename: /home/homeassistant/log/event.txt
-    timestamp: True
   - name: motion
     platform: file
     filename: /home/homeassistant/log/motion.txt
-    timestamp: True
   - name: pushbullet
     platform: pushbullet
     api_key: !secret pbapikey

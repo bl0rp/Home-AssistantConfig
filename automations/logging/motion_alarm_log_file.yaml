@@ -1,0 +1,11 @@
+alias: Benachrichtigung Bewegungsmelder ELW -> motion.txt
+trigger:
+  - platform: state
+    entity_id: sensor.esp8266_02_pir
+    from: 'off'
+    to: 'on'
+action:
+  - service: notify.motion
+    data_template:
+      message: >
+         {{ now().strftime('%d.%m.%Y %H:%M:%S') }}: Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!

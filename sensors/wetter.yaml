@@ -13,7 +13,7 @@
 #Wetter darksky
   - platform: darksky
     api_key: !secret darksky_api_key
-    update_interval: '00:04'
+    update_interval: '00:03'
     monitored_conditions:
       - summary
       - precip_type
