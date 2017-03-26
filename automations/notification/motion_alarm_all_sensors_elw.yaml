@@ -18,4 +18,4 @@ action:
   - service: notify.pushbullet
     data_template:
       message: >
-         { now().strftime('%d.%m.%Y %H:%M:%S') } Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!
+         {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!
