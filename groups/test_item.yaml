@@ -1,6 +1,25 @@
 test_item:
   name: wilde test0rei
   entities:
+    - media_player.gstreamer
+    - sensor.srinika_birthday_days2go
+    - sensor.hasika_birthday_days2go
+    - sensor.mallika_birthday_days2go
+    - automation.today_is_the_birthday
+    - automation.birthday_countdown_30_days
+    - input_select.scene_selector
+    - scene.schlafzimmerhell
+    - scene.schlafzimmerrelax
+    - scene.schlafzimmeraus
+    - scene.flurhell
+    - scene.flurrelax
+    - scene.fluraus
+    - scene.elwrelax
+    - scene.elwaus
+    - scene.elwanhell
+    - sensor.esp8266_05_ultraschall
+    - automation.entfernung_led_an
+    - automation.entfernung_led_aus
     - automation.traffic_status_to_led
     - sensor.cpu_nutzung_mittelwert_mean
     - sensor.load_mittelwert_mean

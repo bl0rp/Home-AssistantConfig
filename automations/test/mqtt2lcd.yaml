@@ -1,0 +1,31 @@
+alias: mqtt2lcd
+trigger:
+  platform: mqtt
+  topic: 'lcdtest'
+  payload: 'fire'
+action:
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_05/cmd"
+      retain: false
+      payload: "lcdcmd,clear"
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_05/cmd"
+      retain: false
+      payload: "lcd,1,1,Temperatur ELW1:"
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_05/cmd"
+      retain: false
+      payload: "lcd,2,1,{{ states('sensor.temperatur_esp8266_02') }}°C"
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_05/cmd"
+      retain: false
+      payload: "lcd,3,1,Temperatur ELW2:"
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_05/cmd"
+      retain: false
+      payload: "lcd,4,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature_2_1') }}°C"

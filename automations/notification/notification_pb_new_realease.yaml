@@ -1,8 +1,0 @@
-alias: "Update verfügbar"
-trigger:
-  - platform: state
-    entity_id: updater.updater
-action:
-  service: notify.pushbullet
-  data:
-    message: 'Es gibt eine neue HA Version!'

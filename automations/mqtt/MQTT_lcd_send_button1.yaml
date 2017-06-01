@@ -1,0 +1,17 @@
+alias: 'LCD Send'
+trigger:
+  platform: mqtt
+  topic: sensor_esp8266_05/button/button1
+  payload: '1'
+action:
+#  - service: mqtt.publish
+#    data_template:
+#      topic: "sensor_esp8266_05/cmd"
+#      payload: 'LCDCMD,on'
+#  - delay: 5
+#  - service: mqtt.publish
+#    data_template:
+#      topic: "sensor_esp8266_05/cmd"
+#      payload: 'LCDCMD,off'
+    - service: homeassistant.turn_on
+      entity_id: script.lcd_spam

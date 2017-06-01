@@ -1,0 +1,4 @@
+lcd_display_on:
+  alias: "Display anschalten"
+  sequence:
+    - service: shell_command.lcd_on

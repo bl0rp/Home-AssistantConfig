@@ -1,0 +1,230 @@
+#Package all ESP & Z-Wave Sensors/Switches
+homeassistant:
+#Customize
+  customize:
+#ESP8266_1
+    sensor.temperatur_esp8266_01:
+      icon: mdi:thermometer
+      friendly_name: Temperatur Wohnzimmer
+    sensor.luftfeuchtigkeit_esp8266_01:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit Wohnzimmer
+#ESP8266_2
+    sensor.temperatur_esp8266_02:
+      icon: mdi:thermometer
+      friendly_name: Temperatur ELW
+    sensor.luftfeuchtigkeit_esp8266_02:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit ELW
+#ESP8266_3
+    sensor.temperatur_esp8266_03:
+      icon: mdi:thermometer
+      friendly_name: Temperatur Wintergarten
+    sensor.luftfeuchtigkeit_esp8266_03:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit Wintergarten
+#ESP8266_4
+    sensor.temperatur_esp8266_04:
+      icon: mdi:thermometer
+      friendly_name: Temperatur #ESP8266_4
+    sensor.luftfeuchtigkeit_esp8266_04:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit #ESP8266_4
+#ESP8266_5
+    sensor.temperatur_esp8266_05:
+      icon: mdi:thermometer
+      friendly_name: Temperatur #ESP8266_5
+    sensor.luftfeuchtigkeit_esp8266_05:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit #ESP8266_5
+
+group:
+  status_alle_sensoren:
+    name: Status aller Sensoren im Netzwerk
+    entities:
+      - sensor.multisensor1_battery
+      - binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
+      - sensor.esp8266_01_status_var
+      - sensor.esp8266_02_status_var
+      - sensor.esp8266_03_status_var
+      - sensor.esp8266_04_status_var
+      - sensor.esp8266_05_status_var
+  
+  status_alle_bewegsungsmelder:
+    name: Status aller Bewegungsmelder im Netzwerk
+    entities:
+      - sensor.multisensor1_motion
+      - sensor.esp8266_02_motion
+      - sensor.esp8266_01_motion
+      - sensor.esp8266_03_motion
+      - sensor.esp8266_04_motion
+      - sensor.esp8266_05_motion
+  
+  status_bewegungsmelder_last_triggered:
+    name: Letzte Änderung Bewegungsmelder
+    entities:
+      - sensor.elw_motion_last_triggered
+      - sensor.elw_2_motion_last_triggered
+      - sensor.wintergarten_motion_last_triggered
+      - sensor.wohnzimmer_motion_last_triggered
+      - sensor.esp8266_05_motion_last_triggered
+  
+  status_alle_umweltsensoren:
+    name: Status aller Umweltsensoren im Netzwerk
+    entities:
+      - sensor.aeotec_zw100_multisensor_6_temperature_2_1
+      - sensor.temperatur_esp8266_02
+      - sensor.temperatur_esp8266_01
+      - sensor.temperatur_esp8266_03
+      - sensor.temperatur_esp8266_04
+      - sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5
+      - sensor.luftfeuchtigkeit_esp8266_02
+      - sensor.luftfeuchtigkeit_esp8266_01
+      - sensor.luftfeuchtigkeit_esp8266_03
+      - sensor.luftfeuchtigkeit_esp8266_04
+  
+  signalstaerke_alle_sensoren:
+    name: W-Lan Signalstärke ESP
+    entities:
+      - sensor.esp8266_01_signal
+      - sensor.esp8266_02_signal
+      - sensor.esp8266_03_signal
+      - sensor.esp8266_04_signal
+      - sensor.esp8266_05_signal
+sensor:
+  - platform: template
+    sensors:
+      srinika_birthday:
+        unit_of_measurement: (mm-dd)
+        value_template: !secret srinika_birthday
+
+  - platform: template
+    sensors:
+      hasika_birthday:
+        value_template: !secret hasika_birthday
+        unit_of_measurement: (mm-dd)
+
+  - platform: template
+    sensors:
+      mallika_birthday:
+        value_template: !secret mallika_birthday
+        unit_of_measurement: (mm-dd)
+
+  - platform: template
+    sensors:
+      srinika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.srinika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.srinika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+  - platform: template
+    sensors:
+      hasika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.hasika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.hasika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+  - platform: template
+    sensors:
+      mallika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.mallika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.mallika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+automation:
+
+# Build the excitement
+  - alias: Birthday Countdown 30 Days
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: 
+        - sensor.srinika_birthday_days2go
+        - sensor.hasika_birthday_days2go
+        - sensor.mallika_birthday_days2go
+    condition:
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+      - condition: template
+        value_template: "{% if trigger.to_state.state | int > 0 and trigger.to_state.state | int < 30 %}true{% else %}false{% endif %}"
+    action:
+      - service: script.notify_me
+        data_template:
+          value1: "{{ trigger.entity_id.split('.')[1].split('_')[0] | title }}'s Birthday is only {{ trigger.to_state.state }} days to go!"
+          value2: ""
+
+# Celebrate Birthday!!!
+  - alias: Today is the Birthday
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: 
+        - sensor.srinika_birthday_days2go
+        - sensor.hasika_birthday_days2go
+        - sensor.mallika_birthday_days2go
+    condition:
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+      - condition: template
+        value_template: "{% if trigger.to_state.state | int == 0 %}true{% else %}false{% endif %}"
+    action:
+      - service: script.notify_me
+        data_template:
+          value1: "Hurray! Today is {{ trigger.entity_id.split('.')[1].split('_')[0] | title }}'s Birthday!"
+          value2: ""
+
+## Announce Happy Birthday message every hour starting 7 am until 9 PM
+## - alias: Random Birthday Wishes
+##   initial_state: true
+##   hide_entity: true
+##   trigger:
+##     platform: time
+##     hours: '/1'
+##     minutes: 00
+##     seconds: 00
+##   condition:
+##     - condition: state
+##       entity_id: group.all_devices
+##       state: 'home'
+##     - condition: time
+##       after: '07:00:00'
+##       before: '21:00:00'
+##     - condition: template
+##       value_template: >-
+##         {% if states.sensor.srinika_birthday_days2go.state | int == 0 or states.sensor.hasika_birthday_days2go.state | int == 0 or states.sensor.mallika_birthday_days2go.state | int == 0 %}
+##           true
+##         {% else %}
+##           false
+##         {% endif %}
+##   action:
+##     - service: script.voice_notify
+##       data_template:
+##         value1: !include ../templates/birthday_wishes.yaml

@@ -1,0 +1,4 @@
+lcd_gtt_petros:
+  alias: "Petros -> ILS"
+  sequence:
+    - service: shell_command.lcd_send_gtt

@@ -1,0 +1,2 @@
+  - platform: dnsip
+    ipv6: true

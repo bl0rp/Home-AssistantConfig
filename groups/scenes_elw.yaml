@@ -1,0 +1,12 @@
+sceneselw:
+  name: Licht ELW
+  entities:
+    - scene.elwrelax
+    - scene.elwaus
+    - scene.elwanhell
+    - scene.schlafzimmerhell
+    - scene.schlafzimmerrelax
+    - scene.schlafzimmeraus
+    - scene.flurhell
+    - scene.flurrelax
+    - scene.fluraus

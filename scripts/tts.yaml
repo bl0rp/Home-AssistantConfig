@@ -1,0 +1,10 @@
+tts:
+  sequence:
+    - service: tts.google_say
+      data:
+        entity_id: media_player.gstreamer
+        message: "Maximilian Joseph stammte aus einer Pfälzer Seitenlinie der Familie der Wittelsbacher und wurde in Schwetzingen bei Mannheim geboren. Seine Eltern waren Friedrich Michael (1724–1767), Herzog von Pfalz-Birkenfeld-Bischweiler, und Maria Franziska Dorothea von Pfalz-Sulzbach (1724–1794)."
+    - service: tts.amazon_polly_say
+      data:
+        entity_id: media_player.gstreamer
+        message: "Maximilian Joseph stammte aus einer Pfälzer Seitenlinie der Familie der Wittelsbacher und wurde in Schwetzingen bei Mannheim geboren. Seine Eltern waren Friedrich Michael (1724–1767), Herzog von Pfalz-Birkenfeld-Bischweiler, und Maria Franziska Dorothea von Pfalz-Sulzbach (1724–1794)."

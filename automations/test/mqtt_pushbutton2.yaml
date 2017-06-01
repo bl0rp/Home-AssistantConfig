@@ -1,0 +1,12 @@
+alias: 'Pushbutton 2'
+trigger:
+  platform: mqtt
+  topic: 'sensor_esp8266_04/button/button2'
+  payload: '1'
+action:
+  - service: homeassistant.toggle
+    entity_id: switch.110111
+#  - service: notify.pushbullet
+#    data_template:
+#      message: >
+#         {{ states.sensor.date__time.state }} Licht geschalt0rt {{ now().strftime('%d.%m.%Y %H:%M:%S') }} 

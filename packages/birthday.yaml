@@ -1,0 +1,183 @@
+###############################################################################
+#   @author         :   Mahasri Kalavala
+#   @date           :   04/28/2017
+#   @package        :   Birthday
+#   @description    :   Birthday reminders, greetings/wishes - all good stuff!
+#
+#   THREE IMPORTANT THINGS YOU NEED:
+#     1. Copy birtday_wishes.yaml file from templates folder to your templates folder
+#     2. Copy this file to Packages folder & add following to configuration.yaml
+#        packages: !include_dir_named packages
+#     3. Add the following to your secrets.yaml file, change name and date
+#        name_birthday: "MM-DD". See below for example:
+#
+#        srinika_birthday: "04-01"
+#        hasika_birthday:  "07-25"
+#        mallika_birthday: "12-31"
+#
+###############################################################################
+homeassistant:
+  customize:
+    sensor.srinika_birthday:
+      hidden: true
+    sensor.hasika_birthday:
+      hidden: true
+    sensor.mallika_birthday:
+      hidden: true
+    sensor.srinika_birthday_days2go:
+      friendly_name: Srinika's Birthday
+      icon: mdi:cake-variant
+    sensor.hasika_birthday_days2go:
+      friendly_name: Hasika's Birthday
+      icon: mdi:cake-variant
+    sensor.mallika_birthday_days2go:
+      friendly_name: Mallika's Birthday
+      icon: mdi:cake-variant
+
+group:
+  Birthdays:
+    entities:
+      - sensor.srinika_birthday_days2go
+      - sensor.hasika_birthday_days2go
+      - sensor.mallika_birthday_days2go
+      - automation.today_is_the_birthday
+      - automation.birthday_countdown_30_days
+#      - automation.random_birthday_wishes
+
+sensor:
+  - platform: template
+    sensors:
+      srinika_birthday:
+        unit_of_measurement: (mm-dd)
+        value_template: !secret srinika_birthday
+
+  - platform: template
+    sensors:
+      hasika_birthday:
+        value_template: !secret hasika_birthday
+        unit_of_measurement: (mm-dd)
+
+  - platform: template
+    sensors:
+      mallika_birthday:
+        value_template: !secret mallika_birthday
+        unit_of_measurement: (mm-dd)
+
+  - platform: template
+    sensors:
+      srinika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.srinika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.srinika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+  - platform: template
+    sensors:
+      hasika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.hasika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.hasika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+  - platform: template
+    sensors:
+      mallika_birthday_days2go:
+        unit_of_measurement: days to go
+        value_template: >-
+          {%- set month = states.sensor.mallika_birthday.state.split('-')[0] -%}
+          {%- set day = states.sensor.mallika_birthday.state.split('-')[1] -%}
+          {%- set currentYear = as_timestamp(now()) | timestamp_custom('%Y', true) | int -%}
+          {%- set numOfDays = ((as_timestamp(strptime(currentYear ~ '-' ~ month ~ '-' ~ day , '%Y-%m-%d')) | timestamp_custom('%j', true) | int ) - (as_timestamp(now()) | timestamp_custom('%j', true) | int)) -%}          
+          {%- if numOfDays < 0 -%}
+          {{ numOfDays + 365 }}
+          {%- else -%}
+          {{ numOfDays }}
+          {%- endif -%}
+
+automation:
+
+# Build the excitement
+  - alias: Birthday Countdown 30 Days
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: 
+        - sensor.srinika_birthday_days2go
+        - sensor.hasika_birthday_days2go
+        - sensor.mallika_birthday_days2go
+    condition:
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+      - condition: template
+        value_template: "{% if trigger.to_state.state | int > 0 and trigger.to_state.state | int < 30 %}true{% else %}false{% endif %}"
+    action:
+      - service: script.notify_me
+        data_template:
+          value1: "{{ trigger.entity_id.split('.')[1].split('_')[0] | title }}'s Birthday is only {{ trigger.to_state.state }} days to go!"
+          value2: ""
+
+# Celebrate Birthday!!!
+  - alias: Today is the Birthday
+    initial_state: true
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id: 
+        - sensor.srinika_birthday_days2go
+        - sensor.hasika_birthday_days2go
+        - sensor.mallika_birthday_days2go
+    condition:
+      - condition: state
+        entity_id: group.all_devices
+        state: 'home'
+      - condition: template
+        value_template: "{% if trigger.to_state.state | int == 0 %}true{% else %}false{% endif %}"
+    action:
+      - service: script.notify_me
+        data_template:
+          value1: "Hurray! Today is {{ trigger.entity_id.split('.')[1].split('_')[0] | title }}'s Birthday!"
+          value2: ""
+
+## Announce Happy Birthday message every hour starting 7 am until 9 PM
+## - alias: Random Birthday Wishes
+##   initial_state: true
+##   hide_entity: true
+##   trigger:
+##     platform: time
+##     hours: '/1'
+##     minutes: 00
+##     seconds: 00
+##   condition:
+##     - condition: state
+##       entity_id: group.all_devices
+##       state: 'home'
+##     - condition: time
+##       after: '07:00:00'
+##       before: '21:00:00'
+##     - condition: template
+##       value_template: >-
+##         {% if states.sensor.srinika_birthday_days2go.state | int == 0 or states.sensor.hasika_birthday_days2go.state | int == 0 or states.sensor.mallika_birthday_days2go.state | int == 0 %}
+##           true
+##         {% else %}
+##           false
+##         {% endif %}
+##   action:
+##     - service: script.voice_notify
+##       data_template:
+##         value1: !include ../templates/birthday_wishes.yaml

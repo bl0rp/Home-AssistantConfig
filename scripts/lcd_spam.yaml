@@ -1,0 +1,15 @@
+lcd_spam:
+  alias: "SPAM LCD"
+  sequence:
+    - service: shell_command.lcd_on
+    - service: shell_command.lcd_send_elw_temp1
+    - service: shell_command.lcd_send_elw_temp2
+    - delay: 5
+    - service: shell_command.lcd_clear
+    - service: shell_command.lcd_send_wiga_temp
+    - delay: 5
+    - service: shell_command.lcd_clear
+    - service: shell_command.lcd_send_gtt
+    - delay: 5
+    - service: shell_command.lcd_clear
+    - service: shell_command.lcd_off

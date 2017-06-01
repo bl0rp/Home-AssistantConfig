@@ -1,0 +1,4 @@
+lcd_display_off:
+  alias: "Display ausschalten"
+  sequence:
+    - service: shell_command.lcd_off

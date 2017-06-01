@@ -1,0 +1,9 @@
+alias: "Entfernung LED an"
+initial_state: False
+trigger:
+  platform: numeric_state
+  entity_id: sensor.esp8266_05_ultraschall
+  below: 35
+action:
+  - service: homeassistant.turn_on
+    entity_id: switch.rote_led

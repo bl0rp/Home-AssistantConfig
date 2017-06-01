@@ -1,0 +1,19 @@
+lcd_mqtt:
+  name: LCD LED Send
+  entities:
+    - automation.pushbutton1
+    - automation.pushbutton2
+    - automation.curl_test
+    - automation.lcd_send
+    - automation.next_track_mqtt
+    - automation.play_pause_mqtt
+    - automation.traffic_status_drkls_to_lcd
+    - automation.traffic_status_hrw_to_lcd
+    - automation.traffic_status_to_led
+    - script.lcd_display
+    - script.lcd_display_clear
+    - script.lcd_display_on
+    - script.lcd_display_off
+    - script.lcd_elw_temp
+    - script.lcd_gtt_petros
+    - script.lcd_spam

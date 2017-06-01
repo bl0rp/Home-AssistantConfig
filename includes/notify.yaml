@@ -2,18 +2,23 @@
     platform: file
     filename: /home/homeassistant/log/katze.txt
     timestamp: True
+
   - name: event
     platform: file
     filename: /home/homeassistant/log/event.txt
+
   - name: motion
     platform: file
     filename: /home/homeassistant/log/motion.txt
+
   - name: pushbullet
     platform: pushbullet
     api_key: !secret pbapikey
+
   - name: nma
     platform: nma
     api_key: !secret nma_apikey
+
   - name: email
     platform: smtp
     server: !secret smtp_server
@@ -23,3 +28,33 @@
     username: !secret ha_mail_user
     password: !secret ha_mail_pw
     recipient: !secret mail_recipient
+
+  - name: mail2frank
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    sender: !secret ha_mail_user
+    starttls: true
+    username: !secret ha_mail_user
+    password: !secret ha_mail_pw
+    recipient: !secret frank_mail
+
+  - name: mail2petros
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    sender: !secret ha_mail_user
+    starttls: true
+    username: !secret ha_mail_user
+    password: !secret ha_mail_pw
+    recipient: !secret petros_mail
+
+  - name: mail2sms
+    platform: smtp
+    server: !secret smtp_server
+    port: 587
+    sender: !secret ha_mail_user
+    starttls: true
+    username: !secret ha_mail_user
+    password: !secret ha_mail_pw
+    recipient: !secret smsrobot

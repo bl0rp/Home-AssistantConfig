@@ -1,0 +1,13 @@
+alias: QNAP Watchdog
+trigger:
+  platform: state
+  entity_id: sensor.qnap1_status
+condition:
+  - condition: template
+    value_template: "{% if states('sensor.qnap1_status') != 'good' %} True {% else %} False {% endif %}"
+action:
+  - service: notify.pushbullet
+    data_template:
+      title: "QNAP1 Status"
+      message: >
+        Achtung! Der Status des NAS hat sich geändert!

@@ -1,6 +1,0 @@
-platform: mqtt
-name: "Rote LED"
-state_topic: "rot/status"
-command_topic: "rot/switch"
-payload_on: "ON"
-payload_off: "OFF"

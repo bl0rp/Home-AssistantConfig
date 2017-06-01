@@ -1,0 +1,5 @@
+lcd_elw_temp:
+  alias: "Temperatur in der ELW"
+  sequence:
+    - service: shell_command.lcd_send_elw_temp1
+    - service: shell_command.lcd_send_elw_temp2

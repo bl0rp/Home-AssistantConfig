@@ -1,0 +1,8 @@
+alias: Traffic State Frank 0x711
+
+
+trigger:
+    platform: state
+    entity_id: sensor.abtis__frank, sensor.frank__abtis
+action:
+  - service: shell_command.traffic_send_temp

@@ -1,0 +1,16 @@
+alias: Bewegungsmelder ELW Licht Relax PIR
+trigger:
+  platform: state
+  entity_id: sensor.esp8266_02_pir
+  from: '0'
+  to: '1'
+condition:
+  - condition: sun
+    after: sunset
+#    after_offset: "+0:10:00"
+  - condition: state
+    entity_id: device_tracker.oneplus3bt
+    state: "home"
+action:
+  - service: scene.turn_on
+    entity_id: scene.elwrelax

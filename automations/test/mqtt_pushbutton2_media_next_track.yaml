@@ -1,0 +1,9 @@
+alias: 'next track mqtt'
+initial_state: false
+trigger:
+  platform: mqtt
+  topic: 'sensor_esp8266_05/button/button2'
+  payload: '1'
+action:
+  - service: media_player.media_next_track
+    entity_id: media_player.volumio

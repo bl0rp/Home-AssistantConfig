@@ -1,0 +1,61 @@
+alias: Last Motion 2 OLED
+
+trigger:
+    platform: state
+    entity_id: sensor.multisensor1_motion, sensor.esp8266_02_motion, sensor.esp8266_01_motion, sensor.esp8266_03_motion
+    from: "Keine Bewegung."
+    to: "Bewegung erkannt!"
+action:
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oledcmd,off"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oledcmd,clear"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,1,1,Letzte Bewegung"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,2,1,um {{ now().strftime('%H:%M:%S') }} :"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,4,1,Sensorname:"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,5,1,{{ trigger.to_state.attributes.friendly_name }}"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,7,1,Raketenkatze"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oled,8,1,muahhahahaha"
+
+  - service: mqtt.publish
+    data_template:
+      topic: "sensor_esp8266_06/cmd"
+      retain: false
+      payload: "oledcmd,on"

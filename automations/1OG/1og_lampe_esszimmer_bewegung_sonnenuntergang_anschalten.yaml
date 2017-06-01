@@ -1,10 +1,10 @@
 alias: 1 OG Stehlampe bei erster Bewegung nach Sonnenuntergang anschalten
-initial_state: True
+initial_state: False
 trigger:
   platform: state
   entity_id: sensor.esp8266_01_pir
-  from: 'off'
-  to: 'on'
+  from: '0'
+  to: '1'
 condition:
   - condition: state
     entity_id: sun.sun

@@ -1,0 +1,13 @@
+alias: 'Pushbutton Temperatur'
+trigger:
+  platform: mqtt
+  topic: 'sensor_esp8266_05/button/button1'
+  payload: '1'
+action:
+- service: tts.amazon_polly_say
+  data_template:
+    entity_id: media_player.gstreamer
+    message: >
+      Hallo Welt. Es hat {{ states('sensor.temperatur_esp8266_02')|round(1)|replace(".", ",") }} Grad in der E L W und die Außentemperatur ist {{ states('sensor.dark_sky_temperature')|round }} Grad. 
+      Die Fahrzeit zur Hauptrettungswache beträgt momentan {{ states('sensor.zuhause__hauptrettungswache') }} Minuten.
+      Tschüß.

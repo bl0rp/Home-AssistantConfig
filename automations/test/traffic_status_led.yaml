@@ -6,7 +6,7 @@ trigger:
     entity_id: sensor.zuhause__hauptrettungswache
 action:
   - service_template: >-
-      {% if 0 <= trigger.to_state.state|int < 15 %}
+      {% if 0 <= trigger.to_state.state|int < 17 %}
         switch.turn_on
       {% else %}
         switch.turn_off
@@ -15,7 +15,7 @@ action:
       entity_id: switch.grune_led
 
   - service_template: >-
-      {% if 15 <= trigger.to_state.state|int < 20 %}
+      {% if 17 <= trigger.to_state.state|int < 22 %}
         switch.turn_on
       {% else %}
         switch.turn_off
@@ -24,7 +24,7 @@ action:
       entity_id: switch.gelbe_led
 
   - service_template: >-
-      {% if 20 <= trigger.to_state.state|int < 60 %}
+      {% if 22 <= trigger.to_state.state|int < 60 %}
         switch.turn_on
       {% else %}
         switch.turn_off

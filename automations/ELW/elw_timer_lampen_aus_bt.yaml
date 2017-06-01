@@ -7,7 +7,7 @@ trigger:
         minutes: 2
 action:
     - service: homeassistant.turn_on
-      entity_id: script.elw_lampen_aus
+      entity_id: script.elw_lampen_aus_scene
 #    - service: notify.pushbullet
 #      data:
 #        message: 'Alle Lichter in der ELW wurden ausgeschaltet da dass BT Gerät nicht gefunden wurde!'

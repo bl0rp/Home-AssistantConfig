@@ -1,0 +1,9 @@
+alias: 'play pause mqtt'
+initial_state: false
+trigger:
+  platform: mqtt
+  topic: 'sensor_esp8266_05/button/button1'
+  payload: '1'
+action:
+  - service: media_player.media_play_pause
+    entity_id: media_player.volumio

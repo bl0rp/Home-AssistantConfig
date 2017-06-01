@@ -150,6 +150,8 @@
       entity_picture: /local/esp.jpg
     sensor.esp8266_04:
       entity_picture: /local/esp.jpg
+    sensor.esp8266_05:
+      entity_picture: /local/esp.jpg
 
 
 #Fibaro Z-Wave WallPlug

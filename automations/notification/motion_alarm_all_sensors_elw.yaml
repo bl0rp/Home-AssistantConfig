@@ -8,8 +8,8 @@ trigger:
     to: '8'
   - platform: state
     entity_id: sensor.esp8266_02_pir
-    from: 'off'
-    to: 'on'
+    from: '0'
+    to: '1'
 condition:
   condition: state
   entity_id: input_boolean.chrishome

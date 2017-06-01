@@ -5,13 +5,14 @@ automation_1og:
     - automation.stehlampe_um_23_uhr_ausschalten
     - automation.lampe_esszimmer_anschalten_nach_sonnenuntergang
     - automation.lampe_esszimmer_um_22_uhr_ausschalten
-    - automation.restart_der_automations_bei_sonnenaufgang
+    - automation.restart_der_automations_bei_sonnenuntergang
 
 
 automation_elw:
   name: Automatisierung für die ELW
   entities:
-    - automation.benachrichtigung_alle_bewegunsgmelder
+    - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
     - automation.bewegungsmelder_elw_licht_zwave
-    - automation.bewegungsmelder_elw_licht_esp_8266_pir
+    - automation.bewegungsmelder_elw_licht_relax_pir
+    - automation.elw_licht_ausschalten_wenn_bt_nicht_gefunden
     - automation.akkuladeautomatik

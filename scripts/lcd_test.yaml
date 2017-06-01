@@ -1,0 +1,4 @@
+lcd_display:
+  alias: "Text an das Display"
+  sequence:
+    - service: shell_command.lcd_send

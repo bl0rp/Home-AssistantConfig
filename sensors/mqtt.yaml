@@ -1,19 +1,19 @@
 ### MQTT via esp8266_01
   - platform: mqtt
     name: "Temperatur ESP8266 01"
-    state_topic: "sensor_esp8266_01/temperature"
+    state_topic: "sensor_esp8266_01/dht22/Temperature"
     qos: 0
     unit_of_measurement: "ºC"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 01"
-    state_topic: "sensor_esp8266_01/humidity"
+    state_topic: "sensor_esp8266_01/dht22/Humidity"
     qos: 0
     unit_of_measurement: "%"
 
   - platform: mqtt
     name: "ESP8266 01 PIR"
-    state_topic: "sensor_esp8266_01/motion"
+    state_topic: "sensor_esp8266_01/pir/motion"
     qos: 0
 
   - platform: mqtt
@@ -26,22 +26,34 @@
     state_topic: "sensor_esp8266_01/status"
     qos: 0
 
+  - platform: mqtt
+    name: "ESP8266 01 Uptime"
+    state_topic: "sensor_esp8266_01/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 01 Signal"
+    state_topic: "sensor_esp8266_01/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
 ### MQTT via esp8266_02
   - platform: mqtt
     name: "Temperatur ESP8266 02"
-    state_topic: "sensor_esp8266_02/temperature"
+    state_topic: "sensor_esp8266_02/dht22/Temperature"
     qos: 0
     unit_of_measurement: "ºC"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 02"
-    state_topic: "sensor_esp8266_02/humidity"
+    state_topic: "sensor_esp8266_02/dht22/Humidity"
     qos: 0
     unit_of_measurement: "%"
 
   - platform: mqtt
     name: "ESP8266 02 PIR"
-    state_topic: "sensor_esp8266_02/motion"
+    state_topic: "sensor_esp8266_02/pir/motion"
     qos: 0
 
   - platform: mqtt
@@ -54,22 +66,34 @@
     state_topic: "sensor_esp8266_02/status"
     qos: 0
 
+  - platform: mqtt
+    name: "ESP8266 02 Uptime"
+    state_topic: "sensor_esp8266_02/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 02 Signal"
+    state_topic: "sensor_esp8266_02/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
 ### MQTT via esp8266_03
   - platform: mqtt
     name: "Temperatur ESP8266 03"
-    state_topic: "sensor_esp8266_03/temperature"
+    state_topic: "sensor_esp8266_03/dht22/Temperature"
     qos: 0
     unit_of_measurement: "ºC"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 03"
-    state_topic: "sensor_esp8266_03/humidity"
+    state_topic: "sensor_esp8266_03/dht22/Humidity"
     qos: 0
     unit_of_measurement: "%"
 
   - platform: mqtt
     name: "ESP8266 03 PIR"
-    state_topic: "sensor_esp8266_03/motion"
+    state_topic: "sensor_esp8266_03/pir/motion"
     qos: 0
 
   - platform: mqtt
@@ -82,22 +106,34 @@
     state_topic: "sensor_esp8266_03/status"
     qos: 0
 
+  - platform: mqtt
+    name: "ESP8266 03 Uptime"
+    state_topic: "sensor_esp8266_03/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 03 Signal"
+    state_topic: "sensor_esp8266_03/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
 ### MQTT via esp8266_04
   - platform: mqtt
     name: "Temperatur ESP8266 04"
-    state_topic: "sensor_esp8266_04/temperature"
+    state_topic: "sensor_esp8266_04/dht22/Temperature"
     qos: 0
     unit_of_measurement: "ºC"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 04"
-    state_topic: "sensor_esp8266_04/humidity"
+    state_topic: "sensor_esp8266_04/dht22/Humidity"
     qos: 0
     unit_of_measurement: "%"
 
   - platform: mqtt
     name: "ESP8266 04 PIR"
-    state_topic: "sensor_esp8266_04/motion"
+    state_topic: "sensor_esp8266_04/pir/motion"
     qos: 0
 
   - platform: mqtt
@@ -109,6 +145,64 @@
     name: "ESP8266 04 Status"
     state_topic: "sensor_esp8266_04/status"
     qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 04 Uptime"
+    state_topic: "sensor_esp8266_04/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 04 Signal"
+    state_topic: "sensor_esp8266_04/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
+### MQTT via esp8266_05
+  - platform: mqtt
+    name: "Temperatur ESP8266 05"
+    state_topic: "sensor_esp8266_05/dht22/Temperature"
+    qos: 0
+    unit_of_measurement: "ºC"
+
+  - platform: mqtt
+    name: "Luftfeuchtigkeit ESP8266 05"
+    state_topic: "sensor_esp8266_05/dht22/Humidity"
+    qos: 0
+    unit_of_measurement: "%"
+
+  - platform: mqtt
+    name: "ESP8266 05 PIR"
+    state_topic: "sensor_esp8266_05/pir/motion"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 05 IP"
+    state_topic: "sensor_esp8266_05/status_ip"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 05 Status"
+    state_topic: "sensor_esp8266_05/status"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 05 Uptime"
+    state_topic: "sensor_esp8266_05/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 05 Signal"
+    state_topic: "sensor_esp8266_05/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
+  - platform: mqtt
+    name: "ESP8266 05 Ultraschall"
+    state_topic: "sensor_esp8266_05/usabstand/cm"
+    qos: 0
+    unit_of_measurement: "cm"
 
 ### MQTT ESP8266_Cloud
   - platform: mqtt

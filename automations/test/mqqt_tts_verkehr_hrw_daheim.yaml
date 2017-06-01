@@ -1,0 +1,12 @@
+alias: 'mqtt tts fahrzeit hrw'
+trigger:
+  platform: mqtt
+  topic: 'traffic'
+  payload: '2hrw'
+action:
+- service: tts.amazon_polly_say
+  data_template:
+    entity_id: media_player.gstreamer
+    message: >
+      Die Fahrzeit zur Hauptrettungswache beträgt momentan {{ states('sensor.zuhause__hauptrettungswache') }} Minuten. Tschüß.
+

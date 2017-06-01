@@ -17,12 +17,6 @@
     destination: Berlin, Germany
 
   - platform: google_travel_time
-    name: Daheim -> ZWA
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Leibnizstraße 31, Stuttgart, Germany
-
-  - platform: google_travel_time
     name: Daheim -> MQTT Standort
     api_key: !secret google_traveltime_apikey
     origin: zone.home
@@ -33,3 +27,27 @@
     api_key: !secret google_traveltime_apikey
     origin: device_tracker.chop3_oneplus3
     destination: zone.home
+
+  - platform: google_travel_time
+    name: Frank -> Abtis
+    api_key: !secret google_traveltime_apikey
+    origin: Wolfmahdenstraße 67, Stuttgart, Germany
+    destination: Wilhelm-Becker-Straße 11, Pforzheim, Germany
+
+  - platform: google_travel_time
+    name: Abtis -> Frank
+    api_key: !secret google_traveltime_apikey
+    origin: Wilhelm-Becker-Straße 11, Pforzheim, Germany
+    destination: Wolfmahdenstraße 67, Stuttgart, Germany
+
+  - platform: google_travel_time
+    name: Petros -> ILS
+    api_key: !secret google_traveltime_apikey
+    origin: Leinenweberstraße 17, Stuttgart, Germany
+    destination: Mercedesstraße 33, Stuttgart, Germany
+
+  - platform: google_travel_time
+    name: ILS -> Petros
+    api_key: !secret google_traveltime_apikey
+    origin: Mercedesstraße 33, Stuttgart, Germany
+    destination: Leinenweberstraße 17, Stuttgart, Germany

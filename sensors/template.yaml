@@ -55,6 +55,9 @@
       esp8266_04:
         friendly_name: 'ESP8266 #4'
         value_template: "{{ 'Online' if is_state('device_tracker.esp8266_04', 'home') else 'Offline' }}"
+      esp8266_05:
+        friendly_name: 'ESP8266 #5'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_05', 'home') else 'Offline' }}"
 #Status ESP* -> view esp
 #in short:
 #      esp8266_01_status:
@@ -64,7 +67,7 @@
         friendly_name: "ESP8266 01 Status"
         value_template: >-
            {%- if is_state('device_tracker.esp8266_01_ping', 'home') -%}
-             {{ states.sensor.esp8266_01_status.state }}
+             Online! Uptime: {{ states.sensor.esp8266_01_uptime_human.state }}
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
@@ -72,7 +75,7 @@
         friendly_name: "ESP8266 02 Status"
         value_template: >-
            {%- if is_state('device_tracker.esp8266_02_ping', 'home') -%}
-             {{ states.sensor.esp8266_02_status.state }}
+             Online! Uptime: {{ states.sensor.esp8266_02_uptime_human.state }}
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
@@ -80,7 +83,7 @@
         friendly_name: "ESP8266 03 Status"
         value_template: >-
            {%- if is_state('device_tracker.esp8266_03_ping', 'home') -%}
-             {{ states.sensor.esp8266_03_status.state }}
+             Online! Uptime: {{ states.sensor.esp8266_03_uptime_human.state }}
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
@@ -88,25 +91,216 @@
         friendly_name: "ESP8266 04 Status"
         value_template: >-
            {%- if is_state('device_tracker.esp8266_04_ping', 'home') -%}
-             {{ states.sensor.esp8266_04_status.state }}
+             Online! Uptime: {{ states.sensor.esp8266_04_uptime_human.state }}
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
+      esp8266_05_status_var:
+        friendly_name: "ESP8266 05 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_05_ping', 'home') -%}
+             Online! Uptime: {{ states.sensor.esp8266_05_uptime_human.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+
+
+###Uptime to human readable espXX (thanks to @dale3h and @BillyNate)
+      esp8266_01_uptime_human:
+        friendly_name: Uptime ESP8266_01
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_01_uptime.state | int * 60) }}
+
+      esp8266_02_uptime_human:
+        friendly_name: Uptime ESP8266_02
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_02_uptime.state | int * 60) }}
+
+      esp8266_03_uptime_human:
+        friendly_name: Uptime ESP8266_03
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_03_uptime.state | int * 60) }}
+
+      esp8266_04_uptime_human:
+        friendly_name: Uptime ESP8266_04
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_04_uptime.state | int * 60) }}
+
+      esp8266_05_uptime_human:
+        friendly_name: Uptime ESP8266_05
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_05_uptime.state | int * 60) }}
+
 ### ESP8266_XX Bewegungsmelder
       esp8266_01_motion:
-        friendly_name: Bewegungsmelder Wohnzimmer
-        value_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_01_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+        friendly_name: Wohnzimmer
+        value_template: '{% if is_state("sensor.esp8266_01_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_01_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
       esp8266_02_motion:
-        friendly_name: Bewegungsmelder ELW
-        value_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_02_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+        friendly_name: ELW
+        value_template: '{% if is_state("sensor.esp8266_02_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_02_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
       esp8266_03_motion:
-        friendly_name: Bewegungsmelder Wintergarten
-        value_template: '{% if is_state("sensor.esp8266_03_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_03_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+        friendly_name: Wintergarten
+        value_template: '{% if is_state("sensor.esp8266_03_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_03_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+      esp8266_04_motion:
+        friendly_name: esp8266 04
+        value_template: '{% if is_state("sensor.esp8266_04_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_04_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+      esp8266_05_motion:
+        friendly_name: esp8266 05
+        value_template: '{% if is_state("sensor.esp8266_05_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_05_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
 ### systemmonitor
       process_sshd_format:
@@ -135,7 +329,7 @@
       multisensor1_battery:
         value_template: >-
            {%- if states.binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0 != None -%}
-             {{ states.binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0.attributes.battery_level }}
+             {{ states.zwave.aeotec_zw100_multisensor_6_2.attributes.battery_level }}
            {%- else -%}
              unknown
            {%- endif -%}
@@ -144,6 +338,43 @@
 
 ### Multisensor1 Bewegungsmelder
       multisensor1_motion:
-        friendly_name: Bewegungsmelder Multisensor 01
+        friendly_name: Multisensor 01
         value_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar_2_10", "8") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
         icon_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar_2_10", "8") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+### Last Motion
+
+      template_pir_motion:
+        friendly_name: 'Motion Location'
+        value_template: >
+                    {%- set pirs = [states.sensor.multisensor1_motion,states.sensor.esp8266_01_motion, states.sensor.esp8266_02_motion, states.sensor.esp8266_03_motion] %}
+                    {% for pir in pirs %}
+                      {% if as_timestamp(pir.last_changed) == as_timestamp(pirs | map(attribute='last_changed') | max) %}
+                        {{ pir.name }}
+                      {% endif %}
+                    {% endfor %}
+### last_motion_timestamp
+      elw_motion_last_triggered:
+        friendly_name: "ELW Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp8266_02_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+      elw_2_motion_last_triggered:
+        friendly_name: "ELW Flur Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+      wintergarten_motion_last_triggered:
+        friendly_name: "Wintergarten Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp8266_03_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+      wohnzimmer_motion_last_triggered:
+        friendly_name: "Wohnzimmer Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp8266_01_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+      esp8266_05_motion_last_triggered:
+        friendly_name: "esp8266 #5  Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp8266_05_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}

@@ -1,0 +1,8 @@
+platform: mqtt
+name: "Grüne LED"
+state_topic: "sensor_esp8266_04/gruen/Switch"
+command_topic: "sensor_esp8266_04/gpio/13"
+payload_on: "1"
+payload_off: "0"
+optimistic: false
+qos: 0

@@ -1,8 +1,8 @@
-alias: Restart der Automations bei Sonnenaufgang
+alias: Restart der Automations bei Sonnenuntergang
 initial_state: True
 trigger:
   platform: sun
-  event: sunrise
+  event: sunset
 action:
   - service: automation.turn_on
     entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
