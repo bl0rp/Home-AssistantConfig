@@ -1,8 +1,0 @@
-platform: mqtt
-name: "Rote LED"
-state_topic: "sensor_esp8266_04/rot/Switch"
-command_topic: "sensor_esp8266_04/gpio/14"
-payload_on: "1"
-payload_off: "0"
-optimistic: false
-qos: 0

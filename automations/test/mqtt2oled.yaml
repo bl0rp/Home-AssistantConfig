@@ -4,6 +4,14 @@ trigger:
   topic: 'sensor_esp8266_06/flash/flash'
   payload: '1'
 action:
+  - service: tts.amazon_polly_say
+    data_template:
+      entity_id: media_player.volumio_tts
+      message: >
+        Hallo Welt. Es hat {{ states('sensor.temperatur_esp8266_02')|round(1)|replace(".", ",") }} Grad in der E L W und die Außentemperatur ist {{ states('sensor.dark_sky_temperature')|round }} Grad. 
+        Die Fahrzeit zur Hauptrettungswache beträgt momentan {{ states('sensor.zuhause__hauptrettungswache') }} Minuten.
+        Tschüß.
+
   - service: mqtt.publish
     data_template:
       topic: "sensor_esp8266_06/cmd"

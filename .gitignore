@@ -13,6 +13,7 @@ lib
 deps
 tts
 secrets.yaml
+tradfri.conf
 google_calendars.yaml
 known_devices.yaml
 *.conf

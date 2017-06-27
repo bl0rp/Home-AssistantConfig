@@ -23,19 +23,29 @@ http:
 config:
 
 logger:
-  default: debug
+  default: warn
 zwave:
   usb_path: /dev/ttyACM0
   device_config: !include zwave_device_config.yaml
+  new_entity_ids: true
 #  config_path: /usr/local/lib/python3.4/dist-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
 
 updater:
 
-discovery:
+#discovery:
 
 conversation:
 
-#history:
+history:
+
+recorder:
+  purge_days: 5
+  db_url: sqlite:///home/homeassistant/sqlite_HA_db
+  include:
+    domains:
+      - sensor
+      - switch
+      - media_player
 
 #recorder:
 #  purge_days: 30
@@ -79,7 +89,11 @@ sun:
 
 # Emulated Hue -> Amazon Echo 
 emulated_hue:
-
+  type: alexa
+  expose_by_default: true
+  exposed_domains:
+    - light
+    - switch
 
 #Google Calender
 google:
@@ -93,7 +107,7 @@ switch: !include_dir_list switches/
 group: !include_dir_merge_named groups/
 script: !include_dir_merge_named scripts/
 automation: !include_dir_list automations/
-#sensor: !include_dir_merge_list sensors/
+sensor: !include_dir_merge_list sensors/
 notify: !include includes/notify.yaml
 
 
@@ -111,14 +125,15 @@ device_tracker:
 #    username: !secret ddwrt_user
 #    password: !secret ddwrt_pw
   - platform: nmap_tracker
-    hosts: 192.168.0.1/24
+    hosts:
+      - 192.168.0.98
     home_interval: 20
-    exclude:
-    - 192.168.0.27
-    - 192.168.0.26
+
   - platform: owntracks
     max_gps_accuracy: 200
+
   - platform: bluetooth_tracker
+
   - platform: ping
     hosts:
        WKS_Alekto: 192.168.0.29
@@ -127,6 +142,7 @@ device_tracker:
        ESP8266_03_Ping: 192.168.0.82
        ESP8266_04_Ping: 192.168.0.83
        ESP8266_05_Ping: 192.168.0.84
+       ESP8266_06_Ping: 192.168.0.85
 #      AmazonEchoDot: 192.168.0.97
 
 #mjpeg stream rpi1 cam / generic ip cam
@@ -153,12 +169,17 @@ media_player:
   - platform: volumio
     host: 192.168.0.24
     port: 3000
+#Volumio ELW TTS
+  - platform: mpd
+    host: 192.168.0.24
+    port: 6600
+    name: Volumio TTS
 #Spotify
   - platform: spotify
     client_id: !secret spotify_client
     client_secret: !secret spotify_secret
-#gstreamer
-  - platform: gstreamer
+#gstreamer disabled for now... cpu util. bug 
+#  - platform: gstreamer
 tts:
   - platform: google
     language: 'de'
@@ -238,6 +259,7 @@ shell_command:
   lcd_send_traffic_hrw: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20HRW && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.zuhause__hauptrettungswache.state }}%20Minuten"
   lcd_send_traffic_drkls: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20DRKLS && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.daheim__pfalzgrafenweiler.state }}%20Minuten"
   traffic_send_temp: curl -sS  -X POST -d "TrafficDuration={{ states.sensor.frank__abtis.state }};{{ states.sensor.abtis__frank.state }}"  https://fahrzeit:fahrzeit@chris.0x711.de/fahrzeit_frank/receive.php
+  rmradarlog: rm -f /home/homeassistant/log/elwmotion.txt
 scene:
   - name: ELWAus
     entities:
@@ -261,19 +283,16 @@ scene:
         state: on
       light.schlafzimmer:
         state: on
-        rgb_color: [245,250,246]
         brightness: 255
         color_temp: 250
       light.flur:
         state: on
-        rgb_color: [245,250,246]
         brightness: 255
         color_temp: 250
   - name: ELWRelax
     entities:
       light.schlafzimmer:
         state: on
-        rgb_color: [239,210,117]
         brightness: 18
         color_temp: 454.54545454545456
       switch.110112:
@@ -282,14 +301,12 @@ scene:
     entities:
       light.schlafzimmer:
         state: on
-        rgb_color: [245,250,246]
         brightness: 255
         color_temp: 250
   - name: SchlafzimmerRelax
     entities:
       light.schlafzimmer:
         state: on
-        rgb_color: [239,210,117]
         brightness: 18
         color_temp: 454.54545454545456
   - name: SchlafzimmerAus
@@ -300,14 +317,12 @@ scene:
     entities:
       light.flur:
         state: on
-        rgb_color: [245,250,246]
         brightness: 255
         color_temp: 250
   - name: FlurRelax
     entities:
       light.flur:
         state: on
-        rgb_color: [239,210,117]
         brightness: 18
         color_temp: 454.54545454545456
   - name: FlurAus

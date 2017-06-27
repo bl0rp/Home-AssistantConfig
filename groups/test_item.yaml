@@ -1,6 +1,8 @@
 test_item:
   name: wilde test0rei
   entities:
+    - zwave.aeotec_dsa03202_minimote
+    - media_player.volumio_tts
     - media_player.gstreamer
     - sensor.srinika_birthday_days2go
     - sensor.hasika_birthday_days2go

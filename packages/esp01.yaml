@@ -1,0 +1,127 @@
+################################################################
+## Packages / NodeMCU #1
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
+################################################################
+homeassistant:
+  customize:
+
+    sensor.esp8266_01:
+      entity_picture: /local/esp.jpg
+
+    sensor.temperatur_esp8266_01:
+      icon: mdi:thermometer
+      friendly_name: Temperatur Wohnzimmer
+
+    sensor.luftfeuchtigkeit_esp8266_01:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit Wohnzimmer
+
+
+###############################################################################
+#  Sensors
+###############################################################################
+sensor:
+
+  - platform: mqtt
+    name: "Temperatur ESP8266 01"
+    state_topic: "sensor_esp8266_01/dht22/Temperature"
+    qos: 0
+    unit_of_measurement: "ºC"
+
+  - platform: mqtt
+    name: "Luftfeuchtigkeit ESP8266 01"
+    state_topic: "sensor_esp8266_01/dht22/Humidity"
+    qos: 0
+    unit_of_measurement: "%"
+
+  - platform: mqtt
+    name: "ESP8266 01 PIR"
+    state_topic: "sensor_esp8266_01/pir/motion"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 01 IP"
+    state_topic: "sensor_esp8266_01/status_ip"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 01 Status"
+    state_topic: "sensor_esp8266_01/status"
+    qos: 0
+
+  - platform: mqtt
+    name: "ESP8266 01 Uptime"
+    state_topic: "sensor_esp8266_01/uptime/minutes"
+    qos: 0
+    unit_of_measurement: "minutes"
+
+  - platform: mqtt
+    name: "ESP8266 01 Signal"
+    state_topic: "sensor_esp8266_01/signal/rssi"
+    qos: 0
+    unit_of_measurement: "dB"
+
+  - platform: template
+    sensors:
+
+      esp8266_01:
+        friendly_name: 'ESP8266 #1'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_01', 'home') else 'Offline' }}"
+
+      esp8266_01_status_var:
+        friendly_name: "ESP8266 01 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_01_ping', 'home') -%}
+             Online! Uptime: {{ states.sensor.esp8266_01_uptime_human.state }}
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+
+      esp8266_01_uptime_human:
+        friendly_name: Uptime ESP8266_01
+        value_template: >-
+           {% macro human_time(seconds) -%}
+             {%- set seconds = seconds|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'weeks': 60 * 60 * 24 * 7,
+               'days': 60 * 60 * 24,
+               'hours': 60 * 60,
+               'minutes': 60,
+               'seconds': 1,
+             } -%}
+           
+             {%- set weeks = seconds // intervals.weeks -%}
+             {%- set seconds = seconds % intervals.weeks -%}
+             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+           
+             {%- set days = seconds // intervals.days -%}
+             {%- set seconds = seconds % intervals.days -%}
+             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+           
+             {%- set hours = seconds // intervals.hours -%}
+             {%- set seconds = seconds % intervals.hours -%}
+             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+           
+             {%- set minutes = seconds // intervals.minutes -%}
+             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+           
+             {%- set seconds = seconds % intervals.minutes -%}
+             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.esp8266_01_uptime.state | int * 60) }}
+
+      esp8266_01_motion:
+        friendly_name: Wohnzimmer
+        value_template: '{% if is_state("sensor.esp8266_01_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp8266_01_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
+
+      wohnzimmer_motion_last_triggered:
+        friendly_name: "Wohnzimmer Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp8266_01_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+
+
+

@@ -1,9 +1,0 @@
-zwave_fibaro_plug:
-  name: MPD ELW (Z-Wave)
-  view: no
-  entities:
-    - sensor.mpd_use
-    - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy_3_0
-    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_4
-    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_3_8
-    - switch.fibaro_system_fgwpef_wall_plug_gen5_switch_3_0

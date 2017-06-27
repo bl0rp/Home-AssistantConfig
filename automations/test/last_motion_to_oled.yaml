@@ -59,3 +59,11 @@ action:
       topic: "sensor_esp8266_06/cmd"
       retain: false
       payload: "oledcmd,on"
+
+#  - delay: 00:00:05
+#
+#  - service: mqtt.publish
+#    data_template:
+#      topic: "sensor_esp8266_06/cmd"
+#      retain: false
+#      payload: "oledcmd,off"

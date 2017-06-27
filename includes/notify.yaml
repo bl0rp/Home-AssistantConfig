@@ -11,6 +11,10 @@
     platform: file
     filename: /home/homeassistant/log/motion.txt
 
+  - name: motionelw
+    platform: file
+    filename: /home/homeassistant/log/elwmotion.txt
+
   - name: pushbullet
     platform: pushbullet
     api_key: !secret pbapikey

@@ -28,4 +28,4 @@ action:
     data_template:
       topic: "sensor_esp8266_05/cmd"
       retain: false
-      payload: "lcd,4,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature_2_1') }}°C"
+      payload: "lcd,4,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature') }}°C"

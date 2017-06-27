@@ -6,19 +6,19 @@ condition:
 trigger:
   - platform: state
     entity_id: device_tracker.christoph_ip
-    state: 'home' 
+    to: 'home'
   - platform: state
     entity_id: device_tracker.oneplus3bt
-    state: 'home'
+    to: 'home'
   - platform: state
     entity_id: device_tracker.chop3_oneplus3
-    state: 'home'
+    to: 'home'
   - platform: state
     entity_id: sensor.tasker_chris
-    state: 'home'
+    to: 'home'
   - platform: state
     entity_id: switch.christoph_mqtt
-    state: 'on'
+    to: 'on'
 action:
    service: homeassistant.turn_on
    entity_id: input_boolean.chrishome

@@ -1,0 +1,13 @@
+alias: Minimote Button 2 Pressed
+trigger:
+  platform: event
+  event_type: zwave.scene_activated
+  event_data:
+    node_id: 6
+    scene_id: 3
+action:
+  - service: notify.pushbullet
+    data_template:
+      title: "button 1"
+      message: >
+         Button 1 pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}

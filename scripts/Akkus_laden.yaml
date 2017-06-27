@@ -4,7 +4,7 @@ akkus_laden:
    - service: automation.turn_on
      entity_id: automation.akkuladeautomatik
    - service: switch.turn_on
-     entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch_3_0
+     entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
    - service: notify.pushbullet
      data:
        message: '{{ states.sensor.date__time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'

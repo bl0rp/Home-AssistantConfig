@@ -22,7 +22,7 @@ action:
       method: get
   - service: shell_command.curl
     data_template:
-      url: "http://192.168.0.84/control?cmd=lcd,2,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature_2_1') }}%20%DFC"
+      url: "http://192.168.0.84/control?cmd=lcd,2,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature') }}%20%DFC"
       method: get
   - service: shell_command.curl
     data:

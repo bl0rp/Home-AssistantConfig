@@ -1,0 +1,12 @@
+alias: Minimote Button 1 Pressed Long
+trigger:
+  platform: event
+  event_type: zwave.scene_activated
+  event_data:
+    node_id: 6
+    scene_id: 2
+action:
+  - service: scene.turn_on
+    entity_id: scene.elwaus
+  - service: switch.turn_off
+    entity_id: switch.sonoff_1

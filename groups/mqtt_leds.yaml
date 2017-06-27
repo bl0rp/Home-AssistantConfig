@@ -4,5 +4,5 @@ mqtt_leds:
   entities:
     - switch.rote_led
     - switch.gelbe_led
-    - switch.grune_led
+    - switch.grne_led
     - camera.led_cam

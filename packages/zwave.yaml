@@ -1,0 +1,98 @@
+homeassistant:
+  customize:
+
+#Fibaro Z-Wave WallPlug
+    switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
+      friendly_name: Universalsteckdose Z-Wave
+      icon: mdi:power-plug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_power:
+      friendly_name: Aktuelle Leistung
+      icon: mdi:power-plug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2:
+      friendly_name: Maximale Leistung
+      icon: mdi:power-plug
+    sensor.fibaro_system_fgwpef_wall_plug_gen5_energy:
+      friendly_name: Gesamtverbrauch
+      icon: mdi:chart-line
+    sensor.zwave_mpd1_kosten_gesamt:
+      icon: mdi:currency-eur
+
+#Aeotec Z-Wave Multisensor
+    sensor.multisensor1_battery:
+      icon: mdi:car-battery
+    sensor.aeotec_zw100_multisensor_6_temperature_2_1:
+      friendly_name: Temperatur Z-Wave Multisensor 1
+      icon: mdi:thermometer
+    sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5:
+      friendly_name: Luftfeuchtigkeit Z-Wave Multisensor 1
+      icon: mdi:water-percent
+    sensor.aeotec_zw100_multisensor_6_luminance_2_3:
+      friendly_name: Helligkeit Z-Wave Multisensor 1
+      icon: mdi:theme-light-dark
+    sensor.aeotec_zw100_multisensor_6_burglar_2_10:
+      friendly_name: Bewegsungsmelder Z-Wave Multisensor 1
+      icon: mdi:alert
+    binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0:
+      friendly_name: Sensorstatus Z-Wave Multisensor 1
+    sensor.aeotec_zw100_multisensor_6_ultraviolet_2_27:
+      friendly_name: UV Z-Wave Multisensor 1
+
+group:
+  zwave_aeotec_multisensor6:
+    name: Multisensor ELW
+    view: no
+    entities:
+      - sensor.multisensor1_battery
+      - sensor.aeotec_zw100_multisensor_6_luminance
+      - sensor.aeotec_zw100_multisensor_6_relative
+      - sensor.aeotec_zw100_multisensor_6_temperature
+      - sensor.aeotec_zw100_multisensor_6_ultraviolet
+      - sensor.multisensor1_motion
+      - binary_sensor.aeotec_zw100_multisensor_6_sensor
+  zwave_fibaro_plug:
+    name: MPD ELW (Z-Wave)
+    view: no
+    entities:
+      - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+      - sensor.zwave_mpd1_use
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
+      - sensor.zwave_mpd1_kosten_gesamt
+
+sensor:
+### MPD Dose
+  - platform: template
+    sensors:
+      zwave_mpd1_use:
+        friendly_name: Z-Wave Steckdose in Benutzung?
+        value_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash{% endif %}"
+
+      zwave_mpd1_kosten_gesamt:
+        friendly_name: Gesamtkosten
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.fibaro_system_fgwpef_wall_plug_gen5_energy.state  | multiply(0.2657) | round(2) }}
+
+### Multisensor1 Battery
+  - platform: template
+    sensors:
+      multisensor1_battery:
+        value_template: >-
+           {%- if states.binary_sensor.aeotec_zw100_multisensor_6_sensor != None -%}
+             {{ states.zwave.aeotec_zw100_multisensor_6.attributes.battery_level }}
+           {%- else -%}
+             unknown
+           {%- endif -%}
+        unit_of_measurement: '%'
+        friendly_name: "Multisensor 01 Batterie"
+
+### Multisensor1 Bewegungsmelder
+  - platform: template
+    sensors:
+      multisensor1_motion:
+        friendly_name: Multisensor 01
+        value_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+

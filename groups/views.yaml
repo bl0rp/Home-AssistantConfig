@@ -11,6 +11,7 @@ default_view:
     - group.sabnzbd
     - group.traveltime
     - group.qnap1
+    - group.pihole
 
 ELW:
   name: ELW
@@ -26,6 +27,7 @@ ELW:
     - group.sensordata_elw
     - group.zwave_aeotec_multisensor6
     - group.zwave_fibaro_plug
+    - group.sonoff1
     - group.funksteckdosen433mhz_licht
     - group.deckenlicht_elw
     - group.funksteckdosen433mhz_plug
@@ -104,6 +106,7 @@ tab_all:
    - group.all_lights
    - group.all_scripts
    - group.all_switches
+   - group.all_zwave
    - media_player.kodi
 
 LAN:
@@ -127,6 +130,7 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
+    - group.radartest
     - group.sprit
     - group.lcd_mqtt
     - group.mqtt_leds

@@ -42,7 +42,7 @@ action:
     data_template:
       topic: "sensor_esp8266_06/cmd"
       retain: false
-      payload: "oled,5,1,{{ states('sensor.temperatur_esp8266_02') }}@C"
+      payload: "oled,5,1,{{ states('sensor.temperatur_esp8266_02') }}°C"
       
   - service: mqtt.publish
     data_template:
@@ -54,7 +54,7 @@ action:
     data_template:
       topic: "sensor_esp8266_06/cmd"
       retain: false
-      payload: "oled,8,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature_2_1') }}@C"
+      payload: "oled,8,1,{{ states('sensor.aeotec_zw100_multisensor_6_temperature') }}°C"
   - delay: 00:00:05
   - service: mqtt.publish
     data_template:

@@ -1,0 +1,128 @@
+#Sonoff1 Package
+#Thanks to mihalski
+homeassistant:
+  customize:
+    switch.sonoff_1:
+      friendly_name: PC Boxen
+      icon: mdi:speaker
+    sensor.sonoff1_momentane_leistung:
+      friendly_name: Aktuelle Leistung
+      icon: mdi:power-plug
+    sensor.sonoff1_spannung:
+      friendly_name: Spannung
+      icon: mdi:flash
+    sensor.sonoff1_stromstaerke:
+      friendly_name: Stromstärke
+      icon: mdi:flash
+    sensor.sonoff1_kosten_heute:
+      friendly_name: Kosten Heute
+      icon: mdi:currency-eur
+    sensor.sonoff1_kosten_gestern:
+      friendly_name: Kosten Gestern
+      icon: mdi:currency-eur
+    sensor.sonoff1_kosten_gesamt:
+      friendly_name: Gesamtkosten
+      icon: mdi:currency-eur
+    sensor.sonoff1_verbrauch_heute:
+      friendly_name: Vebrauch Heute
+      icon: mdi:chart-line
+    sensor.sonoff1_verbrauch_gestern:
+      friendly_name: Vebrauch Gestern
+      icon: mdi:chart-line
+    sensor.sonoff1_gesamtverbrauch:
+      friendly_name: Gesamtverbrauch
+      icon: mdi:chart-line
+
+group:
+  sonoff1:
+    name: Sonoff 1
+    view: no
+    entities:
+      - switch.sonoff_1
+      - sensor.sonoff1_use
+      - sensor.sonoff1_momentane_leistung
+      - sensor.sonoff1_spannung
+      - sensor.sonoff1_stromstaerke
+      - sensor.sonoff1_verbrauch_heute
+      - sensor.sonoff1_verbrauch_gestern
+      - sensor.sonoff1_gesamtverbrauch
+      - sensor.sonoff1_kosten_heute
+      - sensor.sonoff1_kosten_gestern
+      - sensor.sonoff1_kosten_gesamt
+
+sensor:
+  - platform: template
+    sensors:
+      sonoff1_use:
+        friendly_name: Sonoff1 in Benutzung?
+        value_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+
+
+  - platform: mqtt
+    name: "Sonoff1 Verbrauch Heute"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Today }}"
+    unit_of_measurement: "kWh"
+
+  - platform: mqtt
+    name: "Sonoff1 Verbrauch Gestern"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Yesterday }}"
+    unit_of_measurement: "kWh"
+
+  - platform: mqtt
+    name: "Sonoff1 Gesamtverbrauch"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Total }}"
+    unit_of_measurement: "kWh"
+
+  - platform: mqtt
+    name: "Sonoff1 Momentane Leistung"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Power }}"
+    unit_of_measurement: "W"
+
+  - platform: mqtt
+    name: "Sonoff1 Spannung"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Voltage }}"
+    unit_of_measurement: "V"
+
+  - platform: mqtt
+    name: "Sonoff1 Stromstaerke"
+    state_topic: "tele/sonoff1/ENERGY"
+    value_template: "{{ value_json.Current }}"
+    unit_of_measurement: "A"
+
+  - platform: template
+    sensors:
+      sonoff1_kosten_heute:
+        friendly_name: Kosten Heute
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff1_verbrauch_heute.state  | multiply(0.2657) | round(2) }}
+
+      sonoff1_kosten_gestern:
+        friendly_name: Kosten Gestern
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff1_verbrauch_gestern.state  | multiply(0.2657) | round(2) }}
+
+      sonoff1_kosten_gesamt:
+        friendly_name: Gesamtkosten
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff1_gesamtverbrauch.state  | multiply(0.2657) | round(2) }}
+
+
+
+switch:
+  - platform: mqtt
+    name: "Sonoff 1"
+    state_topic: "stat/sonoff1/POWER"
+    command_topic: "cmnd/sonoff1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true

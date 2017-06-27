@@ -8,12 +8,14 @@ status_alle_sensoren:
     - sensor.esp8266_03_status_var
     - sensor.esp8266_04_status_var
     - sensor.esp8266_05_status_var
+    - sensor.esp8266_06_status_var
 
 status_alle_bewegsungsmelder:
   name: Status aller Bewegungsmelder im Netzwerk
   entities:
     - sensor.multisensor1_motion
     - sensor.esp8266_02_motion
+    - sensor.esp8266_02_motion_radar
     - sensor.esp8266_01_motion
     - sensor.esp8266_03_motion
     - sensor.esp8266_04_motion
@@ -31,12 +33,12 @@ status_bewegungsmelder_last_triggered:
 status_alle_umweltsensoren:
   name: Status aller Umweltsensoren im Netzwerk
   entities:
-    - sensor.aeotec_zw100_multisensor_6_temperature_2_1
+    - sensor.aeotec_zw100_multisensor_6_temperature
     - sensor.temperatur_esp8266_02
     - sensor.temperatur_esp8266_01
     - sensor.temperatur_esp8266_03
     - sensor.temperatur_esp8266_04
-    - sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5
+    - sensor.aeotec_zw100_multisensor_6_relative_humidity
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_03
@@ -50,3 +52,4 @@ signalstaerke_alle_sensoren:
     - sensor.esp8266_03_signal
     - sensor.esp8266_04_signal
     - sensor.esp8266_05_signal
+    - sensor.esp8266_06_signal

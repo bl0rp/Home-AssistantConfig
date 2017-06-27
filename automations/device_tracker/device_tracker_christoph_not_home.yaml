@@ -6,20 +6,20 @@ condition:
 trigger:
   - platform: state
     entity_id: device_tracker.christoph_ip
-    state: 'not_home'
+    to: 'not_home'
     for:
       minutes: 10
   - platform: state
     entity_id: switch.christoph_mqtt
-    state: 'off'
+    to: 'off'
     for:
       minutes: 5
 #  - platform: state
 #    entity_id: device_tracker.oneplus3bt
-#    state: 'not_home'
+#    to: 'not_home'
   - platform: state
     entity_id: sensor.tasker_chris
-    state: 'not_home'
+    to: 'not_home'
 action:
   - service: homeassistant.turn_off
     entity_id: input_boolean.chrishome
