@@ -17,4 +17,4 @@ action:
   - service: notify.motionelw
     data_template:
       message: >
-         {{ now().strftime('%d.%m.%Y %H:%M:%S') }}: Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde geändert!
+         {{ now().strftime('%d.%m.%Y %H:%M:%S') }}: Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde geaendert!

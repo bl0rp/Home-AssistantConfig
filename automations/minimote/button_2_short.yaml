@@ -6,8 +6,5 @@ trigger:
     node_id: 6
     scene_id: 3
 action:
-  - service: notify.pushbullet
-    data_template:
-      title: "button 1"
-      message: >
-         Button 1 pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
+  - service: switch.toggle
+    entity_id: switch.wemoswitch2
