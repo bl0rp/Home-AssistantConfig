@@ -7,4 +7,5 @@ trigger:
     scene_id: 7
 action:
   - service: switch.toggle
-    entity_id: switch.sonoff_1
+    entity_id: switch.receiver_source_pc
+

@@ -1,0 +1,35 @@
+#- platform: ddwrt
+#  host: !secret ddwrt_host
+#  username: !secret ddwrt_user
+#  password: !secret ddwrt_pw
+
+- platform: nmap_tracker
+  hosts:
+    - !secret technicolor_ip
+    - !secret alekto_ip
+    - !secret qnap_ip
+    - !secret ddwrt_host
+    - !secret mediapi_ip
+    - !secret tradfri_ip
+    - !secret wemo1_ip
+    - !secret wemo2_ip
+    - !secret yamaha_ip
+    - !secret volumio_ip
+  home_interval: 20
+  exclude:
+    - !secret hass_ip
+
+#- platform: owntracks
+#  max_gps_accuracy: 200
+
+- platform: bluetooth_tracker
+
+- platform: ping
+  hosts:
+    esp8266_01_ping: !secret esp8266_01_ip
+    esp8266_02_ping: !secret esp8266_02_ip
+    esp8266_03_ping: !secret esp8266_03_ip
+    esp8266_04_ping: !secret esp8266_04_ip
+    esp8266_05_ping: !secret esp8266_05_ip
+    esp8266_06_ping: !secret esp8266_05_ip
+

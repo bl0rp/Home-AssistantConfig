@@ -20,17 +20,13 @@ frontend:
 
 http:
    api_password: !secret api_password
+
 config:
+
+updater:
 
 logger:
   default: warn
-zwave:
-  usb_path: /dev/ttyACM0
-  device_config: !include zwave_device_config.yaml
-  new_entity_ids: true
-#  config_path: /usr/local/lib/python3.4/dist-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
-
-updater:
 
 #discovery:
 
@@ -39,51 +35,22 @@ conversation:
 history:
 
 recorder:
-  purge_days: 5
-  db_url: sqlite:///home/homeassistant/sqlite_HA_db
-  include:
-    domains:
-      - sensor
-      - switch
-      - media_player
-
-#recorder:
-#  purge_days: 30
-#  db_url: !secret mysql_db_path
-#  exclude:
-#    entities:
-#      - sensor.qnap1_network_up_eth0
-#      - sensor.0x711de_ungelese_emails
-#      - sensor.qnap1_status
-#      - sensor.qnap1_network_link_eth0
-#      - binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
-#      - sun.sun
-#      - sun.sun
-#      - media_player.kodi
-#      - camera.rpi1_ir_cam
-#      - sensor.cpu_use
-#      - sensor.average_load_5m
-#      - sensor.average_load_15m
-#      - sensor.qnap1_memory_used
-#      - sensor.cpu_use
-#      - sensor.average_load_15m
-#      - sensor.qnap1_memory_used
-#      - sensor.average_load_15m
-#      - sensor.yr_fog
-#      - sensor.multisensor1_motion
-#      - sensor.qnap1_cpu_usage
-#      - sensor.multisensor1_motion
-#      - sensor.cpu_use
-#      - sensor.qnap1_memory_used
-#      - sensor.qnap1_cpu_usage
-#      - sensor.average_load_15m
-#      - sensor.average_load_15m
-#      - sensor.average_load_1m
-#      - group.all_switches
-#      - sensor.average_load_5m
-#      - sensor.average_load_15m
+  purge_days: 30
+  db_url: !secret mysql_db_path
 
 logbook:
+
+zwave:
+  usb_path: /dev/ttyACM0
+  device_config: !include zwave_device_config.yaml
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  client_id: !secret mqtt_client_id
+  keepalive: 60
+  username: !secret mqtt_user
+  password: !secret mqtt_pw
 
 sun:
 
@@ -100,232 +67,36 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_secret
 
+wemo:
+  static:
+    - !secret wemo1_ip
+    - !secret wemo2_ip
+
+
+tradfri:
+  host: !secret tradfri_ip
+  api_key: !secret tradfri_api_key
+
 ##################
 #    INCLUDES    #
 ##################
-switch: !include_dir_list switches/
-group: !include_dir_merge_named groups/
-script: !include_dir_merge_named scripts/
 automation: !include_dir_list automations/
-sensor: !include_dir_merge_list sensors/
+#binary_sensor: !include includes/binary_sensor.yaml
+camera: !include includes/camera.yaml
+device_tracker: !include includes/device_tracker.yaml
+group: !include_dir_merge_named groups/
+input_boolean: !include includes/input_boolean.yaml
+input_select: !include includes/input_select.yaml
+input_slider: !include includes/input_slider.yaml
+media_player: !include includes/media_player.yaml
 notify: !include includes/notify.yaml
+scene: !include includes/scene.yaml
+script: !include_dir_merge_named scripts/
+sensor: !include_dir_merge_list sensors/
+shell_command: !include includes/shell_command.yaml
+switch: !include_dir_list switches/
+tts: !include includes/tts.yaml
 
 
-mqtt:
-  broker: !secret mqtt_broker
-  port: !secret mqtt_port
-  client_id: !secret mqtt_client_id
-  keepalive: 60
-  username: !secret mqtt_user
-  password: !secret mqtt_pw
 
-device_tracker:
-#  - platform: ddwrt
-#    host: !secret ddwrt_host
-#    username: !secret ddwrt_user
-#    password: !secret ddwrt_pw
-  - platform: nmap_tracker
-    hosts:
-      - 192.168.0.98
-    home_interval: 20
 
-  - platform: owntracks
-    max_gps_accuracy: 200
-
-  - platform: bluetooth_tracker
-
-  - platform: ping
-    hosts:
-       WKS_Alekto: 192.168.0.29
-       ESP8266_01_Ping: 192.168.0.80
-       ESP8266_02_Ping: 192.168.0.81
-       ESP8266_03_Ping: 192.168.0.82
-       ESP8266_04_Ping: 192.168.0.83
-       ESP8266_05_Ping: 192.168.0.84
-       ESP8266_06_Ping: 192.168.0.85
-#      AmazonEchoDot: 192.168.0.97
-
-#mjpeg stream rpi1 cam / generic ip cam
-camera:
-  - platform: mjpeg
-    mjpeg_url: http://192.168.0.23/html/cam_pic_new.php?
-    name: RPi1 IR Cam
-  - platform: generic
-    name: Google Map Stuttgart
-    still_image_url: https://maps.googleapis.com/maps/api/staticmap?center=48.77,9.15&zoom=10&size=500x500&maptype=roadmap
-    limit_refetch_to_url_change: true
-
-### Android IP Cam OPT
-#android_ip_webcam:
-#  - host: 192.168.0.102
-#    name: LED Cam
-
-#Kodi 1OG
-media_player:
-  - platform: kodi
-    host: 192.168.0.21
-    port: 80
-#Volumio ELW
-  - platform: volumio
-    host: 192.168.0.24
-    port: 3000
-#Volumio ELW TTS
-  - platform: mpd
-    host: 192.168.0.24
-    port: 6600
-    name: Volumio TTS
-#Spotify
-  - platform: spotify
-    client_id: !secret spotify_client
-    client_secret: !secret spotify_secret
-#gstreamer disabled for now... cpu util. bug 
-#  - platform: gstreamer
-tts:
-  - platform: google
-    language: 'de'
-  - platform: amazon_polly
-    aws_access_key_id: !secret AWS_ACCESS_KEY_ID
-    aws_secret_access_key: !secret AWS_SECRET_ACCESS_KEY
-    voice: Marlene
-
-wemo:
-  static:
-    - 192.168.0.31
-    - 192.168.0.33
-tradfri:
-  host: 192.168.0.25
-  api_key: !secret tradfri_api_key
-##################
-#    INPUT       #
-##################
-input_boolean:
-  chrishome:
-    name: "Christoph"
-    initial: on
-    icon: mdi:cellphone-iphone
-
-input_slider:
-  tuerlicht_intervall:
-    name: Türlicht Slider
-    initial: 30
-    min: 0
-    max: 60
-    step: 1
-    unit_of_measurement: seconds
-    icon: mdi:target
-
-input_select:
-  tuerlicht:
-    name: Wie lange soll das Türlicht brennen?
-    options:
-     - 5
-     - 15
-     - 30
-     - 45
-     - 60
-    initial: 30
-    icon: mdi:panda
-
-  led_mqtt:
-    name: welche led darf es sein?
-    options:
-     - Rot
-     - Gelb
-     - Grün
-     - Alle
-    initial: Alle
-    icon: mdi:panda
-
-  scene_selector:
-    name: Scene Selector
-    initial: 'None'
-    options:
-      - 'None'
-      - 'SchlafzimmerHell'
-      - 'SchlafzimmerRelax'
-      - 'SchlafzimmerAus'
-
-shell_command:
-  curl: >-
-    /usr/bin/curl {{ args|default('-sS') }} -X {{ method|default('get')|upper }} {%- for k in headers %} -H "{{ k }}: {{ headers[k] }}"{% endfor %} {{- (' -d \'' ~ payload|tojson ~ '\'') if payload }} {{ url }} > {{ stream|default('/dev/null') }}
-  lcd_on: curl http://192.168.0.84/control?cmd=lcdcmd,on
-  lcd_off: curl http://192.168.0.84/control?cmd=lcdcmd,off
-  lcd_clear: curl  http://192.168.0.84/control?cmd=lcdcmd,clear
-  lcd_send: curl http://192.168.0.84/control?cmd=lcd,1,1,{{ states.sensor.petros__ils.state }}
-  lcd_send_elw_temp1: "curl http://192.168.0.84/control?cmd=lcd,1,1,Temperatur%20ELW:"
-  lcd_send_elw_temp2: curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.temperatur_esp8266_02.state }}%20C
-  lcd_send_wiga_temp: "curl http://192.168.0.84/control?cmd=lcd,1,1,Temp.%20WiGa: && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.temperatur_esp8266_03.state }}%20C"
-  lcd_send_gtt: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20ILS && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.petros__ils.state }}%20Minuten"
-  lcd_send_traffic_hrw: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20HRW && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.zuhause__hauptrettungswache.state }}%20Minuten"
-  lcd_send_traffic_drkls: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20DRKLS && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.daheim__pfalzgrafenweiler.state }}%20Minuten"
-  traffic_send_temp: curl -sS  -X POST -d "TrafficDuration={{ states.sensor.frank__abtis.state }};{{ states.sensor.abtis__frank.state }}"  https://fahrzeit:fahrzeit@chris.0x711.de/fahrzeit_frank/receive.php
-  rmradarlog: rm -f /home/homeassistant/log/elwmotion.txt
-scene:
-  - name: ELWAus
-    entities:
-      light.schlafzimmer:
-        state: off
-      light.flur:
-        state: off
-      switch.110112:
-        state: off
-      switch.110111:
-        state: off
-      switch.110113:
-        state: off
-  - name: ELWAnHell
-    entities:
-      switch.110112:
-        state: on
-      switch.110111:
-        state: on
-      switch.110113:
-        state: on
-      light.schlafzimmer:
-        state: on
-        brightness: 255
-        color_temp: 250
-      light.flur:
-        state: on
-        brightness: 255
-        color_temp: 250
-  - name: ELWRelax
-    entities:
-      light.schlafzimmer:
-        state: on
-        brightness: 18
-        color_temp: 454.54545454545456
-      switch.110112:
-        state: on
-  - name: SchlafzimmerHell
-    entities:
-      light.schlafzimmer:
-        state: on
-        brightness: 255
-        color_temp: 250
-  - name: SchlafzimmerRelax
-    entities:
-      light.schlafzimmer:
-        state: on
-        brightness: 18
-        color_temp: 454.54545454545456
-  - name: SchlafzimmerAus
-    entities:
-      light.schlafzimmer:
-        state: off
-  - name: FlurHell
-    entities:
-      light.flur:
-        state: on
-        brightness: 255
-        color_temp: 250
-  - name: FlurRelax
-    entities:
-      light.flur:
-        state: on
-        brightness: 18
-        color_temp: 454.54545454545456
-  - name: FlurAus
-    entities:
-      light.flur:
-        state: off

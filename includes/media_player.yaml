@@ -1,0 +1,25 @@
+#Kodi 1OG
+  - platform: kodi
+    host: !secret mediapi_ip
+    port: 80
+#Volumio ELW
+  - platform: volumio
+    host: !secret volumio_ip
+    port: 3000
+#Volumio ELW TTS
+  - platform: mpd
+    host: !secret volumio_ip
+    port: 6600
+    name: Volumio TTS
+#Spotify
+  - platform: spotify
+    client_id: !secret spotify_client
+    client_secret: !secret spotify_secret
+#gstreamer disabled for now... cpu util. bug 
+#  - platform: gstreamer
+#Yamaha RX-V473
+  - platform: yamaha
+    host: !secret yamaha_ip
+    source_names:
+      AV5: "Volumio"
+      AV6: "PC"

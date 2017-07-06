@@ -1,5 +1,5 @@
 alias: when gone enable motionlog
-initial_state: true
+initial_state: 'off'
 trigger:
   platform: state
   entity_id: input_boolean.chrishome

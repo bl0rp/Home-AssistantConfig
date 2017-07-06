@@ -1,4 +1,4 @@
-################################################################
+﻿################################################################
 ## Packages / NodeMCU #4
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
@@ -16,7 +16,17 @@ homeassistant:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit esp04
 
+    switch.grne_led:
+      icon: mdi:led-outline
+      friendly_name: Grüne LED
 
+    switch.gelbe_led:
+      icon: mdi:led-outline
+      friendly_name: Gelbe LED
+
+    switch.rote_led:
+      icon: mdi:led-outline
+      friendly_name: Rote LED
 ###############################################################################
 #  Sensors
 ###############################################################################
@@ -26,7 +36,7 @@ sensor:
     name: "Temperatur ESP8266 04"
     state_topic: "sensor_esp8266_04/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "?C"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 04"
@@ -66,7 +76,7 @@ sensor:
 
       esp8266_04:
         friendly_name: 'ESP8266 #4'
-        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_04', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_04_ping', 'home') else 'Offline' }}"
 
       esp8266_04_status_var:
         friendly_name: "ESP8266 04 Status"

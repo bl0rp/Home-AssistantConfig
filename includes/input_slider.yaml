@@ -1,0 +1,8 @@
+  tuerlicht_intervall:
+    name: Türlicht Slider
+    initial: 30
+    min: 0
+    max: 60
+    step: 1
+    unit_of_measurement: seconds
+    icon: mdi:target

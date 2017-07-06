@@ -6,11 +6,5 @@ trigger:
     node_id: 6
     scene_id: 8
 action:
-  - service: switch.turn_on
-    entity_id: switch.sonoff_1
-  - delay: 00:00:02
-  - service: tts.amazon_polly_say
-    data_template:
-      entity_id: media_player.volumio_tts
-      message: >
-        Hallo Meister und Gebieter! Die Boxen wurden angeschaltet! 
+  - service: media_player.toggle
+    entity_id: media_player.yamaha_receiver

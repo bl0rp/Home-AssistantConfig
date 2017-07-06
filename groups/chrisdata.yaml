@@ -8,5 +8,6 @@ chrisdata:
     - switch.christoph_mqtt
     - sensor.tasker_chris
     - input_boolean.chrishome
+    - input_select.christoph_status
     - sensor.ha_release
     - sensor.ping_check_test

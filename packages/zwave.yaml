@@ -1,7 +1,7 @@
 homeassistant:
   customize:
 
-#Fibaro Z-Wave WallPlug
+#Fibaro Z-Wave WallPlug 1
     switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
       friendly_name: Universalsteckdose Z-Wave
       icon: mdi:power-plug
@@ -67,7 +67,7 @@ sensor:
       zwave_mpd1_use:
         friendly_name: Z-Wave Steckdose in Benutzung?
         value_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash{% endif %}"
+        icon_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
       zwave_mpd1_kosten_gesamt:
         friendly_name: Gesamtkosten

@@ -1,4 +1,5 @@
 alias: Benachrichtigung Bewegungsmelder ELW -> motion.txt
+initial_state: False
 trigger:
   - platform: state
     entity_id: sensor.esp8266_02_pir

@@ -1,0 +1,12 @@
+## Binary sensors
+
+  - platform: template 
+
+    sensors:
+      fibaro1_status:
+        friendly_name: 'Fibaro Steckdose 1 Status'
+        value_template: "{{ states.sensor.fibaro_system_fgwpef_wall_plug_gen5_power.state > 1 }}" 
+
+      sonoff1_status:
+        friendly_name: 'Sonoff 1  Status'
+        value_template: "{{ states.sensor.sonoff1_momentane_leistung.state > 1 }}" 

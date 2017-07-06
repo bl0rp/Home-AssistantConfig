@@ -1,0 +1,21 @@
+## Automations for own status
+# Thanks 2 Ron Mar (http://ronmar.co/)
+
+# Home status from bluetooth status
+alias: "stat-christoph_Home status from bluetooth status"
+trigger:
+  - platform: state
+    entity_id: device_tracker.oneplus3bt
+    from: 'not_home'
+    to: 'home'
+#     for:
+#       minutes: 3
+condition:
+  - condition: state
+    entity_id: sensor.sonoff1_use
+    state: "Nein"
+action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.christoph_status
+      option: "In der ELW"

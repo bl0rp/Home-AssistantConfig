@@ -66,7 +66,7 @@ sensor:
 
       esp8266_05:
         friendly_name: 'ESP8266 #5'
-        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_05', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_05_ping', 'home') else 'Offline' }}"
 
       esp8266_05_status_var:
         friendly_name: "ESP8266 05 Status"

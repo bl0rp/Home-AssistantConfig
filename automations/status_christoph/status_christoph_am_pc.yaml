@@ -1,0 +1,21 @@
+## Automations for own status
+# Thanks 2 Ron Mar (http://ronmar.co/)
+
+alias: "stat-christoph_Computer status from monitor status"
+trigger:
+  - platform: state
+    entity_id: sensor.sonoff1_use
+    from: 'Nein'
+    to: 'Ja'
+#     for:
+#       minutes: 1
+
+condition:
+  - condition: state
+    entity_id: input_boolean.chrishome
+    state: "on"
+action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.christoph_status
+      option: "Am PC"

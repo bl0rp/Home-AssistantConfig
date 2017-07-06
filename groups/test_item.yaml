@@ -1,6 +1,9 @@
 test_item:
   name: wilde test0rei
   entities:
+    - media_player.yamaha_receiver
+    - switch.test
+    - camera.regenradarstuttgart
     - zwave.aeotec_dsa03202_minimote
     - media_player.volumio_tts
     - media_player.gstreamer

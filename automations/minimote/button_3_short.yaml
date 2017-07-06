@@ -6,8 +6,9 @@ trigger:
     node_id: 6
     scene_id: 5
 action:
-  - service: notify.pushbullet
-    data_template:
-      title: "button 1"
-      message: >
-         Button 1 pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
+- service: tts.amazon_polly_say
+  data_template:
+    entity_id: media_player.volumio_tts
+    message: >
+      Die Fahrzeit zur Hauptrettungswache beträgt momentan {{ states('sensor.zuhause__hauptrettungswache') }} Minuten. Tschüß.
+

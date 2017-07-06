@@ -1,0 +1,16 @@
+## Automations for own status
+# Thanks 2 Ron Mar (http://ronmar.co/)
+
+# Away status
+alias: "stat-christoph_Away status from input boolean"
+trigger:
+  - platform: state
+    entity_id: input_boolean.chrishome
+    from: 'on'
+    to: 'off'
+
+action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.christoph_status
+      option: "Abwesend"

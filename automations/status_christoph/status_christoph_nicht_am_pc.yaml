@@ -1,0 +1,34 @@
+## Automations for own status
+# Thanks 2 Ron Mar (http://ronmar.co/)
+
+# Home status from monitor status
+alias: "stat-christoph_Home status from monitor status"
+trigger:
+  - platform: state
+    entity_id: sensor.sonoff1_use
+    from: 'Ja'
+    to: 'Nein'
+#     for:
+#       minutes: 3
+condition:
+  - condition: state
+    entity_id: input_boolean.chrishome
+    state: "on"
+
+action:
+  - service: input_select.select_option
+    data:
+      entity_id: input_select.christoph_status
+      option: "Anwesend"
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: 'device_tracker.oneplus3bt'
+        state: 'home'
+  - service: input_select.christoph_status
+    data:
+      entity_id: input_select.christoph_status
+      option: "In der ELW"
+
+
+

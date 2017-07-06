@@ -20,3 +20,4 @@ LANdev:
     - sensor.esp8266_03
     - sensor.esp8266_04
     - sensor.esp8266_05
+    - sensor.esp8266_06

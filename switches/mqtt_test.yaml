@@ -1,0 +1,9 @@
+platform: mqtt
+name: "test"
+state_topic: "test/state"
+command_topic: "test/state"
+payload_on: "on"
+payload_off: "off"
+optimistic: false
+qos: 0
+retain: false
