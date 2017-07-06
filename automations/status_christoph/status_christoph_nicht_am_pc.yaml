@@ -15,20 +15,9 @@ condition:
     entity_id: input_boolean.chrishome
     state: "on"
 
+
 action:
   - service: input_select.select_option
-    data:
+    data_template:
       entity_id: input_select.christoph_status
-      option: "Anwesend"
-  - condition: or
-    conditions:
-      - condition: state
-        entity_id: 'device_tracker.oneplus3bt'
-        state: 'home'
-  - service: input_select.christoph_status
-    data:
-      entity_id: input_select.christoph_status
-      option: "In der ELW"
-
-
-
+      option: '{% if is_state("device_tracker.oneplus3bt", "home") %}In der ELW{% else %}Anwesend{% endif %}'
