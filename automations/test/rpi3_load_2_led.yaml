@@ -1,0 +1,32 @@
+alias: rpi3 Load to LED
+initial_state: True
+trigger:
+  - platform: state
+    entity_id: sensor.average_load_1m
+action:
+  - service_template: >-
+      {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.6 %}
+        switch.turn_on
+      {% else %}
+        switch.turn_off
+      {% endif %}
+    data:
+      entity_id: switch.grne_led
+
+  - service_template: >-
+      {% if 0.6 <= trigger.to_state.state|float < 0.8 %}
+        switch.turn_on
+      {% else %}
+        switch.turn_off
+      {% endif %}
+    data:
+      entity_id: switch.gelbe_led
+
+  - service_template: >-
+      {% if 0.8 <= trigger.to_state.state|float < 5.0 %}
+        switch.turn_on
+      {% else %}
+        switch.turn_off
+      {% endif %}
+    data:
+      entity_id: switch.rote_led

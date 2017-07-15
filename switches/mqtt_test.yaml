@@ -1,9 +1,9 @@
 platform: mqtt
-name: "test"
-state_topic: "test/state"
-command_topic: "test/state"
-payload_on: "on"
-payload_off: "off"
+name: "temperatur"
+state_topic: "notify"
+command_topic: "notify"
+payload_on: "pushover_test"
+payload_off: "pushover_test2"
 optimistic: false
 qos: 0
 retain: false

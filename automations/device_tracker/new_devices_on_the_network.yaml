@@ -1,0 +1,13 @@
+# Announce new devices on the network.
+# Thanks 2 @robotsandcakes
+
+alias: "New device connected"
+initial_state: true
+trigger:
+  - platform: event
+    event_type: device_tracker_new_device
+action:
+  - service: notify.pushbullet
+    data_template:
+      message: >
+        New entity ID {{ trigger.event.data.entity_id }} and hostname {{ trigger.event.data.host_name }}

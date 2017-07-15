@@ -7,3 +7,7 @@ action:
     data_template:
       message: >
          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Die Sonne geht jetzt in Stuttgart unter!
+  - service: notify.pushover
+    data_template:
+      message: >
+         {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Die Sonne geht jetzt in Stuttgart unter!

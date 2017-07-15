@@ -131,6 +131,7 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
+    - group.outtopic
     - group.radartest
     - group.sprit
     - group.lcd_mqtt

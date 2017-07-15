@@ -23,6 +23,11 @@
     platform: nma
     api_key: !secret nma_apikey
 
+  - name: pushover
+    platform: pushover
+    api_key: !secret pushover_api_key
+    user_key: !secret pushover_user_key
+
   - name: email
     platform: smtp
     server: !secret smtp_server

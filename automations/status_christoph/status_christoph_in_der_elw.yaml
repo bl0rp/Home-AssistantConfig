@@ -8,14 +8,9 @@ trigger:
     entity_id: device_tracker.oneplus3bt
     from: 'not_home'
     to: 'home'
-#     for:
-#       minutes: 3
-condition:
-  - condition: state
-    entity_id: sensor.sonoff1_use
-    state: "Nein"
+
 action:
   - service: input_select.select_option
-    data:
+    data_template:
       entity_id: input_select.christoph_status
-      option: "In der ELW"
+      option: '{% if is_state("sensor.sonfoff1_use", "Ja") %}Am PC{% else %}In der ELW{% endif %}'

@@ -3,6 +3,7 @@ raspberry_systemstatus:
   view: no
   icon: mdi:raspberrypi
   entities:
+    - automation.rpi3_load_to_led
     - sensor.cpu_temperature
     - sensor.average_load_1m
     - sensor.average_load_5m
