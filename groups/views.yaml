@@ -77,18 +77,6 @@ familie:
   entities:
    - group.familiegrp
 
-#Statistik:
-#  name: Statistik
-#  view: yes
-#  icon: mdi:chart-line
-#  entities:
-#   - group.statistik_heute
-#   - group.statistik_gestern
-#   - group.statistik_woche
-#   - group.statistik_30tage
-#   - group.statistik_alltime
-#   - group.statistik_personen
-
 autos:
   name: Automation
   view: yes
