@@ -1,0 +1,124 @@
+################################################################
+## Packages / Weather
+## @cvoid - https://github.com/bl0rp/Home-AssistantConfig
+################################################################
+
+homeassistant:
+  customize:
+    sensor.sunstate:
+      friendly_name: Die Sonne ist
+      icon: mdi:white-balance-sunny
+
+    sensor.sun_next_setting:
+      friendly_name: Nächster Sonnenuntergang
+      icon: mdi:weather-sunset-down
+
+    sensor.sun_next_rising:
+      friendly_name: Nächster Sonnenaufgang
+      icon: mdi:weather-sunset-up
+
+    script.sun_info_pushbullet:
+      friendly_name: Pushbullet Sonneninfo
+      icon: mdi:white-balance-sunny
+
+
+group:
+  wetter_all:
+    name: Wetter
+    icon: mdi:weather-partlycloudy
+    entities:
+      - sensor.sunstate
+      - sensor.moon
+      - sensor.sun_next_setting
+      - sensor.sun_next_rising
+      - sensor.yr_temperature
+      - sensor.dark_sky_temperature
+      - sensor.yr_humidity
+      - sensor.dark_sky_humidity
+      - sensor.yr_cloudiness
+      - sensor.dark_sky_cloud_coverage
+      - sensor.yr_precipitation
+      - sensor.dark_sky_precip
+      - sensor.dark_sky_precip_intensity
+      - sensor.dark_sky_precip_probability
+      - script.sun_info_pushbullet
+
+  wetter_yr:
+    name: Wetter via yr.no
+    icon: mdi:weather-partlycloudy
+    entities:
+      - sensor.yr_temperature
+      - sensor.yr_symbol
+      - sensor.yr_cloudiness
+      - sensor.yr_dewpoint_temperature
+      - sensor.yr_humidity
+      - sensor.yr_precipitation
+      - sensor.yr_pressure
+      - sensor.yr_wind_speed
+      - sensor.yr_fog
+
+  wetter_darksky:
+    name: Wetter via DarkSky
+    entities:
+      - sensor.dark_sky_apparent_temperature
+      - sensor.dark_sky_cloud_coverage
+      - sensor.dark_sky_daily_high_apparent_temperature
+      - sensor.dark_sky_daily_high_temperature
+      - sensor.dark_sky_daily_low_apparent_temperature
+      - sensor.dark_sky_daily_low_temperature
+      - sensor.dark_sky_daily_max_precip_intensity
+      - sensor.dark_sky_daily_summary
+      - sensor.dark_sky_dew_point
+      - sensor.dark_sky_hourly_summary
+      - sensor.dark_sky_humidity
+      - sensor.dark_sky_minutely_summary
+      - sensor.dark_sky_ozone
+      - sensor.dark_sky_precip
+      - sensor.dark_sky_precip_intensity
+      - sensor.dark_sky_precip_probability
+      - sensor.dark_sky_pressure
+      - sensor.dark_sky_summary
+      - sensor.dark_sky_temperature
+      - sensor.dark_sky_visibility
+      - sensor.dark_sky_wind_bearing
+      - sensor.dark_sky_wind_speed
+
+
+###############################################################################
+#  Sensors
+###############################################################################
+sensor:
+  - platform: template
+    sensors:
+      sunstate:
+        value_template: >
+          {{ 'am Himmel' if is_state('sun.sun', 'above_horizon') else 'unter dem Horizont' }}
+        icon_template: >
+          {% if is_state('sun.sun', 'above_horizon') %}mdi:weather-sunny{% else %}mdi:waether-night{% endif %}
+
+  - platform: template
+    sensors:
+      sun_next_setting:
+        value_template: '{% if states.sun.sun %}{{ ((as_timestamp(states.sun.sun.attributes.next_setting)) | timestamp_local) [11:19] }}{% endif %}'
+
+  - platform: template
+    sensors:
+      sun_next_rising:
+        value_template: '{% if states.sun.sun %}{{ ((as_timestamp(states.sun.sun.attributes.next_rising)) | timestamp_local) [11:19] }}{% endif %}'
+
+
+
+###############################################################################
+#  Scripts
+###############################################################################
+
+script:
+  sun_info_pushbullet:
+    alias: "Sun Information via PB"
+    sequence:
+      service: notify.pushbullet
+      data:
+        title: "({{ now().strftime('%d.%m.%Y %H:%M:%S') }}): Die Sonne ist {{ states.sensor.sunstate.state }}."
+        message: >
+           Nächster Sonnenuntergang: {{ states.sensor.sun_next_setting.state }}
+           Nächster Sonnenaufgang: {{ states.sensor.sun_next_rising.state }}

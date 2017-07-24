@@ -5,11 +5,12 @@ sensordata_1og:
     - sensor.dark_sky_temperature
     - sensor.temperatur_esp8266_01
     - sensor.temperatur_esp8266_03
+    - sensor.temperatur_esp8266_07
     - sensor.yr_humidity
     - sensor.dark_sky_humidity
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_03
-
+    - sensor.luftfeuchtigkeit_esp8266_07
 
 sensordata_elw:
   name: Temperatur und Luftfeuchtigkeit

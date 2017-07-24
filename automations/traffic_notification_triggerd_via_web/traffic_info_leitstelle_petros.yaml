@@ -1,0 +1,20 @@
+alias: 'Trafficrequest via web ils petros'
+initial_state: True
+trigger:
+  platform: mqtt
+  topic: traffic_status
+  payload: 'leitstelle'
+action:
+  - service: notify.pushbullet
+    data:
+      title: "Sie haben Verkehrsdaten requestiert! ({{ now().strftime('%d.%m.%Y %H:%M:%S') }})"
+      message: >
+         Hallo,
+         
+         Laut Google beträgt die aktuelle Fahrzeit
+         
+         von Daheim zur ILS: {{ states.sensor.petros__ils.state }} Minuten
+         
+         und von der ILS nach Hause: {{ states.sensor.ils__petros.state }} Minuten.
+         
+         Hade, Tschuss!

@@ -11,6 +11,12 @@
     destination: Neckarstraße 143, Stuttgart, Germany
 
   - platform: google_travel_time
+    name: Hauptrettungswache -> Zuhause
+    api_key: !secret google_traveltime_apikey
+    origin: Neckarstraße 143, Stuttgart, Germany
+    destination: zone.home
+
+  - platform: google_travel_time
     name: Stuttgart -> Berlin
     api_key: !secret google_traveltime_apikey
     origin: zone.home

@@ -19,6 +19,14 @@
     platform: pushbullet
     api_key: !secret pbapikey
 
+  - name: pushbullet_petros
+    platform: pushbullet
+    api_key: !secret pbapikey_petros
+
+  - name: pushbullet_traude
+    platform: pushbullet
+    api_key: !secret pbapikey_traude
+
   - name: nma
     platform: nma
     api_key: !secret nma_apikey
