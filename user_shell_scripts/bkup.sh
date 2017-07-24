@@ -9,17 +9,35 @@
 DATE=$(date +%Y-%m-%d-%H%M%S)
 BACKUP_DIR="/root/backups"
 HOMEASSISTANT="/home/homeassistant/.homeassistant"
+HOMEASSISTANT_SCRIPT="/home/homeassistant/script"
+USERCONF="/home/pi/script /home/pi/.bashrc /root/scripts"
 SOURCE="/etc"
 
 # Stop HA, run the Backup, restart HA
+echo Stoppe HomeAssistant.
 systemctl stop home-assistant@homeassistant.service
+
+echo Beginne Backup der Verzeichnisse.
+
 tar -cjpf $BACKUP_DIR/etc-backup-$DATE.tar.bz2 $SOURCE
 tar -cjpf $BACKUP_DIR/homeassistant-complete-$DATE.tar.bz2 $HOMEASSISTANT
-# bziping the sqldump would take ages...
-mysqldump --lock-tables -h 127.0.0.1 -u ha -pha homeassistant > $BACKUP_DIR/homeassistant-sqlbkp_$DATE.bak
+tar -cjpf $BACKUP_DIR/homeassistant-scripts-$DATE.tar.bz2 $HOMEASSISTANT_SCRIPT
+tar -cjpf $BACKUP_DIR/user-scripts-$DATE.tar.bz2 $USERCONF
+
+# bzip2 the SQL Dump would take ages...
+echo Beginne SQLDump.
+mysqldump --lock-tables -h 192.168.0.11 -u ha -pha ha > $BACKUP_DIR/homeassistant-sqlbkp_$DATE.bak 
+echo Starte HomeAssistant.
 systemctl start home-assistant@homeassistant.service
+
+echo Lösche alte Backups und Kopiere auf das NAS.
 
 # Delete old backups
 find $BACKUP_DIR -mtime +14 -exec rm {} \;
-
+# Copy Backups to NAS
+mount /root/habackup_qnap
+cp -rv $BACKUP_DIR/ /root/habackup_qnap/
+umount /root/habackup_qnap
 echo Backup complete.
+
+
