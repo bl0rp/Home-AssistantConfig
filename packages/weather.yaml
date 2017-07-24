@@ -1,10 +1,20 @@
-################################################################
-## Packages / Weather
-## @cvoid - https://github.com/bl0rp/Home-AssistantConfig
-################################################################
+##############################################################
+### Packages / Weather                                     ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
 
 homeassistant:
+
+#################
+### Customize ###
+#################
+
   customize:
+
+    camera.regenradarstuttgart:
+      friendly_name: Regen Radar Stuttgart
+      icon: mdi:radar
+
     sensor.sunstate:
       friendly_name: Die Sonne ist
       icon: mdi:white-balance-sunny
@@ -21,6 +31,92 @@ homeassistant:
       friendly_name: Pushbullet Sonneninfo
       icon: mdi:white-balance-sunny
 
+#####################################
+### yr.no/darksky/wetter->German  ###
+#####################################
+
+    sun.sun:
+      friendly_name: Sonne
+
+###yr.no
+    sensor.yr_fog:
+      friendly_name: Nebel (yr.no)
+    sensor.yr_cloudiness:
+      friendly_name: Bewölkung  (yr.no)
+      icon: mdi:cloud
+    sensor.yr_dewpoint_temperature:
+      friendly_name: Taupunkt  (yr.no)
+    sensor.yr_humidity:
+      friendly_name: Luftfeuchtigkeit  (yr.no)
+      icon: mdi:water-percent
+    sensor.yr_precipitation:
+      friendly_name: Niederschlag  (yr.no)
+      icon: mdi:weather-snowy-rainy
+    sensor.yr_pressure:
+      friendly_name: Luftdruck  (yr.no)
+      icon: mdi:gauge
+    sensor.yr_temperature:
+      friendly_name: Außentemperatur  (yr.no)
+      icon: mdi:thermometer
+    sensor.yr_wind_speed:
+      friendly_name: Windgeschwindigkeit  (yr.no)
+      icon: mdi:weather-windy
+
+###DarkSky
+    sensor.dark_sky_apparent_temperature:
+       friendly_name: Gefühlte Temperatur (DarkSky)
+    sensor.dark_sky_cloud_coverage:
+       friendly_name: Bewölkung (DarkSky)
+    sensor.dark_sky_daily_high_apparent_temperature:
+       friendly_name: Tageshöchsttemperatur (gefühlt) (DarkSky)
+    sensor.dark_sky_daily_high_temperature:
+       friendly_name: Tageshöchsttemperatur (DarkSky)
+    sensor.dark_sky_daily_low_apparent_temperature:
+       friendly_name: Tagesniedrigsttemperatur (gefühlt) (DarkSky)
+    sensor.dark_sky_daily_low_temperature:
+       friendly_name: Tagesniedrigsttemperatur (DarkSky)
+    sensor.dark_sky_daily_max_precip_intensity:
+       friendly_name: Tageshöchstniederschlag (DarkSky)
+    sensor.dark_sky_daily_summary:
+       friendly_name: Tageszusammenfassung (DarkSky)
+    sensor.dark_sky_dew_point:
+       friendly_name: Taupunkt (DarkSky)
+    sensor.dark_sky_hourly_summary:
+       friendly_name: Stündliche Zusammenfassung (DarkSky)
+    sensor.dark_sky_humidity:
+       friendly_name: Luftfeuchtigkeit (DarkSky)
+    sensor.dark_sky_minutely_summary:
+       friendly_name: Minütliche Zusammenfassung (DarkSky)
+    sensor.dark_sky_ozone:
+       friendly_name: Ozon (DarkSky)
+    sensor.dark_sky_precip:
+       friendly_name: Niederschlag (DarkSky)
+    sensor.dark_sky_precip_intensity:
+       friendly_name: Niederschlag Intensität (DarkSky)
+    sensor.dark_sky_precip_probability:
+       friendly_name: Niederschlagswahrscheinlichkeit (DarkSky)
+    sensor.dark_sky_pressure:
+       friendly_name: Luftdruck (DarkSky)
+    sensor.dark_sky_summary:
+       friendly_name: Zusammenfassung (DarkSky)
+    sensor.dark_sky_temperature:
+       friendly_name: Außentemperatur (DarkSky)
+    sensor.dark_sky_visibility:
+       friendly_name: Sichtweite (DarkSky)
+    sensor.dark_sky_wind_bearing:
+       friendly_name: Windrichtung (DarkSky)
+    sensor.dark_sky_wind_speed:
+       friendly_name: Windgeschwindigkeit (DarkSky)
+
+#################
+### Radar Map ###
+#################
+
+camera:
+  - platform: generic
+    name: RegenRadarStuttgart
+    still_image_url: https://www.niederschlagsradar.de/image.ashx?type=regioloop&regio=stg&j=&m=&d=&mi=&uhr=&bliksem=0&voor=&srt=loop1stunde
+
 
 group:
   wetter_all:
@@ -31,6 +127,7 @@ group:
       - sensor.moon
       - sensor.sun_next_setting
       - sensor.sun_next_rising
+      - camera.regenradarstuttgart
       - sensor.yr_temperature
       - sensor.dark_sky_temperature
       - sensor.yr_humidity
@@ -84,10 +181,62 @@ group:
       - sensor.dark_sky_wind_speed
 
 
-###############################################################################
-#  Sensors
-###############################################################################
+###############
+### Sensors ###
+###############
+
 sensor:
+
+###############
+### Sources ###
+###############
+
+#yr.no
+  - platform: yr
+    monitored_conditions:
+        - temperature
+        - symbol
+        - precipitation
+        - windSpeed
+        - pressure
+        - humidity
+        - fog
+        - cloudiness
+        - dewpointTemperature
+#Darksky
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    update_interval: '00:03'
+    monitored_conditions:
+      - summary
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - temperature
+      - apparent_temperature
+      - dew_point
+      - wind_speed
+      - wind_bearing
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - ozone
+      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_max
+      - temperature_min
+      - apparent_temperature_max
+      - apparent_temperature_min
+      - precip_intensity_max
+#Moon
+  - platform: moon
+
+################
+### Template ###
+################
+
   - platform: template
     sensors:
       sunstate:
@@ -108,9 +257,9 @@ sensor:
 
 
 
-###############################################################################
-#  Scripts
-###############################################################################
+###############
+### Scripts ###
+###############
 
 script:
   sun_info_pushbullet:

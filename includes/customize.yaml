@@ -9,8 +9,7 @@
       hidden: false
     group.all_switches:
       hidden: false
-    group.chrisdata:
-      order: 2
+
 ###SWITCH###
     switch.katze:
       friendly_name: Testswitch ohne Funktion
@@ -43,77 +42,7 @@
       friendly_name: WOL alekto
       icon: mdi:power
 ###SENSOR###
-#yr.no/darksky/wetter->deutsch
-    sun.sun:
-      friendly_name: Sonne
-###yr.no
-    sensor.yr_fog:
-      friendly_name: Nebel (yr.no)
-    sensor.yr_cloudiness:
-      friendly_name: Bewölkung  (yr.no)
-      icon: mdi:cloud
-    sensor.yr_dewpoint_temperature:
-      friendly_name: Taupunkt  (yr.no)
-    sensor.yr_humidity:
-      friendly_name: Luftfeuchtigkeit  (yr.no)
-      icon: mdi:water-percent
-    sensor.yr_precipitation:
-      friendly_name: Niederschlag  (yr.no)
-      icon: mdi:weather-snowy-rainy
-    sensor.yr_pressure:
-      friendly_name: Luftdruck  (yr.no)
-      icon: mdi:gauge
-    sensor.yr_temperature:
-      friendly_name: Außentemperatur  (yr.no)
-      icon: mdi:thermometer
-    sensor.yr_wind_speed:
-      friendly_name: Windgeschwindigkeit  (yr.no)
-      icon: mdi:weather-windy
-###DarkSky
-    sensor.dark_sky_apparent_temperature:
-       friendly_name: Gefühlte Temperatur (DarkSky)
-    sensor.dark_sky_cloud_coverage:
-       friendly_name: Bewölkung (DarkSky)
-    sensor.dark_sky_daily_high_apparent_temperature:
-       friendly_name: Tageshöchsttemperatur (gefühlt) (DarkSky)
-    sensor.dark_sky_daily_high_temperature:
-       friendly_name: Tageshöchsttemperatur (DarkSky)
-    sensor.dark_sky_daily_low_apparent_temperature:
-       friendly_name: Tagesniedrigsttemperatur (gefühlt) (DarkSky)
-    sensor.dark_sky_daily_low_temperature:
-       friendly_name: Tagesniedrigsttemperatur (DarkSky)
-    sensor.dark_sky_daily_max_precip_intensity:
-       friendly_name: Tageshöchstniederschlag (DarkSky)
-    sensor.dark_sky_daily_summary:
-       friendly_name: Tageszusammenfassung (DarkSky)
-    sensor.dark_sky_dew_point:
-       friendly_name: Taupunkt (DarkSky)
-    sensor.dark_sky_hourly_summary:
-       friendly_name: Stündliche Zusammenfassung (DarkSky)
-    sensor.dark_sky_humidity:
-       friendly_name: Luftfeuchtigkeit (DarkSky)
-    sensor.dark_sky_minutely_summary:
-       friendly_name: Minütliche Zusammenfassung (DarkSky)
-    sensor.dark_sky_ozone:
-       friendly_name: Ozon (DarkSky)
-    sensor.dark_sky_precip:
-       friendly_name: Niederschlag (DarkSky)
-    sensor.dark_sky_precip_intensity:
-       friendly_name: Niederschlag Intensität (DarkSky)
-    sensor.dark_sky_precip_probability:
-       friendly_name: Niederschlagswahrscheinlichkeit (DarkSky)
-    sensor.dark_sky_pressure:
-       friendly_name: Luftdruck (DarkSky)
-    sensor.dark_sky_summary:
-       friendly_name: Zusammenfassung (DarkSky)
-    sensor.dark_sky_temperature:
-       friendly_name: Außentemperatur (DarkSky)
-    sensor.dark_sky_visibility:
-       friendly_name: Sichtweite (DarkSky)
-    sensor.dark_sky_wind_bearing:
-       friendly_name: Windrichtung (DarkSky)
-    sensor.dark_sky_wind_speed:
-       friendly_name: Windgeschwindigkeit (DarkSky)
+
 #device_tracker -> sensor
     sensor.technicolor:
       icon: mdi:router-wireless

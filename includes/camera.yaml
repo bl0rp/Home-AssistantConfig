@@ -7,7 +7,3 @@
     name: Google Map Stuttgart
     still_image_url: https://maps.googleapis.com/maps/api/staticmap?center=48.77,9.15&zoom=10&size=500x500&maptype=roadmap
     limit_refetch_to_url_change: true
-#Regen Radar
-  - platform: generic
-    name: RegenRadarStuttgart
-    still_image_url: https://www.niederschlagsradar.de/image.ashx?type=regioloop&regio=stg&j=&m=&d=&mi=&uhr=&bliksem=0&voor=&srt=loop1stunde
