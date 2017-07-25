@@ -1,0 +1,93 @@
+##############################################################
+### Packages / Utilities                                   ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks 2 Norien                                        ###
+### https://github.com/Norien/Home-Assistant-Config/       ###
+##############################################################
+
+homeassistant:
+  customize:
+    script.backup_config:
+      friendly_name: Backup Configuration & Userdata
+      icon: mdi:backup-restore
+    script.update_ha:
+      friendly_name: Update Home Assistant
+      icon: mdi:package-variant
+    script.restart_ha:
+      friendly_name: Restart Home Assistant
+      icon: mdi:restart
+    script.clear_log:
+      friendly_name: 'Clear Log File'
+      icon: mdi:eraser
+    script.clear_tts_cache:
+      friendly_name: Clear TTS cache
+      icon: mdi:shredder
+###### STATE CARD #######################################################
+group:
+  utilities:
+    name: Utilities
+    control: hidden
+    entities:
+      - script.restart_ha
+      - script.update_ha
+      - script.clear_log
+      - script.clear_tts_cache
+  backup:
+    name: Backup
+    control: hidden
+    entities:
+      - automation.auto_backup
+      - script.backup_config
+      - sensor.last_commit
+      - sensor.last_backup
+#########################################################################
+script:
+  update_ha:
+    sequence:
+      - service: tts.clear_cache
+      - service: shell_command.update_ha
+  restart_ha:
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.restarts
+      - service: tts.clear_cache
+      - service: shell_command.del_log
+      - service: shell_command.restart_ha
+  clear_log:
+     sequence:
+       - service: shell_command.del_log
+  backup_config:
+     sequence:
+       - service: tts.clear_cache
+       - service: shell_command.backup_config
+  clear_tts_cache:
+    sequence:
+      - service: tts.clear_cache
+#########################################################################
+automation:
+  - alias: "Auto Backup"
+    initial_state: 'off'
+    trigger:
+      platform: template
+      value_template: "{{ states('sensor.last_commit') > states('sensor.last_backup') }}"
+    action:
+      - service: script.backup_config
+#########################################################################
+sensor:
+###### Latest github Commit
+  - platform: command_line
+    command: "python /home/homeassistant/script/latest_commit.py"
+    name: 'Last Commit'
+    scan_interval: 60
+
+###### Latest config backup
+  - platform: command_line
+    command: "sudo python /home/homeassistant/script/latest_backup.py"
+    name: 'Last Backup'
+    scan_interval: 60
+
+shell_command:
+  backup_config: 'sudo bash /home/homeassistant/script/bkup.sh'
+  update_ha: 'sudo bash /home/homeassistant/script/update_ha.sh </dev/null >> /home/homeassistant/log/update_ha.log 2>&1 &'
+  restart_ha: 'sudo hassctl restart'
+  del_log: rm /home/homeassistant/.homeassistant/home-assistant.log && touch /home/homeassistant/.homeassistant/home-assistant.log && chown -R -v homeassistant:homeassistant /home/homeassistant/.homeassistant/home-assistant.log

@@ -45,7 +45,7 @@ config:
 updater:
 
 logger:
-  default: warn
+  default: error
 
 #discovery:
 

@@ -3,6 +3,8 @@
 default_view:
   view: yes
   entities:
+    - group.utilities
+    - group.backup
     - group.raspberry_systemstatus
     - group.services
     - group.wetter_all
