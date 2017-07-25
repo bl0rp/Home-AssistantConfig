@@ -4,11 +4,6 @@
     unit_of_measurement: "°C"
     value_template: '{{ value|int // 1000 }}'
 
-  - platform: command_line
-    scan_interval: 3600
-    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
-    name: HA release
-
 ###
 #process info via systemmonitor is the better choice
 ###

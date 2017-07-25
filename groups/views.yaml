@@ -5,15 +5,17 @@ default_view:
   entities:
     - group.utilities
     - group.backup
+    - group.pihole
+
+service:
+  view: yes
+  icon: mdi:clipboard-text
+  entities:
     - group.raspberry_systemstatus
+    - group.qnap1
     - group.services
-    - group.wetter_all
     - group.bitcoin
     - group.speedtest
-    - group.sabnzbd
-    - group.traveltime
-    - group.qnap1
-    - group.pihole
 
 ELW:
   name: ELW
@@ -78,6 +80,7 @@ familie:
   icon: mdi:account-multiple
   entities:
    - group.familiegrp
+   - group.traveltime
 
 autos:
   name: Automation
