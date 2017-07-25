@@ -15,7 +15,14 @@
     - !secret wemo2_ip
     - !secret yamaha_ip
     - !secret volumio_ip
+    - !secret rpi1_wlan_ip
+    - !secret echo_dot_ip
+    - !secret mbp_wlan_ip
+    - !secret ipad_ip
+#    - !secret nexus7_ip
+
   home_interval: 20
+  scan_options: "-F --host-timeout 20s -Pn"
   exclude:
     - !secret hass_ip
 

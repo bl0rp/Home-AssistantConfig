@@ -10,11 +10,11 @@ homeassistant:
 
     sensor.temperatur_esp8266_07:
       icon: mdi:thermometer
-      friendly_name: Temperatur Gästezimmer
+      friendly_name: Temperatur Waschküche
 
     sensor.luftfeuchtigkeit_esp8266_07:
       icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit Gästezimmer
+      friendly_name: Luftfeuchtigkeit Waschküche
 
 
 ###############################################################################

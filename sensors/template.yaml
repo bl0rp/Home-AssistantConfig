@@ -1,44 +1,6 @@
   - platform: template
     sensors:
 
-### home->Online für landev group
-      technicolor:
-        friendly_name: 'Unitymedia Technicolor Router'
-        value_template: "{{ 'Online' if is_state('device_tracker.technicolor', 'home') else 'Offline' }}"
-      ddwrt:
-        friendly_name: 'DD-WRT Router 1.OG'
-        value_template: "{{ 'Online' if is_state('device_tracker.ddwrt', 'home') else 'Offline' }}"
-      qnap1:
-        friendly_name: 'QNAP TS-563'
-        value_template: "{{ 'Online' if is_state('device_tracker.qnap1', 'home') else 'Offline' }}"
-      alekto:
-        friendly_name: 'WKS Windows 10'
-        value_template: "{{ 'Online' if is_state('device_tracker.wks_alekto', 'home') else 'Offline' }}"
-      pi1wlan:
-        friendly_name: 'RaspberryPi 1 via WLAN'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi1wlan', 'home') else 'Offline' }}"
-      pi1eth:
-        friendly_name: 'RaspberryPi 1 via Ethernet'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi1eth', 'home') else 'Offline' }}"
-      pi2kodi:
-        friendly_name: 'RaspberryPi 2 (Kodi)'
-        value_template: "{{ 'Online' if is_state('device_tracker.pi2kodi', 'home') else 'Offline' }}"
-      chmbp:
-        friendly_name: 'MacBook Pro'
-        value_template: "{{ 'Online' if is_state('device_tracker.chmbp', 'home') else 'Offline' }}"
-      ipad:
-        friendly_name: 'iPad'
-        value_template: "{{ 'Online' if is_state('device_tracker.ipad', 'home') else 'Offline' }}"
-      nexus7:
-        friendly_name: 'Nexus Tablet'
-        value_template: "{{ 'Online' if is_state('device_tracker.nexus7', 'home') else 'Offline' }}"
-      wemoswitch1:
-        friendly_name: 'Wemo Switch 1'
-        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch1', 'home') else 'Offline' }}"
-      wemoswitch2:
-        friendly_name: 'Wemo Switch 2'
-        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch2', 'home') else 'Offline' }}"
-
 ### systemmonitor
       process_sshd_format:
         friendly_name: 'SSH Daemon'
@@ -76,7 +38,3 @@
         friendly_name: "ELW Flur Motion Last Triggered"
         value_template: >-
           {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
-
-
-
-

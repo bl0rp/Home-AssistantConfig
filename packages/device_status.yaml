@@ -1,0 +1,203 @@
+##############################################################
+### Packages / Device Status                               ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks 2 Norien                                        ###
+### https://github.com/Norien/Home-Assistant-Config/       ###
+##############################################################
+
+homeassistant:
+  customize:
+    #ONLINE / OFFLINE Device Tracker
+    sensor.technicolor:
+      icon: mdi:router-wireless
+      friendly_name: 'Unitymedia Technicolor Router'
+    sensor.ddwrt:
+      icon: mdi:router-wireless
+      friendly_name: 'DD-WRT Router 1.OG'
+    sensor.qnap1:
+      entity_picture: /local/qnap.png
+      friendly_name: 'QNAP TS-563'
+    sensor.alekto:
+      icon: mdi:monitor
+      friendly_name: 'WKS Windows 10'
+    sensor.pi1wlan:
+      entity_picture: /local/raspi.jpg
+      friendly_name: 'RaspberryPi 1 via WLAN'
+    sensor.pi1eth:
+      entity_picture: /local/raspi.jpg
+      friendly_name: 'RaspberryPi 1 via Ethernet'
+    sensor.pi2kodi:
+      entity_picture: /local/kodi.jpg
+      friendly_name: 'RaspberryPi 2 (Kodi)'
+    sensor.chmbp:
+      entity_picture: /local/apple.jpg
+      friendly_name: 'MacBook Pro'
+    sensor.ipad:
+      entity_picture: /local/apple.jpg
+      friendly_name: 'iPad'
+    sensor.nexus7:
+      entity_picture: /local/nexus.jpg
+      friendly_name: 'Nexus Tablet'
+    sensor.wemoswitch1:
+      entity_picture: /local/wemo.jpg
+      friendly_name: 'Wemo Switch 1'
+    sensor.wemoswitch2:
+      entity_picture: /local/wemo.jpg
+      friendly_name: 'Wemo Switch 2'
+    sensor.echo_dot:
+      friendly_name: 'Echo Dot'
+      entity_picture: /local/echo_dot.png
+    sensor.tradfri:
+      friendly_name: 'Ikea Tradfri Hub'
+      entity_picture: /local/tradfri.png
+    sensor.yamaha_rxv473:
+      friendly_name: 'Yamaha RX-V473'
+      entity_picture: /local/yamaha.gif
+    sensor.volumio:
+      friendly_name: 'Volumio'
+      entity_picture: /local/volumio.jpg
+    automation.notify_to_logfile_if_device_goes_offline:
+      friendly_name: 'Device Status Logfile'
+    automation.esp8266_sensor_state:
+      friendly_name: 'Benachrichtigung ESP8266 Status'
+
+
+###### STATE CARD for views.yaml
+
+group:
+  device_status:
+    control: hidden
+    icon: mdi:ethernet-cable
+    name: Geräte Heimnetz
+    entities:
+      - automation.notify_to_logfile_if_device_goes_offline
+      - automation.esp8266_sensor_state
+      - sensor.technicolor
+      - sensor.ddwrt
+      - sensor.qnap1
+      - sensor.wks_alekto
+      - sensor.pi1wlan
+      - sensor.pi1eth
+      - sensor.pi2kodi
+      - sensor.chmbp
+      - sensor.ipad
+      - sensor.nexus7
+      - sensor.wemoswitch1
+      - sensor.wemoswitch2
+      - sensor.tradfri
+      - sensor.yamaha_rxv473
+      - sensor.echo_dot
+      - sensor.volumio
+      - sensor.esp8266_01
+      - sensor.esp8266_02
+      - sensor.esp8266_03
+      - sensor.esp8266_04
+      - sensor.esp8266_05
+      - sensor.esp8266_06
+      - sensor.esp8266_07
+
+sensor:
+
+###### CUSTOM ONLINE // OFFLINE TEXT FOR device_tracker
+###### See packages espXX.yaml for specific NodeMCU On- or Offline state sensors
+
+  - platform: template
+    sensors:
+      technicolor:
+        value_template: "{{ 'Online' if is_state('device_tracker.technicolor', 'home') else 'Offline' }}"
+      ddwrt:
+        value_template: "{{ 'Online' if is_state('device_tracker.ddwrt', 'home') else 'Offline' }}"
+      qnap1:
+        value_template: "{{ 'Online' if is_state('device_tracker.qnap1', 'home') else 'Offline' }}"
+      alekto:
+        value_template: "{{ 'Online' if is_state('device_tracker.wks_alekto', 'home') else 'Offline' }}"
+      pi1wlan:
+        value_template: "{{ 'Online' if is_state('device_tracker.pi1wlan', 'home') else 'Offline' }}"
+      pi1eth:
+        value_template: "{{ 'Online' if is_state('device_tracker.pi1eth', 'home') else 'Offline' }}"
+      pi2kodi:
+        value_template: "{{ 'Online' if is_state('device_tracker.pi2kodi', 'home') else 'Offline' }}"
+      chmbp:
+        value_template: "{{ 'Online' if is_state('device_tracker.chmbp', 'home') else 'Offline' }}"
+      ipad:
+        value_template: "{{ 'Online' if is_state('device_tracker.ipad', 'home') else 'Offline' }}"
+      nexus7:
+        value_template: "{{ 'Online' if is_state('device_tracker.nexus7', 'home') else 'Offline' }}"
+      wemoswitch1:
+        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch1', 'home') else 'Offline' }}"
+      wemoswitch2:
+        value_template: "{{ 'Online' if is_state('device_tracker.wemoswitch2', 'home') else 'Offline' }}"
+      tradfri:
+        value_template: "{{ 'Online' if is_state('device_tracker.tradfri', 'home') else 'Offline' }}"
+      yamaha_rxv473:
+        value_template:  "{{ 'Online' if is_state('device_tracker.yamaha_rxv473', 'home') else 'Offline' }}"
+      volumio:
+        value_template:  "{{ 'Online' if is_state('device_tracker.volumio', 'home') else 'Offline' }}"
+      echo_dot:
+        value_template:  "{{ 'Online' if is_state('device_tracker.echo_dot', 'home') else 'Offline' }}"
+
+automation:
+#################################################################
+### Notify when a device goes Offline or Online to the Logfile ##
+#################################################################
+  - alias: Notify to Logfile if Device Goes Offline
+    trigger:
+      platform: state
+      entity_id:
+        - sensor.technicolor
+        - sensor.ddwrt
+        - sensor.qnap1
+        - sensor.wks_alekto
+        - sensor.pi1wlan
+        - sensor.pi1eth
+        - sensor.pi2kodi
+        - sensor.chmbp
+        - sensor.ipad
+        - sensor.nexus7
+        - sensor.wemoswitch1
+        - sensor.wemoswitch2
+        - sensor.yamaha_rxv473
+        - sensor.tradfri
+        - sensor.volumio
+        - sensor.esp8266_01
+        - sensor.esp8266_02
+        - sensor.esp8266_03
+        - sensor.esp8266_04
+        - sensor.esp8266_05
+        - sensor.esp8266_06
+        - sensor.esp8266_07
+    condition:
+      - condition: template
+        value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+    action:
+      - service: notify.device_tracker
+        data_template:
+          message: >
+            {% if trigger.to_state.state | lower == "offline" %}
+              {{ trigger.to_state.attributes.friendly_name }} ist offline ({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
+            {% else %}
+              {{ trigger.to_state.attributes.friendly_name }} ist online({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
+            {% endif %}
+#################################################
+### Notify when a NodeMCU device goes Offline ###
+#################################################
+  - alias: ESP8266 Sensor State
+    trigger:
+      platform: state
+      entity_id:
+        - sensor.esp8266_01
+        - sensor.esp8266_02
+        - sensor.esp8266_03
+        - sensor.esp8266_04
+        - sensor.esp8266_05
+        - sensor.esp8266_06
+        - sensor.esp8266_07
+      from: 'Online'
+      to: 'Offline'
+      for:
+        minutes: 2
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} {{ trigger.to_state.attributes.friendly_name }} ist offline!

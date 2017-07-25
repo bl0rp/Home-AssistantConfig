@@ -41,33 +41,7 @@
     switch.wake_on_lan:
       friendly_name: WOL alekto
       icon: mdi:power
-###SENSOR###
 
-#device_tracker -> sensor
-    sensor.technicolor:
-      icon: mdi:router-wireless
-    sensor.ddwrt:
-      icon: mdi:router-wireless
-    sensor.qnap1:
-      entity_picture: /local/qnap.png
-    sensor.alekto:
-      icon: mdi:monitor
-    sensor.pi1eth:
-      entity_picture: /local/raspi.jpg
-    sensor.pi1wlan:
-      entity_picture: /local/raspi.jpg
-    sensor.pi2kodi:
-      entity_picture: /local/kodi.jpg
-    sensor.chmbp:
-      entity_picture: /local/apple.jpg
-    sensor.ipad:
-      entity_picture: /local/apple.jpg
-    sensor.nexus7:
-      entity_picture: /local/nexus.jpg
-    sensor.wemoswitch1:
-      entity_picture: /local/wemo.jpg
-    sensor.wemoswitch2:
-      entity_picture: /local/wemo.jpg
 
 #media_player
     media_player.kodi:

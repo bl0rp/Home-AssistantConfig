@@ -103,7 +103,7 @@ LAN:
   view: yes
   icon: mdi:ethernet-cable
   entities:
-    - group.landev
+    - group.device_status
 
 WETTER:
   name: Wetter

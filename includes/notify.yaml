@@ -11,6 +11,11 @@
     platform: file
     filename: /home/homeassistant/log/motion.txt
 
+  - name: device_tracker
+    platform: file
+    filename: /home/homeassistant/log/device_tracker.txt
+
+
   - name: motionelw
     platform: file
     filename: /home/homeassistant/log/elwmotion.txt
