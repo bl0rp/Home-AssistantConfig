@@ -51,24 +51,15 @@ homeassistant:
     sensor.disk_free_:
       friendly_name: Festplatte frei
       icon: mdi:harddisk
-    sensor.swap_free:
-      friendly_name: Swap frei
-      icon: mdi:harddisk
-    sensor.swap_use:
-      friendly_name: Swap prozentual belegt
-      icon: mdi:harddisk
-    sensor.swap_use_2:
-      friendly_name: Swap belegt
-      icon: mdi:harddisk
     sensor.ram_free:
       friendly_name: RAM belegt
       icon: mdi:chip
     sensor.ram_use:
-      friendly_name: RAM prozentual belegt
+      friendly_name: RAM frei
       icon: mdi:chip
     sensor.ram_use_2:
-      friendly_name: RAM frei
-      icon: mdi:harddisk
+      friendly_name: RAM prozentual belegt
+      icon: mdi:chip
     sensor.ipv4_address_eth0:
       friendly_name: IPv4 Adresse
       icon: mdi:server-network
@@ -81,7 +72,9 @@ homeassistant:
     sensor.sent_eth0:
       friendly_name: Daten gesendet
       icon: mdi:upload-network
-
+    automation.rpi3_load_to_led:
+      friendly_name: Load 2 LED
+      icon: mdi:led-on
 
 
 ###### STATE CARD
@@ -143,9 +136,6 @@ sensor:
       - type: load_1m
       - type: load_5m
       - type: load_15m
-      - type: swap_use_percent
-      - type: swap_use
-      - type: swap_free
       - type: network_in
         arg: eth0
       - type: network_out
@@ -288,3 +278,38 @@ sensor:
            {%- endmacro %}
            {{ human_time(states.sensor.ha_uptime_in_seconds.state | int ) }}
 
+### Visualize load with LEDs (-> packages/esp04)
+automation:
+  alias: rpi3 Load to LED
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: sensor.average_load_1m
+  action:
+    - service_template: >-
+        {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.6 %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      data:
+        entity_id: switch.grne_led
+  
+    - service_template: >-
+        {% if 0.6 <= trigger.to_state.state|float < 0.8 %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      data:
+        entity_id: switch.gelbe_led
+  
+    - service_template: >-
+        {% if 0.8 <= trigger.to_state.state|float < 5.0 %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      data:
+        entity_id: switch.rote_led
+  
