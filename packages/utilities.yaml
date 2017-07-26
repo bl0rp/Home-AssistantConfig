@@ -26,12 +26,7 @@ homeassistant:
       icon: mdi:github-box
     sensor.last_backup:
       icon: mdi:backup-restore
-    sensor.ha_release:
-      friendly_name: 'HA Aktuelle Version:'
-      entity_picture: /local/ha.png
-    sensor.ha_release_local:
-      friendly_name: 'HA Installierte Version:'
-      entity_picture: /local/ha.png
+
 ###### STATE CARD #######################################################
 group:
   utilities:
@@ -50,6 +45,7 @@ group:
       - script.backup_config
       - sensor.last_commit
       - sensor.last_backup
+### Customization and Setup in packages/systeminfo
       - sensor.ha_release
       - sensor.ha_release_local
 #########################################################################
@@ -98,17 +94,6 @@ sensor:
     name: 'Last Backup'
     scan_interval: 60
 
-###### Latest HA Release
-  - platform: command_line
-    scan_interval: 3600
-    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
-    name: HA_release
-
-###### Local HA Release
-  - platform: command_line
-    scan_interval: 3600
-    command: "/srv/homeassistant/bin/hass --version"
-    name: HA_release_local
 
 shell_command:
   backup_config: 'sudo bash /home/homeassistant/script/bkup.sh'

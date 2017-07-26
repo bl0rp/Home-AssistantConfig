@@ -1,0 +1,290 @@
+##############################################################
+### Packages / Systeminfo                                  ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Inspired by Norien                                     ###
+### https://github.com/Norien/Home-Assistant-Config/       ###
+##############################################################
+homeassistant:
+  customize:
+    sensor.uname:
+      icon: mdi:linux
+      friendly_name: OS
+    sensor.host_uptime_human:
+      icon: mdi:run-fast
+      friendly_name: Uptime
+    sensor.ha_uptime_human:
+      friendly_name: Home Assistant Uptime
+      icon: mdi:timer
+    sensor.server_uptime:
+      friendly_name: Server Uptime
+      icon: mdi:timer
+    sensor.ha_release:
+      friendly_name: 'HA Aktuelle Version:'
+      entity_picture: /local/ha.png
+    sensor.ha_release_local:
+      friendly_name: 'HA Installierte Version:'
+      entity_picture: /local/ha.png
+    sensor.ha_version:
+      friendly_name: 'HA aktuell?'
+      entity_picture: /local/ha.png
+    sensor.cpu_temperature:
+      friendly_name: CPU Temperatur
+      icon: mdi:thermometer
+    sensor.average_load_1m:
+      friendly_name: Last (1m)
+      icon: mdi:worker
+    sensor.average_load_5m:
+      friendly_name: Last (5m)
+      icon: mdi:worker
+    sensor.average_load_15m:
+      friendly_name: Last (15m)
+      icon: mdi:worker
+    sensor.cpu_use:
+      friendly_name: CPU
+      icon: mdi:desktop-tower
+    sensor.disk_use_:
+      friendly_name: Festplatte belegt
+      icon: mdi:harddisk
+    sensor.disk_use__2:
+      friendly_name: Festplatte prozentual belegt
+      icon: mdi:harddisk
+    sensor.disk_free_:
+      friendly_name: Festplatte frei
+      icon: mdi:harddisk
+    sensor.swap_free:
+      friendly_name: Swap frei
+      icon: mdi:harddisk
+    sensor.swap_use:
+      friendly_name: Swap prozentual belegt
+      icon: mdi:harddisk
+    sensor.swap_use_2:
+      friendly_name: Swap belegt
+      icon: mdi:harddisk
+    sensor.ram_free:
+      friendly_name: RAM belegt
+      icon: mdi:chip
+    sensor.ram_use:
+      friendly_name: RAM prozentual belegt
+      icon: mdi:chip
+    sensor.ram_use_2:
+      friendly_name: RAM frei
+      icon: mdi:harddisk
+    sensor.ipv4_address_eth0:
+      friendly_name: IPv4 Adresse
+      icon: mdi:server-network
+    sensor.ipv6_address_eth0:
+      friendly_name: IPv6 Adresse
+      icon: mdi:server-network
+    sensor.received_eth0:
+      friendly_name: Daten empfangen
+      icon: mdi:download-network
+    sensor.sent_eth0:
+      friendly_name: Daten gesendet
+      icon: mdi:upload-network
+
+
+
+###### STATE CARD
+
+group:
+
+  systeminfo:
+    control: hidden
+    icon: mdi:ethernet-cable
+    name: Systemstatus
+    entities:
+      - automation.rpi3_load_to_led
+      - sensor.ha_release
+      - sensor.ha_release_local
+      - sensor.ha_version
+      - weblink.release_log
+      - sensor.host_uptime_human
+      - sensor.ha_uptime_human
+      - sensor.uname
+      - sensor.cpu_temperature
+      - sensor.cpu_use
+      - sensor.average_load_1m
+      - sensor.average_load_5m
+      - sensor.average_load_15m
+      - sensor.disk_use_
+      - sensor.disk_use__2
+      - sensor.disk_free_
+      - sensor.swap_free
+      - sensor.swap_use
+      - sensor.swap_use_2
+      - sensor.ram_free
+      - sensor.ram_use
+      - sensor.ram_use_2
+      - sensor.ipv4_address_eth0
+      - sensor.ipv6_address_eth0
+      - sensor.packets_received_eth0
+      - sensor.packets_sent_eth0
+      - sensor.received_eth0
+      - sensor.sent_eth0
+
+weblink:
+  entities:
+    - name: release_log
+      url: https://github.com/home-assistant/home-assistant/releases
+
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: memory_use_percent
+      - type: memory_use
+      - type: memory_free
+      - type: processor_use
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+      - type: swap_use_percent
+      - type: swap_use
+      - type: swap_free
+      - type: network_in
+        arg: eth0
+      - type: network_out
+        arg: eth0
+      - type: ipv4_address
+        arg: eth0
+      - type: ipv6_address
+        arg: eth0
+      - type: process
+        arg: sshd
+      - type: process
+        arg: dhcpd
+      - type: process
+        arg: autossh
+      - type: process
+        arg: mosquitto
+
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value|multiply(0.001)|round(1)}}'
+
+### Calculating human readable uptime
+
+  - platform: command_line
+    name: host_uptime_in_seconds
+    command: "awk '{print $1}' /proc/uptime"
+    unit_of_measurement: "sec"
+    value_template: '{{ value|round }}'
+
+  - platform: template
+    sensors:
+
+      host_uptime_human:
+        value_template: >-
+           {% macro human_time(sekunden) -%}
+             {%- set sekunden = sekunden|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'wochen': 60 * 60 * 24 * 7,
+               'tage': 60 * 60 * 24,
+               'stunden': 60 * 60,
+               'minuten': 60,
+               'sekunden': 1,
+             } -%}
+           
+             {%- set wochen = sekunden // intervals.wochen -%}
+             {%- set sekunden = sekunden % intervals.wochen -%}
+             {{- comma() ~ wochen ~ ' Woche' ~ ('n' if wochen != 1) if wochen -}}
+           
+             {%- set tage = sekunden // intervals.tage -%}
+             {%- set sekunden = sekunden % intervals.tage -%}
+             {{- comma() ~ tage ~ ' Tag' ~ ('e' if tage != 1) if tage -}}
+           
+             {%- set stunden = sekunden // intervals.stunden -%}
+             {%- set sekunden = sekunden % intervals.stunden -%}
+             {{- comma() ~ stunden ~ ' Stunde' ~ ('n' if stunden != 1) if stunden -}}
+           
+             {%- set minuten = sekunden // intervals.minuten -%}
+             {{- comma() ~ minuten ~ ' Minute' ~ ('n' if minuten != 1) if minuten -}}
+           
+             {%- set sekunden = sekunden % intervals.minuten -%}
+             {{- comma() ~ sekunden ~ ' Sekunde' ~ ('n' if sekunden != 1) if sekunden -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.host_uptime_in_seconds.state | int ) }}
+
+
+
+
+###### Latest HA Release
+  - platform: command_line
+    scan_interval: 3600
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: HA_release
+
+###### Local HA Release
+  - platform: command_line
+    scan_interval: 3600
+    command: "/srv/homeassistant/bin/hass --version"
+    name: HA_release_local
+
+###### CUSTOM HA/Version
+  - platform: template
+    sensors:
+      ha_version:
+        value_template: "{%- if states.sensor.ha_release.state == states.sensor.ha_release_local.state-%} Ja! {% else %}{{states.sensor.ha_release.state}} verfügbar! {% endif%}"
+        icon_template: >-
+          {% if states.sensor.ha_release.state == states.sensor.ha_release_local.state %}
+            mdi:checkbox-marked
+          {% else %}
+            mdi:checkbox-blank-outline
+          {% endif %}
+
+###### CUSTOM LINUX VERSION
+  - platform: command_line
+    command: "uname -s -r -m"
+    name: 'uname'
+    scan_interval: 604800
+
+###### UPTIMES
+  - platform: command_line
+    name: 'ha_uptime_in_seconds'
+    command: echo "$(($(date +%s) - $(date -d "$(head -n1 /home/homeassistant/.homeassistant/home-assistant.log | cut -d' ' -f-2)" +%s)))"
+    scan_interval: 30
+
+  - platform: template
+    sensors:
+ 
+      ha_uptime_human:
+        value_template: >-
+           {% macro human_time(sekunden) -%}
+             {%- set sekunden = sekunden|int -%}
+             {%- set comma = joiner(', ') -%}
+             {%- set intervals = {
+               'wochen': 60 * 60 * 24 * 7,
+               'tage': 60 * 60 * 24,
+               'stunden': 60 * 60,
+               'minuten': 60,
+               'sekunden': 1,
+             } -%}
+           
+             {%- set wochen = sekunden // intervals.wochen -%}
+             {%- set sekunden = sekunden % intervals.wochen -%}
+             {{- comma() ~ wochen ~ ' Woche' ~ ('n' if wochen != 1) if wochen -}}
+           
+             {%- set tage = sekunden // intervals.tage -%}
+             {%- set sekunden = sekunden % intervals.tage -%}
+             {{- comma() ~ tage ~ ' Tag' ~ ('e' if tage != 1) if tage -}}
+           
+             {%- set stunden = sekunden // intervals.stunden -%}
+             {%- set sekunden = sekunden % intervals.stunden -%}
+             {{- comma() ~ stunden ~ ' Stunde' ~ ('n' if stunden != 1) if stunden -}}
+           
+             {%- set minuten = sekunden // intervals.minuten -%}
+             {{- comma() ~ minuten ~ ' Minute' ~ ('n' if minuten != 1) if minuten -}}
+           
+             {%- set sekunden = sekunden % intervals.minuten -%}
+             {{- comma() ~ sekunden ~ ' Sekunde' ~ ('n' if sekunden != 1) if sekunden -}}
+           {%- endmacro %}
+           {{ human_time(states.sensor.ha_uptime_in_seconds.state | int ) }}
+
