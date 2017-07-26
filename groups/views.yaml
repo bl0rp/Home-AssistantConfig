@@ -33,6 +33,7 @@ ELW:
     - group.zwave_aeotec_multisensor6
     - group.zwave_fibaro_plug
     - group.sonoff1
+    - group.sonoff2
     - group.funksteckdosen433mhz_licht
     - group.deckenlicht_elw
     - group.funksteckdosen433mhz_plug

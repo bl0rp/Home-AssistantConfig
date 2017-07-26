@@ -4,7 +4,7 @@ homeassistant:
   customize:
     switch.sonoff_1:
       friendly_name: Monitore
-      icon: mdi:speaker
+      icon: mdi:monitor-multiple
     sensor.sonoff1_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug
