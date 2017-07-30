@@ -65,7 +65,7 @@ sensor:
   - platform: template
     sensors:
       zwave_mpd1_use:
-        friendly_name: Z-Wave Steckdose in Benutzung?
+        friendly_name: Gerät in Benutzung?
         value_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
         icon_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
