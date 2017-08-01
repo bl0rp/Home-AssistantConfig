@@ -52,13 +52,13 @@ homeassistant:
       friendly_name: Festplatte frei
       icon: mdi:harddisk
     sensor.ram_free:
-      friendly_name: RAM belegt
-      icon: mdi:chip
-    sensor.ram_use:
       friendly_name: RAM frei
       icon: mdi:chip
-    sensor.ram_use_2:
+    sensor.ram_use:
       friendly_name: RAM prozentual belegt
+      icon: mdi:chip
+    sensor.ram_use_2:
+      friendly_name: RAM belegt
       icon: mdi:chip
     sensor.ipv4_address_eth0:
       friendly_name: IPv4 Adresse
