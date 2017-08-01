@@ -142,8 +142,8 @@ sensor:
 
       sonoff3_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff3_momentane_leistung') | int > 10 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff3_momentane_leistung') | int > 10 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff3_momentane_leistung') | int > 15 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff3_momentane_leistung') | int > 15 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
