@@ -1,0 +1,12 @@
+alias: "Critical Temperature Wintergarden"
+trigger:
+  platform: numeric_state
+  entity_id: sensor.temperatur_esp8266_03
+  above: 30.0
+action:
+  - service: notify.pushbullet
+    data:
+      message: '{{ states.sensor.date__time.state }}: Dies ist ein Test {{ states.sensor.temperatur_esp8266_03.state }}°C im Wintergarten!'
+  - service: notify.pushbullet_traude
+    data:
+      message: '{{ states.sensor.date__time.state }}: Dies ist ein Test {{ states.sensor.temperatur_esp8266_03.state }}°C im Wintergarten!'

@@ -26,7 +26,7 @@ sensor:
     name: "Temperatur ESP8266 05"
     state_topic: "sensor_esp8266_05/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "?C"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 05"

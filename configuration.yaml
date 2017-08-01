@@ -48,6 +48,7 @@ logger:
   default: error
   logs:
     homeassistant.components.camera.generic: fatal
+    requests.exceptions.ConnectionError: fatal
 
 #discovery:
 

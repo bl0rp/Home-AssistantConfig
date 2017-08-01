@@ -126,6 +126,7 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
+    - group.sonoff3
     - group.outtopic
     - group.radartest
     - group.sprit
