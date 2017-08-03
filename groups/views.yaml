@@ -42,6 +42,16 @@ ELW:
     - media_player.volumio
     - media_player.spotify
 
+media_player:
+  name: media_player
+  view: yes
+  icon: mdi:music
+  entities:
+    - media_player.kodi
+    - media_player.spotify
+    - media_player.volumio
+    - media_player.volumio_tts
+    - media_player.yamaha_receiver
 
 
 1OG:
@@ -75,6 +85,17 @@ Sensordaten:
      - group.status_bewegungsmelder_last_triggered
      - group.status_alle_umweltsensoren
      - group.signalstaerke_alle_sensoren
+
+Sonoffs:
+  name: Sonoff
+  view: yes
+  icon: mdi:power
+  entities:
+     - group.sonoff1
+     - group.sonoff2
+     - group.sonoff3
+     - group.sonoff4
+     - group.sonoff5
 
 familie:
   name: Familie
@@ -126,7 +147,6 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
-    - group.sonoff3
     - group.outtopic
     - group.radartest
     - group.sprit
