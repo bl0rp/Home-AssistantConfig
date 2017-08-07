@@ -45,13 +45,13 @@ homeassistant:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
     automation.dryer_start:
-      friendly_name: Waschvorgang begonnen
+      friendly_name: Trockenvorgang begonnen
       icon: mdi:washing-machine
     automation.dryer_done:
-      friendly_name: Benachrichtigung Waschvorgang beendet
+      friendly_name: Benachrichtigung Trockenvorgang beendet
       icon: mdi:washing-machine
     input_boolean.dryer_switch:
-      friendly_name: Waschvorgang aktiv?
+      friendly_name: Trockenvorgang aktiv?
 
 group:
   sonoff5:
