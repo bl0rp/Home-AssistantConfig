@@ -14,24 +14,6 @@
     switch.katze:
       friendly_name: Testswitch ohne Funktion
       entity_picture: /local/cat.jpg
-    switch.110111:
-      friendly_name: Bettlicht
-      icon: mdi:lamp
-    switch.110112:
-      friendly_name: Schreibtischlicht
-      icon: mdi:spotlight-beam
-    switch.110113:
-      friendly_name: Türlicht
-      icon: mdi:spotlight
-    switch.110011:
-      friendly_name: MPD 433MHz
-      icon: mdi:power-plug
-    switch.110012:
-      friendly_name: RPi IR Cam
-      icon: mdi:raspberrypi
-    switch.110013:
-      friendly_name: IR Strahler
-      icon: mdi:spotlight
     switch.wemoswitch1:
       friendly_name: Lampe Esszimmer
       icon: mdi:lamp
