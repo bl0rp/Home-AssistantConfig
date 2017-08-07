@@ -5,6 +5,7 @@ akkus_laden:
      entity_id: automation.akkuladeautomatik
    - service: switch.turn_on
      entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-   - service: notify.pushbullet
+   - service: persistent_notification.create
      data:
        message: '{{ states.sensor.date__time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'
+       title: "Vape"

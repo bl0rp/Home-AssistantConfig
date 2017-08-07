@@ -175,7 +175,7 @@ switch:
 
 automation:
   - alias: Sonoff2 Load LCD
-    initial_state: False
+    initial_state: true
     trigger:
       platform: state
       entity_id:

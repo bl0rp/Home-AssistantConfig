@@ -305,7 +305,7 @@ automation:
         entity_id: switch.gelbe_led
   
     - service_template: >-
-        {% if 0.8 <= trigger.to_state.state|float < 5.0 %}
+        {% if 0.8 <= trigger.to_state.state|float < 15.0 %}
           switch.turn_on
         {% else %}
           switch.turn_off

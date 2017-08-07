@@ -157,3 +157,16 @@ TEST:
     - group.wetter_darksky
     - group.wetter
     - group.birthdays
+
+chrisshort:
+  name: shortcut
+  view: yes
+  icon: mdi:link
+  entities:
+    - scene.elwaus
+    - scene.elwrelax
+    - light.flur
+    - light.schlafzimmer
+    - script.akkus_laden
+    - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
+    - automation.akkuladeautomatik
