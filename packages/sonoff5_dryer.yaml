@@ -11,6 +11,7 @@ homeassistant:
     switch.sonoff5:
       friendly_name: Trockner
       icon: mdi:fan
+      persistent: true
     sensor.sonoff5_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug

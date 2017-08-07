@@ -11,6 +11,7 @@ homeassistant:
     switch.sonoff4:
       friendly_name: Receiver
       icon: mdi:music
+      persistent: true
     sensor.sonoff4_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug

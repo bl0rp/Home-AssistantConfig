@@ -11,6 +11,7 @@ homeassistant:
     switch.sonoff2:
       friendly_name: Workstation
       icon: mdi:desktop-classic
+      persistent: true
     sensor.sonoff2_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug

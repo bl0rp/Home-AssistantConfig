@@ -11,6 +11,7 @@ homeassistant:
     switch.sonoff3:
       friendly_name: Waschmaschine
       icon: mdi:washing-machine
+      persistent: true
     sensor.sonoff3_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug
