@@ -8,5 +8,3 @@ trigger:
 action:
   - service: scene.turn_on
     entity_id: scene.elwaus
-  - service: switch.turn_off
-    entity_id: switch.sonoff_1
