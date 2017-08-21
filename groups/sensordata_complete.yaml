@@ -22,6 +22,7 @@ status_alle_bewegsungsmelder:
     - sensor.esp8266_04_motion
     - sensor.esp8266_05_motion
 
+
 status_bewegungsmelder_last_triggered:
   name: Letzte Änderung Bewegungsmelder
   entities:
@@ -29,7 +30,7 @@ status_bewegungsmelder_last_triggered:
     - sensor.elw_2_motion_last_triggered
     - sensor.wintergarten_motion_last_triggered
     - sensor.wohnzimmer_motion_last_triggered
-    - sensor.esp8266_05_motion_last_triggered
+    - sensor.esp07_motion_last_triggered
 
 status_alle_umweltsensoren:
   name: Status aller Umweltsensoren im Netzwerk
