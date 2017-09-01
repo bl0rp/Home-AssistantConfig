@@ -8,7 +8,7 @@ trigger:
     entity_id: device_tracker.christoph_ip
     to: 'not_home'
     for:
-      minutes: 10
+      minutes: 5
   - platform: state
     entity_id: switch.christoph_mqtt
     to: 'off'

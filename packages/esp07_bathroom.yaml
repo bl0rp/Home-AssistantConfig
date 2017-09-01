@@ -138,9 +138,6 @@ notify:
       platform: file
       filename: /home/homeassistant/log/esp07/radar.txt
 
-### xmlstarlet wrapper
-shell_command:
-  update_rssfeed_motion_esp07: xmlstarlet ed -L   -a "//channel" -t elem -n item -v "" -s "//item[1]" -t elem -n title -v "Radar Bad" -s "//item[1]"  -t elem -n pubDate -v "`date`" -s "//item[1]" -t elem -n description -v "Bewegung im Bad!" -s "//item[1]" -t elem -n guid -v "GUID" -d "//item[position()>10]" /home/homeassistant/rssfeed/feed.xml
 
 ### Record motion  to a file (see notify)
 automation:
@@ -156,6 +153,6 @@ automation:
         data_template:
           message: >
             {{ as_timestamp(states.sensor.esp8266_07_motion_radar.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S: ') }} {{ states.sensor.esp8266_07_motion_radar.state }} (Radar Bad)
-      - service: shell_command.update_rssfeed_motion_esp07
+
 
 

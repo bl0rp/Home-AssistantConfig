@@ -1,4 +1,5 @@
-alias: 'MQTT autosshtunnel'
+alias: 'MQTT autosshtunnel start'
+initial_state: True
 trigger:
   platform: mqtt
   topic: service
