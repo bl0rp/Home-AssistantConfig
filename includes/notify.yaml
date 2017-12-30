@@ -24,22 +24,12 @@
     platform: pushbullet
     api_key: !secret pbapikey
 
-  - name: pushbullet_petros
-    platform: pushbullet
-    api_key: !secret pbapikey_petros
 
   - name: pushbullet_traude
     platform: pushbullet
     api_key: !secret pbapikey_traude
 
-  - name: nma
-    platform: nma
-    api_key: !secret nma_apikey
 
-  - name: pushover
-    platform: pushover
-    api_key: !secret pushover_api_key
-    user_key: !secret pushover_user_key
 
   - name: email
     platform: smtp
@@ -51,32 +41,3 @@
     password: !secret ha_mail_pw
     recipient: !secret mail_recipient
 
-  - name: mail2frank
-    platform: smtp
-    server: !secret smtp_server
-    port: 587
-    sender: !secret ha_mail_user
-    starttls: true
-    username: !secret ha_mail_user
-    password: !secret ha_mail_pw
-    recipient: !secret frank_mail
-
-  - name: mail2petros
-    platform: smtp
-    server: !secret smtp_server
-    port: 587
-    sender: !secret ha_mail_user
-    starttls: true
-    username: !secret ha_mail_user
-    password: !secret ha_mail_pw
-    recipient: !secret petros_mail
-
-  - name: mail2sms
-    platform: smtp
-    server: !secret smtp_server
-    port: 587
-    sender: !secret ha_mail_user
-    starttls: true
-    username: !secret ha_mail_user
-    password: !secret ha_mail_pw
-    recipient: !secret smsrobot

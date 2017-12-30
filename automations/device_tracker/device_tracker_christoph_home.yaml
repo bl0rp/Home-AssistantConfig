@@ -1,4 +1,5 @@
 alias: 'DeviceTracker Christoph home'
+initial_state: True
 condition:
   condition: state
   entity_id: input_boolean.chrishome
@@ -8,7 +9,7 @@ trigger:
     entity_id: device_tracker.christoph_ip
     to: 'home'
   - platform: state
-    entity_id: device_tracker.oneplus3bt
+    entity_id: device_tracker.pixel_2_xl
     to: 'home'
   - platform: state
     entity_id: device_tracker.chop3_oneplus3

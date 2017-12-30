@@ -1,7 +1,8 @@
 alias: 'ELW Licht ausschalten wenn BT nicht gefunden'
+initial_state: True
 trigger:
     - platform: state
-      entity_id: device_tracker.oneplus3bt
+      entity_id: device_tracker.pixel_2_xl
       to: 'not_home'
       for:
         minutes: 2

@@ -60,16 +60,16 @@ homeassistant:
     sensor.ram_use_2:
       friendly_name: RAM belegt
       icon: mdi:chip
-    sensor.ipv4_address_eth0:
+    sensor.ipv4_address_enxb827eb306d76:
       friendly_name: IPv4 Adresse
       icon: mdi:server-network
-    sensor.ipv6_address_eth0:
+    sensor.ipv6_address_enxb827eb306d76:
       friendly_name: IPv6 Adresse
       icon: mdi:server-network
-    sensor.received_eth0:
+    sensor.received_enxb827eb306d76:
       friendly_name: Daten empfangen
       icon: mdi:download-network
-    sensor.sent_eth0:
+    sensor.sent_enxb827eb306d76:
       friendly_name: Daten gesendet
       icon: mdi:upload-network
     automation.rpi3_load_to_led:
@@ -108,12 +108,12 @@ group:
       - sensor.ram_free
       - sensor.ram_use
       - sensor.ram_use_2
-      - sensor.ipv4_address_eth0
-      - sensor.ipv6_address_eth0
-      - sensor.packets_received_eth0
-      - sensor.packets_sent_eth0
-      - sensor.received_eth0
-      - sensor.sent_eth0
+      - sensor.ipv4_address_enxb827eb306d76
+      - sensor.ipv6_address_enxb827eb306d76
+      - sensor.packets_received_enxb827eb306d76
+      - sensor.packets_sent_enxb827eb306d76
+      - sensor.received_enxb827eb306d76
+      - sensor.sent_enxb827eb306d76
 
 weblink:
   entities:
@@ -137,13 +137,13 @@ sensor:
       - type: load_5m
       - type: load_15m
       - type: network_in
-        arg: eth0
+        arg: enxb827eb306d76
       - type: network_out
-        arg: eth0
+        arg: enxb827eb306d76
       - type: ipv4_address
-        arg: eth0
+        arg: enxb827eb306d76
       - type: ipv6_address
-        arg: eth0
+        arg: enxb827eb306d76
       - type: process
         arg: sshd
       - type: process

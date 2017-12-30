@@ -9,8 +9,8 @@ homeassistant:
 
   customize:
     switch.sonoff4:
-      friendly_name: Receiver
-      icon: mdi:music
+      friendly_name: Lichterkette
+      icon: mdi:led-on
       persistent: true
     sensor.sonoff4_momentane_leistung:
       friendly_name: Aktuelle Leistung
@@ -66,7 +66,8 @@ group:
       - sensor.sonoff4_kosten_gesamt
       - automation.sonoff4_load_lcd
       - script.del_sonoff4_power_log
-
+      - automation.lichterkette_anschalten_nach_sonnenuntergang
+      - automation.lichterkette_ausschalten_nach_sonnenuntergang
 sensor:
 
 ### Reading the values from the tasmota mqtt string
@@ -177,6 +178,26 @@ automation:
         data_template:
           message: >
             {{ states.sensor.sonoff4_momentane_leistung.state }}
+### Turn On LED Lights at Sundown
+  - alias: "Lichterkette anschalten nach Sonnenuntergang"
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: sunset
+    action:
+      - service: switch.turn_on
+        entity_id: switch.sonoff4
+### Turn Off LED Lights at Sundown
+  - alias: "Lichterkette ausschalten nach Sonnenuntergang"
+    initial_state: True
+    trigger:
+      - platform: time
+        hours: 23
+        minutes: 00
+        seconds: 00
+    action:
+      - service: switch.turn_off
+        entity_id: switch.sonoff4
 
 ### Delete the logfile (reset the maximum power sensor)
 

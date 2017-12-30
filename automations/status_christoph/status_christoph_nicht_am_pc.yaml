@@ -3,6 +3,7 @@
 
 # Home status from monitor status
 alias: "stat-christoph_Home status from monitor status"
+initial_state: True
 trigger:
   - platform: state
     entity_id: sensor.sonoff1_use
@@ -20,4 +21,4 @@ action:
   - service: input_select.select_option
     data_template:
       entity_id: input_select.christoph_status
-      option: '{% if is_state("device_tracker.oneplus3bt", "home") %}In der ELW{% else %}Anwesend{% endif %}'
+      option: '{% if is_state("device_tracker.pixel_2_xl", "home") %}In der ELW{% else %}Anwesend{% endif %}'

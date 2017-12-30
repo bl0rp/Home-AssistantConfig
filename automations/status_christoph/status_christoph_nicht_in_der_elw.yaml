@@ -3,9 +3,10 @@
 
 # Home status from monitor status
 alias: "stat-christoph_Home status from monitor status"
+initial_state: True
 trigger:
   - platform: state
-    entity_id: device_tracker.oneplus3bt
+    entity_id: device_tracker.pixel_2_xl
     from: 'home'
     to: 'not_home'
 #     for:

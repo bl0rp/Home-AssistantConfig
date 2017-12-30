@@ -9,7 +9,7 @@ condition:
 #    entity_id: sun.sun
 #    state: "below_horizon"
   - condition: state
-    entity_id: device_tracker.oneplus3bt
+    entity_id: device_tracker.pixel_2_xl
     state: "home"
 action:
   - service: switch.turn_on

@@ -233,6 +233,10 @@ sensor:
 #Moon
   - platform: moon
 
+#DWD Weather Warn
+  - platform: dwd_weather_warnings
+    region_name: Stuttgart
+
 ################
 ### Template ###
 ################

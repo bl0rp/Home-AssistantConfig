@@ -1,4 +1,5 @@
 alias: "dhcpd Alarm"
+initial_state: True
 trigger:
   platform: state
   entity_id: sensor.process_dhcpd

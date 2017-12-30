@@ -2,6 +2,7 @@
 # Thanks 2 Ron Mar (http://ronmar.co/)
 
 alias: "stat-christoph_Computer status from monitor status"
+initial_state: True
 trigger:
   - platform: state
     entity_id: sensor.sonoff1_use

@@ -1,4 +1,5 @@
 alias: "Stehlampe um 23 Uhr ausschalten"
+initial_state: True
 trigger:
   platform: time
   hours: 23

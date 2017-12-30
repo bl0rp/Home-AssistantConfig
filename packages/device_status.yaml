@@ -141,6 +141,7 @@ automation:
 ### Notify when a device goes Offline or Online to the Logfile ##
 #################################################################
   - alias: Notify to Logfile if Device Goes Offline
+    initial_state: True
     trigger:
       platform: state
       entity_id:
@@ -182,16 +183,17 @@ automation:
 ### Notify when a NodeMCU device goes Offline ###
 #################################################
   - alias: ESP8266 Sensor State
+    initial_state: True
     trigger:
       platform: state
       entity_id:
         - sensor.esp8266_01
         - sensor.esp8266_02
         - sensor.esp8266_03
-        - sensor.esp8266_04
-        - sensor.esp8266_05
-        - sensor.esp8266_06
-        - sensor.esp8266_07
+#        - sensor.esp8266_04
+#        - sensor.esp8266_05
+#        - sensor.esp8266_06
+#        - sensor.esp8266_07
       from: 'Online'
       to: 'Offline'
       for:

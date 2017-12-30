@@ -1,0 +1,15 @@
+alias: Auto AV Quelle Volumio
+initial_state: True
+trigger:
+  platform: state
+  entity_id: media_player.volumio
+  to: 'playing'
+condition:
+#  - condition: state
+#    state: "home"
+#    entity_id: device_tracker.pixel_2_xl
+action:
+  - service: media_player.select_source
+    entity_id: media_player.yamaha_receiver
+    data:
+        source: Volumio

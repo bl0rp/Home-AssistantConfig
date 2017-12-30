@@ -1,5 +1,6 @@
 #Thanks 2 Bob_NL (https://community.home-assistant.io/t/intruder-alert/24084)
 alias: "Send notification upon failed login attempt"
+initial_state: True
 trigger:
   - platform: state
     entity_id: persistent_notification.httplogin

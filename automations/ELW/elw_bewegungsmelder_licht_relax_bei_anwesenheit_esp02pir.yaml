@@ -9,7 +9,7 @@ condition:
     after: sunset
 #    after_offset: "+0:10:00"
   - condition: state
-    entity_id: device_tracker.oneplus3bt
+    entity_id: device_tracker.pixel_2_xl
     state: "home"
 action:
   - service: scene.turn_on

@@ -1,4 +1,5 @@
 alias: 'DeviceTracker Christoph not_home'
+initial_state: True
 condition:
   condition: state
   entity_id: input_boolean.chrishome
@@ -15,7 +16,7 @@ trigger:
     for:
       minutes: 5
 #  - platform: state
-#    entity_id: device_tracker.oneplus3bt
+#    entity_id: device_tracker.pixel_2_xl
 #    to: 'not_home'
   - platform: state
     entity_id: sensor.tasker_chris

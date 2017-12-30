@@ -3,7 +3,7 @@ alias: slider_led
 initial_state: False
 trigger:
   - platform: state
-    entity_id: input_slider.tuerlicht_intervall
+    entity_id: input_number.tuerlicht_intervall
 action:
   - service_template: >-
       {% if 0 <= trigger.to_state.state|int < 20 %}

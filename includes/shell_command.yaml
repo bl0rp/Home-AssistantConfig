@@ -1,7 +1,10 @@
 #Curl Mapper (Thanks 2 @dale3h)
   curl: >-
     /usr/bin/curl {{ args|default('-sS') }} -X {{ method|default('get')|upper }} {%- for k in headers %} -H "{{ k }}: {{ headers[k] }}"{% endfor %} {{- (' -d \'' ~ payload|tojson ~ '\'') if payload }} {{ url }} > {{ stream|default('/dev/null') }}
-
+#  curl2: >-
+#    /usr/bin/curl {{ url }}
+  curl2: >-
+    /usr/bin/curl {{ args|default('-sS') }} -X {{ method|default('get')|upper }} {%- for k in headers %} -H "{{ k }}: {{ headers[k] }}"{% endfor %} {{- (' -d \'' ~ payload|tojson ~ '\'') if payload }} {{ url }}
 #LCD Curl Wrapper -> ESP8266_5
   lcd_on: curl http://192.168.0.84/control?cmd=lcdcmd,on
   lcd_off: curl http://192.168.0.84/control?cmd=lcdcmd,off

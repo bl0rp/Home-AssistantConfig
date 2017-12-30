@@ -136,8 +136,8 @@ sensor:
 
       sonoff2_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff2_momentane_leistung') | int > 7 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff2_momentane_leistung') | int > 7 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff2_momentane_leistung') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff2_momentane_leistung') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
@@ -182,57 +182,36 @@ automation:
         - sensor.sonoff2_momentane_leistung
         - sensor.sonoff2_sonoff2_max_load
     action:
-      - service: shell_command.curl2
-        data:
-          url: http://192.168.0.84/control?cmd=lcdcmd,clear
-          method: get
-      - service: shell_command.curl2
-        data:
-          url: http://192.168.0.84/control?cmd=lcdcmd,on
-          method: get
-      - service: shell_command.curl2
-        data:
-          url: "http://192.168.0.84/control?cmd=lcd,1,1,Power%20Workstation:"
-          method: get
-      - service: shell_command.curl2
+      - service: mqtt.publish
         data_template:
-          url: "http://192.168.0.84/control?cmd=lcd,2,1,{{ states('sensor.sonoff2_momentane_leistung') }}%20Watt"
-          method: get
-      - service: shell_command.curl2
-        data:
-          url: "http://192.168.0.84/control?cmd=lcd,3,1,Maximum:"
-          method: get
-      - service: shell_command.curl2
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcdcmd,clear"
+      - service: mqtt.publish
         data_template:
-          url: "http://192.168.0.84/control?cmd=lcd,4,1,{{ states('sensor.sonoff2_max_load') }}%20Watt"
-          method: get
-
-  - alias: Auto On LCD while using the PC
-    initial_state: true
-    trigger:
-      platform: state
-      entity_id:
-        - sensor.sonoff2_use
-      to: 'Ja'
-      for:
-        seconds: 30
-    action:
-      - service: switch.turn_on
-        entity_id: switch.110011
-
-  - alias: Auto Off LCD when not using the PC
-    initial_state: true
-    trigger:
-      platform: state
-      entity_id:
-        - sensor.sonoff2_use
-      to: 'Nein'
-      for:
-        seconds: 15
-    action:
-      - service: switch.turn_off
-        entity_id: switch.110011
-
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcdcmd,on"
+      - service: mqtt.publish
+        data_template:
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcd,1,1,Power Workstation:"
+      - service: mqtt.publish
+        data_template:
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcd,2,1,{{ states('sensor.sonoff2_momentane_leistung') }} Watt"
+      - service: mqtt.publish
+        data_template:
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcd,3,1,Maximum:"
+      - service: mqtt.publish
+        data_template:
+          topic: "sensor_esp8266_05/cmd"
+          retain: false
+          payload: "lcd,4,1,{{ states('sensor.sonoff2_max_load') }} Watt"
 
 
 ### Record all power levels to a file (see notify)

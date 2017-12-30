@@ -1,5 +1,6 @@
 ### Thanks to @dal3h and @CCOSTAN
 alias: home_assistant_update_notification
+initial_state: True
 trigger:
   - platform: state
     entity_id: updater.updater

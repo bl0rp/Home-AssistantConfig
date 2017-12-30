@@ -5,7 +5,7 @@ trigger:
     platform: state
     entity_id: sensor.abtis__frank, sensor.frank__abtis
 action:
-  - service: shell_command.curl
+  - service: shell_command.curl2
     data_template:
       url: https://fahrzeit:fahrzeit@chris.0x711.de/fahrzeit_petros/receive.php
       method: post

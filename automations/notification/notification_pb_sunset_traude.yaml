@@ -1,4 +1,5 @@
 alias: "Sonnenuntergang an Pushbullet Traude"
+initial_state: True
 trigger:
   platform: sun
   event: sunset

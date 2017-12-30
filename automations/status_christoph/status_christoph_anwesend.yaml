@@ -3,6 +3,7 @@
 
 # Home status
 alias: "stat-christoph_Home status from input boolean"
+initial_state: True
 trigger:
   - platform: state
     entity_id: input_boolean.chrishome

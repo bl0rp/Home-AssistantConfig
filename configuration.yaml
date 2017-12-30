@@ -38,9 +38,10 @@ frontend:
       paper-slider-active-color: "#2d3a4f"
       paper-slider-secondary-color: "#FFE0B2"
 http:
-   api_password: !secret api_password
+  api_password: !secret api_password
 
 config:
+cloud:
 
 updater:
 
@@ -48,6 +49,7 @@ logger:
   default: error
   logs:
     homeassistant.components.camera.generic: fatal
+    homeassistant.components.shell_command: fatal
     requests.exceptions.ConnectionError: fatal
 
 #discovery:
@@ -57,7 +59,8 @@ conversation:
 history:
 
 recorder:
-  purge_days: 30
+  purge_interval: 30
+  purge_keep_days: 30
   db_url: !secret mysql_db_path
 
 logbook:
@@ -97,7 +100,7 @@ wemo:
 
 tradfri:
   host: !secret tradfri_ip
-  api_key: !secret tradfri_api_key
+
 
 ##################
 #    INCLUDES    #
@@ -109,7 +112,7 @@ device_tracker: !include includes/device_tracker.yaml
 group: !include_dir_merge_named groups/
 input_boolean: !include includes/input_boolean.yaml
 input_select: !include includes/input_select.yaml
-input_slider: !include includes/input_slider.yaml
+input_number: !include includes/input_number.yaml
 media_player: !include includes/media_player.yaml
 notify: !include includes/notify.yaml
 scene: !include includes/scene.yaml

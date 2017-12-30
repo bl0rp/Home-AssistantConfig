@@ -4,7 +4,7 @@ chrisdata:
     - sensor.0x711de_ungelese_emails
     - sensor.phonebatt
     - device_tracker.christoph_ip
-    - device_tracker.oneplus3bt
+    - device_tracker.pixel_2_xl
     - switch.christoph_mqtt
     - sensor.tasker_chris
     - input_boolean.chrishome
