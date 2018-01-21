@@ -116,10 +116,10 @@ sensor:
     name: "sonoff4 Spannung"
     state_topic: "tele/sonoff4/SENSOR"
     value_template: "{{ value_json.ENERGY.Voltage }}"
-    availability_topic: "tele/sonoff4/LWT"
     unit_of_measurement: "V"
-    payload_available: "Online"
-    payload_not_available: "Offline"
+    availability_topic: "tele/sonoff4/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff4 Stromstaerke"
