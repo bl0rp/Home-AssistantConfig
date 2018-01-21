@@ -14,6 +14,9 @@ homeassistant:
       friendly_name: Waschmaschine
       icon: mdi:washing-machine
       persistent: true
+    sensor.sonoff3_ipv4:
+      friendly_name: IPv4
+      icon: mdi:server-network
     sensor.sonoff3_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug
@@ -63,6 +66,7 @@ group:
     view: no
     entities:
       - switch.sonoff3
+      - sensor.sonoff3_ipv4
       - sensor.sonoff3_use
       - sensor.sonoff3_momentane_leistung
       - sensor.sonoff3_spannung
@@ -85,7 +89,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Verbrauch Heute"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Today }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff3/LWT"
@@ -94,7 +98,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Verbrauch Gestern"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Yesterday }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff3/LWT"
@@ -103,7 +107,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Gesamtverbrauch"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Total }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff3/LWT"
@@ -112,7 +116,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Momentane Leistung"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Power }}"
     unit_of_measurement: "W"
     availability_topic: "tele/sonoff3/LWT"
@@ -121,7 +125,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Spannung"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Voltage }}"
     unit_of_measurement: "V"
     availability_topic: "tele/sonoff3/LWT"
@@ -130,7 +134,7 @@ sensor:
 
   - platform: mqtt
     name: "sonoff3 Stromstaerke"
-    state_topic: "tele/sonoff3/ENERGY"
+    state_topic: "tele/sonoff3/SENSOR"
     value_template: "{{ value_json.ENERGY.Current }}"
     unit_of_measurement: "A"
     availability_topic: "tele/sonoff3/LWT"

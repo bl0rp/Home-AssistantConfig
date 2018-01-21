@@ -82,8 +82,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Verbrauch Heute"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Today }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"
@@ -91,8 +91,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Verbrauch Gestern"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Yesterday }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"
@@ -100,8 +100,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Gesamtverbrauch"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Total }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"
@@ -109,8 +109,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Momentane Leistung"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Power }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
     unit_of_measurement: "W"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"
@@ -118,8 +118,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Spannung"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Voltage }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
     unit_of_measurement: "V"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"
@@ -127,8 +127,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff2 Stromstaerke"
-    state_topic: "tele/sonoff2/ENERGY"
-    value_template: "{{ value_json.Current }}"
+    state_topic: "tele/sonoff2/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
     unit_of_measurement: "A"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "online"

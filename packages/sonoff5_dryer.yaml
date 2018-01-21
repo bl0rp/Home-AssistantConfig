@@ -14,6 +14,9 @@ homeassistant:
       friendly_name: Trockner
       icon: mdi:fan
       persistent: true
+    sensor.sonoff5_ipv4:
+      friendly_name: IPv4
+      icon: mdi:server-network
     sensor.sonoff5_momentane_leistung:
       friendly_name: Aktuelle Leistung
       icon: mdi:power-plug
@@ -63,6 +66,7 @@ group:
     view: no
     entities:
       - switch.sonoff5
+      - sensor.sonoff5_ipv4
       - sensor.sonoff5_use
       - sensor.sonoff5_momentane_leistung
       - sensor.sonoff5_spannung
@@ -85,8 +89,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Verbrauch Heute"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Today }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
@@ -94,8 +98,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Verbrauch Gestern"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Yesterday }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
@@ -103,8 +107,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Gesamtverbrauch"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Total }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
     unit_of_measurement: "kWh"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
@@ -112,8 +116,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Momentane Leistung"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Power }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
     unit_of_measurement: "W"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
@@ -121,8 +125,8 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Spannung"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Voltage }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
     unit_of_measurement: "V"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
@@ -130,9 +134,17 @@ sensor:
 
   - platform: mqtt
     name: "sonoff5 Stromstaerke"
-    state_topic: "tele/sonoff5/ENERGY"
-    value_template: "{{ value_json.Current }}"
+    state_topic: "tele/sonoff5/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
     unit_of_measurement: "A"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - platform: mqtt
+    name: "sonoff5 IPv4"
+    state_topic: "tele/sonoff5/INFO2"
+    value_template: "{{ value_json.IPAddress }}"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "online"
     payload_not_available: "offline"
