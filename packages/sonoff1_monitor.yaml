@@ -1,6 +1,8 @@
 ##############################################################
 ### Packages / sonoff1                                     ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
 ### Inspired by mihalski                                   ###
 ### https://github.com/mihalski/homeassistant-config       ###
 ##############################################################
@@ -20,6 +22,9 @@ homeassistant:
     sensor.sonoff1_stromstaerke:
       friendly_name: Stromstärke
       icon: mdi:flash
+    sensor.sonoff1_ipv4:
+      friendly_name: IPv4
+      icon: mdi:server-network
     sensor.sonoff1_max_load:
       friendly_name: Maximale Leistung
       icon: mdi:fire
@@ -52,6 +57,7 @@ group:
     view: no
     entities:
       - switch.sonoff1
+      - sensor.sonoff1_ipv4
       - sensor.sonoff1_use
       - sensor.sonoff1_momentane_leistung
       - sensor.sonoff1_spannung
@@ -68,43 +74,68 @@ group:
 
 sensor:
 
-### Reading the values from the tasmota mqtt string
+### Readsensor:
+  - platform: mqtt
+    name: "sonoff1 Momentane Leistung"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff1 Verbrauch Heute"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Today }}"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff1 Verbrauch Gestern"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Yesterday }}"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff1 Gesamtverbrauch"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Total }}"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
     unit_of_measurement: "kWh"
-
-  - platform: mqtt
-    name: "sonoff1 Momentane Leistung"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Power }}"
-    unit_of_measurement: "W"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff1 Spannung"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Voltage }}"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
     unit_of_measurement: "V"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff1 Stromstaerke"
-    state_topic: "tele/sonoff1/ENERGY"
-    value_template: "{{ value_json.Current }}"
+    state_topic: "tele/sonoff1/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
     unit_of_measurement: "A"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - platform: mqtt
+    name: "sonoff1 IPv4"
+    state_topic: "tele/sonoff1/INFO2"
+    value_template: "{{ value_json.IPAddress }}"
+    availability_topic: "tele/sonoff1/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 ### Calculating cost based on the local prive per kWh
 
@@ -132,8 +163,8 @@ sensor:
 
       sonoff1_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 4 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff1_momentane_leistung') | int > 4 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)

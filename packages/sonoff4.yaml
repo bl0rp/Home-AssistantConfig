@@ -134,6 +134,9 @@ sensor:
     name: "sonoff4 IPv4"
     state_topic: "tele/sonoff4/INFO2"
     value_template: "{{ value_json.IPAddress }}"
+    availability_topic: "tele/sonoff4/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 
 ### Calculating cost based on the local prive per kWh

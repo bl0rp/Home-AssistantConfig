@@ -1,6 +1,8 @@
 ##############################################################
-### Packages / Sonoff2                                     ###
+### Packages / sonoff2                                     ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
 ### Inspired by mihalski                                   ###
 ### https://github.com/mihalski/homeassistant-config       ###
 ##############################################################
@@ -21,6 +23,9 @@ homeassistant:
     sensor.sonoff2_stromstaerke:
       friendly_name: Stromstärke
       icon: mdi:flash
+    sensor.sonoff2_ipv4:
+      friendly_name: IPv4
+      icon: mdi:server-network
     sensor.sonoff2_max_load:
       friendly_name: Maximale Leistung
       icon: mdi:fire
@@ -56,6 +61,7 @@ group:
     view: no
     entities:
       - switch.sonoff2
+      - sensor.sonoff2_ipv4
       - sensor.sonoff2_use
       - sensor.sonoff2_momentane_leistung
       - sensor.sonoff2_spannung
@@ -79,36 +85,62 @@ sensor:
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Today }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff2 Verbrauch Gestern"
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Yesterday }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff2 Gesamtverbrauch"
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Total }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff2 Momentane Leistung"
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Power }}"
     unit_of_measurement: "W"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff2 Spannung"
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Voltage }}"
     unit_of_measurement: "V"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff2 Stromstaerke"
     state_topic: "tele/sonoff2/ENERGY"
     value_template: "{{ value_json.Current }}"
     unit_of_measurement: "A"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
+
+  - platform: mqtt
+    name: "sonoff2 IPv4"
+    state_topic: "tele/sonoff2/INFO2"
+    value_template: "{{ value_json.IPAddress }}"
+    availability_topic: "tele/sonoff2/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 ### Calculating cost based on the local prive per kWh
 
@@ -175,7 +207,7 @@ switch:
 
 automation:
   - alias: Sonoff2 Load LCD
-    initial_state: true
+    initial_state: false
     trigger:
       platform: state
       entity_id:
@@ -207,6 +239,8 @@ automation:
           url: "http://192.168.0.84/control?cmd=lcd,4,1,{{ states('sensor.sonoff2_max_load') }}%20Watt"
           method: get
 
+#Turn on/off the ESP / Automations (packages/sysinfo) while using the Computer
+
   - alias: Auto On LCD while using the PC
     initial_state: true
     trigger:
@@ -219,6 +253,11 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.110011
+      - service: automation.turn_on
+        entity_id: automation.sonoff2_load_lcd
+      - service: automation.turn_on
+        entity_id: automation.rpi3_load_to_led
+
 
   - alias: Auto Off LCD when not using the PC
     initial_state: true
@@ -232,7 +271,10 @@ automation:
     action:
       - service: switch.turn_off
         entity_id: switch.110011
-
+      - service: automation.turn_off
+        entity_id: automation.sonoff2_load_lcd
+      - service: automation.turn_off
+        entity_id: automation.rpi3_load_to_led
 
 
 ### Record all power levels to a file (see notify)

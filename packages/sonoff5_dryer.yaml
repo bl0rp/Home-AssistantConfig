@@ -1,6 +1,8 @@
 ##############################################################
 ### Packages / sonoff5                                     ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
 ### Inspired by mihalski                                   ###
 ### https://github.com/mihalski/homeassistant-config       ###
 ##############################################################
@@ -86,36 +88,54 @@ sensor:
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Today }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff5 Verbrauch Gestern"
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Yesterday }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff5 Gesamtverbrauch"
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Total }}"
     unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff5 Momentane Leistung"
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Power }}"
     unit_of_measurement: "W"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff5 Spannung"
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Voltage }}"
     unit_of_measurement: "V"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
   - platform: mqtt
     name: "sonoff5 Stromstaerke"
     state_topic: "tele/sonoff5/ENERGY"
     value_template: "{{ value_json.Current }}"
     unit_of_measurement: "A"
+    availability_topic: "tele/sonoff5/LWT"
+    payload_available: "online"
+    payload_not_available: "offline"
 
 ### Calculating cost based on the local prive per kWh
 
@@ -143,8 +163,8 @@ sensor:
 
       sonoff5_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff5_momentane_leistung') | int > 15 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff5_momentane_leistung') | int > 15 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff5_momentane_leistung') | int > 30 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff5_momentane_leistung') | int > 30 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
