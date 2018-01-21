@@ -61,7 +61,6 @@ media_player:
   entities:
     - switch.wemoswitch1
     - switch.wemoswitch2
-    - switch.sonoff4
     - script.1og_lampen_an
     - script.1og_lampen_aus
     - group.automation_1og

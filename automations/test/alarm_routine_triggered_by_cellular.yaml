@@ -1,0 +1,19 @@
+alias: tasker_alarm_cellular
+initial_state: True
+
+trigger:
+  platform: mqtt
+  topic: 'pixel2'
+  payload: 'alarm'
+action:
+  - service: switch.turn_on
+    entity_id: switch.110111
+
+  - service: scene.turn_on
+    entity_id: scene.schlafzimmerhell
+
+  - service: notify.pushbullet
+    data_template:
+      message: >
+         {{ states.sensor.date__time.state }} Licht geschalt0rt {{ now().strftime('%d.%m.%Y %H:%M:%S') }} 
+

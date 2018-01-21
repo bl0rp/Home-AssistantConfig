@@ -9,4 +9,5 @@ chrisdata:
     - sensor.tasker_chris
     - input_boolean.chrishome
     - input_select.christoph_status
-    - sensor.ping_check_test
+    - sensor.tankstelle_super
+    - automation.mqtt_home_state_pushbullet

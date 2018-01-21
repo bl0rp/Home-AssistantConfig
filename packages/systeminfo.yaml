@@ -281,7 +281,7 @@ sensor:
 ### Visualize load with LEDs (-> packages/esp04)
 automation:
   alias: rpi3 Load to LED
-  initial_state: True
+  initial_state: False
   trigger:
     - platform: state
       entity_id: sensor.average_load_1m
