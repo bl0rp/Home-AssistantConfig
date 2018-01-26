@@ -1,0 +1,79 @@
+###########################################################################################################
+## Packages / dockermon                                                                                  ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config                                               ##
+## Inspired by:                                                                                          ##
+## https://philhawthorne.com/ha-dockermon-use-home-assistant-to-monitor-start-or-stop-docker-containers/ ##
+###########################################################################################################
+homeassistant:
+
+  customize:
+
+    switch.grafanainflux:
+      friendly_name: "Grafana & Influx"
+      icon: mdi:chart-line-variant
+
+    switch.portainer:
+      icon: mdi:chart-line-variant
+
+switch:
+
+    - platform: rest
+      resource: http://127.0.0.1:8126/container/docker-influxdb-grafana
+      name: GrafanaInflux
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+
+
+    - platform: rest
+      resource: http://127.0.0.1:8126/container/mystifying_swirles
+      name: Portainer
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+
+
+
+group:
+
+  dockercontainer:
+    control: hidden
+    icon: mdi:ethernet-cable
+    name: Docker Container
+    entities:
+      - switch.grafanainflux
+      - switch.portainer
+
+automation:
+
+  - alias: Alert when a critical container goes offline
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: switch.grafanainflux, switch.portainer
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+      condition: and
+      conditions:
+        # Only send this once per hour
+        - condition: template
+          value_template: >
+            {% if states.automation.alert_when_a_critical_container_goes_offline.last_triggered is not none %}
+              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.alert_when_a_critical_container_goes_offline.attributes.last_triggered) | int > 3600 %} true {% else %} false
+              {% endif %}
+            {% else %}
+            false
+            {% endif %}
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: 'Docker container for {{ trigger.to_state.name }} is not running. Please check the status of this container as some features may stop functioning.'
+          title: Container Alert
+      - service: persistent_notification.create
+        data_template:
+          notification_id: offline_container
+          title: Container Offline
+          message: >
+            Docker container for {{ trigger.to_state.name }} is not running.
