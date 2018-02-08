@@ -1,0 +1,93 @@
+################################################################
+## Packages / ESP32 #1                                        ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config    ##
+################################################################
+homeassistant:
+  customize:
+
+
+    sensor.esp32_01_battery:
+      icon: mdi:car-battery
+      friendly_name: Batteriestatus ESP32 01
+
+    sensor.esp32_01_battery_state:
+      icon: mdi:car-battery
+      friendly_name: Batteriestatus ESP32 01
+
+    sensor.esp32_01_battery_value:
+      icon: mdi:car-battery
+      friendly_name: Batteriewert ESP32 01
+
+    sensor.esp32_01_door_state:
+      icon: mdi:door
+      friendly_name: Wohnungstüre ELW
+
+    sensor.esp32_01_door_motion:
+      icon: mdi:door
+      friendly_name: Wohnungstüre ELW
+
+    sensor.esp32_01_motion_last_triggered:
+      icon: mdi:door
+      friendly_name: Letze Bewegung
+
+#############
+#  group    #
+#############
+group:
+
+  esp_01:
+    control: hidden
+    icon: mdi:door
+    name: Türsensor ELW
+    entities:
+      - sensor.esp32_01_battery
+      - sensor.esp32_01_battery_state
+      - sensor.esp32_01_battery_value
+      - sensor.esp32_01_door_state
+      - sensor.esp32_01_door_motion
+      - sensor.esp32_01_motion_last_triggered
+
+
+#############
+#  sensors  #
+#############
+sensor:
+
+  - platform: mqtt
+    name: "esp32_01_battery"
+    state_topic: "stat/tuere-elw/battery"
+    qos: 0
+
+
+  - platform: mqtt
+    name: "esp32_01_battery_value"
+    state_topic: "stat/tuere-elw/batteryvalue"
+    qos: 0
+
+
+  - platform: mqtt
+    name: "esp32_01_door_state"
+    state_topic: "stat/tuere-elw/status"
+    qos: 0
+
+
+  - platform: template
+    sensors:
+
+
+      esp32_01_door_motion:
+        value_template: '{% if is_state("sensor.esp32_01_door_state", "open") %}Türe geöffnet!{% else %}Türe geschlossen.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp32_01_door_state", "open") %}mdi:door-open{% else %}mdi:door-closed{% endif %}'
+
+      esp32_01_battery_state:
+        value_template: '{% if is_state("sensor.esp32_01_battery", "full") %}Geladen{% else %}Leer{% endif %}'
+        icon_template: '{% if is_state("sensor.esp32_01_battery", "full") %}mdi:battery{% else %}mdi:battery-10{% endif %}'
+
+      esp32_01_motion_last_triggered:
+        friendly_name: "Wohnzimmer Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.esp32_01_door_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+
+
+
