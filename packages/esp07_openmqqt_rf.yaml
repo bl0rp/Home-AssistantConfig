@@ -1,0 +1,36 @@
+#############################################################
+## Packages / NodeMCU #7                                   ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config ##
+#############################################################
+homeassistant:
+  customize:
+
+    sensor.esp8266_07:
+      entity_picture: /local/esp.jpg
+
+##############
+#  Sensors  ##
+##############
+sensor:
+
+  - platform: template
+    sensors:
+
+      esp8266_07:
+        friendly_name: 'ESP8266 #7'
+        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_07_ping', 'home') else 'Offline' }}"
+
+      esp8266_07_status_var:
+        friendly_name: "ESP8266 07 Status"
+        value_template: >-
+           {%- if is_state('device_tracker.esp8266_07_ping', 'home') -%}
+             Online!
+           {%- else -%}
+             Sensor ist offline!
+           {%- endif -%}
+
+
+
+
+
+
