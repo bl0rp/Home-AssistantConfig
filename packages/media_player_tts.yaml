@@ -1,0 +1,124 @@
+##############################################################
+### Packages / Media Player State and TTS Script           ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks 2 Ron Mar                                       ###
+##############################################################
+
+homeassistant:
+  customize:
+    automation.DeviceTracker_Christoph_not_home:
+      friendly_name: 'Christoph geht '
+
+### MQTT Sensors for State 
+
+sensor:
+  - platform: mqtt
+    state_topic: "receiver_elw/power"
+    name: power_yamaha
+
+  - platform: mqtt
+    state_topic: "receiver_elw/source"
+    name: source_yamaha
+
+  - platform: mqtt
+    state_topic: "receiver_elw/volume"
+    name: volume_yamaha
+
+  - platform: mqtt
+    state_topic: "mpd_volumio/status"
+    name: volumio_status
+
+
+script:
+  amazon_polly_notify:
+    sequence:
+  
+  # Publish the current receiver state to mqtt
+  
+    - service: mqtt.publish
+      data_template:
+       topic: "receiver_elw/power"
+       retain: true
+       payload: '{{ states.media_player.yamaha_receiver.state }}'
+    - service: media_player.turn_on
+      entity_id: media_player.yamaha_receiver
+    - delay: 00:00:04
+  
+  # Publish the current source to mqtt
+  
+    - service: mqtt.publish
+      data_template:
+       topic: "receiver_elw/source"
+       retain: true
+       payload: '{{ states.media_player.yamaha_receiver.attributes.source }}'
+    #- delay: 00:00:01
+  
+  # Change input to Volumio
+    - service: media_player.select_source
+      entity_id: media_player.yamaha_receiver
+      data:
+          source: "Volumio"
+  #  - delay: 00:00:01
+  
+  # Save current volume
+    - service: mqtt.publish
+      data_template:
+       topic: "receiver_elw/volume"
+       retain: true
+       payload: '{{ states.media_player.yamaha_receiver.attributes.volume_level }}'
+
+    - service: media_player.volume_set
+      entity_id: media_player.yamaha_receiver
+      data:
+          volume_level: "0.50"
+  
+  
+  # Save MPD Current State
+    - service: mqtt.publish
+      data_template:
+       topic: "mpd_volumio/status"
+       retain: true
+       payload: '{{ states.media_player.volumio.state }}'
+  
+  
+  
+  
+  # Say it with Amazon Polly
+    - service: tts.amazon_polly
+      entity_id: media_player.volumio_tts
+      data_template:
+        message: >
+          {% if now().strftime("%H")|int < 12 %}
+          "Good morning.
+          {% elif now().strftime("%H")|int < 18 %}
+          "Good afternoon.
+          {% else %}
+          "Good evening.
+          {% endif %}
+          {{ value1 }}"
+        cache: true
+    - delay: 00:00:02
+
+  # Return Receiver Back to Previous Source
+    - service: media_player.select_source
+      entity_id: media_player.yamaha_receiver
+      data_template:
+          source: >
+             {{ states("sensor.source_yamaha") }}
+
+
+  # Return Receiver Back to Previous Volume Level
+    - service: media_player.volume_set
+      entity_id: media_player.yamaha_receiver
+      data_template:
+          volume_level: >
+             {{ states("sensor.volume_yamaha") }}
+
+
+
+  # Turn off Receiver depending on Media Player Activity
+
+
+    - service_template: >
+          {{ 'media_player.turn_off' if ((states.sensor.mpd_status.state == "paused" or states.sensor.mpd_status.state == "off") and (states.sensor.zone3_status.state == "off" or states.sensor.zone3_status.state == "idle") and ( states.sensor.zone_2_source.state != "NET RADIO" ))  else 'media_player.turn_on' }}
+      entity_id: media_player.yamaha_receiver

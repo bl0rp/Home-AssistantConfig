@@ -1,3 +1,13 @@
+- platform: rest
+  resource: http://ml.internalpositioning.com/location?group=disrespectfuldrever&user=chris
+  value_template: '{{ value_json.users.YOURUSERNAME[0].location }}'
+  method: GET
+  name: find_chris
+  scan_interval: 1
+
+
+
+
   - platform: rest
     resource: https://creativecommons.tankerkoenig.de/json/prices.php?apikey=47f827a6-5036-563a-4aa5-c3bdf12d8258&ids=961351cb-a3c3-4903-9a52-23a7c9be06f3
     name: Diesel

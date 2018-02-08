@@ -13,7 +13,7 @@ homeassistant:
       icon: mdi:run-fast
       friendly_name: Uptime
     sensor.ha_uptime_human:
-      friendly_name: Home Assistant Uptime
+      friendly_name: HA Uptime
       icon: mdi:timer
     sensor.server_uptime:
       friendly_name: Server Uptime
@@ -60,22 +60,43 @@ homeassistant:
     sensor.ram_use_2:
       friendly_name: RAM belegt
       icon: mdi:chip
-    sensor.ipv4_address_enxb827eb306d76:
+    sensor.ipv4_address_eno1:
       friendly_name: IPv4 Adresse
       icon: mdi:server-network
-    sensor.ipv6_address_enxb827eb306d76:
+    sensor.ipv6_address_eno1:
       friendly_name: IPv6 Adresse
       icon: mdi:server-network
-    sensor.received_enxb827eb306d76:
+    sensor.received_eno1:
       friendly_name: Daten empfangen
       icon: mdi:download-network
-    sensor.sent_enxb827eb306d76:
+    sensor.sent_eno1:
       friendly_name: Daten gesendet
       icon: mdi:upload-network
-    automation.rpi3_load_to_led:
+    ##automations
+    automation.nuc_load_to_led:
       friendly_name: Load 2 LED
       icon: mdi:led-on
-
+    automation.hdd_alarm:
+      friendly_name: Alarm Speicherplatz
+      icon: mdi:harddisk
+    automation.cpu_temp_alarm:
+      friendly_name: Alarm CPU Temperatur
+      icon: mdi:fire
+    automation.dhcpd_alarm:
+      friendly_name: Alarm DHCPd
+      icon: mdi:server
+    automation.dockerd_alarm:
+      friendly_name: Alarm Dockerd
+      icon: mdi:server
+    automation.sshd_alarm:
+      friendly_name: Alarm SSHd
+      icon: mdi:server
+    automation.tor_alarm:
+      friendly_name: Alarm TORd
+      icon: mdi:server
+    automation.speedtest_alarm:
+      friendly_name: Alarm Bandbreite
+      icon: mdi:speedometer
 
 ###### STATE CARD
 
@@ -86,7 +107,7 @@ group:
     icon: mdi:ethernet-cable
     name: Systemstatus
     entities:
-      - automation.rpi3_load_to_led
+      - automation.nuc_load_to_led
       - sensor.ha_release
       - sensor.ha_release_local
       - sensor.ha_version
@@ -108,12 +129,36 @@ group:
       - sensor.ram_free
       - sensor.ram_use
       - sensor.ram_use_2
-      - sensor.ipv4_address_enxb827eb306d76
-      - sensor.ipv6_address_enxb827eb306d76
-      - sensor.packets_received_enxb827eb306d76
-      - sensor.packets_sent_enxb827eb306d76
-      - sensor.received_enxb827eb306d76
-      - sensor.sent_enxb827eb306d76
+      - sensor.ipv4_address_eno1
+      - sensor.ipv6_address_eno1
+      - sensor.packets_received_eno1
+      - sensor.packets_sent_eno1
+      - sensor.received_eno1
+      - sensor.sent_eno1
+
+  services:
+    name: Servicestatus
+    entities:
+  #-> sensor template on -> running
+      - sensor.process_autossh_format
+      - sensor.process_sshd_format
+      - sensor.process_dhcpd_format
+      - sensor.process_mosquitto_format
+      - sensor.process_tor_format
+      - sensor.process_dockerd_format
+
+  server_alarm_automations:
+    name: Alarme
+    control: hidden
+    entities:
+     - automation.cpu_temp_alarm
+     - automation.hdd_alarm
+     - automation.dhcpd_alarm
+     - automation.dockerd_alarm
+     - automation.sshd_alarm
+     - automation.tor_alarm
+     - automation.speedtest_alarm
+
 
 weblink:
   entities:
@@ -137,13 +182,13 @@ sensor:
       - type: load_5m
       - type: load_15m
       - type: network_in
-        arg: enxb827eb306d76
+        arg: eno1
       - type: network_out
-        arg: enxb827eb306d76
+        arg: eno1
       - type: ipv4_address
-        arg: enxb827eb306d76
+        arg: eno1
       - type: ipv6_address
-        arg: enxb827eb306d76
+        arg: eno1
       - type: process
         arg: sshd
       - type: process
@@ -152,10 +197,14 @@ sensor:
         arg: autossh
       - type: process
         arg: mosquitto
+      - type: process
+        arg: tor
+      - type: process
+        arg: dockerd
 
   - platform: command_line
     name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    command: "cat /sys/class/thermal/thermal_zone1/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value|multiply(0.001)|round(1)}}'
 
@@ -203,8 +252,41 @@ sensor:
            {%- endmacro %}
            {{ human_time(states.sensor.host_uptime_in_seconds.state | int ) }}
 
-
-
+### systemmonitor
+      process_sshd_format:
+        friendly_name: 'SSH Daemon'
+        value_template: "{{ 'running' if is_state('sensor.process_sshd', 'on') else 'stopped' }}"
+        icon_template: '{% if is_state("sensor.process_sshd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+      process_autossh_format:
+        friendly_name: 'autossh tunnel script'
+        icon_template: '{% if is_state("sensor.process_autossh", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_autossh', 'on') else 'stopped' }}"
+      process_dhcpd_format:
+        friendly_name: 'DHCPD Daemon'
+        icon_template: '{% if is_state("sensor.process_dhcpd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_dhcpd', 'on') else 'stopped' }}"
+      process_mosquitto_format:
+        friendly_name: 'MQTT Daemon'
+        icon_template: '{% if is_state("sensor.process_mosquitto", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_mosquitto', 'on') else 'stopped' }}"
+      process_tor_format:
+        friendly_name: 'Tor Daemon'
+        icon_template: '{% if is_state("sensor.process_tor", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_tor', 'on') else 'stopped' }}"
+      process_dockerd_format:
+        friendly_name: 'Docker Daemon'
+        icon_template: '{% if is_state("sensor.process_dockerd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
+        value_template: "{{ 'running' if is_state('sensor.process_dockerd', 'on') else 'stopped' }}"
+  - platform: speedtest
+    minute:
+      - 0
+      - 15
+      - 30
+      - 45
+    monitored_conditions:
+      - ping
+      - download
+      - upload
 
 ###### Latest HA Release
   - platform: command_line
@@ -215,7 +297,7 @@ sensor:
 ###### Local HA Release
   - platform: command_line
     scan_interval: 3600
-    command: "/srv/homeassistant/bin/hass --version"
+    command: "/home/homeassistant/homeassistant/bin/hass --version"
     name: HA_release_local
 
 ###### CUSTOM HA/Version
@@ -280,36 +362,151 @@ sensor:
 
 ### Visualize load with LEDs (-> packages/esp04)
 automation:
-  alias: rpi3 Load to LED
-  initial_state: False
-  trigger:
-    - platform: state
-      entity_id: sensor.average_load_1m
-  action:
-    - service_template: >-
-        {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.6 %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      data:
-        entity_id: switch.grne_led
-  
-    - service_template: >-
-        {% if 0.6 <= trigger.to_state.state|float < 0.8 %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      data:
-        entity_id: switch.gelbe_led
-  
-    - service_template: >-
-        {% if 0.8 <= trigger.to_state.state|float < 15.0 %}
-          switch.turn_on
-        {% else %}
-          switch.turn_off
-        {% endif %}
-      data:
-        entity_id: switch.rote_led
-  
+  - alias: nuc Load to LED
+    initial_state: False
+    trigger:
+      - platform: state
+        entity_id: sensor.average_load_1m
+    action:
+      - service_template: >-
+          {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.2 %}
+            switch.turn_on
+          {% else %}
+            switch.turn_off
+          {% endif %}
+        data:
+          entity_id: switch.grne_led
+    
+      - service_template: >-
+          {% if 0.2 <= trigger.to_state.state|float < 0.6 %}
+            switch.turn_on
+          {% else %}
+            switch.turn_off
+          {% endif %}
+        data:
+          entity_id: switch.gelbe_led
+    
+      - service_template: >-
+          {% if 0.6 <= trigger.to_state.state|float < 30.0 %}
+            switch.turn_on
+          {% else %}
+            switch.turn_off
+          {% endif %}
+        data:
+          entity_id: switch.rote_led
+    
+    # Notification if X happens
+  - alias: "HDD Alarm"
+    initial_state: True
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.disk_use_
+      above: 25.0
+    action:
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+      - service: notify.email
+        data:
+          title: 'HA: Speicherplatz'
+          message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+    
+  - alias: "cpu temp Alarm"
+    initial_state: True
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      above: 45.0
+    action:
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.sensor.date__time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
+      - service: notify.email
+        data:
+          title: 'HA NUC CPU Temperatur'
+          message: '{{ states.sensor.date__time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
+    
+    
+  - alias: "dhcpd Alarm"
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.process_dhcpd
+      from: 'on'
+      to: 'off'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der DHCP Daemon läuft nicht!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der DHCP Daemon läuft nicht!'
+    
+  - alias: "sshd Alarm"
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.process_sshd
+      from: 'on'
+      to: 'off'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der SSH Daemon läuft nicht!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der SSH Daemon läuft nicht!'
+    
+    
+  - alias: "tor Alarm"
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.process_tor
+      from: 'on'
+      to: 'off'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der Tor Daemon läuft nicht!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der Tor Daemon läuft nicht!'
+
+  - alias: "dockerd Alarm"
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: sensor.process_dockerd
+      from: 'on'
+      to: 'off'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der Docker Daemon läuft nicht!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Der Docker Daemon läuft nicht!'
+
+  - alias: "speedtest_alarm"
+    initial_state: True
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.speedtest_download.state|float < 50}}'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: Process Monitor'
+          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'

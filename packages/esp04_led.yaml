@@ -1,4 +1,4 @@
-﻿################################################################
+################################################################
 ## Packages / NodeMCU #4
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
@@ -27,6 +27,11 @@ homeassistant:
     switch.rote_led:
       icon: mdi:led-outline
       friendly_name: Rote LED
+
+    sensor.esp8266_04_ip:
+      icon: mdi:server-network
+      friendly_name: IPv4 ESP 04
+
 ###############################################################################
 #  Sensors
 ###############################################################################
@@ -39,6 +44,14 @@ sensor:
     unit_of_measurement: "°C"
 
   - platform: mqtt
+    name: "ESP8266 04 IP"
+    state_topic: "sensor_esp8266_04/IP"
+    availability_topic: "sensor_esp8266_04/status"
+    payload_available: "Connected"
+    payload_not_available: "Connection Lost"
+    qos: 0
+
+  - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 04"
     state_topic: "sensor_esp8266_04/dht22/Humidity"
     qos: 0
@@ -47,11 +60,6 @@ sensor:
   - platform: mqtt
     name: "ESP8266 04 PIR"
     state_topic: "sensor_esp8266_04/pir/motion"
-    qos: 0
-
-  - platform: mqtt
-    name: "ESP8266 04 IP"
-    state_topic: "sensor_esp8266_04/status_ip"
     qos: 0
 
   - platform: mqtt

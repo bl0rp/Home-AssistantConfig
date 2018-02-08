@@ -2,13 +2,14 @@ alias: 'ELW Licht ausschalten wenn BT nicht gefunden'
 initial_state: True
 trigger:
     - platform: state
-      entity_id: device_tracker.pixel_2_xl
+#      entity_id: device_tracker.pixel_2_xl
+      entity_id: device_tracker.chris_bluetooth_nuc
       to: 'not_home'
       for:
         minutes: 2
 action:
     - service: homeassistant.turn_on
       entity_id: script.elw_lampen_aus_scene
-#    - service: notify.pushbullet
-#      data:
-#        message: 'Alle Lichter in der ELW wurden ausgeschaltet da dass BT Gerät nicht gefunden wurde!'
+    # - service: notify.pushbullet
+      # data:
+        # message: 'Alle Lichter in der ELW wurden ausgeschaltet da dass BT Gerät nicht gefunden wurde!'

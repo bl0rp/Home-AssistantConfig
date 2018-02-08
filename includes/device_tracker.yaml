@@ -31,7 +31,14 @@
 #- platform: owntracks
 #  max_gps_accuracy: 200
 
-- platform: bluetooth_tracker
+#- platform: bluetooth_tracker
+
+- platform: mqtt
+  devices:
+    chris_bluetooth_rpi1: 'bluetooth_rpi1/presence/pixel2'
+    chris_bluetooth_rpi3: 'bluetooth_rpi3/presence/pixel2'
+    chris_bluetooth_nuc: 'bluetooth_nuc/presence/pixel2'
+
 
 - platform: ping
   hosts:

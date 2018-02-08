@@ -2,5 +2,6 @@ deckenlicht_elw:
   name: Deckenlicht ELW
   view: no
   entities:
+    - sensor.tradfri_remote_control
     - light.flur
     - light.schlafzimmer

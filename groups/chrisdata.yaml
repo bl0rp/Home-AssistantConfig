@@ -5,6 +5,10 @@ chrisdata:
     - sensor.phonebatt
     - device_tracker.christoph_ip
     - device_tracker.pixel_2_xl
+    - device_tracker.chris_bluetooth_rpi1
+    - device_tracker.chris_bluetooth_rpi3
+    - device_tracker.chris_bluetooth_nuc
+    - sensor.find_chris
     - switch.christoph_mqtt
     - sensor.tasker_chris
     - input_boolean.chrishome

@@ -8,3 +8,9 @@
 
 
 
+  - platform: rest
+    resource: http://ml.internalpositioning.com/location?group=disrespectfuldrever&user=chris
+    value_template: '{{ value_json.users.chris[0].location }}'
+    method: GET
+    name: find_chris
+    scan_interval: 1

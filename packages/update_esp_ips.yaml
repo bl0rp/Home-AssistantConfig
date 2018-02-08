@@ -1,0 +1,41 @@
+##############################################################
+### Packages / Update_ESP_IPs                              ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+automation:
+    - alias: get_esp_ips
+      trigger:
+        platform: homeassistant
+        event: start
+      action:
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_01"
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_02"
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_03"
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_04"
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_05"
+        - service: script.get_esp_ip
+          data:
+            device: "sensor_esp8266_06"
+
+
+
+script:
+  get_esp_ip:
+    sequence:
+      service: mqtt.publish
+      data_template:
+        topic: "{{ device }}/status"
+        payload: "Connected"
+
+

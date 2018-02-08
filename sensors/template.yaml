@@ -1,24 +1,6 @@
   - platform: template
     sensors:
 
-### systemmonitor
-      process_sshd_format:
-        friendly_name: 'SSH Daemon'
-        value_template: "{{ 'running' if is_state('sensor.process_sshd', 'on') else 'stopped' }}"
-        icon_template: '{% if is_state("sensor.process_sshd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
-      process_autossh_format:
-        friendly_name: 'autossh tunnel script'
-        icon_template: '{% if is_state("sensor.process_autossh", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
-        value_template: "{{ 'running' if is_state('sensor.process_autossh', 'on') else 'stopped' }}"
-      process_dhcpd_format:
-        friendly_name: 'DHCPD Daemon'
-        icon_template: '{% if is_state("sensor.process_dhcpd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
-        value_template: "{{ 'running' if is_state('sensor.process_dhcpd', 'on') else 'stopped' }}"
-      process_mosquitto_format:
-        friendly_name: 'MQTT Daemon'
-        icon_template: '{% if is_state("sensor.process_mosquitto", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
-        value_template: "{{ 'running' if is_state('sensor.process_mosquitto', 'on') else 'stopped' }}"
-
 #### Last Motion
 #
 #      template_pir_motion:

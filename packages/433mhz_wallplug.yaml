@@ -5,57 +5,94 @@
 
 homeassistant:
   customize:
-    switch.110111:
+    switch.11011_A:
       friendly_name: Bettlicht
       icon: mdi:lamp
       persistent: true
-    switch.110112:
+    switch.11011_B:
       friendly_name: Schreibtischlicht
       icon: mdi:spotlight-beam
       persistent: true
-    switch.110113:
+    switch.11011_C:
       friendly_name: Türlicht
       icon: mdi:spotlight
       persistent: true
-    switch.110011:
+    switch.11001_A:
       friendly_name: ESP Schreibtisch
       icon: mdi:power-plug
       persistent: true
-    switch.110012:
+    switch.11001_B:
       friendly_name: RPi IR Cam
       icon: mdi:raspberrypi
       persistent: true
-    switch.110013:
+    switch.11001_C:
       friendly_name: IR Strahler
       icon: mdi:spotlight
       persistent: true
 
-### send used from https://github.com/xkonni/raspberry-remote to control 433MHz outlets
-
 switch:
-  platform: command_line
-  switches:
-    11011_1:
-      command_on: /home/homeassistant/send 11011 1 1
-      command_off: /home/homeassistant/send 11011 1 0
-  
-    11011_2:
-      command_on: /home/homeassistant/send 11011 2 1
-      command_off: /home/homeassistant/send 11011 2 0
-  
-    11011_3:
-      command_on: /home/homeassistant/send 11011 3 1
-      command_off: /home/homeassistant/send 11011 3 0
-  
-    11001_1:
-      command_on: /home/homeassistant/send 11001 1 1
-      command_off: /home/homeassistant/send 11001 1 0
-  
-    11001_2:
-      command_on: /home/homeassistant/send 11001 2 1
-      command_off: /home/homeassistant/send 11001 2 0
-  
-    11001_3:
-      command_on: /home/homeassistant/send 11001 3 1
-      command_off: /home/homeassistant/send 11001 3 0
-  
+  - platform: mqtt
+    name: "11011_A"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "263505"
+    payload_off: "263508"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "11011_B"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "266577"
+    payload_off: "266580"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "11011_C"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "267345"
+    payload_off: "267348"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "11001_A"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "329041"
+    payload_off: "329044"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "11001_B"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "332113"
+    payload_off: "332116"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0
+
+  - platform: mqtt
+    name: "11001_C"
+    command_topic: "home/commands/MQTTto433"
+    payload_on: "332881"
+    payload_off: "332884"
+    availability_topic: "home/OpenMQTTGateway/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    optimistic: false
+    qos: 0

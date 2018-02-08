@@ -1,5 +1,5 @@
 alias: Last Motion 2 OLED
-
+initial_state: false
 trigger:
     platform: state
     entity_id: sensor.multisensor1_motion, sensor.esp8266_02_motion, sensor.esp8266_01_motion, sensor.esp8266_03_motion

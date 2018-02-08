@@ -16,6 +16,9 @@ homeassistant:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit esp06
 
+    sensor.esp8266_06_ip:
+      icon: mdi:server-network
+      friendly_name: IPv4 ESP 06
 
 ###############################################################################
 #  Sensors
@@ -26,7 +29,15 @@ sensor:
     name: "Temperatur ESP8266 06"
     state_topic: "sensor_esp8266_06/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "?C"
+
+  - platform: mqtt
+    name: "ESP8266 06 IP"
+    state_topic: "sensor_esp8266_06/IP"
+    availability_topic: "sensor_esp8266_06/status"
+    payload_available: "Connected"
+    payload_not_available: "Connection Lost"
+    qos: 0
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 06"
@@ -37,11 +48,6 @@ sensor:
   - platform: mqtt
     name: "ESP8266 06 PIR"
     state_topic: "sensor_esp8266_06/pir/motion"
-    qos: 0
-
-  - platform: mqtt
-    name: "ESP8266 06 IP"
-    state_topic: "sensor_esp8266_06/status_ip"
     qos: 0
 
   - platform: mqtt

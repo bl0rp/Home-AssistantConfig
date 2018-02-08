@@ -15,7 +15,7 @@ homeassistant:
       icon: mdi:fan
       persistent: true
     sensor.sonoff5_ipv4:
-      friendly_name: IPv4
+      friendly_name: IPv4 Sonoff 5
       icon: mdi:server-network
     sensor.sonoff5_momentane_leistung:
       friendly_name: Aktuelle Leistung
@@ -141,13 +141,7 @@ sensor:
     payload_available: "online"
     payload_not_available: "offline"
 
-  - platform: mqtt
-    name: "sonoff5 IPv4"
-    state_topic: "tele/sonoff5/INFO2"
-    value_template: "{{ value_json.IPAddress }}"
-    availability_topic: "tele/sonoff5/LWT"
-    payload_available: "online"
-    payload_not_available: "offline"
+
 
 ### Calculating cost based on the local prive per kWh
 

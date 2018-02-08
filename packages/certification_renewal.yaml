@@ -1,0 +1,32 @@
+##############################################################
+### Packages / Certification Renewal                       ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+  customize:
+    sensor.nullx_cert_expiry:
+      friendly_name: SSL Cert. 0x711
+
+
+
+sensor:
+  - platform: cert_expiry
+    host: 0x711.de
+    name: nullx_cert_expiry
+
+automation:
+  - alias: "0x_cert_expiry_alarm"
+    initial_state: True
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.nullx_cert_expiry.state|float < 14}}'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: 'HomeAssistant: 0x711.de SSL Certification'
+          message: '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: 0x711.de SSL Certification'
+          message:  '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'

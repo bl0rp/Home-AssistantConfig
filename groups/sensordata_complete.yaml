@@ -30,7 +30,7 @@ status_bewegungsmelder_last_triggered:
     - sensor.elw_2_motion_last_triggered
     - sensor.wintergarten_motion_last_triggered
     - sensor.wohnzimmer_motion_last_triggered
-    - sensor.esp07_motion_last_triggered
+
 
 status_alle_umweltsensoren:
   name: Status aller Umweltsensoren im Netzwerk
@@ -57,4 +57,19 @@ signalstaerke_alle_sensoren:
     - sensor.esp8266_04_signal
     - sensor.esp8266_05_signal
     - sensor.esp8266_06_signal
-    - sensor.esp8266_07_signal
+
+
+esp_alle_ips:
+  name: IPv4 Adressen aller Sensoren
+  entities:
+    - sensor.esp8266_01_ip
+    - sensor.esp8266_02_ip
+    - sensor.esp8266_03_ip
+    - sensor.esp8266_04_ip
+    - sensor.esp8266_05_ip
+    - sensor.esp8266_06_ip
+    - sensor.sonoff1_ipv4
+    - sensor.sonoff2_ipv4
+    - sensor.sonoff3_ipv4
+    - sensor.sonoff4_ipv4
+    - sensor.sonoff5_ipv4

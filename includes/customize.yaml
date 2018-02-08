@@ -29,8 +29,10 @@
     media_player.kodi:
       friendly_name: Kodi Wohnzimmer
 
-
-
+#sensor
+    sensor.tradfri_remote_control:
+      friendly_name: Batterie Tradfri
+      icon: mdi:car-battery
 
 
 

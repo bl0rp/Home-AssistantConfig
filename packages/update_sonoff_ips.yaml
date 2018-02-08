@@ -1,0 +1,65 @@
+##############################################################
+### Packages / Update_Sonoff_IPs                           ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
+##############################################################
+
+automation:
+    - alias: get_sonoff_ips
+      trigger:
+        platform: homeassistant
+        event: start
+      action:
+        - service: script.get_sonoff_ip
+          data:
+            device: "sonoff1"
+        - service: script.get_sonoff_ip
+          data:
+            device: "sonoff2"
+        - service: script.get_sonoff_ip
+          data:
+            device: "sonoff3"
+        - service: script.get_sonoff_ip
+          data:
+            device: "sonoff4"
+        - service: script.get_sonoff_ip
+          data:
+            device: "sonoff5"
+
+
+script:
+  get_sonoff_ip:
+    sequence:
+      service: mqtt.publish
+      data_template:
+        topic: "cmnd/{{ device }}/Status"
+        payload: "5"
+
+
+
+sensor:
+  - platform: mqtt
+    name: "sonoff1 IPv4"
+    state_topic: "stat/sonoff1/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff2 IPv4"
+    state_topic: "stat/sonoff2/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff3 IPv4"
+    state_topic: "stat/sonoff3/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff4 IPv4"
+    state_topic: "stat/sonoff4/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff5 IPv4"
+    state_topic: "stat/sonoff5/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"

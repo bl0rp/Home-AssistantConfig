@@ -24,7 +24,7 @@ homeassistant:
       friendly_name: Stromstärke
       icon: mdi:flash
     sensor.sonoff2_ipv4:
-      friendly_name: IPv4
+      friendly_name: IPv4 Sonoff 2
       icon: mdi:server-network
     sensor.sonoff2_max_load:
       friendly_name: Maximale Leistung
@@ -134,13 +134,7 @@ sensor:
     payload_available: "online"
     payload_not_available: "offline"
 
-  - platform: mqtt
-    name: "sonoff2 IPv4"
-    state_topic: "tele/sonoff2/INFO2"
-    value_template: "{{ value_json.IPAddress }}"
-    availability_topic: "tele/sonoff2/LWT"
-    payload_available: "online"
-    payload_not_available: "offline"
+
 
 ### Calculating cost based on the local prive per kWh
 
@@ -228,7 +222,7 @@ automation:
           method: get
       - service: shell_command.curl2
         data_template:
-          url: "http://192.168.0.84/control?cmd=lcd,2,1,{{ states('sensor.sonoff2_momentane_leistung') }}%20Watt"
+          url: "http://192.168.0.84/control?cmd=lcd,2,1,{{ states('sensor.sonoff2_momentane_leistung') }}%20Watt%20({{ now().strftime('%H:%M:%S') }})"
           method: get
       - service: shell_command.curl2
         data:
@@ -252,7 +246,7 @@ automation:
         seconds: 30
     action:
       - service: switch.turn_on
-        entity_id: switch.110011
+        entity_id: switch.11001_a
       - service: automation.turn_on
         entity_id: automation.sonoff2_load_lcd
       - service: automation.turn_on
@@ -270,7 +264,7 @@ automation:
         seconds: 15
     action:
       - service: switch.turn_off
-        entity_id: switch.110011
+        entity_id: switch.11001_a
       - service: automation.turn_off
         entity_id: automation.sonoff2_load_lcd
       - service: automation.turn_off

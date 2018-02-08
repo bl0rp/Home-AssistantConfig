@@ -23,7 +23,7 @@ homeassistant:
       friendly_name: Stromstärke
       icon: mdi:flash
     sensor.sonoff1_ipv4:
-      friendly_name: IPv4
+      friendly_name: IPv4 Sonoff 1
       icon: mdi:server-network
     sensor.sonoff1_max_load:
       friendly_name: Maximale Leistung
@@ -129,13 +129,7 @@ sensor:
     payload_available: "online"
     payload_not_available: "offline"
 
-  - platform: mqtt
-    name: "sonoff1 IPv4"
-    state_topic: "tele/sonoff1/INFO2"
-    value_template: "{{ value_json.IPAddress }}"
-    availability_topic: "tele/sonoff1/LWT"
-    payload_available: "online"
-    payload_not_available: "offline"
+
 
 ### Calculating cost based on the local prive per kWh
 

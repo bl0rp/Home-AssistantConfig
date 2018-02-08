@@ -37,8 +37,41 @@ frontend:
       paper-slider-pin-color: "#2d3a4f"
       paper-slider-active-color: "#2d3a4f"
       paper-slider-secondary-color: "#FFE0B2"
+    dark_red:
+      dark-primary-color: "#c66900"
+      disabled-text-color: "#545454"
+      divider-color: "rgba(255, 255, 255, 0.12)"
+      light-primary-color: "#e06c6c"
+      paper-card-background-color: "#1d1d1d"
+      paper-grey-200: "#191919"
+      paper-item-icon-color: "#d3d3d3"
+      paper-listbox-background-color: "#202020"
+      primary-background-color: "#303030"
+      primary-color: "#d32f2f"
+      primary-text-color: "#cfcfcf"
+      secondary-background-color: "#131313"
+      sidebar-text_-_background: "#62717b"
+      paper-card-header-color: "var(--paper-item-icon-color)"
+      paper-item-icon-active-color: "var(--primary-color)"
+      paper-item-icon_-_color: "var(--primary-text-color)"
+      paper-listbox-color: "var(--primary-text-color)"
+      paper-grey-50: "var(--primary-text-color)"
+      paper-slider-active-color: "var(--primary-color)"
+      paper-slider-knob-color: "var(--primary-color)"
+      paper-slider-knob-start-color: "var(--primary-color)"
+      paper-slider-pin-color: "var(--primary-color)"
+      paper-slider-secondary-color: "var(--light-primary-color)"
+      paper-toggle-button-checked-ink-color: "var(--dark-primary-color)"
+      paper-toggle-button-checked-button-color: "var(--primary-color)"
+      paper-toggle-button-checked-bar-color: "var(--light-primary-color)"
+      paper-toggle-button-unchecked-bar-color: "var(--primary-text-color)"
+      secondary-text-color: "var(--primary-color)"
+      table-row-background-color: "var(--paper-card-background-color)"
+      table-row-alternative-background-color: "var(--sidebar-text_-_background)"
 http:
   api_password: !secret api_password
+  ssl_certificate: /home/homeassistant/sslcert/fullchain1.pem
+  ssl_key: /home/homeassistant/sslcert/privkey1.pem
 
 config:
 cloud:
@@ -62,6 +95,68 @@ recorder:
   purge_interval: 1
   purge_keep_days: 30
   db_url: !secret mysql_db_path
+  include:
+    domains:
+      - binary_sensor
+      - switch
+      - light
+      - media_player
+      - device_tracker
+    entities:
+      - sensor.aeotec_zw100_multisensor_6_temperature
+      - sensor.average_load_1m
+      - sensor.average_load_5m
+      - sensor.average_load_15m
+      - sensor.cpu_temperature
+      - sensor.cpu_used
+      - sensor.disk_free_
+      - sensor.disk_used_
+      - sensor.disk_used__2
+      - sensor.hauptrettungswache__zuhause
+      - sensor.luftfeuchtigkeit_esp8266_01
+      - sensor.luftfeuchtigkeit_esp8266_02
+      - sensor.luftfeuchtigkeit_esp8266_03
+      - sensor.qnap1_free_space_datavol1
+      - sensor.qnap1_cpu_usage
+      - sensor.qnap1_network_down_eth0
+      - sensor.qnap1_network_up_eth0
+      - sensor.sonoff1_gesamtverbrauch
+      - sensor.sonoff1_kosten_gesamt
+      - sensor.sonoff1_kosten_gestern
+      - sensor.sonoff1_kosten_heute
+      - sensor.sonoff2_gesamtverbrauch
+      - sensor.sonoff2_kosten_gesamt
+      - sensor.sonoff2_kosten_gestern
+      - sensor.sonoff2_kosten_heute
+      - sensor.sonoff3_gesamtverbrauch
+      - sensor.sonoff3_kosten_gesamt
+      - sensor.sonoff3_kosten_gestern
+      - sensor.sonoff3_kosten_heute
+      - sensor.sonoff4_gesamtverbrauch
+      - sensor.sonoff4_kosten_gesamt
+      - sensor.sonoff4_kosten_gestern
+      - sensor.sonoff4_kosten_heute
+      - sensor.sonoff5_gesamtverbrauch
+      - sensor.sonoff5_kosten_gesamt
+      - sensor.sonoff5_kosten_gestern
+      - sensor.sonoff5_kosten_heute
+      - sensor.sonoff1_momentane_leistung
+      - sensor.sonoff2_momentane_leistung
+      - sensor.sonoff3_momentane_leistung
+      - sensor.sonoff4_momentane_leistung
+      - sensor.sonoff5_momentane_leistung
+      - sensor.tankstelle_super
+      - sensor.temperatur_esp8266_01
+      - sensor.temperatur_esp8266_02
+      - sensor.temperatur_esp8266_03
+      - sensor.zuhause__marienhospital
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+      - sensor.speedtest_ping
+
+influxdb:
+  host: 127.0.0.1
+
 
 logbook:
 
@@ -81,11 +176,13 @@ sun:
 
 # Emulated Hue -> Amazon Echo 
 emulated_hue:
-  type: alexa
+  off_maps_to_on_domains:
+    - scene
   expose_by_default: true
   exposed_domains:
     - light
     - switch
+    - scene
 
 #Google Calender
 google:

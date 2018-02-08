@@ -14,6 +14,8 @@ service:
     - group.systeminfo
     - group.qnap1
     - group.services
+    - group.dockercontainer
+    - group.server_alarm_automations
     - group.bitcoin
     - group.speedtest
 
@@ -29,6 +31,7 @@ ELW:
     - script.akkus_laden
     - script.tuerlicht_def
     - group.sceneselw
+    - group.esp_01
     - group.automation_elw
     - group.sensordata_elw
     - group.zwave_aeotec_multisensor6
@@ -53,6 +56,7 @@ media_player:
     - media_player.volumio
     - media_player.volumio_tts
     - media_player.yamaha_receiver
+    - media_player.test
 
 
 1OG:
@@ -86,6 +90,7 @@ Sensordaten:
      - group.status_bewegungsmelder_last_triggered
      - group.status_alle_umweltsensoren
      - group.signalstaerke_alle_sensoren
+     - group.esp_alle_ips
 
 Sonoffs:
   name: Sonoff
@@ -158,6 +163,7 @@ TEST:
     - group.wetter_darksky
     - group.wetter
     - group.birthdays
+    - group.device_tracker
 
 chrisshort:
   name: shortcut

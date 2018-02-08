@@ -11,6 +11,11 @@
     host: !secret volumio_ip
     port: 6600
     name: Volumio TTS
+#mpd pi3
+  - platform: mpd
+    host: 192.168.0.28
+    port: 6600
+    name: test
 #Spotify
   - platform: spotify
     client_id: !secret spotify_client

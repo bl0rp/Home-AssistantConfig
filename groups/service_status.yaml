@@ -1,8 +1,0 @@
-services:
-  name: Servicestatus
-  entities:
-#-> sensor template on -> running
-    - sensor.process_autossh_format
-    - sensor.process_sshd_format
-    - sensor.process_dhcpd_format
-    - sensor.process_mosquitto_format

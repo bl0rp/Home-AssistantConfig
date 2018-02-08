@@ -1,6 +1,6 @@
 ################################################################
-## Packages / NodeMCU #1
-## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
+## Packages / NodeMCU #1                                      ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config    ##
 ################################################################
 homeassistant:
   customize:
@@ -16,6 +16,9 @@ homeassistant:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit Wohnzimmer
 
+    sensor.esp8266_01_ip:
+      icon: mdi:server-network
+      friendly_name: IPv4 ESP 01
 
 ###############################################################################
 #  Sensors
@@ -26,7 +29,7 @@ sensor:
     name: "Temperatur ESP8266 01"
     state_topic: "sensor_esp8266_01/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "°C"
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 01"
@@ -41,7 +44,10 @@ sensor:
 
   - platform: mqtt
     name: "ESP8266 01 IP"
-    state_topic: "sensor_esp8266_01/status_ip"
+    state_topic: "sensor_esp8266_01/IP"
+    availability_topic: "sensor_esp8266_01/status"
+    payload_available: "Connected"
+    payload_not_available: "Connection Lost"
     qos: 0
 
   - platform: mqtt

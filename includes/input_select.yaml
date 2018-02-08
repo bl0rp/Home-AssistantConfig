@@ -28,13 +28,4 @@
       - 'SchlafzimmerRelax'
       - 'SchlafzimmerAus'
 
-  christoph_status:
-    name: Status Christoph
-    initial: 'kA'
-    options:
-      - 'kA'
-      - 'Nicht am PC'
-      - 'Am PC'
-      - 'In der ELW'
-      - 'Anwesend'
-      - 'Abwesend'
+

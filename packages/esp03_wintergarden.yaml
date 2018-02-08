@@ -16,6 +16,9 @@ homeassistant:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit Wintergarten
 
+    sensor.esp8266_03_ip:
+      icon: mdi:server-network
+      friendly_name: IPv4 ESP 03
 
 ###############################################################################
 #  Sensors
@@ -26,7 +29,15 @@ sensor:
     name: "Temperatur ESP8266 03"
     state_topic: "sensor_esp8266_03/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "ºC"
+    unit_of_measurement: "°C"
+
+  - platform: mqtt
+    name: "ESP8266 03 IP"
+    state_topic: "sensor_esp8266_03/IP"
+    availability_topic: "sensor_esp8266_03/status"
+    payload_available: "Connected"
+    payload_not_available: "Connection Lost"
+    qos: 0
 
   - platform: mqtt
     name: "Luftfeuchtigkeit ESP8266 03"
@@ -37,11 +48,6 @@ sensor:
   - platform: mqtt
     name: "ESP8266 03 PIR"
     state_topic: "sensor_esp8266_03/pir/motion"
-    qos: 0
-
-  - platform: mqtt
-    name: "ESP8266 03 IP"
-    state_topic: "sensor_esp8266_03/status_ip"
     qos: 0
 
   - platform: mqtt
