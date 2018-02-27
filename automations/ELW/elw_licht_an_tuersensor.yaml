@@ -1,0 +1,22 @@
+alias: ELW Türsensor Licht
+initial_state: True
+trigger:
+  platform: state
+  entity_id: sensor.esp32_01_door_state
+  from: 'closed'
+  to: 'open'
+condition:
+  - condition: state
+    entity_id: sun.sun
+    state: "below_horizon"
+  - condition: state
+    entity_id: light.flur
+    state: "off"
+action:
+  - service: scene.turn_on
+    entity_id: scene.elwrelax
+  - service: scene.turn_on
+    entity_id: scene.flurrelax
+  - delay: '{{ states.input_select.tuerlicht.state | int }}'
+  - service: scene.turn_on
+    entity_id: scene.fluraus
