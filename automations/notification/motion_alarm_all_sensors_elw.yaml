@@ -11,6 +11,10 @@ trigger:
     entity_id: sensor.esp8266_02_pir
     from: '0'
     to: '1'
+  - platform: state
+    entity_id: sensor.esp32_01_door_state
+    from: 'closed'
+    to: 'open'
 condition:
   condition: state
   entity_id: input_boolean.chrishome

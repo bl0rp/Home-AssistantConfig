@@ -2,6 +2,7 @@
 
 default_view:
   view: yes
+  icon: mdi:home
   entities:
     - group.utilities
     - group.backup
@@ -57,6 +58,7 @@ media_player:
     - media_player.volumio_tts
     - media_player.yamaha_receiver
     - media_player.test
+    - group.tts_test
 
 
 1OG:

@@ -75,6 +75,27 @@ http:
 
 config:
 cloud:
+  alexa:
+    filter:
+      include_entities:
+        - light.flur
+        - light.schlafzimmer
+      include_domains:
+        - switch
+      exclude_entities:
+        - switch.outside
+    entity_config:
+      light.flur:
+        name: Flurlicht
+        description: Flurlicht
+      switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
+        name: Steckdose
+        description: mpd steckdose
+      switch.receiver:
+        name: Verstärker
+        description: Verstärker
+      switch.11011_a:
+        display_categories: LIGHT
 
 updater:
 
@@ -94,7 +115,7 @@ history:
 recorder:
   purge_interval: 1
   purge_keep_days: 30
-  db_url: !secret mysql_db_path
+  db_url: !secret mysql_db_path_local
   include:
     domains:
       - binary_sensor
@@ -153,6 +174,8 @@ recorder:
       - sensor.speedtest_download
       - sensor.speedtest_upload
       - sensor.speedtest_ping
+      - sensor.esp32_01_battery_value
+
 
 influxdb:
   host: 127.0.0.1
@@ -174,15 +197,15 @@ mqtt:
 
 sun:
 
-# Emulated Hue -> Amazon Echo 
-emulated_hue:
-  off_maps_to_on_domains:
-    - scene
-  expose_by_default: true
-  exposed_domains:
-    - light
-    - switch
-    - scene
+# # Emulated Hue -> Amazon Echo 
+# emulated_hue:
+  # off_maps_to_on_domains:
+    # - scene
+  # expose_by_default: true
+  # exposed_domains:
+    # - light
+    # - switch
+    # - scene
 
 #Google Calender
 google:
