@@ -72,6 +72,9 @@ homeassistant:
     sensor.sent_eno1:
       friendly_name: Daten gesendet
       icon: mdi:upload-network
+    sensor.mysql_ha_size:
+      friendly_name: Datenbankgröße
+      icon: mdi:harddisk
     ##automations
     automation.nuc_load_to_led:
       friendly_name: Load 2 LED
@@ -114,6 +117,7 @@ group:
       - weblink.release_log
       - sensor.host_uptime_human
       - sensor.ha_uptime_human
+      - sensor.mysql_ha_size
       - sensor.uname
       - sensor.cpu_temperature
       - sensor.cpu_use
@@ -360,6 +364,15 @@ sensor:
            {%- endmacro %}
            {{ human_time(states.sensor.ha_uptime_in_seconds.state | int ) }}
 
+###### HASS MySQL DB Size
+  - platform: sql
+    db_url: !secret mysql_db_path_local
+    queries:
+      - name: mysql_ha_size
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "value" FROM information_schema.tables WHERE table_schema="ha" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MiB
+
 ### Visualize load with LEDs (-> packages/esp04)
 automation:
   - alias: nuc Load to LED
@@ -416,7 +429,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-      above: 45.0
+      above: 50.0
     action:
       - service: notify.pushbullet
         data:
@@ -500,13 +513,13 @@ automation:
     initial_state: True
     trigger:
       platform: template
-      value_template: '{{ states.sensor.speedtest_download.state|float < 50}}'
+      value_template: '{{ states.sensor.speedtest_download.state|float < 30}}'
     action:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
           message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
-      - service: notify.email
-        data:
-          title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
+      # - service: notify.email
+        # data:
+          # title: 'HomeAssistant: Process Monitor'
+          # message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
