@@ -1,0 +1,167 @@
+########################################################################
+## Packages / Frist Floor                                             ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+  customize:
+
+    switch.wemoswitch1:
+      friendly_name: Lampe Esszimmer
+      icon: mdi:lamp
+    switch.wemoswitch2:
+      friendly_name: Stehlampe
+      icon: mdi:lamp
+    script.1og_lampen_an:
+      friendly_name: Alle Lampen an!
+      icon: mdi:lamp
+    script.1og_lampen_aus:
+      friendly_name: Alle Lampen aus!
+      icon: mdi:flashlight-off
+
+#############
+#  group    #
+#############
+group:
+
+  sensordata_1og:
+    name: Temperatur und Luftfeuchtigkeit
+    entities:
+      - sensor.yr_temperature
+      - sensor.dark_sky_temperature
+      - sensor.temperatur_esp8266_01
+      - sensor.temperatur_esp8266_03
+      - sensor.yr_humidity
+      - sensor.dark_sky_humidity
+      - sensor.luftfeuchtigkeit_esp8266_01
+      - sensor.luftfeuchtigkeit_esp8266_03
+
+  automation_1og:
+    name: Automatisierung für den ersten Stock
+    entities:
+      - automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+      - automation.stehlampe_um_23_uhr_ausschalten
+      - automation.lampe_esszimmer_anschalten_nach_sonnenuntergang
+      - automation.lampe_esszimmer_um_22_uhr_ausschalten
+      - automation.restart_der_automations_bei_sonnenuntergang
+
+
+
+#############
+#  sensors  #
+#############
+
+###
+#See Sensor Package esp8266_01 and esp8266_03#
+###
+
+####################################
+### automation lights auto on/off ##
+####################################
+
+automation:
+###
+# Turn on Automation at sunset
+###
+  - alias: Restart der Automations bei Sonnenuntergang
+    initial_state: True
+    trigger:
+      platform: sun
+      event: sunset
+    action:
+      - service: automation.turn_on
+        entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+
+#Stehlampe on/off
+
+###
+# on after 1st movement 
+###
+
+  - alias: 1 OG Stehlampe bei erster Bewegung nach Sonnenuntergang anschalten
+    initial_state: False
+    trigger:
+      - platform: state
+        entity_id: sensor.esp8266_01_pir
+        from: '0'
+        to: '1'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: "below_horizon"
+    action:
+      - service: switch.turn_on
+        entity_id: switch.wemoswitch2
+      - service: automation.turn_off
+        entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ states.sensor.date__time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
+
+
+# off at 11 pm
+
+  - alias: "Stehlampe um 23 Uhr ausschalten"
+    initial_state: True
+    trigger:
+      - platform: time
+        hours: 23
+        minutes: 00
+        seconds: 00
+    action:
+      - service: switch.turn_off
+        entity_id: switch.wemoswitch2
+
+#Esszimmer on/off
+
+###
+# on at sunset
+###
+
+  - alias: "Lampe Esszimmer anschalten nach Sonnenuntergang"
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: sunset
+    action:
+      - service: switch.turn_on
+        entity_id: switch.wemoswitch1
+
+
+###
+# off at 22:00
+###
+
+  - alias: "Lampe Esszimmer um 22 Uhr ausschalten"
+    initial_state: True
+    trigger:
+      - platform: time
+        hours: 22
+        minutes: 00
+        seconds: 00
+    action:
+      - service: switch.turn_off
+        entity_id: switch.wemoswitch1
+
+#############
+### script ##
+#############
+script:
+###
+# all lights on and off 
+###
+
+
+  1og_lampen_an:
+    sequence:
+       - service: switch.turn_on
+         entity_id: switch.wemoswitch1
+       - service: switch.turn_on
+         entity_id: switch.wemoswitch2
+
+  1og_lampen_aus:
+    sequence:
+       - service: switch.turn_off
+         entity_id: switch.wemoswitch1
+       - service: switch.turn_off
+         entity_id: switch.wemoswitch2
