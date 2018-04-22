@@ -1,60 +1,96 @@
 switch.wemoswitch2:
+  name:
   platform: wemo
   unique_id: 221622K11001A6
 switch.wemoswitch1:
+  name:
   platform: wemo
   unique_id: 221622K110018B
 sensor.aeotec_zw100_multisensor_6_temperature:
+  name:
   platform: zwave
   unique_id: 2-72057594076479506
 binary_sensor.aeotec_zw100_multisensor_6_sensor:
+  name:
   platform: zwave
   unique_id: 2-72057594076463104
 sensor.aeotec_zw100_multisensor_6_luminance:
+  name:
   platform: zwave
   unique_id: 2-72057594076479538
 sensor.aeotec_zw100_multisensor_6_relative_humidity:
+  name:
   platform: zwave
   unique_id: 2-72057594076479570
 sensor.aeotec_zw100_multisensor_6_ultraviolet:
+  name:
   platform: zwave
   unique_id: 2-72057594076479922
 sensor.aeotec_zw100_multisensor_6_alarm_type:
+  name:
   platform: zwave
   unique_id: 2-72057594077528065
 sensor.aeotec_zw100_multisensor_6_alarm_level:
+  name:
   platform: zwave
   unique_id: 2-72057594077528081
 sensor.aeotec_zw100_multisensor_6_sourcenodeid:
+  name:
   platform: zwave
   unique_id: 2-72057594077528097
 sensor.aeotec_zw100_multisensor_6_burglar:
+  name:
   platform: zwave
   unique_id: 2-72057594077528225
 switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
+  name:
   platform: zwave
   unique_id: 3-72057594093060096
 sensor.fibaro_system_fgwpef_wall_plug_gen5_power:
+  name:
   platform: zwave
   unique_id: 3-72057594093256770
 sensor.fibaro_system_fgwpef_wall_plug_gen5_energy:
+  name:
   platform: zwave
   unique_id: 3-72057594093273090
 sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2:
+  name:
   platform: zwave
   unique_id: 3-72057594093273218
 sensor.fibaro_system_fgwpef_wall_plug_gen5_exporting:
+  name:
   platform: zwave
   unique_id: 3-72057594093273600
 sensor.fibaro_system_fgwpef_wall_plug_gen5_alarm_type:
+  name:
   platform: zwave
   unique_id: 3-72057594094305281
 sensor.fibaro_system_fgwpef_wall_plug_gen5_alarm_level:
+  name:
   platform: zwave
   unique_id: 3-72057594094305297
 sensor.fibaro_system_fgwpef_wall_plug_gen5_sourcenodeid:
+  name:
   platform: zwave
   unique_id: 3-72057594094305313
 sensor.fibaro_system_fgwpef_wall_plug_gen5_power_management:
+  name:
   platform: zwave
   unique_id: 3-72057594094305457
+light.flur:
+  name:
+  platform: tradfri
+  unique_id: light-7e0c4552044001e2-65538
+light.schlafzimmer:
+  name:
+  platform: tradfri
+  unique_id: light-7e0c4552044001e2-65537
+light.schlafzimmer_2:
+  name:
+  platform: tradfri
+  unique_id: group-7e0c4552044001e2-148206
+light.flur_2:
+  name:
+  platform: tradfri
+  unique_id: group-7e0c4552044001e2-190079

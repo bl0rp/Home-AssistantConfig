@@ -1,7 +1,0 @@
-1og_lampen_an:
-  alias: "Alle Lampen im 1 OG anschalten"
-  sequence:
-  - service: switch.turn_on
-    entity_id: switch.wemoswitch1
-  - service: switch.turn_on
-    entity_id: switch.wemoswitch2

@@ -5,12 +5,3 @@
     unit_of_measurement: '€'
     value_template: '{{ value_json.prices["961351cb-a3c3-4903-9a52-23a7c9be06f3"].e5 }}'
     scan_interval: 600
-
-
-
-  - platform: rest
-    resource: http://ml.internalpositioning.com/location?group=disrespectfuldrever&user=chris
-    value_template: '{{ value_json.users.chris[0].location }}'
-    method: GET
-    name: find_chris
-    scan_interval: 1

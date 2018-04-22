@@ -14,12 +14,6 @@
     switch.katze:
       friendly_name: Testswitch ohne Funktion
       entity_picture: /local/cat.jpg
-    switch.wemoswitch1:
-      friendly_name: Lampe Esszimmer
-      icon: mdi:lamp
-    switch.wemoswitch2:
-      friendly_name: Stehlampe
-      icon: mdi:lamp
     switch.wake_on_lan:
       friendly_name: WOL alekto
       icon: mdi:power

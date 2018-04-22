@@ -70,8 +70,8 @@ frontend:
       table-row-alternative-background-color: "var(--sidebar-text_-_background)"
 http:
   api_password: !secret api_password
-  ssl_certificate: /home/homeassistant/sslcert/fullchain1.pem
-  ssl_key: /home/homeassistant/sslcert/privkey1.pem
+  ssl_certificate: /home/homeassistant/sslcert/fullchain.pem
+  ssl_key: /home/homeassistant/sslcert/privkey.pem
 
 config:
 cloud:

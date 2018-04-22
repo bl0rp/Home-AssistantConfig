@@ -1,13 +1,3 @@
-automation_1og:
-  name: Automatisierung für den ersten Stock
-  entities:
-    - automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
-    - automation.stehlampe_um_23_uhr_ausschalten
-    - automation.lampe_esszimmer_anschalten_nach_sonnenuntergang
-    - automation.lampe_esszimmer_um_22_uhr_ausschalten
-    - automation.restart_der_automations_bei_sonnenuntergang
-
-
 automation_elw:
   name: Automatisierung für die ELW
   entities:

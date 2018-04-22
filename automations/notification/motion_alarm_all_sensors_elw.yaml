@@ -1,5 +1,4 @@
-### https://github.com/brahmafear/hass_config/blob/master/yaml/automation/motion_alarm.yaml
-### Thanks 2 @brahmafear
+### Thanks 2 @brahmafear (initial version)
 alias: Benachrichtigung aller Bewegunsgmelder in der ELW 
 initial_state: True
 trigger:
@@ -16,9 +15,19 @@ trigger:
     from: 'closed'
     to: 'open'
 condition:
-  condition: state
-  entity_id: input_boolean.chrishome
-  state: 'off'
+  condition: and
+  conditions:
+    - condition: state
+      entity_id: 'input_boolean.chrishome'
+      state: 'off'
+    - condition: template
+      value_template: >
+        {% if states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.last_triggered is not none %}
+          {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.attributes.last_triggered) | int > 60 %} true {% else %} false
+          {% endif %}
+        {% else %}
+        false
+        {% endif %}
 action:
   - service: notify.pushbullet
     data_template:
