@@ -23,6 +23,36 @@ homeassistant:
     automation.select_christoph_home_status_away_elw:
       friendly_name: 'setze status auf anwesend von der in der elw'
 
+### template sensors last changed 
+
+sensor:
+  - platform: template
+    sensors:
+      device_tracker_traude_last_changed:
+        friendly_name: "Traude letzte Änderung"
+        value_template: >-
+          {{ as_timestamp(states.device_tracker.traude_ip.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+
+  - platform: template
+    sensors:
+      device_tracker_ewald_last_changed:
+        friendly_name: "Ewald letzte Änderung"
+        value_template: >-
+          {{ as_timestamp(states.device_tracker.ewald_ip.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+
+  - platform: template
+    sensors:
+      device_tracker_christoph_last_changed:
+        friendly_name: "Christoph letzte Änderung"
+        value_template: >-
+          {{ as_timestamp(states.input_boolean.chrishome.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+
+  - platform: template
+    sensors:
+      device_tracker_christoph_verbose:
+        friendly_name: "Christoph State Update"
+        value_template: >-
+          {{ states.sensor.tasker_home.state }} via {{ states.sensor.tasker_home_connection.state }}
 ###### STATE CARD for views.yaml
 
 group:
@@ -76,10 +106,10 @@ automation:
         entity_id: device_tracker.christoph_ip
         to: 'not_home'
         for:
-          minutes: 20
+          minutes: 10
       - platform: state
-        entity_id: switch.christoph_mqtt
-        to: 'off'
+        entity_id: sensor.tasker_home
+        to: 'not_home'
         for:
           minutes: 5
     
@@ -111,8 +141,8 @@ automation:
         entity_id: device_tracker.chris_bluetooth_rpi3
         to: 'home'
       - platform: state
-        entity_id: switch.christoph_mqtt
-        to: 'on'
+        entity_id: sensor.tasker_home
+        to: 'home'
     action:
        service: homeassistant.turn_on
        entity_id: input_boolean.chrishome

@@ -155,6 +155,7 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
+    - group.esp_02
     - group.outtopic
     - group.radartest
     - group.sprit
