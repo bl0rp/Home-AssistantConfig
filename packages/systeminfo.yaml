@@ -235,22 +235,22 @@ sensor:
                'minuten': 60,
                'sekunden': 1,
              } -%}
-           
+
              {%- set wochen = sekunden // intervals.wochen -%}
              {%- set sekunden = sekunden % intervals.wochen -%}
              {{- comma() ~ wochen ~ ' Woche' ~ ('n' if wochen != 1) if wochen -}}
-           
+
              {%- set tage = sekunden // intervals.tage -%}
              {%- set sekunden = sekunden % intervals.tage -%}
              {{- comma() ~ tage ~ ' Tag' ~ ('e' if tage != 1) if tage -}}
-           
+
              {%- set stunden = sekunden // intervals.stunden -%}
              {%- set sekunden = sekunden % intervals.stunden -%}
              {{- comma() ~ stunden ~ ' Stunde' ~ ('n' if stunden != 1) if stunden -}}
-           
+
              {%- set minuten = sekunden // intervals.minuten -%}
              {{- comma() ~ minuten ~ ' Minute' ~ ('n' if minuten != 1) if minuten -}}
-           
+
              {%- set sekunden = sekunden % intervals.minuten -%}
              {{- comma() ~ sekunden ~ ' Sekunde' ~ ('n' if sekunden != 1) if sekunden -}}
            {%- endmacro %}
@@ -330,7 +330,7 @@ sensor:
 
   - platform: template
     sensors:
- 
+
       ha_uptime_human:
         value_template: >-
            {% macro human_time(sekunden) -%}
@@ -343,22 +343,22 @@ sensor:
                'minuten': 60,
                'sekunden': 1,
              } -%}
-           
+
              {%- set wochen = sekunden // intervals.wochen -%}
              {%- set sekunden = sekunden % intervals.wochen -%}
              {{- comma() ~ wochen ~ ' Woche' ~ ('n' if wochen != 1) if wochen -}}
-           
+
              {%- set tage = sekunden // intervals.tage -%}
              {%- set sekunden = sekunden % intervals.tage -%}
              {{- comma() ~ tage ~ ' Tag' ~ ('e' if tage != 1) if tage -}}
-           
+
              {%- set stunden = sekunden // intervals.stunden -%}
              {%- set sekunden = sekunden % intervals.stunden -%}
              {{- comma() ~ stunden ~ ' Stunde' ~ ('n' if stunden != 1) if stunden -}}
-           
+
              {%- set minuten = sekunden // intervals.minuten -%}
              {{- comma() ~ minuten ~ ' Minute' ~ ('n' if minuten != 1) if minuten -}}
-           
+
              {%- set sekunden = sekunden % intervals.minuten -%}
              {{- comma() ~ sekunden ~ ' Sekunde' ~ ('n' if sekunden != 1) if sekunden -}}
            {%- endmacro %}
@@ -389,7 +389,7 @@ automation:
           {% endif %}
         data:
           entity_id: switch.grne_led
-    
+
       - service_template: >-
           {% if 0.2 <= trigger.to_state.state|float < 0.6 %}
             switch.turn_on
@@ -398,7 +398,7 @@ automation:
           {% endif %}
         data:
           entity_id: switch.gelbe_led
-    
+
       - service_template: >-
           {% if 0.6 <= trigger.to_state.state|float < 30.0 %}
             switch.turn_on
@@ -407,7 +407,7 @@ automation:
           {% endif %}
         data:
           entity_id: switch.rote_led
-    
+
     # Notification if X happens
   - alias: "HDD Alarm"
     initial_state: True
@@ -423,7 +423,7 @@ automation:
         data:
           title: 'HA: Speicherplatz'
           message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
-    
+
   - alias: "cpu temp Alarm"
     initial_state: True
     trigger:
@@ -438,8 +438,8 @@ automation:
         data:
           title: 'HA NUC CPU Temperatur'
           message: '{{ states.sensor.date__time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
-    
-    
+
+
   - alias: "dhcpd Alarm"
     initial_state: True
     trigger:
@@ -456,7 +456,7 @@ automation:
         data:
           title: 'HomeAssistant: Process Monitor'
           message: '{{ states.sensor.date__time.state }}: Der DHCP Daemon läuft nicht!'
-    
+
   - alias: "sshd Alarm"
     initial_state: True
     trigger:
@@ -473,8 +473,8 @@ automation:
         data:
           title: 'HomeAssistant: Process Monitor'
           message: '{{ states.sensor.date__time.state }}: Der SSH Daemon läuft nicht!'
-    
-    
+
+
   - alias: "tor Alarm"
     initial_state: True
     trigger:
@@ -523,3 +523,23 @@ automation:
         # data:
           # title: 'HomeAssistant: Process Monitor'
           # message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
+
+### New HA Version notify
+### Thanks to @dal3h and @CCOSTAN
+  - alias: home_assistant_update_notification
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: updater.updater
+    condition:
+      - condition: template
+        value_template: "{{ states('updater.updater') != 'unknown' }}"
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: "Es gibt eine neue HA Version! Home Assistant {{ states('updater.updater') }}."
+      - service: persistent_notification.create
+        data:
+          title: "Update Available"
+          message: "Es gibt eine neue HA Version! {{ states('updater.updater') }}. - {{ as_timestamp(now()) | timestamp_custom('%d.%m.%Y %H:%M:%S', true) }}"
+          notification_id: "update_available"
