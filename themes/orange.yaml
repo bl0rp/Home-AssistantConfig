@@ -1,0 +1,13 @@
+orange:
+  dark-primary-color: "#444649"
+  primary-color: "#444649"
+  light-primary-color: "#FFE0B2"
+  primary-text-color: "#212121"
+  paper-toggle-button-checked-ink-color: "#2d3a4f"
+  paper-toggle-button-checked-button-color: "#2d3a4f"
+  paper-toggle-button-checked-bar-color: "#726c64"
+  paper-slider-knob-color: "#2d3a4f"
+  paper-slider-knob-start-color: "#2d3a4f"
+  paper-slider-pin-color: "#2d3a4f"
+  paper-slider-active-color: "#2d3a4f"
+  paper-slider-secondary-color: "#FFE0B2"

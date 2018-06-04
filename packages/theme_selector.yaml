@@ -1,0 +1,58 @@
+#################################################################################
+### Packages / Theme Selector                                                 ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig                    ###
+### Inspired by BurnsHA (https://www.youtube.com/watch?v=h1h8FFy9_Co&t=239s)  ###                                    ###
+#################################################################################
+
+### Add this to your configuration.yaml
+#frontend:
+#  themes: !include_dir_merge_named themes/
+
+
+
+#List all themes from the themes folder
+input_select:
+  hass_theme:
+    name: Welches Theme darf es sein?
+    icon: mdi:theme-light-dark
+    ### themes from themes/ folder
+    options:
+      # "Aktuelles beibehalten" means "Keep selected"
+      - Aktuelles beibehalten
+      - Default
+      - Orange
+      - Dark Red
+      - Solarized
+      - Mono Night
+      - Mono Light
+
+#Automation for applying the Theme
+
+automation:
+  - id: hass_theme
+    alias: hass_theme
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_select.hass_theme
+    condition:
+      condition: template
+      value_template: "{{ not is_state('input_select.hass_theme', 'Aktuelles beibehalten') }}"
+    action:
+      - service: frontend.set_theme
+        data_template:
+          name: "{{ states('input_select.hass_theme')|lower|replace(' ', '_') }}"
+      - delay: 2
+      - service: input_select.select_option
+        entity_id: input_select.hass_theme
+        data:
+          option: 'Aktuelles beibehalten'
+
+#Group for main view.yaml
+group:
+  theme:
+    name: Themes
+    view: no
+    icon: mdi:brush
+    entities:
+      - input_select.hass_theme
