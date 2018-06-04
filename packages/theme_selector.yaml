@@ -1,7 +1,7 @@
 #################################################################################
 ### Packages / Theme Selector                                                 ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig                    ###
-### Inspired by BurnsHA (https://www.youtube.com/watch?v=h1h8FFy9_Co&t=239s)  ###                                    ###
+### Inspired by BurnsHA (https://www.youtube.com/watch?v=h1h8FFy9_Co&t        ###
 #################################################################################
 
 ###############################################
@@ -281,13 +281,12 @@ frontend:
 ## Input Select                               #
 ###############################################
 
-    #List all themes from the themes from above
+    #List all themes from the themes from above (' ' becomes _ and everything is lowered)
 
 input_select:
   hass_theme:
     name: Welches Theme darf es sein?
     icon: mdi:theme-light-dark
-    ### themes from themes/ folder
     options:
       # "Aktuelles beibehalten" means "Keep selected"
       - Aktuelles beibehalten
