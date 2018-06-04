@@ -240,8 +240,8 @@ automation:
   alias: pihole_update_notification
   initial_state: True
   trigger:
-    - platform: state
-      entity_id: sensor.pihole_version_latest
+    - platform: template
+      value_template: "{% if 'states.sensor.pihole_version_current.state' != 'states.sensor.pihole_version_latest.state' %}true{% else %}false{% endif %}"
   condition:
     - condition: template
       value_template: "{{ states('sensor.pihole_version_latest') != 'unknown' }}"
