@@ -135,7 +135,7 @@ sensor:
     command: "pihole -v -p -c"
     name: 'pihole_version_current'
     value_template: '{{ value[28:] }}'
-    scan_interval: 86400
+    scan_interval: 900
 
   - platform: command_line
     command: "pihole -v -p -l"
@@ -223,6 +223,9 @@ script:
   pihole_update:
     sequence:
        - service: shell_command.pihole_update
+       - service: persistent_notification.dismiss
+         data:
+           notification_id: "update_available_pihole"
 ###############################################################################
 #  Shell Command
 ###############################################################################
@@ -230,3 +233,24 @@ shell_command:
   pihole_on: !secret pi_hole_switch_on
   pihole_off: !secret pi_hole_switch_off
   pihole_update: "pihole -up"
+###############################################################################
+#  Automation
+###############################################################################
+automation:
+  alias: pihole_update_notification
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: sensor.pihole_version_latest
+  condition:
+    - condition: template
+      value_template: "{{ states('sensor.pihole_version_latest') != 'unknown' }}"
+  action:
+    - service: notify.pushbullet
+      data_template:
+        message: "Es gibt eine neue PiHole Version! {{ states('sensor.pihole_version_latest') }}."
+    - service: persistent_notification.create
+      data:
+        title: "Update Available PiHole"
+        message: "Es gibt eine neue PiHole Version! {{ states('sensor.pihole_version_latest') }}. - {{ as_timestamp(now()) | timestamp_custom('%d.%m.%Y %H:%M:%S', true) }}"
+        notification_id: "update_available_pihole"
