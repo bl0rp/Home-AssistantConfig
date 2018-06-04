@@ -94,3 +94,19 @@ light.flur_2:
   name:
   platform: tradfri
   unique_id: group-7e0c4552044001e2-190079
+zwave.aeotec_zw090_zstick_gen5:
+  name:
+  platform: zwave
+  unique_id: node-1
+zwave.aeotec_zw100_multisensor_6:
+  name:
+  platform: zwave
+  unique_id: node-2
+zwave.fibaro_system_fgwpef_wall_plug_gen5:
+  name:
+  platform: zwave
+  unique_id: node-3
+zwave.aeotec_dsa03202_minimote:
+  name:
+  platform: zwave
+  unique_id: node-6

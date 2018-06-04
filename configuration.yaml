@@ -175,7 +175,21 @@ recorder:
       - sensor.speedtest_upload
       - sensor.speedtest_ping
       - sensor.esp32_01_battery_value
+ #pihole stats
+      - switch.pihole
+      - sensor.ads_blocked_today
+      - sensor.ads_percentage_today
+      - sensor.dns_queries_today
+      - sensor.domains_being_blocked
+      - sensor.ads_blocked_today
+      - sensor.unique_domains
+      - sensor.queries_forwarded
+      - sensor.queries_cached
+      - sensor.pihole_dns
+      - sensor.pihole_blocking
 
+
+    
 
 influxdb:
   host: 127.0.0.1
