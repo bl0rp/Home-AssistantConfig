@@ -301,7 +301,7 @@ input_select:
 sensor:
   - platform: mqtt
     state_topic: "homeassistant/current_theme_set"
-    name: homeassistant_mqqt_theme_set
+    name: homeassistant_mqtt_theme_set
 ###############################################
 ## Automation                                 #
 ###############################################
@@ -339,7 +339,7 @@ automation:
       service: input_select.select_option
       entity_id: input_select.hass_theme
       data_template:
-        option: "{{ states('sensor.homeassistant_mqqt_theme_set')|replace('_', ' ')| title}}"
+        option: "{{ states('sensor.homeassistant_mqtt_theme_set')|replace('_', ' ')| title}}"
 #Group for main view.yaml
 group:
   theme:
