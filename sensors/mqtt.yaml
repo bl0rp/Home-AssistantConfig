@@ -36,3 +36,12 @@
     name: "inTopic"
     state_topic: "inTopic"
     qos: 0
+
+  - platform: mqtt
+    name: "mosquitto_broker_messages_received"
+    state_topic: "$SYS/broker/messages/received"
+    qos: 0
+  - platform: mqtt
+    name: "mosquitto_broker_messages_sent"
+    state_topic: "$SYS/broker/messages/sent"
+    qos: 0

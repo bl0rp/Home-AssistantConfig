@@ -7,8 +7,17 @@ homeassistant:
   customize:
     sensor.nullx_cert_expiry:
       friendly_name: SSL Cert. 0x711
+      icon: mdi:lock
     sensor.cvoid_cert_expiry:
       friendly_name: SSL Cert. cvoid
+      icon: mdi:lock
+group:
+  ssl_cert:
+    name: "SSL Cert. Status"
+    control: hidden
+    entities:
+      - sensor.nullx_cert_expiry
+      - sensor.cvoid_cert_expiry
 
 
 sensor:
@@ -27,6 +36,9 @@ automation:
     trigger:
       platform: template
       value_template: '{{ states.sensor.nullx_cert_expiry.state|float < 14}}'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.nullx_cert_expiry') != 'unknown' }}"
     action:
       - service: notify.pushbullet
         data:
@@ -42,6 +54,9 @@ automation:
     trigger:
       platform: template
       value_template: '{{ states.sensor.cvoid_cert_expiry.state|float < 14}}'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.cvoid_cert_expiry') != 'unknown' }}"
     action:
       - service: notify.pushbullet
         data:

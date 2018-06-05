@@ -76,9 +76,9 @@ recorder:
       - device_tracker
     entities:
       - sensor.aeotec_zw100_multisensor_6_temperature
-      - sensor.average_load_1m
-      - sensor.average_load_5m
-      - sensor.average_load_15m
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.load_15m
       - sensor.cpu_temperature
       - sensor.cpu_used
       - sensor.disk_free_

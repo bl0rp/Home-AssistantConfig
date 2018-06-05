@@ -30,13 +30,13 @@ homeassistant:
     sensor.cpu_temperature:
       friendly_name: CPU Temperatur
       icon: mdi:thermometer
-    sensor.average_load_1m:
+    sensor.load_1m:
       friendly_name: Last (1m)
       icon: mdi:worker
-    sensor.average_load_5m:
+    sensor.load_5m:
       friendly_name: Last (5m)
       icon: mdi:worker
-    sensor.average_load_15m:
+    sensor.load_15m:
       friendly_name: Last (15m)
       icon: mdi:worker
     sensor.cpu_use:
@@ -121,9 +121,9 @@ group:
       - sensor.uname
       - sensor.cpu_temperature
       - sensor.cpu_use
-      - sensor.average_load_1m
-      - sensor.average_load_5m
-      - sensor.average_load_15m
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.load_15m
       - sensor.disk_use_
       - sensor.disk_use__2
       - sensor.disk_free_
@@ -379,7 +379,7 @@ automation:
     initial_state: False
     trigger:
       - platform: state
-        entity_id: sensor.average_load_1m
+        entity_id: sensor.load_1m
     action:
       - service_template: >-
           {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.2 %}
@@ -518,11 +518,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
+          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
       # - service: notify.email
         # data:
           # title: 'HomeAssistant: Process Monitor'
-          # message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbis/s!'
+          # message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
 
 ### New HA Version notify
 ### Thanks to @dal3h and @CCOSTAN
