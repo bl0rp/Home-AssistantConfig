@@ -9,7 +9,6 @@ default_view:
     - group.pihole
     - group.ssl_cert
     - group.theme
-    - group.gasstations
 
 service:
   view: yes
@@ -115,7 +114,12 @@ familie:
   entities:
    - group.familiegrp
    - group.traveltime
-
+ 
+tankstellen:
+  view: yes
+  icon: mdi:gas-station
+  entities:
+    - group.gasstations      
 autos:
   name: Automation
   view: yes

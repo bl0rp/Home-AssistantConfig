@@ -16,34 +16,34 @@ homeassistant:
         e5: true
         e10: true
         diesel: true
-      entities:
-        - entity: '961351cb-a3c3-4903-9a52-23a7c9be06f3'
-          street: 'Seerosenstr.'
-          brand: T
-        - entity: '1542a76a-ceaf-4d55-8cef-bcd83af16f3b'
-          street: 'Hauptstr.'
-          brand: ESSO
-        - entity: 'defffb81-c4da-4f04-92eb-bb503de51e12'
-          street: 'Hauptstr.'
-          brand: ARAL
-        - entity: '9f783258-e896-4dfe-83f5-ae7f53a6097f'
-          street: 'Robert-Koch-Str..'
-          brand: ARAL
-        - entity: '51d4b68e-a095-1aa0-e100-80009459e03a'
-          street: 'Industriestr..'
-          brand: JET
-        - entity: '507e6415-581e-44f8-b090-11d9e1b7af11'
-          street: 'Am Wallgraben'
-          brand: AVIA
-        - entity: 'b9612d70-7bea-4bea-b2a6-9892b60104ed'
-          street: 'Industriestr.'
-          brand: SHELL
-        - entity: '5c63b4f0-1a6b-4a73-b7dc-c125c6cd3d66'
-          street: 'Burgstallstr.'
-          brand: SHELL
-        - entity: '2c2238a5-cea6-46f3-8467-514f146414a5'
-          street: 'Vaihinger Str.'
-          brand: ARAL
+        entities:
+          - entity: '961351cb-a3c3-4903-9a52-23a7c9be06f3'
+            street: 'Seerosenstr.'
+            brand: T
+          - entity: '1542a76a-ceaf-4d55-8cef-bcd83af16f3b'
+            street: 'Hauptstr.'
+            brand: ESSO
+          - entity: 'defffb81-c4da-4f04-92eb-bb503de51e12'
+            street: 'Hauptstr.'
+            brand: ARAL
+          - entity: '9f783258-e896-4dfe-83f5-ae7f53a6097f'
+            street: 'Robert-Koch-Str..'
+            brand: ARAL
+          - entity: '51d4b68e-a095-1aa0-e100-80009459e03a'
+            street: 'Industriestr..'
+            brand: JET
+          - entity: '507e6415-581e-44f8-b090-11d9e1b7af11'
+            street: 'Am Wallgraben'
+            brand: AVIA
+          - entity: 'b9612d70-7bea-4bea-b2a6-9892b60104ed'
+            street: 'Industriestr.'
+            brand: SHELL
+          - entity: '5c63b4f0-1a6b-4a73-b7dc-c125c6cd3d66'
+            street: 'Burgstallstr.'
+            brand: SHELL
+          - entity: '2c2238a5-cea6-46f3-8467-514f146414a5'
+            street: 'Vaihinger Str.'
+            brand: ARAL
 
 frontend:
   extra_html_url:
