@@ -1,2 +1,2 @@
 import os.path, time
-print("%s" % time.ctime(os.path.getmtime("/root/backups")))
+print("%s" % time.strftime('%d.%m.%Y %H:%M', time.gmtime(os.path.getmtime("/root/backups"))))
