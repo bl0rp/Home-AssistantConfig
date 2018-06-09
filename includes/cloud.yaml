@@ -1,0 +1,21 @@
+alexa:
+  filter:
+    include_entities:
+      - light.flur
+      - light.schlafzimmer
+    include_domains:
+      - switch
+    exclude_entities:
+      - switch.outside
+  entity_config:
+    light.flur:
+      name: Flurlicht
+      description: Flurlicht
+    switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
+      name: Steckdose
+      description: mpd steckdose
+    switch.receiver:
+      name: Verstärker
+      description: Verstärker
+    switch.11011_a:
+      display_categories: LIGHT

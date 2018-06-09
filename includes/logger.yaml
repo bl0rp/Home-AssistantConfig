@@ -1,0 +1,5 @@
+default: error
+logs:
+  homeassistant.components.camera.generic: fatal
+  homeassistant.components.shell_command: fatal
+  requests.exceptions.ConnectionError: fatal
