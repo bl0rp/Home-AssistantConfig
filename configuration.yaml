@@ -1,23 +1,14 @@
 homeassistant:
   name: !secret name
-
   latitude: !secret latitude
-
   longitude: !secret longitude
-
   elevation: 429
-
   unit_system: metric
-
   time_zone: Europe/Berlin
-
   customize: !include includes/customize.yaml
-
   packages: !include_dir_named packages
 
-
 frontend:
-
 
 http:
   api_password: !secret api_password
@@ -25,37 +16,8 @@ http:
   ssl_key: /home/homeassistant/sslcert/privkey.pem
 
 config:
-cloud:
-  alexa:
-    filter:
-      include_entities:
-        - light.flur
-        - light.schlafzimmer
-      include_domains:
-        - switch
-      exclude_entities:
-        - switch.outside
-    entity_config:
-      light.flur:
-        name: Flurlicht
-        description: Flurlicht
-      switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
-        name: Steckdose
-        description: mpd steckdose
-      switch.receiver:
-        name: Verstärker
-        description: Verstärker
-      switch.11011_a:
-        display_categories: LIGHT
 
 updater:
-
-logger:
-  default: error
-  logs:
-    homeassistant.components.camera.generic: fatal
-    homeassistant.components.shell_command: fatal
-    requests.exceptions.ConnectionError: fatal
 
 #discovery:
 
@@ -63,88 +25,8 @@ conversation:
 
 history:
 
-recorder:
-  purge_interval: 1
-  purge_keep_days: 30
-  db_url: !secret mysql_db_path_local
-  include:
-    domains:
-      - binary_sensor
-      - switch
-      - light
-      - media_player
-      - device_tracker
-    entities:
-      - sensor.aeotec_zw100_multisensor_6_temperature
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.load_15m
-      - sensor.cpu_temperature
-      - sensor.cpu_used
-      - sensor.disk_free_
-      - sensor.disk_used_
-      - sensor.disk_used__2
-      - sensor.hauptrettungswache__zuhause
-      - sensor.luftfeuchtigkeit_esp8266_01
-      - sensor.luftfeuchtigkeit_esp8266_02
-      - sensor.luftfeuchtigkeit_esp8266_03
-      - sensor.qnap1_free_space_datavol1
-      - sensor.qnap1_cpu_usage
-      - sensor.qnap1_network_down_eth0
-      - sensor.qnap1_network_up_eth0
-      - sensor.sonoff1_gesamtverbrauch
-      - sensor.sonoff1_kosten_gesamt
-      - sensor.sonoff1_kosten_gestern
-      - sensor.sonoff1_kosten_heute
-      - sensor.sonoff2_gesamtverbrauch
-      - sensor.sonoff2_kosten_gesamt
-      - sensor.sonoff2_kosten_gestern
-      - sensor.sonoff2_kosten_heute
-      - sensor.sonoff3_gesamtverbrauch
-      - sensor.sonoff3_kosten_gesamt
-      - sensor.sonoff3_kosten_gestern
-      - sensor.sonoff3_kosten_heute
-      - sensor.sonoff4_gesamtverbrauch
-      - sensor.sonoff4_kosten_gesamt
-      - sensor.sonoff4_kosten_gestern
-      - sensor.sonoff4_kosten_heute
-      - sensor.sonoff5_gesamtverbrauch
-      - sensor.sonoff5_kosten_gesamt
-      - sensor.sonoff5_kosten_gestern
-      - sensor.sonoff5_kosten_heute
-      - sensor.sonoff1_momentane_leistung
-      - sensor.sonoff2_momentane_leistung
-      - sensor.sonoff3_momentane_leistung
-      - sensor.sonoff4_momentane_leistung
-      - sensor.sonoff5_momentane_leistung
-      - sensor.tankstelle_super
-      - sensor.temperatur_esp8266_01
-      - sensor.temperatur_esp8266_02
-      - sensor.temperatur_esp8266_03
-      - sensor.zuhause__marienhospital
-      - sensor.speedtest_download
-      - sensor.speedtest_upload
-      - sensor.speedtest_ping
-      - sensor.esp32_01_battery_value
- #pihole stats
-      - switch.pihole
-      - sensor.ads_blocked_today
-      - sensor.ads_percentage_today
-      - sensor.dns_queries_today
-      - sensor.domains_being_blocked
-      - sensor.ads_blocked_today
-      - sensor.unique_domains
-      - sensor.queries_forwarded
-      - sensor.queries_cached
-      - sensor.pihole_dns
-      - sensor.pihole_blocking
-
-
-
-
 influxdb:
   host: 127.0.0.1
-
 
 logbook:
 
@@ -162,16 +44,6 @@ mqtt:
 
 sun:
 
-# # Emulated Hue -> Amazon Echo
-# emulated_hue:
-  # off_maps_to_on_domains:
-    # - scene
-  # expose_by_default: true
-  # exposed_domains:
-    # - light
-    # - switch
-    # - scene
-
 #Google Calender
 google:
   client_id: !secret google_client_id
@@ -182,10 +54,8 @@ wemo:
     - !secret wemo1_ip
     - !secret wemo2_ip
 
-
 tradfri:
   host: !secret tradfri_ip
-
 
 ##################
 #    INCLUDES    #
@@ -193,12 +63,15 @@ tradfri:
 automation: !include_dir_list automations/
 #binary_sensor: !include includes/binary_sensor.yaml
 camera: !include includes/camera.yaml
+cloud: !include includes/cloud.yaml
 device_tracker: !include includes/device_tracker.yaml
 group: !include_dir_merge_named groups/
 input_boolean: !include includes/input_boolean.yaml
 input_select: !include includes/input_select.yaml
 input_number: !include includes/input_number.yaml
+logger: !include includes/logger.yaml
 media_player: !include includes/media_player.yaml
+recorder: !include includes/recorder.yaml
 notify: !include includes/notify.yaml
 scene: !include includes/scene.yaml
 script: !include_dir_merge_named scripts/

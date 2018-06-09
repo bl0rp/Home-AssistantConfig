@@ -207,6 +207,7 @@ sensor:
   - platform: darksky
     api_key: !secret darksky_api_key
     update_interval: '00:03'
+    language: de
     monitored_conditions:
       - summary
       - precip_type
@@ -225,10 +226,10 @@ sensor:
       - minutely_summary
       - hourly_summary
       - daily_summary
-      - temperature_max
-      - temperature_min
-      - apparent_temperature_max
-      - apparent_temperature_min
+      - temperature_high
+      - temperature_low
+      - apparent_temperature_high
+      - apparent_temperature_low
       - precip_intensity_max
 #Moon
   - platform: moon

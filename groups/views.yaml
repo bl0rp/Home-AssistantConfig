@@ -9,6 +9,7 @@ default_view:
     - group.pihole
     - group.ssl_cert
     - group.theme
+    - group.gasstations
 
 service:
   view: yes
