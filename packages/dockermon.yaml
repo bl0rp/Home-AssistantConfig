@@ -26,7 +26,7 @@ switch:
 
 
     - platform: rest
-      resource: http://127.0.0.1:8126/container/mystifying_swirles
+      resource: http://127.0.0.1:8126/container/portainer
       name: Portainer
       body_on: '{"state": "start"}'
       body_off: '{"state": "stop"}'

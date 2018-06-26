@@ -82,3 +82,8 @@ include:
     - sensor.multisensor1_battery
     - sensor.tradfri_remote_control
     - sensor.esp32_01_battery_value
+    #esp32
+   - sensor.esp32_02_battery
+   - sensor.esp32_02_humidity
+   - sensor.esp32_02_temperature
+   - sensor.esp32_02_rssi

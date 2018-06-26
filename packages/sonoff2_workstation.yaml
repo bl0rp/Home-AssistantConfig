@@ -250,7 +250,7 @@ automation:
       - service: automation.turn_on
         entity_id: automation.sonoff2_load_lcd
       - service: automation.turn_on
-        entity_id: automation.rpi3_load_to_led
+        entity_id: automation.nuc_load_to_led
 
 
   - alias: Auto Off LCD when not using the PC
@@ -268,7 +268,7 @@ automation:
       - service: automation.turn_off
         entity_id: automation.sonoff2_load_lcd
       - service: automation.turn_off
-        entity_id: automation.rpi3_load_to_led
+        entity_id: automation.nuc_load_to_led
 
 
 ### Record all power levels to a file (see notify)

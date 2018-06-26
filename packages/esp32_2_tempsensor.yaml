@@ -11,6 +11,7 @@ homeassistant:
       friendly_name: Batteriewert ESP32 02
 
     sensor.esp32_02_battery_state:
+      icon: mdi:car-battery
       friendly_name: Batteriestatus ESP32 02
 
     sensor.esp32_02_humidity:
@@ -21,6 +22,17 @@ homeassistant:
       icon: mdi:temperature-celsius
       friendly_name: Temperatur
 
+    sensor.esp32_02_rssi:
+      icon: mdi:wifi
+      friendly_name: Signalstärke
+
+    sensor.esp32_02_temperature_last_changed:
+      icon: mdi:delta
+      friendly_name: Letzte Änderung
+
+    automation.benachrichtigung_batterie_esp32_02:
+      icon: mdi:power-socket-eu
+      friendly_name: Akkuwarnung
 #############
 #  group    #
 #############
@@ -28,8 +40,9 @@ group:
   esp_02:
     control: hidden
     icon: mdi:door
-    name: Tempsensor
+    name: Temperatursensor Draußen
     entities:
+      - sensor.esp32_02_rssi
       - sensor.esp32_02_battery
       - sensor.esp32_02_battery_state
       - sensor.esp32_02_temperature
@@ -45,21 +58,27 @@ sensor:
 
   - platform: mqtt
     name: "esp32_02_battery"
-    state_topic: "testsensor/sensor/spannung_akku/state"
+    state_topic: "esp32_2/sensor/spannung_akku/state"
     unit_of_measurement: "V"
     qos: 0
 
   - platform: mqtt
     name: "esp32_02_humidity"
-    state_topic: "testsensor/sensor/humidity/state"
+    state_topic: "esp32_2/sensor/humidity/state"
     qos: 0
     unit_of_measurement: "%"
 
   - platform: mqtt
     name: "esp32_02_temperature"
-    state_topic: "testsensor/sensor/temperature/state"
+    state_topic: "esp32_2/sensor/temperature/state"
     qos: 0
     unit_of_measurement: "°C"
+
+  - platform: mqtt
+    name: "esp32_02_rssi"
+    state_topic: "esp32_2/sensor/esp32_2_wifi_signal_sensor/state"
+    qos: 0
+    unit_of_measurement: "dB"
 
   - platform: template
     sensors:
@@ -78,7 +97,7 @@ sensor:
 ### automation battery empty
 automation:
   alias: benachrichtigung_batterie_esp32_02
-  initial_state: False
+  initial_state: True
   trigger:
     - platform: state
       entity_id: sensor.esp32_02_battery_state
@@ -94,4 +113,4 @@ automation:
         title: "{{ trigger.to_state.attributes.friendly_name }}"
         message: >
             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-        notification_id: "esp01_battery_notification"
+        notification_id: "esp02_battery_notification"
