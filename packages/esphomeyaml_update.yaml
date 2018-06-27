@@ -1,0 +1,23 @@
+##############################################################
+### Packages / esphomeyaml update                          ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+
+sensor:
+  - platform: command_line
+    scan_interval: 3600
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/esphomeyaml/json').json()['info']['version'])"
+    name: esphomeyaml_release
+
+automation:
+  - alias: esphomeyaml_release_update_notification
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.esphomeyaml_release
+    action:
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.sensor.date__time.state }}: esphomeyaml V{{ states.sensor.esphomeyaml_release.state }} released!'
