@@ -510,7 +510,7 @@ automation:
           message: '{{ states.sensor.date__time.state }}: Der Docker Daemon läuft nicht!'
 
   - alias: "speedtest_alarm"
-    initial_state: True
+    initial_state: False
     trigger:
       platform: template
       value_template: '{{ states.sensor.speedtest_download.state|float < 30}}'

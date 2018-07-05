@@ -19,8 +19,7 @@ status_alle_bewegsungsmelder:
     - sensor.esp8266_02_motion_radar
     - sensor.esp8266_01_motion
     - sensor.esp8266_03_motion
-    - sensor.esp8266_04_motion
-    - sensor.esp8266_05_motion
+
 
 
 status_bewegungsmelder_last_triggered:
@@ -39,14 +38,12 @@ status_alle_umweltsensoren:
     - sensor.temperatur_esp8266_02
     - sensor.temperatur_esp8266_01
     - sensor.temperatur_esp8266_03
-    - sensor.temperatur_esp8266_04
-    - sensor.temperatur_esp8266_07
     - sensor.aeotec_zw100_multisensor_6_relative_humidity
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_03
-    - sensor.luftfeuchtigkeit_esp8266_04
-    - sensor.luftfeuchtigkeit_esp8266_07
+
+
 
 signalstaerke_alle_sensoren:
   name: W-Lan Signalstärke ESP

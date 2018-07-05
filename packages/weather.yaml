@@ -119,6 +119,18 @@ camera:
 
 
 group:
+  wetter_local:
+    name: Wetter kompakt
+    icon: mdi:weather-partlycloudy
+    entities:
+      - sensor.esp32_02_temperature
+      - sensor.yr_temperature
+      - sensor.dark_sky_temperature
+      - sensor.temperatur_esp8266_02
+      - sensor.temperatur_esp8266_01
+      - sensor.temperatur_esp8266_03
+
+
   wetter_all:
     name: Wetter
     icon: mdi:weather-partlycloudy

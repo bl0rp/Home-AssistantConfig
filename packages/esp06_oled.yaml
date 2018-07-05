@@ -29,7 +29,7 @@ sensor:
     name: "Temperatur ESP8266 06"
     state_topic: "sensor_esp8266_06/dht22/Temperature"
     qos: 0
-    unit_of_measurement: "?C"
+    unit_of_measurement: "°C"
 
   - platform: mqtt
     name: "ESP8266 06 IP"
@@ -96,22 +96,22 @@ sensor:
                'minutes': 60,
                'seconds': 1,
              } -%}
-           
+
              {%- set weeks = seconds // intervals.weeks -%}
              {%- set seconds = seconds % intervals.weeks -%}
              {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
-           
+
              {%- set days = seconds // intervals.days -%}
              {%- set seconds = seconds % intervals.days -%}
              {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
-           
+
              {%- set hours = seconds // intervals.hours -%}
              {%- set seconds = seconds % intervals.hours -%}
              {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
-           
+
              {%- set minutes = seconds // intervals.minutes -%}
              {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
-           
+
              {%- set seconds = seconds % intervals.minutes -%}
              {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
            {%- endmacro %}
@@ -127,7 +127,3 @@ sensor:
         friendly_name: "esp06 Motion Last Triggered"
         value_template: >-
           {{ as_timestamp(states.sensor.esp8266_06_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
-
-
-
-

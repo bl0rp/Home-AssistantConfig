@@ -75,6 +75,23 @@ media_player:
     - media_player.kodi
     - group.sensordata_1og
 
+WETTER:
+  name: Wetter
+  view: yes
+  icon: mdi:weather-partlycloudy
+  entities:
+    - group.wetter_local
+    - group.wetter_all
+    - group.wetter_yr
+    - group.wetter_darksky
+
+WASTEVIEW:
+  name: abfallkalender
+  view: yes
+  icon: mdi:delete-empty
+  entities:
+    - group.waste
+
 Cam:
   name: Webcam
   view: yes
@@ -92,6 +109,8 @@ Sensordaten:
      - group.status_alle_sensoren
      - group.status_alle_bewegsungsmelder
      - group.status_bewegungsmelder_last_triggered
+     - group.esp_01
+     - group.esp_02
      - group.status_alle_umweltsensoren
      - group.signalstaerke_alle_sensoren
      - group.esp_alle_ips
@@ -114,12 +133,12 @@ familie:
   entities:
    - group.familiegrp
    - group.traveltime
- 
+
 tankstellen:
   view: yes
   icon: mdi:gas-station
   entities:
-    - group.gasstations      
+    - group.gasstations
 autos:
   name: Automation
   view: yes
@@ -148,21 +167,14 @@ LAN:
   entities:
     - group.device_status
 
-WETTER:
-  name: Wetter
-  view: yes
-  icon: mdi:weather-partlycloudy
-  entities:
-    - group.wetter_all
-    - group.wetter_yr
-    - group.wetter_darksky
+
 
 TEST:
   name: TEST
   view: yes
   icon: mdi:delete
   entities:
-    - group.esp_02
+    - group.iss
     - group.outtopic
     - group.radartest
     - group.sprit

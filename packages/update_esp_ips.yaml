@@ -15,9 +15,9 @@ automation:
         - service: script.get_esp_ip
           data:
             device: "sensor_esp8266_02"
-        - service: script.get_esp_ip
-          data:
-            device: "sensor_esp8266_03"
+#        - service: script.get_esp_ip
+#          data:
+#            device: "sensor_esp8266_03"
         - service: script.get_esp_ip
           data:
             device: "sensor_esp8266_04"
@@ -37,5 +37,3 @@ script:
       data_template:
         topic: "{{ device }}/status"
         payload: "Connected"
-
-

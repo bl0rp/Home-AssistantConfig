@@ -1,5 +1,5 @@
 alias: "Critical Temperature Wintergarden"
-initial_state: True
+initial_state: False
 trigger:
   platform: numeric_state
   entity_id: sensor.temperatur_esp8266_03

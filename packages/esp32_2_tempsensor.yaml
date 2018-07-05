@@ -19,7 +19,7 @@ homeassistant:
       friendly_name: Luftfeuchtigkeit
 
     sensor.esp32_02_temperature:
-      icon: mdi:temperature-celsius
+      icon: mdi:thermometer
       friendly_name: Temperatur
 
     sensor.esp32_02_rssi:
