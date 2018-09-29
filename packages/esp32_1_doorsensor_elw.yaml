@@ -1,36 +1,33 @@
 ########################################################################
 ## Packages / ESP32 #1                                                ##
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
-## Thanks to Merlin Schumacher                                        ##
-## esp32 with basecamp (https://github.com/merlinschumacher/Basecamp) ##
 ########################################################################
 homeassistant:
   customize:
 
-
+    binary_sensor.esp32_01_door_state:
+      friendly_name: Türe ELW
     sensor.esp32_01_battery:
       icon: mdi:car-battery
-      friendly_name: Batteriestatus ESP32 01
+      friendly_name: Batteriewert ESP32 01
 
     sensor.esp32_01_battery_state:
       icon: mdi:car-battery
       friendly_name: Batteriestatus ESP32 01
 
-    sensor.esp32_01_battery_value:
-      icon: mdi:car-battery
-      friendly_name: Batteriewert ESP32 01
 
-    sensor.esp32_01_door_state:
-      icon: mdi:door
-      friendly_name: Wohnungstüre ELW
+    sensor.esp32_01_rssi:
+      icon: mdi:wifi
+      friendly_name: Signalstärke
 
-    sensor.esp32_01_door_motion:
-      icon: mdi:door
-      friendly_name: Wohnungstüre ELW
+    sensor.esp32_01_motion_last_changed:
+      icon: mdi:delta
+      friendly_name: Letzte Änderung
 
-    sensor.esp32_01_motion_last_triggered:
-      icon: mdi:door
-      friendly_name: Letze Bewegung
+    automation.benachrichtigung_batterie_esp32_01:
+      icon: mdi:power-socket-eu
+      friendly_name: Akkuwarnung
+
 
 #############
 #  group    #
@@ -42,64 +39,67 @@ group:
     icon: mdi:door
     name: Türsensor ELW
     entities:
-#      - sensor.esp32_01_battery
+      - binary_sensor.esp32_01_door_state
+      - sensor.esp32_01_rssi
+      - sensor.esp32_01_battery
       - sensor.esp32_01_battery_state
-      - sensor.esp32_01_battery_value
-#      - sensor.esp32_01_door_state
-      - sensor.esp32_01_door_motion
-      - sensor.esp32_01_motion_last_triggered
+      - sensor.esp32_01_motion_last_changed
+      - automation.benachrichtigung_batterie_esp32_01
 
 
 #############
 #  sensors  #
 #############
-sensor:
+binary_sensor:
+  - platform: mqtt
+    name: esp32_01_door_state
+    state_topic: "esp32_1/binary_sensor/door/state"
+    device_class: door
 
+sensor:
   - platform: mqtt
     name: "esp32_01_battery"
-    state_topic: "stat/tuere-elw/battery"
+    state_topic: "esp32_1/sensor/spannung_akku/state"
+    unit_of_measurement: "V"
     qos: 0
-
 
   - platform: mqtt
-    name: "esp32_01_battery_value"
-    state_topic: "stat/tuere-elw/batteryvalue"
-    unit_of_measurement: "mV"
+    name: "esp32_01_rssi"
+    state_topic: "esp32_1/sensor/esp32_1_wifi_signal_sensor/state"
     qos: 0
-
-
-  - platform: mqtt
-    name: "esp32_01_door_state"
-    state_topic: "stat/tuere-elw/status"
-    qos: 0
+    unit_of_measurement: "dB"
 
 
   - platform: template
     sensors:
 
-
       esp32_01_door_motion:
-        value_template: '{% if is_state("sensor.esp32_01_door_state", "open") %}Türe geöffnet!{% else %}Türe geschlossen.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp32_01_door_state", "open") %}mdi:door-open{% else %}mdi:door-closed{% endif %}'
+        value_template: '{% if is_state("sensor.esp32_01_door_state", "ON") %}Türe geöffnet!{% else %}Türe geschlossen.{% endif %}'
+        icon_template: '{% if is_state("sensor.esp32_01_door_state", "ON") %}mdi:door-open{% else %}mdi:door-closed{% endif %}'
 
       esp32_01_battery_state:
-        value_template: '{% if is_state("sensor.esp32_01_battery", "full") %}Geladen{% else %}Leer{% endif %}'
-        icon_template: '{% if is_state("sensor.esp32_01_battery", "full") %}mdi:battery{% else %}mdi:battery-10{% endif %}'
+        value_template: "{{ 'Geladen' if states.sensor.esp32_01_battery.state | float >3.3  else 'Leer' }}"
+        icon_template: "{{ 'mdi:battery' if states.sensor.esp32_01_battery.state | float >3.3  else 'mdi:battery-10' }}"
 
-      esp32_01_motion_last_triggered:
+      esp32_01_motion_last_changed:
         value_template: >-
           {{ as_timestamp(states.sensor.esp32_01_door_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
 
 ### automation battery empty
 automation:
-  alias: benachrichtigung_batterie_esp_01
+  alias: benachrichtigung_batterie_esp32_01
   initial_state: True
   trigger:
-    - platform: state
+    - platform: numeric_state
       entity_id: sensor.esp32_01_battery
-      from: 'full'
-      to: 'empty'
+      below: 3.0
+      for:
+        seconds: 5
+
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state != nan }}"
   action:
     - service: notify.pushbullet
       data_template:
@@ -110,4 +110,4 @@ automation:
         title: "{{ trigger.to_state.attributes.friendly_name }}"
         message: >
             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-        notification_id: "esp01_battery_notification" 
+        notification_id: "esp01_battery_notification"
