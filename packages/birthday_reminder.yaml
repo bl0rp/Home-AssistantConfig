@@ -1,0 +1,68 @@
+##############################################################
+### Packages / Birthday  Reminder                          ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+
+homeassistant:
+  customize:
+    sensor.next_birthday:
+      friendly_name: "Nächster Geburtstag"
+      icon: mdi:cake
+    automation.birthday_alert_today:
+      friendly_name: "Benachrichtigung Geburtstage"
+      icon: mdi:alert
+
+
+group:
+  birthday:
+    control: hidden
+    name: Geburtstag
+    view: no
+    entities:
+      - sensor.next_birthday
+      - automation.birthday_alert_today
+
+
+
+
+sensor:
+#template sensor for calc. unixtime -> automation
+  - platform: template
+    sensors:
+      cal_alert_time_birthday:
+        entity_id: sensor.date__time
+        value_template: >-
+          {{ (as_timestamp(states.calendar.contacts.attributes.start_time) - as_timestamp(now()) )|int }}
+ 
+# show next calendar entry
+  - platform: template
+    sensors:
+      next_birthday:
+        value_template: >-
+          {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.contacts.attributes.message|replace("hat Geburtstag", "")}}
+
+
+
+
+
+automation:
+
+
+
+  - alias: birthday_alert_today
+    initial_state: true
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.cal_alert_time_birthday
+        below: 43200
+    action:
+      - service: notify.pushbullet
+        data_template:
+          title: 'Erinnerung Geburtstag'
+          message: >
+              {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.contacts.attributes.message}}
+
+
+
+
