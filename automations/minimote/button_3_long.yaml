@@ -9,6 +9,6 @@ trigger:
 action:
   - service: notify.pushbullet
     data_template:
-      title: "button 1"
+      title: "button 3 long"
       message: >
-         Button 1 pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
+         Button 3 long  pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
