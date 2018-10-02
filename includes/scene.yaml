@@ -1,6 +1,6 @@
 ##ELW Komplett
 #Alles Aus
-  - name: ELWAus
+  - name: ELW_Aus
     entities:
       light.schlafzimmer:
         state: off
@@ -13,7 +13,7 @@
       switch.11011_C:
         state: off
 #Alles An Hell
-  - name: ELWAnHell
+  - name: ELW_Hell
     entities:
       switch.11011_B:
         state: on
@@ -30,7 +30,7 @@
         brightness: 255
         color_temp: 250
 #Relax
-  - name: ELWRelax
+  - name: ELW_Relax
     entities:
       light.schlafzimmer:
         state: on
@@ -39,40 +39,40 @@
       switch.11011_B:
         state: on
 #Schlafzimmer Hell
-  - name: SchlafzimmerHell
+  - name: Schlafzimmer_Hell
     entities:
       light.schlafzimmer:
         state: on
         brightness: 255
         color_temp: 250
 #Schlafzimmer Relax
-  - name: SchlafzimmerRelax
+  - name: Schlafzimmer_Relax
     entities:
       light.schlafzimmer:
         state: on
         brightness: 18
         color_temp: 454.54545454545456
 #Schlafzimmer Aus
-  - name: SchlafzimmerAus
+  - name: Schlafzimmer_Aus
     entities:
       light.schlafzimmer:
         state: off
 #Flur Hell
-  - name: FlurHell
+  - name: Flur_Hell
     entities:
       light.flur:
         state: on
         brightness: 255
         color_temp: 250
 #Flur Relax
-  - name: FlurRelax
+  - name: Flur_Relax
     entities:
       light.flur:
         state: on
         brightness: 18
         color_temp: 454.54545454545456
 #Flur Aus
-  - name: FlurAus
+  - name: Flur_Aus
     entities:
       light.flur:
         state: off

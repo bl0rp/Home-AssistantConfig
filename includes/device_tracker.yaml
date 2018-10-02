@@ -22,7 +22,8 @@
     - !secret ewald_ip
     - !secret christoph_ip
     - !secret ipad_ip
-#    - !secret nexus7_ip
+    - !secret hanni_iphone_ip
+      #    - !secret nexus7_ip
 
   home_interval: 10
   exclude:
@@ -35,8 +36,6 @@
 
 - platform: mqtt
   devices:
-    chris_bluetooth_rpi1: 'bluetooth_rpi1/presence/pixel2'
-    chris_bluetooth_rpi3: 'bluetooth_rpi3/presence/pixel2'
     chris_bluetooth_nuc: 'bluetooth_nuc/presence/pixel2'
 
 

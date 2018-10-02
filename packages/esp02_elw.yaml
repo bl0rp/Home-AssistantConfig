@@ -23,37 +23,45 @@ homeassistant:
 ###############################################################################
 #  Sensors
 ###############################################################################
-sensor:
-
+binary_sensor:
   - platform: mqtt
-    name: "Temperatur ESP8266 02"
-    state_topic: "sensor_esp8266_02/dht22/Temperature"
-    qos: 0
-    unit_of_measurement: "°C"
-
-  - platform: mqtt
-    name: "ESP8266 02 IP"
-    state_topic: "sensor_esp8266_02/IP"
-    availability_topic: "sensor_esp8266_02/status"
-    payload_available: "Connected"
-    payload_not_available: "Connection Lost"
-    qos: 0
-
-  - platform: mqtt
-    name: "Luftfeuchtigkeit ESP8266 02"
-    state_topic: "sensor_esp8266_02/dht22/Humidity"
-    qos: 0
-    unit_of_measurement: "%"
+    state_topic: "sensor_esp8266_02/status"
+    payload_on: "online"
+    payload_off: "offline"
+    device_class: "connectivity"
+    name: "sensor_esp8266_02_status_binary"
 
   - platform: mqtt
     name: "ESP8266 02 PIR"
-    state_topic: "sensor_esp8266_02/pir/motion"
+    availability_topic: "sensor_esp8266_02/status"
+    state_topic: "sensor_esp8266_02/binary_sensor/motion/state"
+    device_class: "motion"
+    payload_on: "ON"
+    payload_off: "OFF"
+sensor:
+
+  - platform: mqtt
+    name: "ESP8266 02 Status"
+    state_topic: "sensor_esp8266_02/status"
+    payload_on: "online"
+    payload_off: "offline"
     qos: 0
 
   - platform: mqtt
-    name: "ESP8266 02 Radar"
-    state_topic: "sensor_esp8266_02/radar/motion"
+    name: "Temperatur ESP8266 02"
+    state_topic: "sensor_esp8266_02/sensor/temperature/state"
+    availability_topic: "sensor_esp8266_02/status"
     qos: 0
+    unit_of_measurement: "°C"
+
+
+  - platform: mqtt
+    name: "Luftfeuchtigkeit ESP8266 02"
+    state_topic: "sensor_esp8266_02/sensor/humidity/state"
+    availability_topic: "sensor_esp8266_02/status"
+    qos: 0
+    unit_of_measurement: "%"
+
 
   - platform: mqtt
     name: "ESP8266 02 Status"
@@ -62,13 +70,15 @@ sensor:
 
   - platform: mqtt
     name: "ESP8266 02 Uptime"
-    state_topic: "sensor_esp8266_02/uptime/minutes"
+    state_topic: "sensor_esp8266_02/sensor/uptime/state"
+    availability_topic: "sensor_esp8266_02/status"
     qos: 0
-    unit_of_measurement: "minutes"
+    unit_of_measurement: "seconds"
 
   - platform: mqtt
     name: "ESP8266 02 Signal"
-    state_topic: "sensor_esp8266_02/signal/rssi"
+    state_topic: "sensor_esp8266_02/sensor/rssi/state"
+    availability_topic: "sensor_esp8266_02/status"
     qos: 0
     unit_of_measurement: "dB"
 
@@ -101,42 +111,34 @@ sensor:
                'minutes': 60,
                'seconds': 1,
              } -%}
-           
+
              {%- set weeks = seconds // intervals.weeks -%}
              {%- set seconds = seconds % intervals.weeks -%}
-             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
-           
+             {{- comma() ~ weeks ~ 'w' if weeks -}}
+
              {%- set days = seconds // intervals.days -%}
              {%- set seconds = seconds % intervals.days -%}
-             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
-           
+             {{- comma() ~ days ~ 'd' if days -}}
+
              {%- set hours = seconds // intervals.hours -%}
              {%- set seconds = seconds % intervals.hours -%}
-             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
-           
+             {{- comma() ~ hours ~ 'h' if hours -}}
+
              {%- set minutes = seconds // intervals.minutes -%}
-             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
-           
+             {{- comma() ~ minutes ~ 'm' if minutes -}}
+
              {%- set seconds = seconds % intervals.minutes -%}
-             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+             {{- comma() ~ seconds ~ 's' if seconds -}}
            {%- endmacro %}
-           {{ human_time(states.sensor.esp8266_02_uptime.state | int * 60) }}
+           {{ human_time(states.sensor.esp8266_02_uptime.state | int   ) }}
 
       esp8266_02_motion:
         friendly_name: ELW
-        value_template: '{% if is_state("sensor.esp8266_02_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_02_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+        value_template: '{% if is_state("binary_sensor.esp8266_02_pir", "on") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
+        icon_template: '{% if is_state("binary_sensor.esp8266_02_pir", "on") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
-      esp8266_02_motion_radar:
-        friendly_name: ELW Radar
-        value_template: '{% if is_state("sensor.esp8266_02_radar", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_02_radar", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
       elw_motion_last_triggered:
         friendly_name: "ELW Motion Last Triggered"
         value_template: >-
           {{ as_timestamp(states.sensor.esp8266_02_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
-
-
-
-

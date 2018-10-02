@@ -117,10 +117,10 @@ automation:
       - service: homeassistant.turn_off
         entity_id: input_boolean.chrishome
     
-      - service: notify.pushbullet
-        data_template:
-          message: >
-             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
+      # - service: notify.pushbullet
+        # data_template:
+          # message: >
+             # {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
 
 #switch input_boolean from off to on 
 

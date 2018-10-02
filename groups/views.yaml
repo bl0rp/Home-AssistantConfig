@@ -33,7 +33,7 @@ ELW:
     - script.elw_lampen_aus
     - script.akkus_laden
     - script.tuerlicht_def
-    - group.sceneselw
+    - group.elw_scene_select
     - group.esp_01
     - group.automation_elw
     - group.sensordata_elw
@@ -111,6 +111,7 @@ Sensordaten:
      - group.status_bewegungsmelder_last_triggered
      - group.esp_01
      - group.esp_02
+     - group.esp_03
      - group.status_alle_umweltsensoren
      - group.signalstaerke_alle_sensoren
      - group.esp_alle_ips
@@ -125,6 +126,7 @@ Sonoffs:
      - group.sonoff3
      - group.sonoff4
      - group.sonoff5
+     - group.sonoff_firmware
 
 familie:
   name: Familie
@@ -132,6 +134,7 @@ familie:
   icon: mdi:account-multiple
   entities:
    - group.familiegrp
+   - group.birthday
    - group.traveltime
 
 tankstellen:

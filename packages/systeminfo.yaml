@@ -414,7 +414,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.disk_use_
-      above: 25.0
+      above: 50.0
     action:
       - service: notify.pushbullet
         data:
@@ -429,7 +429,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-      above: 50.0
+      above: 60.0
     action:
       - service: notify.pushbullet
         data:

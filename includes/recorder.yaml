@@ -62,6 +62,9 @@ include:
     #google travel time
     - sensor.zuhause__marienhospital
     - sensor.hauptrettungswache__zuhause
+    - sensor.waze_zuhause_hrw
+    - sensor.waze_stuttgart_berlin
+
     #speedtest
     - sensor.speedtest_download
     - sensor.speedtest_upload

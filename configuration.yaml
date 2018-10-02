@@ -54,8 +54,8 @@ wemo:
     - !secret wemo1_ip
     - !secret wemo2_ip
 
-tradfri:
-  host: !secret tradfri_ip
+#tradfri:
+#  host: !secret tradfri_ip
 
 ##################
 #    INCLUDES    #

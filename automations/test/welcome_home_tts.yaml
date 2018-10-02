@@ -1,0 +1,26 @@
+alias: welcome_home_tts
+initial_state: False
+trigger:
+  platform: state
+  entity_id: sensor.esp32_01_door_state
+  from: 'closed'
+  to: 'open'
+condition:
+  condition: state
+  entity_id: input_boolean.chrishome
+  state: 'on'
+action:
+- delay: 00:00:20
+- service: notify.echodot
+  data_template:
+    message: >
+      {% if now().strftime("%H")|int < 12 %}
+      Guten Morgen Christoph.
+      {% elif now().strftime("%H")|int < 18 %}
+      Guten Mittag Christoph.
+      {% else %}
+      Guten Abend Christoph.
+      {% endif %}
+      
+- service: automation.turn_off
+  entity_id: automation.welcome_home_tts

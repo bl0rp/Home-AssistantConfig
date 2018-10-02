@@ -83,7 +83,7 @@ sensor:
 
       esp32_01_motion_last_changed:
         value_template: >-
-          {{ as_timestamp(states.sensor.esp32_01_door_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.binary_sensor.esp32_01_door_state.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
 
 ### automation battery empty
