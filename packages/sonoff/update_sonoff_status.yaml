@@ -1,0 +1,130 @@
+##############################################################
+### Packages / Update_Sonoff_Status                        ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd & sjabby                                ###
+### https://github.com/cnrd / https://github.com/sjabby    ###
+##############################################################
+
+automation:
+    - alias: get_sonoff_info
+      trigger:
+        platform: homeassistant
+        event: start
+      action:
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/Status"
+            payload: "5"
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/Status"
+            payload: "2"
+    - alias: tasmota_update_notification
+      initial_state: True
+      trigger:
+        - platform: state
+          entity_id: sensor.sonoff_latest_release
+      condition:
+        condition: and
+        conditions:
+            - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release_raw') != 'unavailable' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release') != 'unaailable' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release_raw') != '' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release') != states('sensor.sonoff1_sw_version')}}"
+      action:
+        - service: notify.pushbullet
+          data_template:
+            message: "Es gibt eine neue Tasmota Version! Tasmota {{ states('sensor.sonoff_latest_release') }}."
+        - service: persistent_notification.create
+          data:
+            title: "Tasmota Update"
+            message: "Es gibt eine neue Tasmota Version! {{ states('sensor.sonoff_latest_release') }}. - {{ as_timestamp(now()) | timestamp_custom('%d.%m.%Y %H:%M:%S', true) }}"
+            notification_id: "tasmota_update"
+
+
+
+group:
+  sonoff_firmware:
+    control: hidden
+    entities:
+      - sensor.sonoff_latest_release
+      - sensor.sonoff1_sw_version
+      - sensor.sonoff2_sw_version
+      - sensor.sonoff3_sw_version
+      - sensor.sonoff4_sw_version
+      - sensor.sonoff5_sw_version
+
+
+
+
+sensor:
+  #Latest Release
+  - platform: rest
+    name: sonoff_latest_release_raw
+    resource: https://api.github.com/repos/arendst/Sonoff-Tasmota/releases/latest
+    value_template: '{{ value_json.tag_name  }}'
+    headers:
+      Accept: application/vnd.github.v3+json
+      Content-Type: application/json
+      User-Agent: Home Assistant REST sensor
+  - platform: template
+    sensors:
+      sonoff_latest_release:
+        value_template: >-
+          {{ states.sensor.sonoff_latest_release_raw.state |replace ('v','')  }}
+
+  #ipv4 sonoff
+  - platform: mqtt
+    name: "sonoff1 IPv4"
+    state_topic: "stat/sonoff1/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff2 IPv4"
+    state_topic: "stat/sonoff2/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff3 IPv4"
+    state_topic: "stat/sonoff3/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff4 IPv4"
+    state_topic: "stat/sonoff4/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff5 IPv4"
+    state_topic: "stat/sonoff5/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+  #SW Version
+
+  - platform: mqtt
+    name: "sonoff1 sw version"
+    state_topic: "stat/sonoff1/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff2 sw version"
+    state_topic: "stat/sonoff1/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff3 sw version"
+    state_topic: "stat/sonoff3/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff4 sw version"
+    state_topic: "stat/sonoff4/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff5 sw version"
+    state_topic: "stat/sonoff5/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
