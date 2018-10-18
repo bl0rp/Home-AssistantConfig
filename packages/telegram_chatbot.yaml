@@ -1,0 +1,189 @@
+##############################################################
+### Packages / telegram chatbot                            ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to @JCDenton                                    ###
+##############################################################
+
+homeassistant:
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+     - !secret telegram_chat_id_christoph
+
+notify:
+  - name: telegram_christoph
+    platform: telegram
+    chat_id: !secret telegram_chat_id_christoph
+
+automation:
+
+#initial Menu
+
+  - alias: 'telegram_boot_notice'
+    trigger:
+    - event: start
+      platform: homeassistant
+    action:
+    - service: telegram_bot.send_message
+      data_template:
+        target: !secret telegram_chat_id_christoph
+        disable_notification: true
+        message: "Home Assistant online!"
+    - service: telegram_bot.send_message
+      data_template:
+        target: !secret telegram_chat_id_christoph
+        disable_notification: true
+        message: "Commands..."
+        keyboard: ["/status", "/test", "/temp", "/weather"]
+
+
+## menu
+  - alias: 'telegram_menu'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/menu'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Commands..."
+        keyboard: ["/status", "/test", "/temp", "/weather"]
+
+
+#weather info dark sky
+
+  - alias: 'telegram_weather'
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/weather'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: '{{ trigger.event.data.user_id }}'
+          disable_notification: false
+          message: '{{ states.sensor.dark_sky_hourly_summary.state }} {{ states.sensor.dark_sky_daily_summary.state }}'
+          keyboard: ["/menu"]
+
+#send a test message
+
+  - alias: 'telegram_test'
+    initial_state: true
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/test'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: "{{ trigger.event.data.user_id }}"
+          message: 'Test message received.'
+          keyboard: ["/menu"]
+#systemstatus
+
+  - alias: 'telegram_status'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/status'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "System is online!
+        
+          Uptime NUC: {{ states('sensor.host_uptime_human') }}.
+
+          Uptime HASS: {{ states('sensor.ha_uptime_human') }}."
+
+        keyboard: ["/menu"]
+
+##Temperatur
+  - alias: telegram_temperatur_menu
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/temp'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Wo?"
+        keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+
+  - alias: telegram_replay_temp_elw
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/temp_elw'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Temperatur ELW:
+
+          Multisensor: {{ states.sensor.aeotec_zw100_multisensor_6_temperature.state}}°C
+
+          ESP: {{ states.sensor.temperatur_esp8266_02.state}}°C"
+        keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+
+  - alias: telegram_replay_temp_wohnzimmer
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/temp_wohnzimmer'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Temperatur Wohnzimmer:
+          {{ states.sensor.temperatur_esp8266_01.state}}°C"
+        keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+
+  - alias: telegram_replay_temp_wintergarten
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/temp_wintergarten'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Temperatur Wintergarten:
+           {{ states.sensor.temperatur_esp8266_03.state}}°C"
+        keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+
+  - alias: telegram_replay_temp_aussen
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/temp_aussen'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Temperatur Carport:
+
+           DHT: {{ states.sensor.esp32_02_temperature.state}}°C
+
+           BME: {{ states.sensor.esp32_03_temperature.state}}°C"
+        keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
