@@ -1,5 +1,5 @@
 ########################################################################
-## Packages / ESP32 #2                                                ##
+## Packages / ESP32 #3                                                ##
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
 ########################################################################
 homeassistant:
@@ -16,11 +16,11 @@ homeassistant:
 
     sensor.esp32_03_humidity:
       icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit
+      friendly_name: Luftfeuchtigkeit Cartport BME
 
     sensor.esp32_03_temperature:
       icon: mdi:thermometer
-      friendly_name: Temperatur
+      friendly_name: Temperatur Carport BME
 
     sensor.esp32_03_pressure:
       icon: mdi:gauge
@@ -28,7 +28,7 @@ homeassistant:
 
     sensor.esp32_03_rssi:
       icon: mdi:wifi
-      friendly_name: Signalstärke
+      friendly_name: "ESP32 #3 Signalstärke"
 
     sensor.esp32_03_uptime_human:
       icon: mdi:timer
@@ -45,12 +45,12 @@ homeassistant:
 #  group    #
 #############
 group:
-  esp_03:
+  esp32_03:
     control: hidden
     icon: mdi:door
     name: Temperatursensor BME280
     entities:
-      - sensor.esp32_03_uptime_human
+#      - sensor.esp32_03_uptime_human
       - sensor.esp32_03_rssi
       - sensor.esp32_03_battery
       - sensor.esp32_03_battery_state

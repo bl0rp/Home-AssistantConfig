@@ -1,14 +1,3 @@
-  tuerlicht:
-    name: Wie lange soll das Türlicht brennen?
-    options:
-     - 5
-     - 15
-     - 30
-     - 45
-     - 60
-    initial: 30
-    icon: mdi:panda
-
   led_mqtt:
     name: welche led darf es sein?
     options:
@@ -18,14 +7,3 @@
      - Alle
     initial: Alle
     icon: mdi:panda
-
-  scene_selector:
-    name: Scene Selector
-    initial: 'None'
-    options:
-      - 'None'
-      - 'SchlafzimmerHell'
-      - 'SchlafzimmerRelax'
-      - 'SchlafzimmerAus'
-
-

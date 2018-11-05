@@ -1,5 +1,6 @@
 alias: Welcome Home tts hanni
 hide_entity: false
+initial_state: false
 trigger:
   platform: state
   entity_id: device_tracker.hanni_iphone_ip

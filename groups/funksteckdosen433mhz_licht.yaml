@@ -1,7 +1,0 @@
-funksteckdosen433mhz_licht:
-  name: Lampen (via 433Mhz)
-  view: no
-  entities:
-    - switch.11011_A
-    - switch.11011_B
-    - switch.11011_C

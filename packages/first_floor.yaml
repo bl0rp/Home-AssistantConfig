@@ -1,5 +1,5 @@
 ########################################################################
-## Packages / Frist Floor                                             ##
+## Packages / First Floor                                             ##
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
 ########################################################################
 homeassistant:
@@ -74,7 +74,7 @@ automation:
 #Stehlampe on/off
 
 ###
-# on after 1st movement 
+# on after 1st movement
 ###
 
   - alias: 1 OG Stehlampe bei erster Bewegung nach Sonnenuntergang anschalten
@@ -148,7 +148,7 @@ automation:
 #############
 script:
 ###
-# all lights on and off 
+# all lights on and off
 ###
 
 

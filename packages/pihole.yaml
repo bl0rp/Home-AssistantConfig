@@ -137,16 +137,34 @@ sensor:
     value_template: '{{ value[28:] }}'
     scan_interval: 900
 
-  - platform: command_line
-    command: "pihole -v -p -l"
-    name: 'pihole_version_latest'
-    value_template: '{{ value[27:] }}'
-    scan_interval: 86400
+  - platform: rest
+    name: pihole_version_latest_raw
+    resource: https://api.github.com/repos/pi-hole/pi-hole/releases/latest
+    username: !secret github_user
+    password: !secret github_token
+    authentication: basic
+    value_template: '{{ value_json.tag_name  }}'
+    headers:
+      Accept: application/vnd.github.v3+json
+      Content-Type: application/json
+      User-Agent: Home Assistant REST sensor
+
+  - platform: template
+    sensors:
+      pihole_version_latest:
+        value_template: >-
+          {{ states.sensor.pihole_version_latest_raw.state |replace ('v','')  }}
+
+  # - platform: command_line
+    # command: "pihole -v -p -l"
+    # name: 'pihole_version_latest'
+    # value_template: '{{ value[27:] }}'
+    # scan_interval: 43200
 
   - platform: template
     sensors:
       pi_hole_version:
-        value_template: "{%- if states.sensor.pihole_version_current.state == states.sensor.pihole_version_latest.state -%}{{states.sensor.pihole_version_current.state}} {% else %}{{states.sensor.pihole_version_latest.state}} Available{% endif%}"
+        value_template: "{%- if states.sensor.pihole_version_current.state == states.sensor.pihole_version_latest.state -%}{{states.sensor.pihole_version_current.state}} {% else %}{{states.sensor.pihole_version_latest.state}} Verfügbar!{% endif%}"
         icon_template: >-
           {% if states.sensor.pihole_version_current.state == states.sensor.pihole_version_latest.state %}
             mdi:checkbox-marked
@@ -264,7 +282,7 @@ automation:
         - condition: template
           value_template: "{{ states('sensor.pihole_version_latest') != 'unknown' }}"
         - condition: template
-          value_template: "{{ states('sensor.pihole_version_latest') != 'RROR' }}"
+          value_template: "{{ states('sensor.pihole_version_latest') != '' }}"
   action:
     - service: notify.pushbullet
       data_template:

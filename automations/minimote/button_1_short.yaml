@@ -12,4 +12,4 @@ action:
       message: >
          Es werde Licht
   - service: scene.turn_on
-    entity_id: scene.elwrelax
+    entity_id: scene.elw_relax

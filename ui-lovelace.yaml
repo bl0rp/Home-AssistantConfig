@@ -114,8 +114,11 @@ views:
         title: Docker Container
         show_header_toggle: false
         entities:
-          - switch.grafanainflux
+          - switch.watchtower
           - switch.portainer
+          - switch.grafana
+          - switch.influx
+          - switch.tasmoadmin
       - type: entities
         title: Alarme
         show_header_toggle: false
@@ -144,155 +147,50 @@ views:
   - title: ELW
     cards:
       - type: entities
-        entities:
-          - script.elw_lampen_an
-          - script.elw_lampen_aus_scene
-          - script.elw_lampen_aus
-          - script.akkus_laden
-          - script.tuerlicht_def
-      - type: entities
         title: Licht ELW
-        show_header_toggle: true
-        entities:
-          - scene.elwrelax
-          - scene.elwaus
-          - scene.elwanhell
-          - scene.schlafzimmerhell
-          - scene.schlafzimmerrelax
-          - scene.schlafzimmeraus
-          - scene.flurhell
-          - scene.flurrelax
-          - scene.fluraus
-      - type: entities
-        title: "T\xFCrsensor ELW"
         show_header_toggle: false
         entities:
-          - sensor.esp32_01_battery_state
-          - sensor.esp32_01_battery_value
-          - sensor.esp32_01_door_motion
-          - sensor.esp32_01_motion_last_triggered
-      - type: entities
-        title: "Automatisierung f\xFCr die ELW"
-        show_header_toggle: true
-        entities:
-          - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-          - automation.bewegungsmelder_elw_licht_zwave
-          - automation.elw_licht_ausschalten_wenn_bt_nicht_gefunden
-          - automation.akkuladeautomatik
+          - input_select.elw_scene
+          - input_select.tuerlicht
+          - light.flur
+          - light.schlafzimmer
+          - switch.11011_a
+          - switch.11011_b
+          - switch.11011_c
+          - automation.motion_zwave_sunset_flur_dimlight
       - type: entities
         title: Temperatur und Luftfeuchtigkeit
         show_header_toggle: true
         entities:
-          - sensor.yr_temperature
-          - sensor.dark_sky_temperature
+          - sensor.esp32_02_temperature
+          - sensor.esp32_03_temperature
           - sensor.temperatur_esp8266_02
-          - sensor.yr_humidity
-          - sensor.dark_sky_humidity
-          - sensor.luftfeuchtigkeit_esp8266_02
-      - type: entities
-        title: Multisensor ELW
-        show_header_toggle: true
-        entities:
-          - sensor.multisensor1_battery
-          - sensor.aeotec_zw100_multisensor_6_luminance
           - sensor.aeotec_zw100_multisensor_6_temperature
-          - sensor.aeotec_zw100_multisensor_6_ultraviolet
-          - sensor.multisensor1_motion
-          - binary_sensor.aeotec_zw100_multisensor_6_sensor
+          - sensor.esp32_02_humidity
+          - sensor.esp32_03_humidity
+          - sensor.luftfeuchtigkeit_esp8266_02
+          - sensor.aeotec_zw100_multisensor_6_relative_humidity
       - type: entities
-        title: MPD ELW (Z-Wave)
+        title: Letzte Bewegung
         show_header_toggle: true
         entities:
-          - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-          - sensor.zwave_mpd1_use
-          - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-          - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
-          - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
-          - sensor.zwave_mpd1_kosten_gesamt
+          - sensor.multisensor_motion_last_triggered
+          - sensor.elw_motion_last_triggered
       - type: entities
-        title: Sonoff 1
+        title: "T\xFCrsensor ELW"
         show_header_toggle: false
         entities:
-          - switch.sonoff1
-          - sensor.sonoff1_ipv4
-          - sensor.sonoff1_use
-          - sensor.sonoff1_momentane_leistung
-          - sensor.sonoff1_spannung
-          - sensor.sonoff1_stromstaerke
-          - sensor.sonoff1_max_load
-          - sensor.sonoff1_verbrauch_heute
-          - sensor.sonoff1_verbrauch_gestern
-          - sensor.sonoff1_gesamtverbrauch
-          - sensor.sonoff1_kosten_heute
-          - sensor.sonoff1_kosten_gestern
-          - sensor.sonoff1_kosten_gesamt
-          - script.del_sonoff1_power_log
-      - type: entities
-        title: Sonoff 2
-        show_header_toggle: false
-        entities:
-          - switch.sonoff2
-          - sensor.sonoff2_ipv4
-          - sensor.sonoff2_use
-          - sensor.sonoff2_momentane_leistung
-          - sensor.sonoff2_spannung
-          - sensor.sonoff2_stromstaerke
-          - sensor.sonoff2_max_load
-          - sensor.sonoff2_verbrauch_heute
-          - sensor.sonoff2_verbrauch_gestern
-          - sensor.sonoff2_gesamtverbrauch
-          - sensor.sonoff2_kosten_heute
-          - sensor.sonoff2_kosten_gestern
-          - sensor.sonoff2_kosten_gesamt
-          - automation.sonoff2_load_lcd
-          - script.del_sonoff2_power_log
-      - type: entities
-        title: Lampen (via 433Mhz)
-        show_header_toggle: true
-        entities:
-          - switch.11011_a
-          - switch.11011_b
-          - switch.11011_c
-      - type: entities
-        title: Deckenlicht ELW
-        show_header_toggle: true
-        entities:
-          - sensor.tradfri_remote_control
-          - light.flur
-          - light.schlafzimmer
-      - type: entities
-        title: Steckdosen (via 433Mhz)
-        show_header_toggle: true
-        entities:
-          - switch.11001_a
-          - switch.11001_b
-          - switch.11001_c
+          - binary_sensor.esp32_01_door_state
+          - sensor.esp32_01_motion_last_changed
       - type: entities
         title: Diverses
         show_header_toggle: true
         entities:
-          - sensor.0x711de_ungelese_emails
           - sensor.phonebatt
           - device_tracker.christoph_ip
-          - device_tracker.pixel_2_xl
-          - device_tracker.chris_bluetooth_rpi1
-          - device_tracker.chris_bluetooth_rpi3
           - device_tracker.chris_bluetooth_nuc
-          - switch.christoph_mqtt
           - input_boolean.chrishome
           - input_select.christoph_status
-          - sensor.tankstelle_super
-          - automation.mqtt_home_state_pushbullet
-      - type: entities
-        title: Input Select und Slider
-        show_header_toggle: true
-        entities:
-          - input_number.tuerlicht_intervall
-          - input_select.tuerlicht
-      - type: media-control
-        entity: media_player.volumio
-      - type: media-control
-        entity: media_player.spotify
   - title: media_player
     icon: mdi:music
     cards:
@@ -303,11 +201,7 @@ views:
       - type: media-control
         entity: media_player.volumio
       - type: media-control
-        entity: media_player.volumio_tts
-      - type: media-control
         entity: media_player.yamaha_receiver
-      - type: media-control
-        entity: media_player.test
       - type: entities
         title: tts_retain
         show_header_toggle: false
@@ -461,6 +355,7 @@ views:
         show_header_toggle: true
         entities:
           - sensor.multisensor1_battery
+          - binary_sensor.aeotec_zw100_multisensor_6_sensor
           - sensor.esp8266_01_status_var
           - sensor.esp8266_02_status_var
           - sensor.esp8266_03_status_var
@@ -474,27 +369,23 @@ views:
         entities:
           - sensor.multisensor1_motion
           - sensor.esp8266_02_motion
-          - sensor.esp8266_02_motion_radar
           - sensor.esp8266_01_motion
           - sensor.esp8266_03_motion
-      - type: entities
-        title: "Letzte \xC4nderung Bewegungsmelder"
-        show_header_toggle: true
-        entities:
           - sensor.elw_motion_last_triggered
-          - sensor.elw_2_motion_last_triggered
           - sensor.wintergarten_motion_last_triggered
           - sensor.wohnzimmer_motion_last_triggered
       - type: entities
         title: "T\xFCrsensor ELW"
         show_header_toggle: false
         entities:
+          - binary_sensor.esp32_01_door_state
+          - sensor.esp32_01_rssi
+          - sensor.esp32_01_battery
           - sensor.esp32_01_battery_state
-          - sensor.esp32_01_battery_value
-          - sensor.esp32_01_door_motion
-          - sensor.esp32_01_motion_last_triggered
+          - sensor.esp32_01_motion_last_changed
+          - automation.benachrichtigung_batterie_esp32_01
       - type: entities
-        title: "Temperatursensor Drau\xDFen"
+        title: Temperatursensor Carport
         show_header_toggle: false
         entities:
           - sensor.esp32_02_rssi
@@ -505,9 +396,23 @@ views:
           - sensor.esp32_02_temperature_last_changed
           - automation.benachrichtigung_batterie_esp32_02
       - type: entities
+        title: Temperatursensor BME280
+        show_header_toggle: false
+        entities:
+          - sensor.esp32_03_rssi
+          - sensor.esp32_03_battery
+          - sensor.esp32_03_battery_state
+          - sensor.esp32_03_temperature
+          - sensor.esp32_03_humidity
+          - sensor.esp32_03_pressure
+          - sensor.esp32_03_temperature_last_changed
+          - automation.benachrichtigung_batterie_esp32_03
+      - type: entities
         title: Status aller Umweltsensoren im Netzwerk
         show_header_toggle: true
         entities:
+          - sensor.esp32_02_temperature
+          - sensor.esp32_03_temperature
           - sensor.aeotec_zw100_multisensor_6_temperature
           - sensor.temperatur_esp8266_02
           - sensor.temperatur_esp8266_01
@@ -516,6 +421,8 @@ views:
           - sensor.luftfeuchtigkeit_esp8266_02
           - sensor.luftfeuchtigkeit_esp8266_01
           - sensor.luftfeuchtigkeit_esp8266_03
+          - sensor.esp32_02_humidity
+          - sensor.esp32_03_humidity
       - type: entities
         title: "W-Lan Signalst\xE4rke ESP"
         show_header_toggle: true
@@ -526,12 +433,14 @@ views:
           - sensor.esp8266_04_signal
           - sensor.esp8266_05_signal
           - sensor.esp8266_06_signal
+          - sensor.esp32_01_rssi
+          - sensor.esp32_02_rssi
+          - sensor.esp32_03_rssi
       - type: entities
         title: IPv4 Adressen aller Sensoren
         show_header_toggle: true
         entities:
           - sensor.esp8266_01_ip
-          - sensor.esp8266_02_ip
           - sensor.esp8266_04_ip
           - sensor.esp8266_05_ip
           - sensor.esp8266_06_ip
@@ -549,6 +458,7 @@ views:
         entities:
           - switch.sonoff1
           - sensor.sonoff1_ipv4
+          - sensor.sonoff1_uptime
           - sensor.sonoff1_use
           - sensor.sonoff1_momentane_leistung
           - sensor.sonoff1_spannung
@@ -567,6 +477,7 @@ views:
         entities:
           - switch.sonoff2
           - sensor.sonoff2_ipv4
+          - sensor.sonoff2_uptime
           - sensor.sonoff2_use
           - sensor.sonoff2_momentane_leistung
           - sensor.sonoff2_spannung
@@ -586,6 +497,7 @@ views:
         entities:
           - switch.sonoff3
           - sensor.sonoff3_ipv4
+          - sensor.sonoff3_uptime
           - sensor.sonoff3_use
           - sensor.sonoff3_momentane_leistung
           - sensor.sonoff3_spannung
@@ -607,6 +519,7 @@ views:
         entities:
           - switch.sonoff4
           - sensor.sonoff4_ipv4
+          - sensor.sonoff4_uptime
           - sensor.sonoff4_use
           - sensor.sonoff4_momentane_leistung
           - sensor.sonoff4_spannung
@@ -625,6 +538,7 @@ views:
         entities:
           - switch.sonoff5
           - sensor.sonoff5_ipv4
+          - sensor.sonoff5_uptime
           - sensor.sonoff5_use
           - sensor.sonoff5_momentane_leistung
           - sensor.sonoff5_spannung
@@ -640,6 +554,41 @@ views:
           - input_boolean.dryer_switch
           - automation.dryer_start
           - automation.dryer_done
+      - type: entities
+        title: sonoff_firmware
+        show_header_toggle: false
+        entities:
+          - sensor.sonoff_latest_release
+          - sensor.sonoff1_sw_version
+          - sensor.sonoff2_sw_version
+          - sensor.sonoff3_sw_version
+          - sensor.sonoff4_sw_version
+          - sensor.sonoff5_sw_version
+  - title: zwave
+    icon: mdi:z-wave
+    cards:
+      - type: entities
+        title: Multisensor ELW
+        show_header_toggle: true
+        entities:
+          - sensor.multisensor1_battery
+          - sensor.aeotec_zw100_multisensor_6_luminance
+          - sensor.aeotec_zw100_multisensor_6_temperature
+          - sensor.aeotec_zw100_multisensor_6_ultraviolet
+          - sensor.multisensor1_motion
+          - binary_sensor.aeotec_zw100_multisensor_6_sensor
+      - type: entities
+        title: MPD ELW (Z-Wave)
+        show_header_toggle: true
+        entities:
+          - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+          - sensor.zwave_mpd1_use
+          - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+          - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
+          - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
+          - sensor.zwave_mpd1_kosten_gesamt
+          - script.akkus_laden
+          - automation.akkuladeautomatik
   - title: Familie
     icon: mdi:account-multiple
     cards:
@@ -650,6 +599,7 @@ views:
           - input_boolean.chrishome
           - device_tracker.ewald_ip
           - device_tracker.traude_ip
+          - device_tracker.hanni_iphone_ip
           - sensor.device_tracker_christoph_last_changed
           - sensor.device_tracker_christoph_verbose
           - sensor.device_tracker_ewald_last_changed
@@ -664,9 +614,11 @@ views:
         title: Fahrzeit
         show_header_toggle: true
         entities:
+          - sensor.stuttgart__berlin
+          - sensor.zuhause__hauptrettungswache
           - sensor.zuhause__marienhospital
-          - sensor.daheim__mqtt_standort
-          - sensor.mqtt_standort__daheim
+          - sensor.waze_zuhause_hrw
+          - sensor.waze_stuttgart_berlin
   - title: tankstellen
     icon: mdi:gas-station
     cards:
@@ -694,7 +646,6 @@ views:
           - automation.benachrichtigung_bewegungsmelder_elw__motiontxt
           - automation.benachrichtigung_aller_bewegungsmelder_elw__elwmotiontxt
           - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-          - automation.bewegungsmelder_elw_licht_zwave
           - automation.critical_temperature_wintergarden
           - automation.curl_test
           - automation.curl_test_2
@@ -746,8 +697,10 @@ views:
           - automation.trafficrequest_petros
           - automation.washer_done
           - automation.washer_start
+          - automation.welcome_home_tts_hanni
+          - automation.benachrichtigung_batterie_esp32_01
           - automation.benachrichtigung_batterie_esp32_02
-          - automation.benachrichtigung_batterie_esp_01
+          - automation.benachrichtigung_batterie_esp32_03
           - automation.birthday_alert_today
           - automation.cpu_temp_alarm
           - automation.critical_device_sensor_state
@@ -756,16 +709,19 @@ views:
           - automation.dockerd_alarm
           - automation.dryer_done
           - automation.dryer_start
+          - automation.enable_automation_coming_home
           - automation.esphomeyaml_release_update_notification
           - automation.get_esp_ips
-          - automation.get_sonoff_ips
+          - automation.get_sonoff_info
           - automation.home_assistant_update_notification
           - automation.minimote_button_pressed
+          - automation.motion_zwave_sunset_flur_dimlight
           - automation.mqtt_pushover_test
           - automation.mqtt_tts_fahrzeit_hrw
           - automation.mqtt2lcd
           - automation.mqtt2oled
           - automation.next_track_mqtt
+          - automation.notify_sensor_update
           - automation.nuc_load_to_led
           - automation.outtopic_load_to_led
           - automation.persistence_publish
@@ -774,6 +730,8 @@ views:
           - automation.persistence_subscribe_select_value
           - automation.pihole_update_notification
           - automation.play_pause_mqtt
+          - automation.restore_current_timer_tuerlicht_elw
+          - automation.restore_elw_scene
           - automation.select_a_scene
           - automation.select_christoph_home_status_from_bluetooth_status
           - automation.select_christoph_home_status_from_input_boolean
@@ -782,6 +740,8 @@ views:
           - automation.select_christoph_home_status_away_monitor_status
           - automation.select_christoph_home_status_from_monitor_status
           - automation.select_christoph_home_status_home_oben
+          - automation.set_current_timer_tuerlicht_elw
+          - automation.set_elw_scene
           - automation.set_hass_theme
           - automation.set_theme
           - automation.slider_led
@@ -791,12 +751,14 @@ views:
           - automation.sonoff5_load_logfile
           - automation.speedtest_alarm
           - automation.sshd_alarm
-          - automation.tasker_alarm_cellular
+          - automation.tasmota_update_notification
           - automation.tor_alarm
+          - automation.turn_on_lights_when_coming_home
           - automation.waste_alert_12h
           - automation.waste_alert_gelb_12h
           - automation.waste_alert_gelb_today
           - automation.waste_alert_today
+          - automation.welcome_home_tts
           - automation.when_gone_enable_motionlog
       - type: entities
         title: all scripts
@@ -805,9 +767,6 @@ views:
           - script.1og_lampen_an
           - script.1og_lampen_aus
           - script.akkus_laden
-          - script.elw_lampen_an
-          - script.elw_lampen_aus
-          - script.elw_lampen_aus_scene
           - script.lcd_display_on
           - script.lcd_display_off
           - script.var_push
@@ -821,8 +780,6 @@ views:
           - script.lcd_elw_temp
           - script.lcd_display
           - script.lcd_display_clear
-          - script.tuerlicht_motion
-          - script.tuerlicht_def
           - script.ad_blocker
           - script.amazon_polly_notify
           - script.backup_config
@@ -835,7 +792,6 @@ views:
           - script.del_sonoff5_power_log
           - script.gasstation
           - script.get_esp_ip
-          - script.get_sonoff_ip
           - script.minimote_button_caller
           - script.pihole_off
           - script.pihole_on
@@ -863,7 +819,6 @@ views:
           - automation.benachrichtigung_bewegungsmelder_elw__motiontxt
           - automation.benachrichtigung_aller_bewegungsmelder_elw__elwmotiontxt
           - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-          - automation.bewegungsmelder_elw_licht_zwave
           - automation.critical_temperature_wintergarden
           - automation.curl_test
           - automation.curl_test_2
@@ -915,8 +870,10 @@ views:
           - automation.trafficrequest_petros
           - automation.washer_done
           - automation.washer_start
+          - automation.welcome_home_tts_hanni
+          - automation.benachrichtigung_batterie_esp32_01
           - automation.benachrichtigung_batterie_esp32_02
-          - automation.benachrichtigung_batterie_esp_01
+          - automation.benachrichtigung_batterie_esp32_03
           - automation.birthday_alert_today
           - automation.cpu_temp_alarm
           - automation.critical_device_sensor_state
@@ -925,16 +882,19 @@ views:
           - automation.dockerd_alarm
           - automation.dryer_done
           - automation.dryer_start
+          - automation.enable_automation_coming_home
           - automation.esphomeyaml_release_update_notification
           - automation.get_esp_ips
-          - automation.get_sonoff_ips
+          - automation.get_sonoff_info
           - automation.home_assistant_update_notification
           - automation.minimote_button_pressed
+          - automation.motion_zwave_sunset_flur_dimlight
           - automation.mqtt_pushover_test
           - automation.mqtt_tts_fahrzeit_hrw
           - automation.mqtt2lcd
           - automation.mqtt2oled
           - automation.next_track_mqtt
+          - automation.notify_sensor_update
           - automation.nuc_load_to_led
           - automation.outtopic_load_to_led
           - automation.persistence_publish
@@ -943,6 +903,8 @@ views:
           - automation.persistence_subscribe_select_value
           - automation.pihole_update_notification
           - automation.play_pause_mqtt
+          - automation.restore_current_timer_tuerlicht_elw
+          - automation.restore_elw_scene
           - automation.select_a_scene
           - automation.select_christoph_home_status_from_bluetooth_status
           - automation.select_christoph_home_status_from_input_boolean
@@ -951,6 +913,8 @@ views:
           - automation.select_christoph_home_status_away_monitor_status
           - automation.select_christoph_home_status_from_monitor_status
           - automation.select_christoph_home_status_home_oben
+          - automation.set_current_timer_tuerlicht_elw
+          - automation.set_elw_scene
           - automation.set_hass_theme
           - automation.set_theme
           - automation.slider_led
@@ -960,19 +924,20 @@ views:
           - automation.sonoff5_load_logfile
           - automation.speedtest_alarm
           - automation.sshd_alarm
-          - automation.tasker_alarm_cellular
+          - automation.tasmota_update_notification
           - automation.tor_alarm
+          - automation.turn_on_lights_when_coming_home
           - automation.waste_alert_12h
           - automation.waste_alert_gelb_12h
           - automation.waste_alert_gelb_today
           - automation.waste_alert_today
+          - automation.welcome_home_tts
           - automation.when_gone_enable_motionlog
       - type: entities
         title: all devices
         show_header_toggle: true
         entities:
           - device_tracker.ddwrt
-          - device_tracker.technicolor
           - device_tracker.pi1wlan
           - device_tracker.chmbp
           - device_tracker.ewald_ip
@@ -1015,7 +980,7 @@ views:
           - device_tracker.esp8266_06_ip
           - device_tracker.esp8266_04_ip
           - device_tracker.esp8266_07_ping
-          - device_tracker.amazonb1bbdf834local
+          - device_tracker.echo_dot
           - device_tracker.b827eb2c51c9
           - device_tracker.echo26f
           - device_tracker.op3t
@@ -1027,14 +992,13 @@ views:
           - device_tracker.chris_bluetooth_nuc
           - device_tracker.gateway
           - device_tracker.christoph_ip
+          - device_tracker.hanni_iphone_ip
       - type: entities
         title: all lights
         show_header_toggle: true
         entities:
           - light.flur
-          - light.flur_2
           - light.schlafzimmer
-          - light.schlafzimmer_2
       - type: entities
         title: all scripts
         show_header_toggle: true
@@ -1042,9 +1006,6 @@ views:
           - script.1og_lampen_an
           - script.1og_lampen_aus
           - script.akkus_laden
-          - script.elw_lampen_an
-          - script.elw_lampen_aus
-          - script.elw_lampen_aus_scene
           - script.lcd_display_on
           - script.lcd_display_off
           - script.var_push
@@ -1058,8 +1019,6 @@ views:
           - script.lcd_elw_temp
           - script.lcd_display
           - script.lcd_display_clear
-          - script.tuerlicht_motion
-          - script.tuerlicht_def
           - script.ad_blocker
           - script.amazon_polly_notify
           - script.backup_config
@@ -1072,7 +1031,6 @@ views:
           - script.del_sonoff5_power_log
           - script.gasstation
           - script.get_esp_ip
-          - script.get_sonoff_ip
           - script.minimote_button_caller
           - script.pihole_off
           - script.pihole_on
@@ -1095,17 +1053,20 @@ views:
           - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
           - switch.gelbe_led
           - switch.grne_led
-          - switch.grafanainflux
+          - switch.grafana
           - switch.portainer
           - switch.rote_led
-          - switch.sonoff2
+          - switch.tasmoadmin
+          - switch.watchtower
           - switch.wemoswitch1
           - switch.wemoswitch2
+          - switch.influx
           - switch.pihole
           - switch.receiver
           - switch.receiver_source_pc
           - switch.shutdown_pi1
           - switch.sonoff1
+          - switch.sonoff2
           - switch.sonoff3
           - switch.sonoff4
           - switch.sonoff5
@@ -1121,9 +1082,10 @@ views:
         title: "Ger\xE4te Heimnetz"
         show_header_toggle: false
         entities:
+          - sensor.clients_online
           - automation.notify_to_logfile_if_device_goes_offline
           - automation.esp8266_sensor_state
-          - sensor.technicolor
+          - sensor.gateway
           - sensor.ddwrt
           - sensor.qnap1
           - sensor.pi1wlan
@@ -1152,6 +1114,23 @@ views:
         entities:
           - script.file_test
       - type: entities
+        title: Sensorwarn
+        show_header_toggle: false
+        entities:
+          - sensor.phonebatt
+          - sensor.phonebatt_debug
+          - sensor.phonebatt_debug2
+          - sensor.phonebatt_watch
+          - sensor.esp32_02_temperature
+          - sensor.esp32_02_debug
+          - sensor.esp32_02_debug2
+          - sensor.esp32_02_watch
+          - sensor.esp32_03_temperature
+          - sensor.esp32_03_debug
+          - sensor.esp32_03_debug2
+          - sensor.esp32_03_watch
+          - automation.notify_sensor_update
+      - type: entities
         title: ISS
         show_header_toggle: true
         entities:
@@ -1179,8 +1158,6 @@ views:
           - automation.when_gone_enable_motionlog
           - automation.benachrichtigung_aller_bewegungsmelder_elw__elwmotiontxt
           - input_boolean.chrishome
-          - sensor.esp8266_02_pir
-          - sensor.esp8266_02_radar
       - type: entities
         title: LCD LED Send
         show_header_toggle: true
@@ -1217,7 +1194,6 @@ views:
           - sensor.temperatur_esp8266_01
           - sensor.luftfeuchtigkeit_esp8266_01
           - input_boolean.chrishome
-          - automation.bewegungsmelder_elw_licht_zwave
       - type: entities
         title: Wetter via DarkSky
         show_header_toggle: true
@@ -1323,15 +1299,3 @@ views:
           - automation.select_christoph_home_status_away_monitor_status
           - automation.select_christoph_home_status_away_elw
           - automation.select_christoph_home_status_home_oben
-  - title: shortcut
-    icon: mdi:link
-    cards:
-      - type: entities
-        entities:
-          - scene.elwaus
-          - scene.elwrelax
-          - light.flur
-          - light.schlafzimmer
-          - script.akkus_laden
-          - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-          - automation.akkuladeautomatik

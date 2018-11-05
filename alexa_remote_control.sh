@@ -80,7 +80,8 @@ BROWSER='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firef
 ###########################################
 # nothing to configure below here
 #
-TMP="/home/chris/alexatmp"
+#TMP="/home/chris/alexatmp"
+TMP="/home/homeassistant/alexatmp"
 COOKIE="${TMP}/.alexa.cookie"
 DEVLIST="${TMP}/.alexa.devicelist.json"
 

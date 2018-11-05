@@ -2,7 +2,11 @@
 ### Packages / Scene Selector                                                 ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig                    ###
 #################################################################################
-
+homeassistant:
+  customize:
+    automation.motion_zwave_sunset_flur_dimlight:
+      friendly_name: Licht im Flur bei Bewegung an?
+      icon: mdi:eye-circle-outline
 
 ###############################################
 ## Input Select                               #
@@ -11,10 +15,11 @@
 
 input_select:
   elw_scene:
-    name: Licht in der ELW
+    name: Welche Scene?
     icon: mdi:theme-light-dark
     options:
-      - Aktuelles beibehalten
+      - Keine
+      - Letzte
       - ELW Relax
       - ELW Hell
       - ELW Aus
@@ -24,6 +29,17 @@ input_select:
       - Flur Relax
       - Flur Hell
       - Flur Aus
+  tuerlicht:
+    name: Wie lange soll das Türlicht brennen?
+    icon: mdi:timer
+    options:
+     - 5
+     - 15
+     - 30
+     - 45
+     - 60
+
+
 
 ###############################################
 ## Sensor                                     #
@@ -32,12 +48,15 @@ sensor:
   - platform: mqtt
     state_topic: "homeassistant/current_scene_elw_set"
     name: homeassistant_mqtt_scene_elw_set
+  - platform: mqtt
+    state_topic: "homeassistant/current_timer_tuerlicht_elw_set"
+    name: current_timer_tuerlicht_elw_set
 ###############################################
 ## Automation                                 #
 ###############################################
 
+#Store Last used scene
 automation:
-  #manual change of the theme
   - id: set_elw_scene
     alias: set_elw_scene
     initial_state: 'on'
@@ -46,34 +65,101 @@ automation:
         entity_id: input_select.elw_scene
     condition:
       condition: template
-      value_template: "{{ not is_state('input_select.elw_scene', 'Aktuelles beibehalten') }}"
+      value_template: "{{ states('input_select.elw_scene') not in ['Keine','Letzte'] }}"
+
     action:
-      #Set the theme
       - service: scene.turn_on
         data_template:
-          entity_id: "scene.{{ states('input_select.elw_scene')|replace(' ', '_') }}"
-      #Send and save theme via mqtt
+          entity_id: "scene.{{ states('input_select.elw_scene')|replace(' ', '_')}}"
       - service: mqtt.publish
         data_template:
           topic: "homeassistant/current_scene_elw_set"
           retain: true
-          payload: "{{ states('input_select.elw_scene')|replace(' ', '_') }}"
-  #Restore old value
-  - alias: restore_elw_scene
+          payload: "{{ states('input_select.elw_scene')|replace(' ', '_')}}"
+      - service: input_select.select_option
+        entity_id: input_select.elw_scene
+        data:
+          option: 'Keine'
+
+  - alias: repeat_last_elw_scene
+    initial_state: on
+    trigger:
+      - platform: state
+        entity_id: input_select.elw_scene
+        from: Keine
+        to: Letzte
+    # condition:
+    #   condition: template
+    #   value_template: "{{ not is_state('input_select.elw_scene', 'Letzte')}}"
+    action:
+      service: input_select.select_option
+      entity_id: input_select.elw_scene
+      data_template:
+        option: "{{ states('sensor.homeassistant_mqtt_scene_elw_set')|replace('_', ' ')}}"
+
+  - id: set_current_timer_tuerlicht_elw
+    alias: set_current_timer_tuerlicht_elw
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: input_select.tuerlicht
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "homeassistant/current_timer_tuerlicht_elw_set"
+          retain: true
+          payload: "{{ states('input_select.tuerlicht') }}"
+
+  - alias: restore_current_timer_tuerlicht_elw
     initial_state: on
     trigger:
       - platform: homeassistant
         event: start
     action:
       service: input_select.select_option
-      entity_id: input_select.elw_scene
+      entity_id: input_select.tuerlicht
       data_template:
-        option: "{{ states('sensor.homeassistant_mqtt_scene_elw_set')|replace('_', ' ')| title}}"
+        option: "{{ states('sensor.current_timer_tuerlicht_elw_set')| title}}"
+
+
+  - alias: motion_zwave_sunset_flur_dimlight
+    initial_state: on
+    trigger:
+      platform: state
+      entity_id: sensor.aeotec_zw100_multisensor_6_burglar
+      from: '0'
+      to: '8'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: "below_horizon"
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: "on"
+      - condition: state
+        entity_id: light.flur
+        state: "off"
+    action:
+      - service: scene.turn_on
+        entity_id: scene.flur_relax
+      - delay: '{{ states.input_select.tuerlicht.state | int }}'
+      - service: scene.turn_on
+        entity_id: scene.flur_aus
+
 #Group for main view.yaml
+
 group:
   elw_scene_select:
     name: Licht ELW
     view: no
     icon: mdi:brush
+    control: hidden
     entities:
       - input_select.elw_scene
+      - input_select.tuerlicht
+      - light.flur
+      - light.schlafzimmer
+      - switch.11011_A
+      - switch.11011_B
+      - switch.11011_C
+      - automation.motion_zwave_sunset_flur_dimlight

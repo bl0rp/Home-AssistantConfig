@@ -18,7 +18,7 @@ homeassistant:
 
     sensor.esp32_01_rssi:
       icon: mdi:wifi
-      friendly_name: Signalstärke
+      friendly_name: "ESP32 #1 Signalstärke"
 
     sensor.esp32_01_motion_last_changed:
       icon: mdi:delta
@@ -34,7 +34,7 @@ homeassistant:
 #############
 group:
 
-  esp_01:
+  esp32_01:
     control: hidden
     icon: mdi:door
     name: Türsensor ELW
@@ -45,6 +45,13 @@ group:
       - sensor.esp32_01_battery_state
       - sensor.esp32_01_motion_last_changed
       - automation.benachrichtigung_batterie_esp32_01
+  esp32_01_short:
+    control: hidden
+    icon: mdi:door
+    name: Türsensor ELW
+    entities:
+      - binary_sensor.esp32_01_door_state
+      - sensor.esp32_01_motion_last_changed
 
 
 #############

@@ -23,7 +23,7 @@ homeassistant:
     automation.select_christoph_home_status_away_elw:
       friendly_name: 'setze status auf anwesend von der in der elw'
 
-### template sensors last changed 
+### template sensors last changed
 
 sensor:
   - platform: template
@@ -53,6 +53,17 @@ sensor:
         friendly_name: "Christoph State Update"
         value_template: >-
           {{ states.sensor.tasker_home.state }} via {{ states.sensor.tasker_home_connection.state }}
+
+#bt state from rpi zero https://github.com/andrewjfreyer/presence
+
+  - platform: mqtt
+    state_topic: 'location/elw/B4:F1:DA:2C:91:4E'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'monitor_pixel2_elw'
+
+
+
 ###### STATE CARD for views.yaml
 
 group:
@@ -70,14 +81,36 @@ group:
       - automation.select_christoph_home_status_away_monitor_status
       - automation.select_christoph_home_status_away_elw
       - automation.select_christoph_home_status_home_oben
+  familiegrp:
+    name: Familie
+    view: no
+    icon: mdi:account-multiple
+    entities:
+      - input_boolean.chrishome
+      - device_tracker.ewald_ip
+      - device_tracker.traude_ip
+      - device_tracker.hanni_iphone_ip
 
+  familiegrpstate:
+    name: Letzte Änderung
+    view: no
+    icon: mdi:account-multiple
+    entities:
+      - sensor.device_tracker_christoph_last_changed
+      - sensor.device_tracker_christoph_verbose
+      - sensor.device_tracker_ewald_last_changed
+      - sensor.device_tracker_traude_last_changed
 
 input_boolean:
   chrishome:
-    name: "Christoph"
+    name: "Christoph Status"
     initial: on
-    icon: mdi:cellphone-iphone
+    icon: mdi:cellphone-android
 
+  chrisbluetooth:
+    name: "Christoph Bluetooth Status"
+    initial: on
+    icon:  mdi:bluetooth-audio
 input_select:
   christoph_status:
     name: Status Christoph
@@ -93,7 +126,37 @@ input_select:
 
 automation:
 
-#Switch input_boolean from on to off when gone
+#switch input_boolean bluetooth from on to off
+  - alias: 'input_boolean_chrisbluetooth_off'
+    initial_state: True
+    condition:
+      condition: state
+      entity_id: input_boolean.chrisbluetooth
+      state: 'on'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.monitor_pixel2_elw
+        below: 25
+        # for:
+        #   minutes: 2
+    action:
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.chrisbluetooth
+#switch input_boolean bluetooth from of to on
+  - alias: 'input_boolean_chrisbluetooth_on'
+    initial_state: True
+    condition:
+      condition: state
+      entity_id: input_boolean.chrisbluetooth
+      state: 'off'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.monitor_pixel2_elw
+        above: 30
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.chrisbluetooth
+#Switch input_boolean homestate  from on to off when gone
 
   - alias: 'DeviceTracker_Christoph_not_home'
     initial_state: True
@@ -112,17 +175,17 @@ automation:
         to: 'not_home'
         for:
           minutes: 5
-    
+
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.chrishome
-    
+
       # - service: notify.pushbullet
         # data_template:
           # message: >
              # {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
 
-#switch input_boolean from off to on 
+#switch input_boolean from off to on
 
   - alias: 'DeviceTracker_Christoph_home'
     initial_state: True
@@ -134,21 +197,28 @@ automation:
       - platform: state
         entity_id: device_tracker.christoph_ip
         to: 'home'
-      - platform: state
-        entity_id: device_tracker.chris_bluetooth_nuc
-        to: 'home'
-      - platform: state
-        entity_id: device_tracker.chris_bluetooth_rpi3
-        to: 'home'
+      # - platform: state
+      #   entity_id: device_tracker.chris_bluetooth_nuc
+      #   to: 'home'
+      # - platform: state
+      #   entity_id: device_tracker.chris_bluetooth_rpi3
+      #   to: 'home'
       - platform: state
         entity_id: sensor.tasker_home
         to: 'home'
+      - platform: state
+        entity_id: input_boolean.chrisbluetooth
+        to: 'on'
     action:
-       service: homeassistant.turn_on
-       entity_id: input_boolean.chrishome
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.chrishome
 
-
-# input select for home 
+    - service: telegram_bot.send_message
+      data_template:
+        target: !secret telegram_chat_id_christoph
+        message: >
+          home state triggered by {{ trigger.to_state.attributes.friendly_name }}
+# input select for home
 
   - alias: "select_christoph_Home_status_from_input_boolean"
     initial_state: True
@@ -157,7 +227,7 @@ automation:
         entity_id: input_boolean.chrishome
         from: 'off'
         to: 'on'
-    
+
     action:
       - service: input_select.select_option
         data:
@@ -170,10 +240,10 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: device_tracker.chris_bluetooth_nuc
-        from: 'not_home'
-        to: 'home'
-    
+        entity_id: input_boolean.chrisbluetooth
+        from: 'off'
+        to: 'on'
+
     action:
       - service: input_select.select_option
         data_template:
@@ -189,7 +259,7 @@ automation:
         entity_id: input_boolean.chrishome
         from: 'on'
         to: 'off'
-    
+
     action:
       - service: input_select.select_option
         data:
@@ -207,7 +277,7 @@ automation:
         to: 'Ja'
     #     for:
     #       minutes: 1
-    
+
     condition:
       - condition: state
         entity_id: input_boolean.chrishome
@@ -233,13 +303,13 @@ automation:
       - condition: state
         entity_id: input_boolean.chrishome
         state: "on"
-    
-    
+
+
     action:
       - service: input_select.select_option
         data_template:
           entity_id: input_select.christoph_status
-          option: '{% if is_state("device_tracker.chris_bluetooth_nuc", "home") %}In der ELW{% else %}Anwesend{% endif %}'
+          option: '{% if is_state("input_boolean.chrishome", "on") %}In der ELW{% else %}Anwesend{% endif %}'
 
 
 #input select not in the elw
@@ -248,17 +318,17 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: device_tracker.chris_bluetooth_nuc
-        from: 'home'
-        to: 'not_home'
+        entity_id: input_boolean.chrisbluetooth
+        from: 'on'
+        to: 'off'
     #     for:
     #       minutes: 3
     condition:
       - condition: state
         entity_id: input_boolean.chrishome
         state: "on"
-    
-    
+
+
     action:
       - service: input_select.select_option
         data:
@@ -284,8 +354,8 @@ automation:
       - condition: state
         entity_id: input_boolean.chrishome
         state: "on"
-    
-    
+
+
     action:
       - service: input_select.select_option
         data:

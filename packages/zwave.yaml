@@ -20,21 +20,21 @@ homeassistant:
 #Aeotec Z-Wave Multisensor
     sensor.multisensor1_battery:
       icon: mdi:car-battery
-    sensor.aeotec_zw100_multisensor_6_temperature_2_1:
+    sensor.aeotec_zw100_multisensor_6_temperature:
       friendly_name: Temperatur Z-Wave Multisensor 1
       icon: mdi:thermometer
-    sensor.aeotec_zw100_multisensor_6_relative_humidity_2_5:
+    sensor.aeotec_zw100_multisensor_6_relative_humidity:
       friendly_name: Luftfeuchtigkeit Z-Wave Multisensor 1
       icon: mdi:water-percent
-    sensor.aeotec_zw100_multisensor_6_luminance_2_3:
+    sensor.aeotec_zw100_multisensor_6_luminance:
       friendly_name: Helligkeit Z-Wave Multisensor 1
       icon: mdi:theme-light-dark
-    sensor.aeotec_zw100_multisensor_6_burglar_2_10:
+    sensor.aeotec_zw100_multisensor_6_burglar:
       friendly_name: Bewegsungsmelder Z-Wave Multisensor 1
       icon: mdi:alert
-    binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0:
-      friendly_name: Sensorstatus Z-Wave Multisensor 1
-    sensor.aeotec_zw100_multisensor_6_ultraviolet_2_27:
+    binary_sensor.aeotec_zw100_multisensor_6_sensor:
+      friendly_name: Status Z-Wave Multisensor 1
+    sensor.aeotec_zw100_multisensor_6_ultraviolet:
       friendly_name: UV Z-Wave Multisensor 1
 
 group:
@@ -59,6 +59,8 @@ group:
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
       - sensor.zwave_mpd1_kosten_gesamt
+      - script.akkus_laden
+      - automation.akkuladeautomatik
 
 sensor:
 ### MPD Dose
@@ -96,3 +98,44 @@ sensor:
         value_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
         icon_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
 
+### Motion last triggered
+  - platform: template
+    sensors:
+      multisensor_motion_last_triggered:
+        friendly_name: "Multisensor Motion Last Triggered"
+        value_template: >-
+          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+
+#Turn off charger after loading batteries
+automation:
+  - alias: "Akkuladeautomatik"
+    initial_state: False
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+        below: 0.1
+    action:
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.sensor.date__time.state }} Das Ladegerät verbaucht keinen Strom mehr und die Steckdose wurde ausgeschaltet!'
+      - service: switch.turn_off
+        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+      - service: automation.turn_off
+        entity_id: automation.akkuladeautomatik
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: vape
+
+script:
+  akkus_laden:
+    alias: "Akkuladeautomatik"
+    sequence:
+     - service: automation.turn_on
+       entity_id: automation.akkuladeautomatik
+     - service: switch.turn_on
+       entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+     - service: persistent_notification.create
+       data:
+         message: '{{ states.sensor.date__time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'
+         title: "Akkuladegerät 18650"
+         notification_id: "vape"

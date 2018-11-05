@@ -1,0 +1,227 @@
+##############################################################
+### Packages / sonoff6                                     ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
+### Inspired by mihalski                                   ###
+### https://github.com/mihalski/homeassistant-config       ###
+##############################################################
+
+homeassistant:
+
+  customize:
+    switch.sonoff6:
+      friendly_name: MPD
+      icon: mdi:power-socket-eu
+    sensor.sonoff6_ipv4:
+      friendly_name: IPv4 Sonoff 6
+      icon: mdi:server-network
+    sensor.sonoff6_momentane_leistung:
+      friendly_name: Aktuelle Leistung
+      icon: mdi:power-plug
+    sensor.sonoff6_spannung:
+      friendly_name: Spannung
+      icon: mdi:flash
+    sensor.sonoff6_stromstaerke:
+      friendly_name: Stromstärke
+      icon: mdi:flash
+    sensor.sonoff6_max_load:
+      friendly_name: Maximale Leistung
+      icon: mdi:fire
+    sensor.sonoff6_kosten_heute:
+      friendly_name: Kosten Heute
+      icon: mdi:currency-eur
+    sensor.sonoff6_kosten_gestern:
+      friendly_name: Kosten Gestern
+      icon: mdi:currency-eur
+    sensor.sonoff6_kosten_gesamt:
+      friendly_name: Gesamtkosten
+      icon: mdi:currency-eur
+    sensor.sonoff6_verbrauch_heute:
+      friendly_name: Vebrauch Heute
+      icon: mdi:chart-line
+    sensor.sonoff6_verbrauch_gestern:
+      friendly_name: Vebrauch Gestern
+      icon: mdi:chart-line
+    sensor.sonoff6_gesamtverbrauch:
+      friendly_name: Gesamtverbrauch
+      icon: mdi:chart-line
+    sensor.sonoff6_uptime:
+      friendly_name: Laufzeit
+      icon: mdi:clock-fast
+    script.del_sonoff6_power_log:
+      friendly_name: Maximale Leistung zurücksetzen
+      icon: mdi:eraser
+
+
+group:
+  sonoff6:
+    control: hidden
+    name: Sonoff 5
+    view: no
+    entities:
+      - switch.sonoff6
+      - sensor.sonoff6_ipv4
+      - sensor.sonoff6_uptime
+      - sensor.sonoff6_use
+      - sensor.sonoff6_momentane_leistung
+      - sensor.sonoff6_spannung
+      - sensor.sonoff6_stromstaerke
+      - sensor.sonoff6_max_load
+      - sensor.sonoff6_verbrauch_heute
+      - sensor.sonoff6_verbrauch_gestern
+      - sensor.sonoff6_gesamtverbrauch
+      - sensor.sonoff6_kosten_heute
+      - sensor.sonoff6_kosten_gestern
+      - sensor.sonoff6_kosten_gesamt
+      - script.del_sonoff6_power_log
+
+
+sensor:
+
+### Reading the values from the tasmota mqtt string
+
+  - platform: mqtt
+    name: "sonoff6 Verbrauch Heute"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 Verbrauch Gestern"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 Gesamtverbrauch"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 Momentane Leistung"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 Spannung"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 Stromstaerke"
+    state_topic: "tele/sonoff6/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff6 uptime"
+    state_topic: "tele/sonoff6/STATE"
+    value_template: "{{ value_json.Uptime }}"
+    availability_topic: "tele/sonoff6/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+### Calculating cost based on the local prive per kWh
+
+  - platform: template
+    sensors:
+      sonoff6_kosten_heute:
+        friendly_name: Kosten Heute
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff6_verbrauch_heute.state  | multiply(0.2657) | round(2) }}
+
+      sonoff6_kosten_gestern:
+        friendly_name: Kosten Gestern
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff6_verbrauch_gestern.state  | multiply(0.2657) | round(2) }}
+
+      sonoff6_kosten_gesamt:
+        friendly_name: Gesamtkosten
+        unit_of_measurement: "€"
+        value_template: >-
+          {{ states.sensor.sonoff6_gesamtverbrauch.state  | multiply(0.2657) | round(2) }}
+
+### Usage sensor for other scripts/automations
+
+      sonoff6_use:
+        friendly_name: "Vebraucher aktiv?"
+        value_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 30 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 30 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+
+
+### Reading the highest value in the power log file ( see automation)
+
+  - platform: command_line
+    name: 'sonoff6_max_load'
+    command: "grep -E '[0-9]+' /home/homeassistant/log/sonoff6/power.txt| sort -rn | head -n 1"
+    unit_of_measurement: "W"
+    scan_interval: 15
+
+### log power to the logfile
+
+notify:
+    - name: sonoff6_power_log
+      platform: file
+      filename: /home/homeassistant/log/sonoff6/power.txt
+
+### main switch on/off
+
+switch:
+  - platform: mqtt
+    name: "sonoff6"
+    state_topic: "stat/sonoff6/POWER"
+    command_topic: "cmnd/sonoff6/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: false
+
+
+
+### Record all power levels to a file (see notify)
+automation:
+  - alias: sonoff6 Load logfile
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff6_momentane_leistung
+    action:
+      - service: notify.sonoff6_power_log
+        data_template:
+          message: >
+            {{ states.sensor.sonoff6_momentane_leistung.state }}
+
+
+### Delete the logfile (reset the maximum power sensor)
+
+script:
+  del_sonoff6_power_log:
+     sequence:
+       - service: shell_command.del_sonoff6_power_log
+
+shell_command:
+  del_sonoff6_power_log: rm /home/homeassistant/log/sonoff6/power.txt && touch /home/homeassistant/log/sonoff6/power.txt && chown -R -v homeassistant:homeassistant /home/homeassistant/log/sonoff6/power.txt

@@ -1,6 +1,0 @@
-  - platform: imap
-    server: !secret imap_host
-    port: 993
-    name: 0x711.de ungelese E-Mails
-    username: !secret imap_user
-    password: !secret imap_pw

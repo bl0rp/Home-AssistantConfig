@@ -96,22 +96,22 @@ sensor:
                'minutes': 60,
                'seconds': 1,
              } -%}
-           
+
              {%- set weeks = seconds // intervals.weeks -%}
              {%- set seconds = seconds % intervals.weeks -%}
              {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
-           
+
              {%- set days = seconds // intervals.days -%}
              {%- set seconds = seconds % intervals.days -%}
              {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
-           
+
              {%- set hours = seconds // intervals.hours -%}
              {%- set seconds = seconds % intervals.hours -%}
              {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
-           
+
              {%- set minutes = seconds // intervals.minutes -%}
              {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
-           
+
              {%- set seconds = seconds % intervals.minutes -%}
              {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
            {%- endmacro %}
@@ -126,8 +126,4 @@ sensor:
       wohnzimmer_motion_last_triggered:
         friendly_name: "Wohnzimmer Motion Last Triggered"
         value_template: >-
-          {{ as_timestamp(states.sensor.esp8266_01_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
-
-
-
-
+          {{ as_timestamp(states.sensor.esp8266_01_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}

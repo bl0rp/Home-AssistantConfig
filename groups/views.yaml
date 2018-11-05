@@ -28,26 +28,12 @@ ELW:
   name: ELW
   view: yes
   entities:
-    - script.elw_lampen_an
-    - script.elw_lampen_aus_scene
-    - script.elw_lampen_aus
-    - script.akkus_laden
-    - script.tuerlicht_def
     - group.elw_scene_select
-    - group.esp_01
-    - group.automation_elw
     - group.sensordata_elw
-    - group.zwave_aeotec_multisensor6
-    - group.zwave_fibaro_plug
-    - group.sonoff1
-    - group.sonoff2
-    - group.funksteckdosen433mhz_licht
-    - group.deckenlicht_elw
-    - group.funksteckdosen433mhz_plug
+    - group.last_motion_elw
+    - group.esp32_01_short
     - group.chrisdata
-    - group.vardata
-    - media_player.volumio
-    - media_player.spotify
+
 
 media_player:
   name: media_player
@@ -108,10 +94,10 @@ Sensordaten:
   entities:
      - group.status_alle_sensoren
      - group.status_alle_bewegsungsmelder
-     - group.status_bewegungsmelder_last_triggered
-     - group.esp_01
-     - group.esp_02
-     - group.esp_03
+     - group.esp32_01
+     - group.esp32_02
+     - group.esp32_03
+     - group.esp32_04
      - group.status_alle_umweltsensoren
      - group.signalstaerke_alle_sensoren
      - group.esp_alle_ips
@@ -126,7 +112,16 @@ Sonoffs:
      - group.sonoff3
      - group.sonoff4
      - group.sonoff5
+     - group.sonoff6
+     - group.sonoff_alle_ips
      - group.sonoff_firmware
+zwave:
+  name: zwave
+  view: yes
+  icon: mdi:z-wave
+  entities:
+     - group.zwave_aeotec_multisensor6
+     - group.zwave_fibaro_plug
 
 familie:
   name: Familie
@@ -134,6 +129,7 @@ familie:
   icon: mdi:account-multiple
   entities:
    - group.familiegrp
+   - group.familiegrpstate
    - group.birthday
    - group.traveltime
 
@@ -177,6 +173,7 @@ TEST:
   view: yes
   icon: mdi:delete
   entities:
+    - group.sensor_warn
     - group.iss
     - group.outtopic
     - group.radartest
@@ -189,16 +186,3 @@ TEST:
     - group.wetter
     - group.birthdays
     - group.device_tracker
-
-chrisshort:
-  name: shortcut
-  view: yes
-  icon: mdi:link
-  entities:
-    - scene.elwaus
-    - scene.elwrelax
-    - light.flur
-    - light.schlafzimmer
-    - script.akkus_laden
-    - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-    - automation.akkuladeautomatik

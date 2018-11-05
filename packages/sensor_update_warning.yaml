@@ -19,19 +19,45 @@ group:
     - sensor.phonebatt_debug
     - sensor.phonebatt_debug2
     - sensor.phonebatt_watch
+    - sensor.esp32_02_temperature
+    - sensor.esp32_02_debug
+    - sensor.esp32_02_debug2
+    - sensor.esp32_02_watch
+    - sensor.esp32_03_temperature
+    - sensor.esp32_03_debug
+    - sensor.esp32_03_debug2
+    - sensor.esp32_03_watch
     - automation.notify_sensor_update
 sensor:
 
 ###### warning if battery powered sensor does not update
+#battery mobile
   - platform: template
     sensors:
       phonebatt_watch:
-        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.phonebatt.last_updated) > 1*60 %}true{% else %}false{% endif %}"
+        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.phonebatt.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       phonebatt_debug:
         value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.phonebatt.last_updated)  }}"
       phonebatt_debug2:
         value_template: "{{ states.sensor.phonebatt.last_updated  }}"
-
+#outdoor sensor 2
+  - platform: template
+    sensors:
+      esp32_02_watch:
+        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+      esp32_02_debug:
+        value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated)  }}"
+      esp32_02_debug2:
+        value_template: "{{ states.sensor.esp32_02_temperature.last_updated  }}"
+#outdoor sensor 3
+  - platform: template
+    sensors:
+      esp32_03_watch:
+        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+      esp32_03_debug:
+        value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated)  }}"
+      esp32_03_debug2:
+        value_template: "{{ states.sensor.esp32_03_temperature.last_updated  }}"
 #################################################
 ### Notify when a Sensor does not update      ###
 #################################################
@@ -42,6 +68,8 @@ automation:
       - platform: state
         entity_id:
           - sensor.phonebatt_watch
+          - sensor.esp32_02_watch
+          - sensor.esp32_03_watch
         to: 'true'
     condition:
       condition: and
@@ -52,4 +80,4 @@ automation:
     - service: notify.pushbullet
       data_template:
         message: >
-          NO UPDATE: Sensor {{ trigger.to_state.attributes.friendly_name }}
+          NO UPDATE: {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Sensor {{ trigger.to_state.attributes.friendly_name }}

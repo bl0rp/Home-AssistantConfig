@@ -12,9 +12,9 @@ automation:
         - service: script.get_esp_ip
           data:
             device: "sensor_esp8266_01"
-        - service: script.get_esp_ip
-          data:
-            device: "sensor_esp8266_02"
+#        - service: script.get_esp_ip
+#          data:
+#            device: "sensor_esp8266_02"
 #        - service: script.get_esp_ip
 #          data:
 #            device: "sensor_esp8266_03"

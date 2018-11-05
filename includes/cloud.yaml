@@ -3,6 +3,7 @@ alexa:
     include_entities:
       - light.flur
       - light.schlafzimmer
+      - script.akkus_laden
     include_domains:
       - switch
     exclude_entities:
@@ -19,3 +20,5 @@ alexa:
       description: Verstärker
     switch.11011_a:
       display_categories: LIGHT
+    script.akkus_laden:
+      name: Akkus laden

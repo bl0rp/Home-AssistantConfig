@@ -1,5 +1,5 @@
-  - platform: template
-    sensors:
+#  - platform: template
+#    sensors:
 
 #### Last Motion
 #
@@ -15,8 +15,3 @@
 
 ### last_motion_timestamp
 ### See ESP Packages for all templates
-
-      elw_2_motion_last_triggered:
-        friendly_name: "ELW Flur Motion Last Triggered"
-        value_template: >-
-          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}

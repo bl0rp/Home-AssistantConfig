@@ -1,8 +1,0 @@
-automation_elw:
-  name: Automatisierung für die ELW
-  entities:
-    - automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
-    - automation.bewegungsmelder_elw_licht_zwave
-    - automation.bewegungsmelder_elw_licht_relax_pir
-    - automation.elw_licht_ausschalten_wenn_bt_nicht_gefunden
-    - automation.akkuladeautomatik

@@ -1,6 +1,0 @@
-nma_test:
-  alias: "Spam via NMA"
-  sequence:
-    service: notify.nma
-    data:
-      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'

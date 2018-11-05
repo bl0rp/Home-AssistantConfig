@@ -9,6 +9,8 @@ include:
     - media_player
     - device_tracker
   entities:
+    #network
+    - sensor.clients_online
     #temperature etc
     - sensor.aeotec_zw100_multisensor_6_temperature
     - sensor.temperatur_esp8266_01
@@ -32,31 +34,37 @@ include:
     - sensor.qnap1_network_down_eth0
     - sensor.qnap1_network_up_eth0
     #sonoff stats
+
     - sensor.sonoff1_gesamtverbrauch
     - sensor.sonoff1_kosten_gesamt
     - sensor.sonoff1_kosten_gestern
     - sensor.sonoff1_kosten_heute
+    - sensor.sonoff1_momentane_leistung
     - sensor.sonoff2_gesamtverbrauch
     - sensor.sonoff2_kosten_gesamt
     - sensor.sonoff2_kosten_gestern
     - sensor.sonoff2_kosten_heute
+    - sensor.sonoff2_momentane_leistung
     - sensor.sonoff3_gesamtverbrauch
     - sensor.sonoff3_kosten_gesamt
     - sensor.sonoff3_kosten_gestern
     - sensor.sonoff3_kosten_heute
+    - sensor.sonoff3_momentane_leistung
     - sensor.sonoff4_gesamtverbrauch
     - sensor.sonoff4_kosten_gesamt
     - sensor.sonoff4_kosten_gestern
     - sensor.sonoff4_kosten_heute
+    - sensor.sonoff4_momentane_leistung
     - sensor.sonoff5_gesamtverbrauch
     - sensor.sonoff5_kosten_gesamt
     - sensor.sonoff5_kosten_gestern
     - sensor.sonoff5_kosten_heute
-    - sensor.sonoff1_momentane_leistung
-    - sensor.sonoff2_momentane_leistung
-    - sensor.sonoff3_momentane_leistung
-    - sensor.sonoff4_momentane_leistung
-    - sensor.sonoff5_momentane_leistung
+    - sensor.sonoff6_momentane_leistung
+    - sensor.sonoff6_gesamtverbrauch
+    - sensor.sonoff6_kosten_gesamt
+    - sensor.sonoff6_kosten_gestern
+    - sensor.sonoff6_kosten_heute
+    - sensor.sonoff6_momentane_leistung
     #gas price
     - sensor.tankstelle_super
     #google travel time
@@ -84,9 +92,19 @@ include:
     #Battery stats
     - sensor.multisensor1_battery
     - sensor.tradfri_remote_control
-    - sensor.esp32_01_battery_value
+
     #esp32
+    - sensor.esp32_01_battery
+    - sensor.esp32_01_rssi
+
     - sensor.esp32_02_battery
     - sensor.esp32_02_humidity
     - sensor.esp32_02_temperature
     - sensor.esp32_02_rssi
+
+    - sensor.esp32_03_battery
+    - sensor.esp32_03_humidity
+    - sensor.esp32_03_temperature
+    - sensor.esp32_03_pressure
+    - sensor.esp32_03_rssi
+

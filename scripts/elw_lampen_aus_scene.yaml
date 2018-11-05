@@ -1,5 +1,0 @@
-elw_lampen_aus_scene:
-  alias: "Alle Lampen in der ELW ausschalten (Scene)"
-  sequence:
-  - service: scene.turn_on
-    entity_id: scene.elwaus

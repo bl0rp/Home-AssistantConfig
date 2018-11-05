@@ -14,9 +14,6 @@
     switch.katze:
       friendly_name: Testswitch ohne Funktion
       entity_picture: /local/cat.jpg
-    switch.wake_on_lan:
-      friendly_name: WOL alekto
-      icon: mdi:power
 
 
 #media_player
@@ -27,4 +24,3 @@
     sensor.tradfri_remote_control:
       friendly_name: Batterie Tradfri
       icon: mdi:car-battery
-

@@ -6,22 +6,11 @@
   - platform: volumio
     host: !secret volumio_ip
     port: 3000
-#Volumio ELW TTS
-  - platform: mpd
-    host: !secret volumio_ip
-    port: 6600
-    name: Volumio TTS
-#mpd pi3
-  - platform: mpd
-    host: 192.168.0.28
-    port: 6600
-    name: test
 #Spotify
   - platform: spotify
     client_id: !secret spotify_client
     client_secret: !secret spotify_secret
-#gstreamer disabled for now... cpu util. bug 
-#  - platform: gstreamer
+
 #Yamaha RX-V473
   - platform: yamaha
     host: !secret yamaha_ip

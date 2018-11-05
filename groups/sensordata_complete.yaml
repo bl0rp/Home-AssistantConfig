@@ -2,7 +2,7 @@ status_alle_sensoren:
   name: Status aller Sensoren im Netzwerk
   entities:
     - sensor.multisensor1_battery
-    - binary_sensor.aeotec_zw100_multisensor_6_sensor_2_0
+    - binary_sensor.aeotec_zw100_multisensor_6_sensor
     - sensor.esp8266_01_status_var
     - sensor.esp8266_02_status_var
     - sensor.esp8266_03_status_var
@@ -16,24 +16,20 @@ status_alle_bewegsungsmelder:
   entities:
     - sensor.multisensor1_motion
     - sensor.esp8266_02_motion
-    - sensor.esp8266_02_motion_radar
     - sensor.esp8266_01_motion
     - sensor.esp8266_03_motion
-
-
-
-status_bewegungsmelder_last_triggered:
-  name: Letzte Änderung Bewegungsmelder
-  entities:
     - sensor.elw_motion_last_triggered
-    - sensor.elw_2_motion_last_triggered
     - sensor.wintergarten_motion_last_triggered
     - sensor.wohnzimmer_motion_last_triggered
+
+
 
 
 status_alle_umweltsensoren:
   name: Status aller Umweltsensoren im Netzwerk
   entities:
+    - sensor.esp32_02_temperature
+    - sensor.esp32_03_temperature
     - sensor.aeotec_zw100_multisensor_6_temperature
     - sensor.temperatur_esp8266_02
     - sensor.temperatur_esp8266_01
@@ -42,7 +38,8 @@ status_alle_umweltsensoren:
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_03
-
+    - sensor.esp32_02_humidity
+    - sensor.esp32_03_humidity
 
 
 signalstaerke_alle_sensoren:
@@ -54,7 +51,9 @@ signalstaerke_alle_sensoren:
     - sensor.esp8266_04_signal
     - sensor.esp8266_05_signal
     - sensor.esp8266_06_signal
-
+    - sensor.esp32_01_rssi
+    - sensor.esp32_02_rssi
+    - sensor.esp32_03_rssi
 
 esp_alle_ips:
   name: IPv4 Adressen aller Sensoren
@@ -65,8 +64,3 @@ esp_alle_ips:
     - sensor.esp8266_04_ip
     - sensor.esp8266_05_ip
     - sensor.esp8266_06_ip
-    - sensor.sonoff1_ipv4
-    - sensor.sonoff2_ipv4
-    - sensor.sonoff3_ipv4
-    - sensor.sonoff4_ipv4
-    - sensor.sonoff5_ipv4

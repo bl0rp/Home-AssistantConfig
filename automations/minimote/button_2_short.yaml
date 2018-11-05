@@ -8,4 +8,4 @@ trigger:
     scene_id: 3
 action:
   - service: switch.toggle
-    entity_id: switch.110011
+    entity_id: switch.11001_A

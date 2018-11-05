@@ -1,9 +1,0 @@
-elw_lampen_an:
-  alias: "Alle Lampen in der ELW anschalten"
-  sequence:
-  - service: switch.turn_on
-    entity_id: switch.110111
-  - service: switch.turn_on
-    entity_id: switch.110112
-  - service: switch.turn_on
-    entity_id: switch.110113

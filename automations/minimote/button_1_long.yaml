@@ -12,4 +12,4 @@ action:
       message: >
          Lichter werden ausgeschaltet
   - service: scene.turn_on
-    entity_id: scene.elwaus
+    entity_id: scene.elw_aus

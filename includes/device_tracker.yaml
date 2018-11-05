@@ -5,7 +5,7 @@
 
 - platform: nmap_tracker
   hosts:
-    - !secret technicolor_ip
+    - !secret router_ip
     - !secret alekto_ip
     - !secret qnap_ip
     - !secret ddwrt_host
@@ -24,7 +24,7 @@
     - !secret ipad_ip
     - !secret hanni_iphone_ip
       #    - !secret nexus7_ip
-
+  scan_options: "--host-timeout 5s --privileged -sP "
   home_interval: 10
   exclude:
     - !secret hass_ip
@@ -48,3 +48,12 @@
     esp8266_05_ping: !secret esp8266_05_ip
     esp8266_06_ping: !secret esp8266_06_ip
     esp8266_07_ping: !secret esp8266_07_ip
+
+
+- platform: unifi
+  host: !secret unifi_host
+  username: !secret unifi_user
+  password: !secret unifi_password
+  verify_ssl: false
+  ssid_filter:
+    - 'erisnet'

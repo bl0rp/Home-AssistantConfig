@@ -16,15 +16,15 @@ homeassistant:
 
     sensor.esp32_02_humidity:
       icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit
+      friendly_name: Luftfeuchtigkeit Carport
 
     sensor.esp32_02_temperature:
       icon: mdi:thermometer
-      friendly_name: Temperatur
+      friendly_name: Temperatur Carport
 
     sensor.esp32_02_rssi:
       icon: mdi:wifi
-      friendly_name: Signalstärke
+      friendly_name: "ESP32 #2 Signalstärke"
 
     sensor.esp32_02_temperature_last_changed:
       icon: mdi:delta
@@ -37,10 +37,10 @@ homeassistant:
 #  group    #
 #############
 group:
-  esp_02:
+  esp32_02:
     control: hidden
     icon: mdi:door
-    name: Temperatursensor Draußen
+    name: Temperatursensor Carport
     entities:
       - sensor.esp32_02_rssi
       - sensor.esp32_02_battery

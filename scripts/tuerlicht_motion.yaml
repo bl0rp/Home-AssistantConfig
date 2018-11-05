@@ -1,8 +1,0 @@
-tuerlicht_motion:
-  alias: "Türlicht für 15 Sekunden anschalten"
-  sequence:
-    - service: switch.turn_on
-      entity_id: switch.110113
-    - delay: 00:00:15
-    - service: switch.turn_off
-      entity_id: switch.110113
