@@ -44,9 +44,7 @@ media_player:
     - media_player.spotify
     - media_player.volumio
     - media_player.volumio_tts
-    - media_player.yamaha_receiver
-    - media_player.test
-    - group.tts_test
+    - group.receiver
 
 
 1OG:

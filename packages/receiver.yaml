@@ -1,0 +1,162 @@
+##############################################################
+### Packages / Receiver                                    ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+  customize:
+    switch.receiver:
+      friendly_name: Verstärker
+      icon: mdi:music-circle-outline
+    switch.receiver_source_pc:
+      friendly_name: Verstärker Quelle PC
+      icon: mdi:desktop-classic
+
+group:
+  receiver:
+    name: Verstärker
+    control: hidden
+    entities:
+      - media_player.yamaha_receiver
+      - switch.receiver_source_pc
+      - switch.receiver
+
+media_player:
+  #Yamaha RX-V473
+    - platform: yamaha
+      host: !secret yamaha_ip
+      source_names:
+        AV5: "Volumio"
+        AV6: "PC"
+      source_ignore:
+        - "Server"
+        - "Tuner"
+        - "USB"
+        - "V-AUX"
+        - "iPod (USB)"
+        - "AUDIO"
+        - "AV1"
+        - "AV2"
+        - "AV3"
+        - "AV4"
+        - "AirPlay"
+        - "HDMI1"
+        - "HDMI2"
+        - "HDMI3"
+        - "HDMI4"
+        - "NET RADIO"
+
+
+
+switch:
+  - platform: template
+    switches:
+
+      receiver:
+        value_template: "{{ states.media_player.yamaha_receiver.state == 'on' }}"
+        turn_on:
+          service: media_player.turn_on
+          entity_id: media_player.yamaha_receiver
+        turn_off:
+          service: media_player.turn_off
+          entity_id: media_player.yamaha_receiver
+
+      receiver_source_pc:
+        value_template: "{{ states.media_player.yamaha_receiver.attributes.source == 'PC' }}"
+        turn_on:
+          service: media_player.select_source
+          entity_id: media_player.yamaha_receiver
+          data:
+              source: PC
+        turn_off:
+          service: media_player.select_source
+          entity_id: media_player.yamaha_receiver
+          data:
+              source: Volumio
+
+
+
+automation:
+  #Switch Source to PC when Volumio is idle
+  - alias: Auto AV Quelle PC
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: media_player.volumio
+      from: 'playing'
+      to: 'paused'
+    condition:
+    #  - condition: state
+    #    state: "home"
+    #    entity_id: device_tracker.pixel_2_xl
+    action:
+      - service: media_player.select_source
+        entity_id: media_player.yamaha_receiver
+        data:
+            source: PC
+  #Switch Source to Volumio when playing
+  - alias: Auto AV Quelle Volumio
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: media_player.volumio
+      to: 'playing'
+    condition:
+    #  - condition: state
+    #    state: "home"
+    #    entity_id: device_tracker.pixel_2_xl
+    action:
+      - service: media_player.select_source
+        entity_id: media_player.yamaha_receiver
+        data:
+            source: Volumio
+  #Auto Off when not playing music
+  - alias: Receiver_auto_off_volumio_idle
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: media_player.volumio
+      to: 'paused'
+      for:
+        seconds: 30
+    condition:
+      condition: state
+      entity_id: sensor.sonoff2_use
+      state: 'Nein'
+    action:
+      - service: switch.turn_off
+        entity_id: switch.receiver
+  #Auto Off when not using the computer
+  - alias: Receiver_auto_off_pc_off
+    initial_state: true
+    trigger:
+      platform: state
+      entity_id: sensor.sonoff2_use
+      to: 'Nein'
+      for:
+        seconds: 30
+    condition:
+      condition: template
+      value_template: "{{ not is_state('media_player.volumio', 'playing') }}"
+    action:
+      - service: switch.turn_off
+        entity_id: switch.receiver
+  #Auto On when Volumio/PC on
+  - alias: Receiver_auto_on
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff2_use
+        to: 'Ja'
+        for:
+          seconds: 10
+      - platform: state
+        entity_id: media_player.volumio
+        to: 'playing'
+    condition:
+      condition: state
+      entity_id: switch.receiver
+      state: 'off'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.receiver
