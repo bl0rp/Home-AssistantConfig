@@ -57,3 +57,7 @@
   verify_ssl: false
   ssid_filter:
     - 'erisnet'
+    - 'erisnet_iot'
+
+
+- platform: gpslogger

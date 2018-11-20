@@ -61,18 +61,21 @@ sensor:
     state_topic: "esp32_2/sensor/spannung_akku/state"
     unit_of_measurement: "V"
     qos: 0
+    force_update: true
 
   - platform: mqtt
     name: "esp32_02_humidity"
     state_topic: "esp32_2/sensor/humidity/state"
     qos: 0
     unit_of_measurement: "%"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_02_temperature"
     state_topic: "esp32_2/sensor/temperature/state"
     qos: 0
     unit_of_measurement: "°C"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_02_rssi"

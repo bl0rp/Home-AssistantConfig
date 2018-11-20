@@ -21,7 +21,9 @@ service:
     - group.server_alarm_automations
     - group.bitcoin
     - group.speedtest
-
+    - group.battery_view
+    - group.battery_alert
+    - group.battery_status
 
 
 ELW:

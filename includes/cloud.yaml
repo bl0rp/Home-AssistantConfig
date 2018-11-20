@@ -22,3 +22,24 @@ alexa:
       display_categories: LIGHT
     script.akkus_laden:
       name: Akkus laden
+
+
+google_actions:
+  filter:
+    include_entities:
+      - light.flur
+      - light.schlafzimmer
+      - script.akkus_laden
+    include_domains:
+      - switch
+    exclude_entities:
+      - switch.outside
+  entity_config:
+    light.flur:
+      name: Flurlicht
+    switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
+      name: Steckdose
+    switch.receiver:
+      name: Verstärker
+    script.akkus_laden:
+      name: Akkus laden

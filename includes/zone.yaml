@@ -1,0 +1,28 @@
+  - name: Home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 50
+
+  - name: GR
+    latitude: !secret gr_latitude
+    longitude: !secret gr_longitude
+    radius: 50
+    icon: mdi:beer
+
+  - name: HRW
+    latitude: !secret hrw_latitude
+    longitude: !secret hrw_longitude
+    radius: 50
+    icon: mdi:ambulance
+
+  - name: RW2
+    latitude: !secret rw2_latitude
+    longitude: !secret rw2_longitude
+    radius: 50
+    icon: mdi:ambulance
+
+  - name: MaHo
+    latitude: !secret maho_latitude
+    longitude: !secret maho_longitude
+    radius: 50
+    icon: mdi:hospital-building

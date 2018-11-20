@@ -361,3 +361,57 @@ automation:
         data:
           entity_id: input_select.christoph_status
           option: "Oben"
+# notification home states
+  - alias: notify_homestate
+    initial_state: false
+    trigger:
+      - platform: state
+        entity_id:
+          - device_tracker.traude_ip
+          - device_tracker.ewald_ip
+          - device_tracker.hanni_iphone_ip
+        from: 'not_home'
+        to: 'home'
+
+      - platform: state
+        entity_id:
+          - device_tracker.traude_ip
+          - device_tracker.ewald_ip
+          - device_tracker.hanni_iphone_ip
+        from: 'home'
+        to: 'not_home'
+
+      - platform: state
+        entity_id:
+          - input_boolean.chrishome
+        from: 'off'
+        to: 'on'
+
+      - platform: state
+        entity_id:
+          - input_boolean.chrishome
+        from: 'on'
+        to: 'off'
+
+    action:
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+            {% if (trigger.to_state.state  == "not_home" ) or (trigger.to_state.state == "off") %}
+                {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist gegangen ({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
+            {% else %}
+              {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist daheim ({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
+            {% endif %}
+
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: 'on'
+
+      - service: notify.echodot
+        data_template:
+          message: >
+            {% if (trigger.to_state.state  == "not_home" ) or (trigger.to_state.state == "off") %}
+                {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist gegangen!
+            {% else %}
+              {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist daheim!
+            {% endif %}

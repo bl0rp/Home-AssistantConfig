@@ -25,6 +25,8 @@ conversation:
 
 history:
 
+map:
+
 influxdb:
   host: 127.0.0.1
 
@@ -79,3 +81,4 @@ sensor: !include_dir_merge_list sensors/
 shell_command: !include includes/shell_command.yaml
 switch: !include_dir_list switches/
 tts: !include includes/tts.yaml
+zone: !include includes/zone.yaml

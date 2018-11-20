@@ -13,6 +13,9 @@ homeassistant:
     device_tracker.christoph_ip:
       friendly_name: Christoph via nmap/unifi
       icon: mdi:radar
+    device_tracker.710kpny0475751:
+      friendly_name: GPSLogger
+      icon: mdi:radar
 
 #############
 #  group    #
@@ -36,6 +39,7 @@ group:
     entities:
       - sensor.phonebatt
       - device_tracker.christoph_ip
+      - device_tracker.710kpny0475751
       - input_boolean.chrisbluetooth
       - input_boolean.chrishome
       - input_select.christoph_status
@@ -66,6 +70,7 @@ automation:
       - wait_template: "{{ states.binary_sensor.esp32_01_door_state.state == 'on' }}"
       - service: automation.turn_off
         entity_id: automation.turn_on_lights_when_coming_home
+      - delay: '00:00:20'
       - service: notify.echodot
         data_template:
           message: >

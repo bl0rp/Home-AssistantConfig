@@ -36,7 +36,7 @@ automation:
         target: !secret telegram_chat_id_christoph
         disable_notification: true
         message: "Commands..."
-        keyboard: ["/status", "/test", "/temp", "/weather"]
+        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate"]
 
 
 ## menu
@@ -52,8 +52,64 @@ automation:
       data_template:
         target: "{{ trigger.event.data.user_id }}"
         message: "Commands..."
-        keyboard: ["/status", "/test", "/temp", "/weather"]
+        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate"]
 
+#home state
+  - alias: 'telegram_homestate'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/homestate'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: "Status oder Benachrichtigung?"
+        keyboard: ["/homestatestatus", "/homenotification", "/menu"]
+
+  - alias: 'telegram_homestate_status'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/homestatestatus'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: >
+          Benachrichtigung ist {{ states("automation.notify_homestate")|replace ('on','angeschaltet')|replace ('off','ausgeschaltet')}}!
+
+          {% for entity in state_attr('group.familiegrp', 'entity_id') %}
+
+          {{ state_attr(entity, 'friendly_name')|replace ('Christoph Status','Christoph') }} ist {{ states(entity)|replace ('on','daheim')|replace ('off','abwesend')|replace ('not_home','abwesend')|replace ('home','daheim')}}
+
+          {%- endfor %}
+        keyboard: ["/menu", "/homestate", "/homenotification"]
+##see device_tracker package
+  - alias: 'telegram_homestate_notification'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/homenotification'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: "{{ trigger.event.data.user_id }}"
+          message: >
+              {% if (states.automation.notify_homestate.state  == "off" )  %}
+                  Benachrichtigung wird angeschaltet
+              {% else %}
+                  Benachrichtigung wird ausgeschaltet
+              {% endif %}
+          keyboard: ["/menu", "/homestatestatus"]
+      - service: automation.toggle
+        entity_id: automation.notify_homestate
 
 #weather info dark sky
 
@@ -100,7 +156,7 @@ automation:
       data_template:
         target: "{{ trigger.event.data.user_id }}"
         message: "System is online!
-        
+
           Uptime NUC: {{ states('sensor.host_uptime_human') }}.
 
           Uptime HASS: {{ states('sensor.ha_uptime_human') }}."

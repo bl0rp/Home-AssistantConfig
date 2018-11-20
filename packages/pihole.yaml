@@ -280,7 +280,7 @@ automation:
     condition: and
     conditions:
         - condition: template
-          value_template: "{{ states('sensor.pihole_version_latest') != 'unknown' }}"
+          value_template: "{{ states('sensor.pihole_version_latest') != 'unaaiable' }}"
         - condition: template
           value_template: "{{ states('sensor.pihole_version_latest') != '' }}"
   action:

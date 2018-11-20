@@ -16,11 +16,11 @@ homeassistant:
 
     sensor.esp32_03_humidity:
       icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit Cartport BME
+      friendly_name: Luftfeuchtigkeit BME
 
     sensor.esp32_03_temperature:
       icon: mdi:thermometer
-      friendly_name: Temperatur Carport BME
+      friendly_name: Temperatur BME
 
     sensor.esp32_03_pressure:
       icon: mdi:gauge
@@ -71,30 +71,35 @@ sensor:
     state_topic: "esp32_3/sensor/spannung_akku/state"
     unit_of_measurement: "V"
     qos: 0
+    force_update: true
 
   - platform: mqtt
     name: "esp32_03_humidity"
     state_topic: "esp32_3/sensor/humidity/state"
     qos: 0
     unit_of_measurement: "%"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_03_temperature"
     state_topic: "esp32_3/sensor/temperature/state"
     qos: 0
     unit_of_measurement: "°C"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_03_pressure"
     state_topic: "esp32_3/sensor/pressure/state"
     qos: 0
     unit_of_measurement: "hPa"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_03_rssi"
     state_topic: "esp32_3/sensor/esp32_3_wifi_signal_sensor/state"
     qos: 0
     unit_of_measurement: "dB"
+    force_update: true
 
   - platform: mqtt
     name: "esp32_03_uptime"
