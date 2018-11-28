@@ -1,7 +1,7 @@
-#- platform: ddwrt
-#  host: !secret ddwrt_host
-#  username: !secret ddwrt_user
-#  password: !secret ddwrt_pw
+- platform: ddwrt
+  host: !secret ddwrt_host
+  username: !secret ddwrt_user
+  password: !secret ddwrt_pw
 
 - platform: nmap_tracker
   hosts:

@@ -3,6 +3,11 @@
     longitude: !secret longitude
     radius: 50
 
+  - name: Hanni
+    latitude: !secret hanni_latitude
+    longitude: !secret hanni_longitude
+    radius: 50
+
   - name: GR
     latitude: !secret gr_latitude
     longitude: !secret gr_longitude

@@ -7,6 +7,10 @@ homeassistant:
   customize:
     sensor.phonebatt_watch:
       friendly_name: Handyakku
+    sensor.esp32_02_watch:
+      friendly_name: DHT Carport
+    sensor.esp32_03_watch:
+      friendly_name: BMP ELW
 ###### STATE CARD for views.yaml
 
 group:

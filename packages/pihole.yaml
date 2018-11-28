@@ -35,7 +35,7 @@ homeassistant:
 
     sensor.unique_domains:
       friendly_name: Unique Domains
-      icon: mdi:approval
+      icon: mdi:check-decagram
 
     sensor.queries_forwarded:
       friendly_name: Weitergeleitete Anfragen
@@ -280,7 +280,7 @@ automation:
     condition: and
     conditions:
         - condition: template
-          value_template: "{{ states('sensor.pihole_version_latest') != 'unaaiable' }}"
+          value_template: "{{ states('sensor.pihole_version_latest') != 'unaailable' }}"
         - condition: template
           value_template: "{{ states('sensor.pihole_version_latest') != '' }}"
   action:

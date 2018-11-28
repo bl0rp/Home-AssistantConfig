@@ -59,6 +59,20 @@ group:
       - sensor.esp32_03_pressure
       - sensor.esp32_03_temperature_last_changed
       - automation.benachrichtigung_batterie_esp32_03
+#############
+#  switch   #
+#############
+switch:
+  - platform: mqtt
+    name: ESP32_3 Restart
+    state_topic: esp32_3/switch/esp32_3_restart/state
+    command_topic: esp32_3/switch/esp32_3_restart/command
+
+  - platform: mqtt
+    name: ESP32_3 Shutdown
+    state_topic: esp32_3/switch/esp32_3_shutdown/state
+    command_topic: esp32_3/switch/esp32_3_shutdown/command
+
 
 
 #############
@@ -160,10 +174,12 @@ automation:
   trigger:
     - platform: numeric_state
       entity_id: sensor.esp32_03_battery
-      below: 3.0
+      below: 3.3
       for:
         seconds: 5
   action:
+    - service: switch.turn_on
+      entity_id: switch.esp32_3_shutdown
     - service: notify.pushbullet
       data_template:
         message: >

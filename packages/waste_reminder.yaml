@@ -83,8 +83,8 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: sensor.cal_alert_time_waste
-        below: 40200
-        above: 40100
+        below: 50400
+        above: 50200
     action:
       - service: notify.pushbullet
         data_template:
@@ -131,8 +131,8 @@ automation:
     trigger:
       - platform: numeric_state
         entity_id: sensor.cal_alert_time_waste_gelbersack
-        below: 43200
-        above: 43100
+        below: 50400
+        above: 50200
     action:
       - service: notify.pushbullet
         data_template:

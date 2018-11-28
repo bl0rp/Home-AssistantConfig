@@ -55,6 +55,7 @@ media_player:
   entities:
     - switch.wemoswitch1
     - switch.wemoswitch2
+    - switch.sonoff6
     - script.1og_lampen_an
     - script.1og_lampen_aus
     - group.automation_1og
@@ -113,6 +114,8 @@ Sonoffs:
      - group.sonoff4
      - group.sonoff5
      - group.sonoff6
+     - group.sonoff7
+     - group.sonoff8
      - group.sonoff_alle_ips
      - group.sonoff_firmware
 zwave:

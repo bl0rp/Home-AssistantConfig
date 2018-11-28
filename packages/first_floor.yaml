@@ -93,10 +93,10 @@ automation:
         entity_id: switch.wemoswitch2
       - service: automation.turn_off
         entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
-      - service: notify.pushbullet
-        data_template:
-          message: >
-             {{ states.sensor.date__time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
+      # - service: notify.pushbullet
+      #   data_template:
+      #     message: >
+      #        {{ states.sensor.date__time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
 
 
 # off at 11 pm

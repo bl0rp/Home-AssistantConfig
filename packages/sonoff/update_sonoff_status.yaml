@@ -74,6 +74,8 @@ group:
       - sensor.sonoff4_sw_version
       - sensor.sonoff5_sw_version
       - sensor.sonoff6_sw_version
+      - sensor.sonoff7_sw_version
+      - sensor.sonoff8_sw_version
 
   sonoff_alle_ips:
     name: IPv4 Adressen Sonoff
@@ -84,6 +86,8 @@ group:
       - sensor.sonoff4_ipv4
       - sensor.sonoff5_ipv4
       - sensor.sonoff6_ipv4
+      - sensor.sonoff7_ipv4
+      - sensor.sonoff8_ipv4
 
 sensor:
   #Latest Release
@@ -134,6 +138,16 @@ sensor:
     name: "sonoff6 IPv4"
     state_topic: "stat/sonoff6/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff7 IPv4"
+    state_topic: "stat/sonoff7/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+
+  - platform: mqtt
+    name: "sonoff8 IPv4"
+    state_topic: "stat/sonoff8/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
   #SW Version
 
   - platform: mqtt
@@ -163,5 +177,15 @@ sensor:
 
   - platform: mqtt
     name: "sonoff6 sw version"
-    state_topic: "stat/sonoff5/STATUS2"
+    state_topic: "stat/sonoff6/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff7 sw version"
+    state_topic: "stat/sonoff7/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version }}"
+
+  - platform: mqtt
+    name: "sonoff8 sw version"
+    state_topic: "stat/sonoff8/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version }}"

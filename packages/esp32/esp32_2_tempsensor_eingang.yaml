@@ -22,6 +22,10 @@ homeassistant:
       icon: mdi:thermometer
       friendly_name: Temperatur Carport
 
+    sensor.esp32_02_pressure:
+      icon: mdi:gauge
+      friendly_name: Luftdruck
+
     sensor.esp32_02_rssi:
       icon: mdi:wifi
       friendly_name: "ESP32 #2 Signalstärke"
@@ -47,9 +51,22 @@ group:
       - sensor.esp32_02_battery_state
       - sensor.esp32_02_temperature
       - sensor.esp32_02_humidity
+      - sensor.esp32_02_pressure
       - sensor.esp32_02_temperature_last_changed
       - automation.benachrichtigung_batterie_esp32_02
+#############
+#  switch   #
+#############
+switch:
+  - platform: mqtt
+    name: ESP32_2 Restart
+    state_topic: esp32_2/switch/esp32_2_restart/state
+    command_topic: esp32_2/switch/esp32_2_restart/command
 
+  - platform: mqtt
+    name: ESP32_2 Shutdown
+    state_topic: esp32_2/switch/esp32_2_shutdown/state
+    command_topic: esp32_2/switch/esp32_2_shutdown/command
 
 #############
 #  sensors  #
@@ -75,6 +92,13 @@ sensor:
     state_topic: "esp32_2/sensor/temperature/state"
     qos: 0
     unit_of_measurement: "°C"
+    force_update: true
+
+  - platform: mqtt
+    name: "esp32_02_pressure"
+    state_topic: "esp32_2/sensor/pressure/state"
+    qos: 0
+    unit_of_measurement: "hPa"
     force_update: true
 
   - platform: mqtt
@@ -107,6 +131,8 @@ automation:
       from: 'Geladen'
       to: 'Leer'
   action:
+    - service: switch.turn_on
+      entity_id: switch.esp32_2_shutdown
     - service: notify.pushbullet
       data_template:
         message: >

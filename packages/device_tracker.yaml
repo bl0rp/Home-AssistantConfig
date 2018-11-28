@@ -170,20 +170,24 @@ automation:
         to: 'not_home'
         for:
           minutes: 10
+      # - platform: state
+      #   entity_id: sensor.tasker_home
+      #   to: 'not_home'
+      #   for:
+      #     minutes: 5
       - platform: state
-        entity_id: sensor.tasker_home
+        entity_id: device_tracker.710kpny0475751
         to: 'not_home'
         for:
           minutes: 5
-
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.chrishome
 
-      # - service: notify.pushbullet
-        # data_template:
-          # message: >
-             # {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
 
 #switch input_boolean from off to on
 
@@ -197,15 +201,18 @@ automation:
       - platform: state
         entity_id: device_tracker.christoph_ip
         to: 'home'
+      - platform: state
+        entity_id: device_tracker.710kpny0475751
+        to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_nuc
       #   to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_rpi3
       #   to: 'home'
-      - platform: state
-        entity_id: sensor.tasker_home
-        to: 'home'
+      # - platform: state
+      #   entity_id: sensor.tasker_home
+      #   to: 'home'
       - platform: state
         entity_id: input_boolean.chrisbluetooth
         to: 'on'

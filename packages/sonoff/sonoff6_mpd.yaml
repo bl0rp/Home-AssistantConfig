@@ -11,8 +11,8 @@ homeassistant:
 
   customize:
     switch.sonoff6:
-      friendly_name: MPD
-      icon: mdi:power-socket-eu
+      friendly_name: Lichterkette
+      icon: mdi:led-on
     sensor.sonoff6_ipv4:
       friendly_name: IPv4 Sonoff 6
       icon: mdi:server-network
@@ -57,7 +57,7 @@ homeassistant:
 group:
   sonoff6:
     control: hidden
-    name: Sonoff 5
+    name: Sonoff 6
     view: no
     entities:
       - switch.sonoff6
@@ -169,8 +169,8 @@ sensor:
 
       sonoff6_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 30 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 30 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 3 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff6_momentane_leistung') | int > 3 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
@@ -215,7 +215,26 @@ automation:
           message: >
             {{ states.sensor.sonoff6_momentane_leistung.state }}
 
-
+### X-Mas
+  - alias: "xmas_lights_on"
+    initial_state: True
+    trigger:
+      - platform: sun
+        event: sunset
+    action:
+      - service: switch.turn_on
+        entity_id: switch.sonoff6
+### lights off
+  - alias: "xmas_lights_off"
+    initial_state: True
+    trigger:
+      - platform: time
+        hours: 23
+        minutes: 00
+        seconds: 00
+    action:
+      - service: switch.turn_off
+        entity_id: switch.sonoff6
 ### Delete the logfile (reset the maximum power sensor)
 
 script:
