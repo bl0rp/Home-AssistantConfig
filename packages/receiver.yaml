@@ -11,6 +11,9 @@ homeassistant:
     switch.receiver_source_pc:
       friendly_name: Verstärker Quelle PC
       icon: mdi:desktop-classic
+    input_boolean.all_receiver_automations:
+      friendly_name: Automatisierungen deaktivieren?
+      icon: mdi:autorenew
 
 group:
   receiver:
@@ -20,7 +23,7 @@ group:
       - media_player.yamaha_receiver
       - switch.receiver_source_pc
       - switch.receiver
-
+      - input_boolean.all_receiver_automations
 media_player:
   #Yamaha RX-V473
     - platform: yamaha
@@ -46,6 +49,10 @@ media_player:
         - "HDMI4"
         - "NET RADIO"
 
+input_boolean:
+  all_receiver_automations:
+    name: Automatisierungen deaktivieren?
+    initial: off
 
 
 switch:
@@ -78,7 +85,7 @@ switch:
 
 automation:
   #Switch Source to PC when Volumio is idle
-  - alias: Auto AV Quelle PC
+  - alias: auto_av_quelle_pc
     initial_state: True
     trigger:
       platform: state
@@ -95,7 +102,7 @@ automation:
         data:
             source: PC
   #Switch Source to Volumio when playing
-  - alias: Auto AV Quelle Volumio
+  - alias: auto_av_quelle_volumio
     initial_state: True
     trigger:
       platform: state
@@ -111,7 +118,7 @@ automation:
         data:
             source: Volumio
   #Auto Off when not playing music
-  - alias: Receiver_auto_off_volumio_idle
+  - alias: receiver_auto_off_volumio_idle
     initial_state: true
     trigger:
       platform: state
@@ -121,17 +128,17 @@ automation:
         seconds: 30
     condition:
       condition: state
-      entity_id: sensor.sonoff2_use
+      entity_id: sensor.sonoff1_use
       state: 'Nein'
     action:
       - service: switch.turn_off
         entity_id: switch.receiver
   #Auto Off when not using the computer
-  - alias: Receiver_auto_off_pc_off
+  - alias: receiver_auto_off
     initial_state: true
     trigger:
       platform: state
-      entity_id: sensor.sonoff2_use
+      entity_id: sensor.sonoff1_use
       to: 'Nein'
       for:
         seconds: 30
@@ -142,14 +149,14 @@ automation:
       - service: switch.turn_off
         entity_id: switch.receiver
   #Auto On when Volumio/PC on
-  - alias: Receiver_auto_on
+  - alias: receiver_auto_on_volumio
     initial_state: true
     trigger:
       - platform: state
-        entity_id: sensor.sonoff2_use
+        entity_id: sensor.sonoff1_use
         to: 'Ja'
         for:
-          seconds: 10
+          seconds: 15
       - platform: state
         entity_id: media_player.volumio
         to: 'playing'
@@ -160,3 +167,23 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.receiver
+
+  - alias: toggle_receiver_automations
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.all_receiver_automations
+    action:
+      - service_template: >-
+          {% if is_state("input_boolean.all_receiver_automations", "off") -%}
+            automation.turn_on
+          {% else %}
+            automation.turn_off
+          {% endif %}
+        data:
+          entity_id:
+              - automation.receiver_auto_off
+              - automation.receiver_auto_on_volumio
+              - automation.auto_av_quelle_pc
+              - automation.auto_av_quelle_volumio
+              - automation.receiver_auto_off_volumio_idle
