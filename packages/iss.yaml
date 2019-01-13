@@ -37,6 +37,7 @@ group:
     icon: mdi:rocket
     entities:
       - sensor.iss_visible
+      - sensor.next_launch
       - sensor.iss_next_rise
       - camera.iss
 
@@ -49,6 +50,8 @@ binary_sensor:
   - platform: iss
 
 sensor:
+  - platform: launch_library
+
 
   - platform: template
     sensors:

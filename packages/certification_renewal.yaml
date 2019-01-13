@@ -43,11 +43,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: 0x711.de SSL Certification'
-          message: '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'
+          message: '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'
       - service: notify.email
         data:
           title: 'HomeAssistant: 0x711.de SSL Certification'
-          message:  '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'
+          message:  '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.nullx_cert_expiry.state}} Tagen ab!'
 
   - alias: "cvoid_cert_expiry_alarm"
     initial_state: True
@@ -61,8 +61,8 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: cvoid.de SSL Certification'
-          message: '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.cvoid_cert_expiry.state}} Tagen ab!'
+          message: '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.cvoid_cert_expiry.state}} Tagen ab!'
       - service: notify.email
         data:
           title: 'HomeAssistant: cvoid.de SSL Certification'
-          message: '{{ states.sensor.date__time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.cvoid_cert_expiry.state}} Tagen ab!'
+          message: '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.cvoid_cert_expiry.state}} Tagen ab!'

@@ -52,6 +52,7 @@ google:
   client_secret: !secret google_secret
 
 wemo:
+  discovery: false
   static:
     - !secret wemo1_ip
     - !secret wemo2_ip

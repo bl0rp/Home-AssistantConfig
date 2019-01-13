@@ -83,6 +83,8 @@ group:
       - sensor.sonoff3_kosten_gesamt
       - script.del_sonoff3_power_log
       - input_boolean.washer_switch
+      - input_boolean.washer_notify_traude
+      - input_boolean.washer_notify_christoph
       - automation.washer_start
       - automation.washer_done
 
@@ -208,13 +210,15 @@ switch:
     payload_off: "OFF"
     retain: false
 
-### Input boolen for washing state
+### Input boolen for washing state and notification
 
 input_boolean:
   washer_switch:
     initial: off
-
-
+  washer_notify_traude:
+    initial: on
+  washer_notify_christoph:
+    initial: on
 ### Record all power levels to a file (see notify)
 automation:
   - alias: sonoff3 Load logfile

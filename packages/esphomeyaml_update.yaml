@@ -20,4 +20,4 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: '{{ states.sensor.date__time.state }}: esphomeyaml V{{ states.sensor.esphomeyaml_release.state }} released!'
+          message: '{{ states.sensor.date_time.state }}: esphomeyaml V{{ states.sensor.esphomeyaml_release.state }} released!'

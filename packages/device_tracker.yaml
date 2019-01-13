@@ -62,7 +62,11 @@ sensor:
     unit_of_measurement: '%'
     name: 'monitor_pixel2_elw'
 
-
+  - platform: mqtt
+    state_topic: 'location/elw/3C:28:6D:08:DD:DA'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'monitor_pixel3_elw'
 
 ###### STATE CARD for views.yaml
 
@@ -108,7 +112,7 @@ input_boolean:
     icon: mdi:cellphone-android
 
   chrisbluetooth:
-    name: "Christoph Bluetooth Status"
+    name: "Christoph Bluetooth Status ELW"
     initial: on
     icon:  mdi:bluetooth-audio
 input_select:
@@ -135,14 +139,14 @@ automation:
       state: 'on'
     trigger:
       - platform: numeric_state
-        entity_id: sensor.monitor_pixel2_elw
+        entity_id: sensor.monitor_pixel3_elw
         below: 25
         # for:
         #   minutes: 2
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.chrisbluetooth
-#switch input_boolean bluetooth from of to on
+#switch input_boolean bluetooth from off to on
   - alias: 'input_boolean_chrisbluetooth_on'
     initial_state: True
     condition:
@@ -151,7 +155,7 @@ automation:
       state: 'off'
     trigger:
       - platform: numeric_state
-        entity_id: sensor.monitor_pixel2_elw
+        entity_id: sensor.monitor_pixel3_elw
         above: 30
     action:
       - service: homeassistant.turn_on
@@ -166,7 +170,7 @@ automation:
       state: 'on'
     trigger:
       - platform: state
-        entity_id: device_tracker.christoph_ip
+        entity_id: device_tracker.pixel3_xl
         to: 'not_home'
         for:
           minutes: 10
@@ -176,7 +180,7 @@ automation:
       #   for:
       #     minutes: 5
       - platform: state
-        entity_id: device_tracker.710kpny0475751
+        entity_id: device_tracker.897y04duz
         to: 'not_home'
         for:
           minutes: 5
@@ -198,11 +202,13 @@ automation:
       entity_id: input_boolean.chrishome
       state: 'off'
     trigger:
+#nmap/unifi 
       - platform: state
-        entity_id: device_tracker.christoph_ip
+        entity_id: device_tracker.pixel3_xl
         to: 'home'
+#gpslogger
       - platform: state
-        entity_id: device_tracker.710kpny0475751
+        entity_id: device_tracker.897y04duz
         to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_nuc

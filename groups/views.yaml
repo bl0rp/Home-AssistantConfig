@@ -49,13 +49,12 @@ media_player:
     - group.receiver
 
 
-1OG:
+erster_stock:
   name: 1 OG
   view: yes
   entities:
     - switch.wemoswitch1
     - switch.wemoswitch2
-    - switch.sonoff6
     - script.1og_lampen_an
     - script.1og_lampen_aus
     - group.automation_1og
@@ -179,13 +178,6 @@ TEST:
     - group.sensor_warn
     - group.iss
     - group.outtopic
-    - group.radartest
-    - group.sprit
-    - group.lcd_mqtt
-    - group.mqtt_leds
-    - group.test_item
     - script.file_test
     - group.wetter_darksky
     - group.wetter
-    - group.birthdays
-    - group.device_tracker

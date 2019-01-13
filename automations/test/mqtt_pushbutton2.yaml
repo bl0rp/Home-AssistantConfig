@@ -9,4 +9,4 @@ action:
 #  - service: notify.pushbullet
 #    data_template:
 #      message: >
-#         {{ states.sensor.date__time.state }} Licht geschalt0rt {{ now().strftime('%d.%m.%Y %H:%M:%S') }} 
+#         {{ states.sensor.date_time.state }} Licht geschalt0rt {{ now().strftime('%d.%m.%Y %H:%M:%S') }} 

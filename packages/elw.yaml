@@ -10,11 +10,11 @@ homeassistant:
     sensor.elw_motion_last_triggered:
       friendly_name: PIR
       icon: mdi:camera
-    device_tracker.christoph_ip:
+    device_tracker.pixel3_xl:
       friendly_name: Christoph via nmap/unifi
       icon: mdi:radar
-    device_tracker.710kpny0475751:
-      friendly_name: GPSLogger
+    device_tracker.897y04duz:
+      friendly_name: GPSLogger Pixel3 XL
       icon: mdi:radar
 
 #############
@@ -28,6 +28,7 @@ group:
       - sensor.esp32_03_temperature
       - sensor.temperatur_esp8266_02
       - sensor.aeotec_zw100_multisensor_6_temperature
+      - sensor.esp32_04_temperature
       - sensor.esp32_02_humidity
       - sensor.esp32_03_humidity
       - sensor.luftfeuchtigkeit_esp8266_02
@@ -37,9 +38,9 @@ group:
     name: Diverses
     control: hidden
     entities:
-      - sensor.phonebatt
-      - device_tracker.christoph_ip
-      - device_tracker.710kpny0475751
+      - sensor.phonebatt_pixel3xl
+      - device_tracker.pixel3_xl
+      - device_tracker.897y04duz
       - input_boolean.chrisbluetooth
       - input_boolean.chrishome
       - input_select.christoph_status

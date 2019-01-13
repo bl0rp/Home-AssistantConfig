@@ -39,25 +39,25 @@ homeassistant:
     sensor.load_15m:
       friendly_name: Last (15m)
       icon: mdi:worker
-    sensor.cpu_use:
+    sensor.processor_use:
       friendly_name: CPU
       icon: mdi:desktop-tower
-    sensor.disk_use_:
+    sensor.disk_use:
       friendly_name: Festplatte belegt
       icon: mdi:harddisk
-    sensor.disk_use__2:
+    sensor.disk_use_percent:
       friendly_name: Festplatte prozentual belegt
       icon: mdi:harddisk
-    sensor.disk_free_:
+    sensor.disk_free:
       friendly_name: Festplatte frei
       icon: mdi:harddisk
-    sensor.ram_free:
+    sensor.memory_free:
       friendly_name: RAM frei
       icon: mdi:chip
-    sensor.ram_use:
+    sensor.memory_use_percent:
       friendly_name: RAM prozentual belegt
       icon: mdi:chip
-    sensor.ram_use_2:
+    sensor.memory_use:
       friendly_name: RAM belegt
       icon: mdi:chip
     sensor.ipv4_address_eno1:
@@ -66,10 +66,10 @@ homeassistant:
     sensor.ipv6_address_eno1:
       friendly_name: IPv6 Adresse
       icon: mdi:server-network
-    sensor.received_eno1:
+    sensor.network_in_eno1:
       friendly_name: Daten empfangen
       icon: mdi:download-network
-    sensor.sent_eno1:
+    sensor.network_out_eno1:
       friendly_name: Daten gesendet
       icon: mdi:upload-network
     sensor.mysql_ha_size:
@@ -120,29 +120,30 @@ group:
       - sensor.mysql_ha_size
       - sensor.uname
       - sensor.cpu_temperature
-      - sensor.cpu_use
+      - sensor.processor_use
       - sensor.load_1m
       - sensor.load_5m
       - sensor.load_15m
-      - sensor.disk_use_
-      - sensor.disk_use__2
-      - sensor.disk_free_
+      - sensor.disk_use
+      - sensor.disk_use_percent
+      - sensor.disk_free
       - sensor.swap_free
       - sensor.swap_use
-      - sensor.swap_use_2
-      - sensor.ram_free
-      - sensor.ram_use
-      - sensor.ram_use_2
+      - sensor.swap_use_percent
+      - sensor.memory_free
+      - sensor.memory_use
+      - sensor.memory_use_percent
       - sensor.ipv4_address_eno1
       - sensor.ipv6_address_eno1
-      - sensor.packets_received_eno1
-      - sensor.packets_sent_eno1
-      - sensor.received_eno1
-      - sensor.sent_eno1
+      - sensor.packets_in_eno1
+      - sensor.packets_out_eno1
+      - sensor.network_in_eno1
+      - sensor.network_out_eno1
 
   services:
     name: Servicestatus
     entities:
+      - input_boolean.all_process_alarms
   #-> sensor template on -> running
       - sensor.process_autossh_format
       - sensor.process_sshd_format
@@ -163,6 +164,11 @@ group:
      - automation.tor_alarm
      - automation.speedtest_alarm
 
+input_boolean:
+  all_process_alarms:
+    name: Alarme aktivieren?
+    initial: on
+    icon: mdi:alarm-bell
 
 weblink:
   entities:
@@ -181,6 +187,9 @@ sensor:
       - type: memory_use_percent
       - type: memory_use
       - type: memory_free
+      - type: swap_use_percent
+      - type: swap_use
+      - type: swap_free
       - type: processor_use
       - type: load_1m
       - type: load_5m
@@ -188,6 +197,10 @@ sensor:
       - type: network_in
         arg: eno1
       - type: network_out
+        arg: eno1
+      - type: packets_in
+        arg: eno1
+      - type: packets_out
         arg: eno1
       - type: ipv4_address
         arg: eno1
@@ -388,7 +401,7 @@ automation:
             switch.turn_off
           {% endif %}
         data:
-          entity_id: switch.grne_led
+          entity_id: switch.esp04_led_green
 
       - service_template: >-
           {% if 0.2 <= trigger.to_state.state|float < 0.6 %}
@@ -397,7 +410,7 @@ automation:
             switch.turn_off
           {% endif %}
         data:
-          entity_id: switch.gelbe_led
+          entity_id: switch.esp04_led_yellow
 
       - service_template: >-
           {% if 0.6 <= trigger.to_state.state|float < 30.0 %}
@@ -406,7 +419,27 @@ automation:
             switch.turn_off
           {% endif %}
         data:
-          entity_id: switch.rote_led
+          entity_id: switch.esp04_led_red
+#disable_process_notification if input_boolean is changed
+  - alias: toggle_process_alarm_automations
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.all_process_alarms
+    action:
+      - service_template: >-
+          {% if is_state("input_boolean.all_process_alarms", "on") -%}
+            automation.turn_on
+          {% else %}
+            automation.turn_off
+          {% endif %}
+        data:
+          entity_id:
+              - automation.dhcpd_alarm
+              - automation.dhcpd_alarm
+              - automation.dockerd_alarm
+              - automation.sshd_alarm
+              - automation.tor_alarm
 
     # Notification if X happens
   - alias: "HDD Alarm"
@@ -418,11 +451,11 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
       - service: notify.email
         data:
           title: 'HA: Speicherplatz'
-          message: '{{ states.sensor.date__time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
 
   - alias: "cpu temp Alarm"
     initial_state: True
@@ -433,11 +466,11 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: '{{ states.sensor.date__time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
+          message: '{{ states.sensor.date_time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
       - service: notify.email
         data:
           title: 'HA NUC CPU Temperatur'
-          message: '{{ states.sensor.date__time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
+          message: '{{ states.sensor.date_time.state }}: Achtung! CPU Temp. NUC: {{ states.sensor.cpu_temperature.state }} °C!'
 
 
   - alias: "dhcpd Alarm"
@@ -451,11 +484,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der DHCP Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der DHCP Daemon läuft nicht!'
       - service: notify.email
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der DHCP Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der DHCP Daemon läuft nicht!'
 
   - alias: "sshd Alarm"
     initial_state: True
@@ -468,11 +501,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der SSH Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der SSH Daemon läuft nicht!'
       - service: notify.email
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der SSH Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der SSH Daemon läuft nicht!'
 
 
   - alias: "tor Alarm"
@@ -486,11 +519,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der Tor Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der Tor Daemon läuft nicht!'
       - service: notify.email
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der Tor Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der Tor Daemon läuft nicht!'
 
   - alias: "dockerd Alarm"
     initial_state: True
@@ -503,11 +536,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der Docker Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der Docker Daemon läuft nicht!'
       - service: notify.email
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Der Docker Daemon läuft nicht!'
+          message: '{{ states.sensor.date_time.state }}: Der Docker Daemon läuft nicht!'
 
   - alias: "speedtest_alarm"
     initial_state: False
@@ -518,11 +551,11 @@ automation:
       - service: notify.pushbullet
         data:
           title: 'HomeAssistant: Process Monitor'
-          message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
+          message: '{{ states.sensor.date_time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
       # - service: notify.email
         # data:
           # title: 'HomeAssistant: Process Monitor'
-          # message: '{{ states.sensor.date__time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
+          # message: '{{ states.sensor.date_time.state }}: Performance Downlink! {{ states.sensor.speedtest_download.state }} Mbits/s!'
 
 ### New HA Version notify
 ### Thanks to @dal3h and @CCOSTAN

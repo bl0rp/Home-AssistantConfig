@@ -17,10 +17,10 @@ homeassistant:
       friendly_name: Restart Home Assistant
       icon: mdi:restart
     script.clear_log:
-      friendly_name: 'Clear Log File'
+      friendly_name: 'Logfile löschen'
       icon: mdi:eraser
     script.clear_tts_cache:
-      friendly_name: Clear TTS cache
+      friendly_name: 'TTS Cache löschen'
       icon: mdi:shredder
     sensor.last_commit:
       icon: mdi:github-box
@@ -37,6 +37,8 @@ group:
       - script.update_ha
       - script.clear_log
       - script.clear_tts_cache
+      ### see packages/zwave.yaml
+      - script.reset_router
   backup:
     name: Backup
     control: hidden

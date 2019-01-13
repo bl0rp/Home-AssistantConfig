@@ -9,6 +9,8 @@ include:
     - media_player
     - device_tracker
   entities:
+    #input_boolean (device tracker)
+    - input_boolean.chrishome
     #network
     - sensor.clients_online
     #temperature etc
@@ -68,8 +70,8 @@ include:
     #gas price
     - sensor.tankstelle_super
     #google travel time
-    - sensor.zuhause__marienhospital
-    - sensor.hauptrettungswache__zuhause
+    - sensor.zuhausemarienhospital
+    - sensor.hauptrettungswachezuhause
     - sensor.waze_zuhause_hrw
     - sensor.waze_stuttgart_berlin
 
@@ -108,3 +110,6 @@ include:
     - sensor.esp32_03_pressure
     - sensor.esp32_03_rssi
 
+    - sensor.esp32_04_humidity
+    - sensor.esp32_04_temperature
+    - sensor.esp32_04_rssi

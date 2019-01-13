@@ -1,4 +1,4 @@
-alias: Minimote Button 2 Pressed
+alias: Minimote Button 2 Pressed short
 initial_state: True
 trigger:
   platform: event

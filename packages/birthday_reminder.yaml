@@ -31,7 +31,7 @@ sensor:
   - platform: template
     sensors:
       cal_alert_time_birthday:
-        entity_id: sensor.date__time
+        entity_id: sensor.date_time
         value_template: >-
           {{ (as_timestamp(states.calendar.contacts.attributes.start_time) - as_timestamp(now()) )|int }}
  

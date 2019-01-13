@@ -11,8 +11,8 @@ homeassistant:
 
   customize:
     switch.sonoff8:
-      friendly_name: Schreibtisch
-      icon: mdi:table
+      friendly_name: MPD Weiß
+      icon: mdi:power-socket-eu
     sensor.sonoff8_ipv4:
       friendly_name: IPv4 Sonoff 8
       icon: mdi:server-network
@@ -214,7 +214,6 @@ automation:
         data_template:
           message: >
             {{ states.sensor.sonoff8_momentane_leistung.state }}
-
 
 ### Delete the logfile (reset the maximum power sensor)
 

@@ -1,5 +1,0 @@
-sprit:
-  name: Tankstellenpreise Seerosenstr.
-  entities:
-    - sensor.diesel
-    - sensor.super

@@ -1,8 +1,0 @@
-outtopic:
-  name: outtopic
-  entities:
-    - sensor.hello_world
-    - automation.outtopic_load_to_led
-    - switch.rote_led
-    - switch.gelbe_led
-    - switch.grne_led

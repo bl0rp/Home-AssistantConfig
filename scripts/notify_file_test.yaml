@@ -3,4 +3,4 @@ file_test:
   sequence:
     service: notify.test
     data:
-      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'
+      message: 'Spam wurde requestiert! {{ states.sensor.date_time.state }}'

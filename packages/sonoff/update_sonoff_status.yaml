@@ -153,39 +153,39 @@ sensor:
   - platform: mqtt
     name: "sonoff1 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','')  }}"
 
   - platform: mqtt
     name: "sonoff2 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','') }}"
 
   - platform: mqtt
     name: "sonoff3 sw version"
     state_topic: "stat/sonoff3/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','')  }}"
 
   - platform: mqtt
     name: "sonoff4 sw version"
     state_topic: "stat/sonoff4/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
 
   - platform: mqtt
     name: "sonoff5 sw version"
     state_topic: "stat/sonoff5/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
 
   - platform: mqtt
     name: "sonoff6 sw version"
     state_topic: "stat/sonoff6/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
 
   - platform: mqtt
     name: "sonoff7 sw version"
     state_topic: "stat/sonoff7/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
 
   - platform: mqtt
     name: "sonoff8 sw version"
     state_topic: "stat/sonoff8/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"

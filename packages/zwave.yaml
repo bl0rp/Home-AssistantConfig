@@ -16,7 +16,8 @@ homeassistant:
       icon: mdi:chart-line
     sensor.zwave_mpd1_kosten_gesamt:
       icon: mdi:currency-eur
-
+    script.reset_router:
+      icon: mdi:nuke
 #Aeotec Z-Wave Multisensor
     sensor.multisensor1_battery:
       icon: mdi:car-battery
@@ -59,8 +60,8 @@ group:
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
       - sensor.zwave_mpd1_kosten_gesamt
-      - script.akkus_laden
-      - automation.akkuladeautomatik
+      - script.reset_router
+
 
 sensor:
 ### MPD Dose
@@ -104,38 +105,26 @@ sensor:
       multisensor_motion_last_triggered:
         friendly_name: "Multisensor Motion Last Triggered"
         value_template: >-
-          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}
+          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
-#Turn off charger after loading batteries
-automation:
-  - alias: "Akkuladeautomatik"
-    initial_state: False
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-        below: 0.1
-    action:
-      - service: notify.pushbullet
-        data:
-          message: '{{ states.sensor.date__time.state }} Das Ladegerät verbaucht keinen Strom mehr und die Steckdose wurde ausgeschaltet!'
-      - service: switch.turn_off
-        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-      - service: automation.turn_off
-        entity_id: automation.akkuladeautomatik
-      - service: persistent_notification.dismiss
-        data:
-          notification_id: vape
+
 
 script:
-  akkus_laden:
-    alias: "Akkuladeautomatik"
+  reset_router:
+    alias: "Router Reset"
     sequence:
-     - service: automation.turn_on
-       entity_id: automation.akkuladeautomatik
-     - service: switch.turn_on
-       entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-     - service: persistent_notification.create
-       data:
-         message: '{{ states.sensor.date__time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'
-         title: "Akkuladegerät 18650"
-         notification_id: "vape"
+      - service: persistent_notification.create
+        data:
+          message: '{{ states.sensor.date_time.state }} Router wurde neugestartet!'
+          title: "RouterReset"
+          notification_id: "RouterReset"
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          disable_notification: true
+          message: "Router wird neugestartet! ({{ states.sensor.date_time.state }})"
+      - service: switch.turn_off
+        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+      - delay: 00:00:03
+      - service: switch.turn_on
+        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch

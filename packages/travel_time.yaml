@@ -1,0 +1,75 @@
+##############################################################
+### Packages / Travel Time                                 ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+  customize:
+    sensor.ZuhauseMarienhospital:
+      friendly_name: Fahrzeit MaHo
+      icon: mdi:car-sports
+    sensor.ZuhauseHauptrettungswache:
+      friendly_name: Fahrzeit HRW
+      icon: mdi:car-sports
+    sensor.HauptrettungswacheZuhause:
+      friendly_name:
+      icon: mdi:car-sports
+    sensor.waze_zuhause_hrw:
+      friendly_name: Fahrzeit HRW heimwärts (Waze)
+      icon: mdi:car-sports
+    sensor.StuttgartBerlin:
+      friendly_name:
+      icon: mdi:car-sports
+    sensor.waze_stuttgart_berlin:
+      friendly_name: Fahrzeit Hauptstadt (Waze)
+      icon: mdi:car-sports
+
+group:
+  traveltime:
+    name: Fahrzeit
+    view: no
+    entities:
+      - sensor.zuhausehauptrettungswache
+      - sensor.hauptrettungswachezuhause
+      - sensor.waze_zuhause_hrw
+      - sensor.zuhausemarienhospital
+      - sensor.stuttgartberlin
+      - sensor.waze_stuttgart_berlin
+
+
+sensor:
+  - platform: google_travel_time
+    name: ZuhauseMarienhospital
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: place_id:ChIJHSlDllnbmUcRFTau-VG69RA
+
+  - platform: google_travel_time
+    name: ZuhauseHauptrettungswache
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: Neckarstraße 143, Stuttgart, Germany
+
+  - platform: google_travel_time
+    name: HauptrettungswacheZuhause
+    api_key: !secret google_traveltime_apikey
+    origin: Neckarstraße 143, Stuttgart, Germany
+    destination: zone.home
+
+  - platform: google_travel_time
+    name: StuttgartBerlin
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: Berlin, Germany
+
+  - platform: waze_travel_time
+    name: waze_zuhause_hrw
+    origin: zone.home
+    destination: Neckarstraße 143, Stuttgart, Germany
+    region: 'EU'
+
+  - platform: waze_travel_time
+    name: waze_stuttgart_berlin
+    origin: Stuttgart, Germany
+    destination: Berlin, Germany
+    region: 'EU'

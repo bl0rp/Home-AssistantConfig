@@ -237,9 +237,9 @@ automation:
       service: telegram_bot.send_message
       data_template:
         target: "{{ trigger.event.data.user_id }}"
-        message: "Temperatur Carport:
+        message: "Außentemperatur:
 
-           DHT: {{ states.sensor.esp32_02_temperature.state}}°C
+           {{ states.sensor.esp32_02_temperature.attributes.friendly_name }}: {{ states.sensor.esp32_02_temperature.state}}°C
 
-           BME: {{ states.sensor.esp32_03_temperature.state}}°C"
+           {{ states.sensor.esp32_03_temperature.attributes.friendly_name }}: {{ states.sensor.esp32_03_temperature.state}}°C"
         keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]

@@ -4,4 +4,4 @@ var_push:
 
     - service: notify.pushbullet
       data:
-        message: 'Uhrzeit : {{ states.sensor.date__time.state }} InputSelect: {{ states.input_select.tuerlicht.state }} Sekunden InputSlider: {{ states.input_number.tuerlicht_intervall.state }} Sekunden '
+        message: 'Uhrzeit : {{ states.sensor.date_time.state }} InputSelect: {{ states.input_select.tuerlicht.state }} Sekunden InputSlider: {{ states.input_number.tuerlicht_intervall.state }} Sekunden '

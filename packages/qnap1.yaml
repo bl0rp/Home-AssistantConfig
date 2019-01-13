@@ -1,0 +1,88 @@
+##############################################################
+### Packages / QNAP1                                       ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+  customize:
+    sensor.qnap1_status:
+      friendly_name: 'Status'
+    sensor.qnap1_uptime:
+      friendly_name: 'Uptime'
+      icon: mdi:timer
+    sensor.qnap1_free_space_datavol1:
+      friendly_name: 'Freier Speicherplatz'
+    sensor.qnap1_cpu_temperature:
+      friendly_name: 'CPU Temperatur'
+    sensor.qnap1_cpu_usage:
+      friendly_name: 'CPU Auslastung'
+    sensor.qnap1_memory_available:
+      friendly_name: 'RAM frei'
+    sensor.qnap1_memory_usage:
+      friendly_name: 'RAM Auslastung'
+    sensor.qnap1_network_up_eth0:
+      friendly_name: 'Uplink'
+    sensor.qnap1_network_down_eth0:
+      friendly_name: 'Downlink'
+
+
+###### STATE CARD for views.yaml
+
+group:
+  qnap1:
+    name: Systemstatus QNAP1
+    control: hidden
+    icon: mdi:nas
+    control: hidden
+    view: no
+    entities:
+      - sensor.qnap1
+      - sensor.qnap1_status
+      - sensor.qnap1_smart_status
+      - sensor.qnap1_uptime
+      - sensor.qnap1_free_space_datavol1
+      - sensor.qnap1_cpu_temperature
+      - sensor.qnap1_cpu_usage
+      - sensor.qnap1_memory_available
+      - sensor.qnap1_memory_usage
+      - sensor.qnap1_network_down_eth0
+      - sensor.qnap1_network_up_eth0
+
+sensor:
+  - platform: qnap
+    host: !secret qnap_ip
+    username: !secret qnap_user
+    password: !secret qnap_pw
+    nics: eth0
+    monitored_conditions:
+      - status
+      - cpu_temp
+      - cpu_usage
+      - memory_free
+      - memory_used
+      - memory_percent_used
+      - network_link_status
+      - network_tx
+      - network_rx
+      - drive_smart_status
+      - drive_temp
+      - volume_size_free
+  - platform: template
+    sensors:
+      #uptime from qnap1.status
+      qnap1_uptime:
+        entity_id: sun.sun
+        value_template: "{{ states.sensor.qnap1_status.attributes.Uptime }}"
+      qnap1_smart_status:
+        entity_id: sun.sun
+        value_template: >-
+          {% if is_state("sensor.qnap1_smart_status_drive_0_1", "OK") and
+                is_state("sensor.qnap1_smart_status_drive_0_2", "OK") and
+                is_state("sensor.qnap1_smart_status_drive_0_3", "OK") and
+                is_state("sensor.qnap1_smart_status_drive_0_4", "OK") and
+                is_state("sensor.qnap1_smart_status_drive_0_5", "OK")
+          -%}
+          OK
+          {%- else -%}
+          ERROR
+          {%- endif %}

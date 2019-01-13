@@ -16,15 +16,15 @@ homeassistant:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit esp04
 
-    switch.grne_led:
+    switch.esp04_led_green:
       icon: mdi:led-outline
       friendly_name: Grüne LED
 
-    switch.gelbe_led:
+    switch.esp04_led_yellow:
       icon: mdi:led-outline
       friendly_name: Gelbe LED
 
-    switch.rote_led:
+    switch.esp04_led_red:
       icon: mdi:led-outline
       friendly_name: Rote LED
 
@@ -108,22 +108,22 @@ sensor:
                'minutes': 60,
                'seconds': 1,
              } -%}
-           
+
              {%- set weeks = seconds // intervals.weeks -%}
              {%- set seconds = seconds % intervals.weeks -%}
              {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
-           
+
              {%- set days = seconds // intervals.days -%}
              {%- set seconds = seconds % intervals.days -%}
              {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
-           
+
              {%- set hours = seconds // intervals.hours -%}
              {%- set seconds = seconds % intervals.hours -%}
              {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
-           
+
              {%- set minutes = seconds // intervals.minutes -%}
              {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
-           
+
              {%- set seconds = seconds % intervals.minutes -%}
              {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
            {%- endmacro %}
@@ -146,7 +146,7 @@ sensor:
 switch:
 
   - platform: mqtt
-    name: "Rote LED"
+    name: "esp04_led_red"
     state_topic: "sensor_esp8266_04/rot/Switch"
     command_topic: "sensor_esp8266_04/gpio/14"
     payload_on: "1"
@@ -155,7 +155,7 @@ switch:
     qos: 0
 
   - platform: mqtt
-    name: "Gr?ne LED"
+    name: "esp04_led_green"
     state_topic: "sensor_esp8266_04/gruen/Switch"
     command_topic: "sensor_esp8266_04/gpio/13"
     payload_on: "1"
@@ -164,7 +164,7 @@ switch:
     qos: 0
 
   - platform: mqtt
-    name: "Gelbe LED"
+    name: "esp04_led_yellow"
     state_topic: "sensor_esp8266_04/gelb/Switch"
     command_topic: "sensor_esp8266_04/gpio/12"
     payload_on: "1"

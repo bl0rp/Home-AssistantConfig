@@ -67,16 +67,6 @@ homeassistant:
        friendly_name: Gefühlte Temperatur (DarkSky)
     sensor.dark_sky_cloud_coverage:
        friendly_name: Bewölkung (DarkSky)
-    sensor.dark_sky_daily_high_apparent_temperature:
-       friendly_name: Tageshöchsttemperatur (gefühlt) (DarkSky)
-    sensor.dark_sky_daily_high_temperature:
-       friendly_name: Tageshöchsttemperatur (DarkSky)
-    sensor.dark_sky_daily_low_apparent_temperature:
-       friendly_name: Tagesniedrigsttemperatur (gefühlt) (DarkSky)
-    sensor.dark_sky_daily_low_temperature:
-       friendly_name: Tagesniedrigsttemperatur (DarkSky)
-    sensor.dark_sky_daily_max_precip_intensity:
-       friendly_name: Tageshöchstniederschlag (DarkSky)
     sensor.dark_sky_daily_summary:
        friendly_name: Tageszusammenfassung (DarkSky)
     sensor.dark_sky_dew_point:
@@ -124,6 +114,7 @@ group:
     icon: mdi:weather-partlycloudy
     entities:
       - sensor.esp32_02_temperature
+      - sensor.esp32_03_temperature
       - sensor.yr_temperature
       - sensor.dark_sky_temperature
       - sensor.temperatur_esp8266_02
@@ -171,11 +162,6 @@ group:
     entities:
       - sensor.dark_sky_apparent_temperature
       - sensor.dark_sky_cloud_coverage
-      - sensor.dark_sky_daily_high_apparent_temperature
-      - sensor.dark_sky_daily_high_temperature
-      - sensor.dark_sky_daily_low_apparent_temperature
-      - sensor.dark_sky_daily_low_temperature
-      - sensor.dark_sky_daily_max_precip_intensity
       - sensor.dark_sky_daily_summary
       - sensor.dark_sky_dew_point
       - sensor.dark_sky_hourly_summary
@@ -225,6 +211,7 @@ sensor:
       - precip_type
       - precip_intensity
       - precip_probability
+      - precip_accumulation
       - temperature
       - apparent_temperature
       - dew_point

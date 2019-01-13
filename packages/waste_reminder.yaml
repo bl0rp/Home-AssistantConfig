@@ -51,13 +51,13 @@ sensor:
   - platform: template
     sensors:
       cal_alert_time_waste:
-        entity_id: sensor.date__time
+        entity_id: sensor.date_time
         value_template: >-
-          {{ (as_timestamp(states.calendar.awsabfallkalender.attributes.start_time) - as_timestamp(now()) )|int }}
+          {{ (as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time) - as_timestamp(now()) )|int }}
   - platform: template
     sensors:
       cal_alert_time_waste_gelbersack:
-        entity_id: sensor.date__time
+        entity_id: sensor.date_time
         value_template: >-
           {{ (as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time) - as_timestamp(now()) )|int }}
 # show next calendar entry
@@ -65,7 +65,7 @@ sensor:
     sensors:
       next_waste:
         value_template: >-
-          {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+          {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
   - platform: template
     sensors:
       next_waste_gelbersack:
@@ -90,17 +90,17 @@ automation:
         data_template:
           title: 'Erinnerung Müllabfuhr Morgen'
           message: >
-              {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states. calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
       - service: notify.pushbullet_traude
         data_template:
           title: 'Erinnerung Müllabfuhr Morgen'
           message: >
-              {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
       - service: persistent_notification.create
         data_template:
           title: "Erinnerung Müllabfuhr Morgen"
           message: >
-              {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
           notification_id: "waste_alert_12h"
 #Restmüll heute
   - alias: waste_alert_today
@@ -115,12 +115,12 @@ automation:
         data_template:
           title: 'Erinnerung Müllabfuhr HEUTE'
           message: >
-              {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
       - service: notify.pushbullet_traude
         data_template:
           title: 'Erinnerung Müllabfuhr HEUTE'
           message: >
-              {{(as_timestamp(states.calendar.awsabfallkalender.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.awsabfallkalender.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
 
 
 

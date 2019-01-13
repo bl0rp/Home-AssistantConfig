@@ -1,0 +1,15 @@
+alias: 'nfc_nachttisch'
+initial_state: true
+trigger:
+  platform: mqtt
+  topic: 'nfc/nachttisch'
+  payload: '1'
+action:
+
+  - service: notify.echodot
+    data_template:
+      message: >
+        Es wird dunkel
+  - service: scene.turn_on
+    data_template:
+      entity_id: "scene.elw_aus"

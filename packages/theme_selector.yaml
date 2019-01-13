@@ -336,10 +336,13 @@ automation:
       - platform: homeassistant
         event: start
     action:
-      service: input_select.select_option
-      entity_id: input_select.hass_theme
-      data_template:
-        option: "{{ states('sensor.homeassistant_mqtt_theme_set')|replace('_', ' ')| title}}"
+      - service: input_select.select_option
+        entity_id: input_select.hass_theme
+        data_template:
+          option: "{{ states('sensor.homeassistant_mqtt_theme_set')|replace('_', ' ')| title}}"
+      - service: frontend.set_theme
+        data_template:
+          name: "{{ states('input_select.hass_theme')|lower|replace(' ', '_') }}"
 #Group for main view.yaml
 group:
   theme:

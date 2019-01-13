@@ -6,11 +6,11 @@
 homeassistant:
   customize:
     sensor.phonebatt_watch:
-      friendly_name: Handyakku
+      friendly_name: Handyakku Pixel3XL
     sensor.esp32_02_watch:
-      friendly_name: DHT Carport
+      friendly_name: Haupteingang
     sensor.esp32_03_watch:
-      friendly_name: BMP ELW
+      friendly_name: Carport
 ###### STATE CARD for views.yaml
 
 group:
@@ -19,7 +19,7 @@ group:
     icon: mdi:ethernet-cable
     name: Sensorwarn
     entities:
-    - sensor.phonebatt
+    - sensor.phonebatt_pixel3xl
     - sensor.phonebatt_debug
     - sensor.phonebatt_debug2
     - sensor.phonebatt_watch
@@ -32,6 +32,16 @@ group:
     - sensor.esp32_03_debug2
     - sensor.esp32_03_watch
     - automation.notify_sensor_update
+
+##### notify component -> logfile
+
+
+
+notify:
+    - name: sensor_watch_log
+      platform: file
+      filename: /home/homeassistant/log/sensor_update.txt
+
 sensor:
 
 ###### warning if battery powered sensor does not update
@@ -39,28 +49,33 @@ sensor:
   - platform: template
     sensors:
       phonebatt_watch:
-        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.phonebatt.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+        entity_id: sun.sun
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.phonebatt_pixel3xl.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       phonebatt_debug:
-        value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.phonebatt.last_updated)  }}"
+        entity_id: sun.sun
+        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.phonebatt_pixel3xl.last_updated)  }}"
       phonebatt_debug2:
-        value_template: "{{ states.sensor.phonebatt.last_updated  }}"
+        entity_id: sun.sun
+        value_template: "{{ states.sensor.phonebatt_pixel3xl.last_updated  }}"
 #outdoor sensor 2
-  - platform: template
-    sensors:
       esp32_02_watch:
-        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+        entity_id: sun.sun
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       esp32_02_debug:
-        value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated)  }}"
+        entity_id: sun.sun
+        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated)  }}"
       esp32_02_debug2:
+        entity_id: sun.sun
         value_template: "{{ states.sensor.esp32_02_temperature.last_updated  }}"
 #outdoor sensor 3
-  - platform: template
-    sensors:
       esp32_03_watch:
-        value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+        entity_id: sun.sun
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       esp32_03_debug:
-        value_template: "{{ as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated)  }}"
+        entity_id: sun.sun
+        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated)  }}"
       esp32_03_debug2:
+        entity_id: sun.sun
         value_template: "{{ states.sensor.esp32_03_temperature.last_updated  }}"
 #################################################
 ### Notify when a Sensor does not update      ###
@@ -82,6 +97,10 @@ automation:
           value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
     action:
     - service: notify.pushbullet
+      data_template:
+        message: >
+          NO UPDATE: {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Sensor {{ trigger.to_state.attributes.friendly_name }}
+    - service: notify.sensor_watch_log
       data_template:
         message: >
           NO UPDATE: {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Sensor {{ trigger.to_state.attributes.friendly_name }}

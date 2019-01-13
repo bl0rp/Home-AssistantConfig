@@ -276,6 +276,13 @@ automation:
         seconds: 15
     action:
       - service: switch.turn_off
+        entity_id: switch.esp04_led_red
+      - service: switch.turn_off
+        entity_id: switch.esp04_led_yellow
+      - service: switch.turn_off
+        entity_id: switch.esp04_led_green
+      - delay: 00:00:02
+      - service: switch.turn_off
         entity_id: switch.11001_a
       - service: automation.turn_off
         entity_id: automation.sonoff2_load_lcd

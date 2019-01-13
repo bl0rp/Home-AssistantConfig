@@ -3,4 +3,4 @@ pushbullet_test:
   sequence:
     service: notify.pushbullet
     data:
-      message: 'Spam wurde requestiert! {{ states.sensor.date__time.state }}'
+      message: 'Spam wurde requestiert! {{ states.sensor.date_time.state }}'
