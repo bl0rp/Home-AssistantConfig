@@ -446,16 +446,16 @@ automation:
     initial_state: True
     trigger:
       platform: numeric_state
-      entity_id: sensor.disk_use_
+      entity_id: sensor.disk_use_percent
       above: 50.0
     action:
       - service: notify.pushbullet
         data:
-          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_percent.state }}% ({{states.sensor.disk_use.state }} GiB) belegt!'
       - service: notify.email
         data:
           title: 'HA: Speicherplatz'
-          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_.state }}% ({{states.sensor.disk_use__2.state }} GiB) belegt!'
+          message: '{{ states.sensor.date_time.state }}: Der Speicherplatz geht zur Neige! Im Systemroot sind {{ states.sensor.disk_use_percent.state }}% ({{states.sensor.disk_use.state }} GiB) belegt!'
 
   - alias: "cpu temp Alarm"
     initial_state: True

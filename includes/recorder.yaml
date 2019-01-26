@@ -26,10 +26,10 @@ include:
     - sensor.load_5m
     - sensor.load_15m
     - sensor.cpu_temperature
-    - sensor.cpu_used
-    - sensor.disk_free_
-    - sensor.disk_used_
-    - sensor.disk_used__2
+    - sensor.cpu_usage
+    - sensor.disk_free
+    - sensor.disk_use
+    - sensor.disk_use_percent
     #qnap stats
     - sensor.qnap1_free_space_datavol1
     - sensor.qnap1_cpu_usage

@@ -33,7 +33,6 @@ group:
     name: Systemstatus QNAP1
     control: hidden
     icon: mdi:nas
-    control: hidden
     view: no
     entities:
       - sensor.qnap1

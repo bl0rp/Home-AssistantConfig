@@ -26,6 +26,12 @@
     radius: 50
     icon: mdi:ambulance
 
+  - name: RW4
+    latitude: !secret rw4_latitude
+    longitude: !secret rw4_longitude
+    radius: 50
+    icon: mdi:ambulance
+
   - name: MaHo
     latitude: !secret maho_latitude
     longitude: !secret maho_longitude

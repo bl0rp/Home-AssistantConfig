@@ -1,8 +1,0 @@
-radartest:
-  name: log radartest
-  entities:
-    - automation.when_gone_enable_motionlog
-    - automation.benachrichtigung_aller_bewegungsmelder_elw__elwmotiontxt
-    - input_boolean.chrishome
-    - sensor.esp8266_02_pir
-    - sensor.esp8266_02_radar

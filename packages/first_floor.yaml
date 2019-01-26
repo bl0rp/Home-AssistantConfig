@@ -104,7 +104,7 @@ automation:
   - alias: "Stehlampe um 23 Uhr ausschalten"
     initial_state: True
     trigger:
-      - platform: time
+      - platform: time_pattern
         hours: 23
         minutes: 00
         seconds: 00
@@ -135,7 +135,7 @@ automation:
   - alias: "Lampe Esszimmer um 22 Uhr ausschalten"
     initial_state: True
     trigger:
-      - platform: time
+      - platform: time_pattern
         hours: 22
         minutes: 00
         seconds: 00
