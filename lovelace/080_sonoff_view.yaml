@@ -1,0 +1,421 @@
+title: Sonoff
+icon: mdi:power
+path: sonoff
+panel: true
+cards:
+
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    #firmware
+    - type: custom:vertical-stack-in-card
+      title: 'Firmware'
+      cards:
+        - type: entities
+          entities:
+            - entity: sensor.sonoff_latest_release
+              icon: mdi:github-box
+              name: "Letzte Version"
+            - type: custom:fold-entity-row
+              head:
+                type: section
+                label: Geräteversionen
+              items:
+                - entity: script.update_update_sonoff_info
+                  name: "Update"
+                  icon: mdi:update
+                - type: weblink
+                  name: Tasmo Admin
+                  url: http://192.168.0.27:8124/devices
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - group: "group.sonoff_sw_version"
+                    exclude:
+                      - state: "unknown"
+
+    - type: history-graph
+      title: 'WKS'
+      hours_to_show: 24
+      entities:
+       - entity: sensor.sonoff1_momentane_leistung
+         name: Monitore
+       - entity: sensor.sonoff2_momentane_leistung
+         name: WKS
+    - type: history-graph
+      title: 'Waschküche'
+      hours_to_show: 24
+      entities:
+       - entity: sensor.sonoff3_momentane_leistung
+         name: Waschmaschine
+       - entity: sensor.sonoff5_momentane_leistung
+         name: Trockner
+
+    - break
+    #sonoff1
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff1_state
+          state: "off"
+      card:
+        type: entities
+        title: '#1 Monitore'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff1_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff1_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#1 Monitore'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff1
+                  - entity: sensor.sonoff1_ipv4
+                  - entity: sensor.sonoff1_uptime
+                  - entity: sensor.sonoff1_use
+                  - entity: sensor.sonoff1_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff1_spannung
+                      - entity: sensor.sonoff1_stromstaerke
+                      - entity: sensor.sonoff1_max_load
+                      - entity: sensor.sonoff1_verbrauch_heute
+                      - entity: sensor.sonoff1_verbrauch_gestern
+                      - entity: sensor.sonoff1_gesamtverbrauch
+                      - entity: sensor.sonoff1_kosten_heute
+                      - entity: sensor.sonoff1_kosten_gestern
+                      - entity: sensor.sonoff1_kosten_gesamt
+                      - entity: script.del_sonoff1_power_log
+
+    #sonoff2
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff2_state
+          state: "off"
+      card:
+        type: entities
+        title: '#2 Workstation'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff2_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff2_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#2 Workstation'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff2
+                  - entity: sensor.sonoff2_ipv4
+                  - entity: sensor.sonoff2_uptime
+                  - entity: sensor.sonoff2_use
+                  - entity: sensor.sonoff2_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff2_spannung
+                      - entity: sensor.sonoff2_stromstaerke
+                      - entity: sensor.sonoff2_max_load
+                      - entity: sensor.sonoff2_verbrauch_heute
+                      - entity: sensor.sonoff2_verbrauch_gestern
+                      - entity: sensor.sonoff2_gesamtverbrauch
+                      - entity: sensor.sonoff2_kosten_heute
+                      - entity: sensor.sonoff2_kosten_gestern
+                      - entity: sensor.sonoff2_kosten_gesamt
+                      - entity: script.del_sonoff2_power_log
+    #sonoff3
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff3_state
+          state: "off"
+      card:
+        type: entities
+        title: '#3 Waschmaschine'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff3_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff3_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#3 Waschmaschine'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff3
+                  - entity: sensor.sonoff3_ipv4
+                  - entity: sensor.sonoff3_uptime
+                  - entity: sensor.sonoff3_use
+                  - entity: sensor.sonoff3_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff3_spannung
+                      - entity: sensor.sonoff3_stromstaerke
+                      - entity: sensor.sonoff3_max_load
+                      - entity: sensor.sonoff3_verbrauch_heute
+                      - entity: sensor.sonoff3_verbrauch_gestern
+                      - entity: sensor.sonoff3_gesamtverbrauch
+                      - entity: sensor.sonoff3_kosten_heute
+                      - entity: sensor.sonoff3_kosten_gestern
+                      - entity: sensor.sonoff3_kosten_gesamt
+                      - entity: script.del_sonoff3_power_log
+    - break
+    #sonoff4
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff4_state
+          state: "off"
+      card:
+        type: entities
+        title: '#4 Hub'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff4_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff4_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#4 Hub'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff4
+                  - entity: sensor.sonoff4_ipv4
+                  - entity: sensor.sonoff4_uptime
+                  - entity: sensor.sonoff4_use
+                  - entity: sensor.sonoff4_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff4_spannung
+                      - entity: sensor.sonoff4_stromstaerke
+                      - entity: sensor.sonoff4_max_load
+                      - entity: sensor.sonoff4_verbrauch_heute
+                      - entity: sensor.sonoff4_verbrauch_gestern
+                      - entity: sensor.sonoff4_gesamtverbrauch
+                      - entity: sensor.sonoff4_kosten_heute
+                      - entity: sensor.sonoff4_kosten_gestern
+                      - entity: sensor.sonoff4_kosten_gesamt
+                      - entity: script.del_sonoff4_power_log
+    #sonoff5
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff5_state
+          state: "off"
+      card:
+        type: entities
+        title: '#5 Trockner'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff5_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff5_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#5 Trockner'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff5
+                  - entity: sensor.sonoff5_ipv4
+                  - entity: sensor.sonoff5_uptime
+                  - entity: sensor.sonoff5_use
+                  - entity: sensor.sonoff5_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff5_spannung
+                      - entity: sensor.sonoff5_stromstaerke
+                      - entity: sensor.sonoff5_max_load
+                      - entity: sensor.sonoff5_verbrauch_heute
+                      - entity: sensor.sonoff5_verbrauch_gestern
+                      - entity: sensor.sonoff5_gesamtverbrauch
+                      - entity: sensor.sonoff5_kosten_heute
+                      - entity: sensor.sonoff5_kosten_gestern
+                      - entity: sensor.sonoff5_kosten_gesamt
+                      - entity: script.del_sonoff5_power_log
+    #sonoff6
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff6_state
+          state: "off"
+      card:
+        type: entities
+        title: '#6 NN'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff6_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff6_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#6 NN'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff6
+                  - entity: sensor.sonoff6_ipv4
+                  - entity: sensor.sonoff6_uptime
+                  - entity: sensor.sonoff6_use
+                  - entity: sensor.sonoff6_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff6_spannung
+                      - entity: sensor.sonoff6_stromstaerke
+                      - entity: sensor.sonoff6_max_load
+                      - entity: sensor.sonoff6_verbrauch_heute
+                      - entity: sensor.sonoff6_verbrauch_gestern
+                      - entity: sensor.sonoff6_gesamtverbrauch
+                      - entity: sensor.sonoff6_kosten_heute
+                      - entity: sensor.sonoff6_kosten_gestern
+                      - entity: sensor.sonoff6_kosten_gesamt
+                      - entity: script.del_sonoff6_power_log
+    - break
+    #sonoff7
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff7_state
+          state: "off"
+      card:
+        type: entities
+        title: '#7 Nachttisch'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff7_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff7_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#7 Nachttisch'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff7
+                  - entity: sensor.sonoff7_ipv4
+                  - entity: sensor.sonoff7_uptime
+                  - entity: sensor.sonoff7_use
+                  - entity: sensor.sonoff7_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff7_spannung
+                      - entity: sensor.sonoff7_stromstaerke
+                      - entity: sensor.sonoff7_max_load
+                      - entity: sensor.sonoff7_verbrauch_heute
+                      - entity: sensor.sonoff7_verbrauch_gestern
+                      - entity: sensor.sonoff7_gesamtverbrauch
+                      - entity: sensor.sonoff7_kosten_heute
+                      - entity: sensor.sonoff7_kosten_gestern
+                      - entity: sensor.sonoff7_kosten_gesamt
+                      - entity: script.del_sonoff7_power_log
+    #sonoff8
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff8_state
+          state: "off"
+      card:
+        type: entities
+        title: '#8 Schreibtisch'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff8_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff8_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#8 Schreibtisch'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff8
+                  - entity: sensor.sonoff8_ipv4
+                  - entity: sensor.sonoff8_uptime
+                  - entity: sensor.sonoff8_use
+                  - entity: sensor.sonoff8_momentane_leistung
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.sonoff8_spannung
+                      - entity: sensor.sonoff8_stromstaerke
+                      - entity: sensor.sonoff8_max_load
+                      - entity: sensor.sonoff8_verbrauch_heute
+                      - entity: sensor.sonoff8_verbrauch_gestern
+                      - entity: sensor.sonoff8_gesamtverbrauch
+                      - entity: sensor.sonoff8_kosten_heute
+                      - entity: sensor.sonoff8_kosten_gestern
+                      - entity: sensor.sonoff8_kosten_gesamt
+                      - entity: script.del_sonoff8_power_log

@@ -1,0 +1,26 @@
+path: media
+title: MediaPlayer
+icon: mdi:music
+cards:
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: Verstärker
+      show_header_toggle: false
+      entities:
+      - switch.receiver
+      - switch.receiver_source_pc
+      - input_boolean.all_receiver_automations
+    - type: entities
+      title: Media
+      show_header_toggle: false
+      entities:
+        - type: custom:mini-media-player
+          entity: media_player.spotify
+          icon: mdi:spotify
+          artwork: cover
+        - type: divider
+        - type: custom:mini-media-player
+          entity: media_player.volumio
+          icon: mdi:boombox
+          artwork: cover

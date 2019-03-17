@@ -1,0 +1,32 @@
+title: zwave
+path: zwave
+icon: mdi:z-wave
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: entities
+      title: Multisensor ELW
+      show_header_toggle: false
+      entities:
+      - sensor.multisensor1_battery
+      - sensor.aeotec_zw100_multisensor_6_luminance
+      - sensor.aeotec_zw100_multisensor_6_relative_humidity
+      - sensor.aeotec_zw100_multisensor_6_temperature
+      - sensor.aeotec_zw100_multisensor_6_ultraviolet
+      - sensor.multisensor1_motion
+      - binary_sensor.aeotec_zw100_multisensor_6_sensor
+
+    - type: entities
+      title: Router Killswitch
+      show_header_toggle: false
+      entities:
+
+      - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+      - sensor.zwave_mpd1_use
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
+      - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
+      - sensor.zwave_mpd1_kosten_gesamt
+      - script.reset_router

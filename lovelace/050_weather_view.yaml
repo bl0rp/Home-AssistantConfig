@@ -1,0 +1,80 @@
+title: Wetter
+path: wetter
+icon: mdi:weather-partlycloudy
+cards:
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: Temperatur und Luftfeuchtigkeit
+      show_header_toggle: false
+      entities:
+      - type: section
+        label: Außentempertur
+      - entity: sensor.esp32_02_temperature
+        secondary_info: last-changed
+      - entity: sensor.esp32_03_temperature
+        secondary_info: last-changed
+      - type: section
+        label: Innentemperatur Erster Stock
+      - entity: sensor.temperatur_esp8266_01
+        secondary_info: last-changed
+      - entity: sensor.temperatur_esp8266_03
+        secondary_info: last-changed
+      - type: section
+        label: Innentemperatur ELW
+      - entity: sensor.temperatur_esp8266_02
+        secondary_info: last-changed
+        name: Schlafzimmer
+      - entity: sensor.aeotec_zw100_multisensor_6_temperature
+        secondary_info: last-changed
+        name: Flur
+      - type: section
+      - type: custom:hui-history-graph-card
+        title: 'Außentemperatur'
+        hours_to_show: 24
+        entities:
+         - entity: sensor.dark_sky_temperature
+           name: Internet
+         - entity: sensor.esp32_02_temperature
+           name: Haupteingang
+         - entity: sensor.esp32_03_temperature
+           name: Carport
+
+  - type: vertical-stack
+    cards:
+    - type: iframe
+      url: https://embed.windy.com/embed2.html?rain,48.7560074,9.2382201,7
+      aspect_ratio: 100%
+    - type: picture-entity
+      entity: camera.regenradarstuttgart
+
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: "Sonne & Mond"
+      show_header_toggle: false
+      entities:
+        - type: section
+        - entity: sensor.sunstate
+        - entity: sensor.sun_next_setting
+        - entity: sensor.sun_next_rising
+        - entity: sensor.moon
+        - entity: script.sun_info_pushbullet
+
+    - type: entities
+      title: "Vorhersage Internet"
+      show_header_toggle: false
+      entities:
+            - type: section
+            - sensor.yr_temperature
+            - sensor.dark_sky_temperature
+            - sensor.yr_humidity
+            - sensor.dark_sky_humidity
+            - sensor.yr_cloudiness
+            - sensor.dark_sky_cloud_coverage
+            - sensor.yr_precipitation
+            - sensor.dark_sky_precip_intensity
+            - sensor.dark_sky_precip_probability
+
+    - type: weather-forecast
+      entity: weather.dark_sky

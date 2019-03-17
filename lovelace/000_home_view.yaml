@@ -1,0 +1,77 @@
+title: default_view
+path: default_view
+icon: mdi:home
+panel: true
+background: var(--background-image)
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+
+    - type: markdown
+      title: HomeAssistant
+      content: >
+         **Hommel Stuttgart**
+
+    - type: entities
+      show_header_toggle: false
+      entities:
+      - entity: input_select.hass_theme
+
+
+    - type: entities
+      title: Utilities
+      show_header_toggle: false
+      entities:
+      - entity: script.restart_ha
+      - entity: script.update_ha
+      - entity: script.clear_log
+      - entity: script.clear_tts_cache
+      - entity: script.reset_router
+
+    - break
+
+    - type: entities
+      title: "Version & Backup"
+      show_header_toggle: false
+      entities:
+      - entity: automation.auto_backup
+      - entity: script.backup_config
+      - entity: sensor.last_commit
+      - entity: sensor.last_backup
+      - entity: sensor.ha_version
+        name: HomeAssistant
+
+    - type: entities
+      title: "PiHole"
+      show_header_toggle: false
+      entities:
+        - entity: switch.pihole
+        - entity: sensor.pi_hole_version
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+            - script.pihole_update
+            - sensor.ads_blocked_today
+            - sensor.ads_percentage_today
+            - sensor.dns_queries_today
+            - sensor.domains_being_blocked
+            - sensor.ads_blocked_today
+            - sensor.unique_domains
+            - sensor.queries_forwarded
+            - sensor.queries_cached
+            - sensor.pihole_dns
+            - sensor.pihole_blocking
+
+    - break
+
+    - type: entities
+      title: SSL Zertifikate
+      show_header_toggle: false
+      entities:
+      - entity: sensor.nullx_cert_expiry
+        name: "0x711.de"
+      - entity: sensor.cvoid_cert_expiry
+        name: "cvoid.de"

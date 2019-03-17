@@ -1,0 +1,78 @@
+title: Familie
+path: familie
+icon: mdi:account
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: custom:vertical-stack-in-card
+      title: 'Familie'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+            - entity: input_boolean.chrishome
+              secondary_info: last-changed
+              name: Christoph
+            - entity: device_tracker.ewald_ip
+              secondary_info: last-changed
+            - entity: device_tracker.traude_ip
+              secondary_info: last-changed
+            - entity: device_tracker.hanni_iphone_ip
+              secondary_info: last-changed
+
+    - type: custom:vertical-stack-in-card
+      title: 'Freunde'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+            - entity: device_tracker.iphonexs_petros
+              secondary_info: last-changed
+            - entity: device_tracker.64_a2_f9_f2_5c_9b
+              secondary_info: last-changed
+
+
+    - type: custom:vertical-stack-in-card
+      title: 'Geburtstag'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+            - sensor.next_birthday
+            - automation.birthday_alert_today
+
+    - break
+
+    - type: custom:vertical-stack-in-card
+      title: 'Fahrzeit'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+              label: Google
+            - entity: sensor.zuhausehauptrettungswache
+              name: HRW
+              icon: mdi:ambulance
+            - entity: sensor.zuhausemarienhospital
+              name: Marienhospital
+              icon: mdi:hospital
+            - entity: sensor.stuttgartberlin
+              name: Berlin
+              icon: mdi:city-variant
+            - entity: sensor.hauptrettungswachezuhause
+              name: "Nach Hause (HRW)"
+              icon: mdi:home-map-marker
+            - type: section
+              label: Waze
+            - entity: sensor.waze_zuhause_hrw
+              name: HRW
+              icon: mdi:ambulance
+            - entity: sensor.waze_stuttgart_berlin
+              name: Berlin
+              icon: mdi:city-variant

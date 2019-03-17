@@ -1,0 +1,474 @@
+title: service
+path: service
+icon: mdi:clipboard-text
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+
+    - type: custom:vertical-stack-in-card
+      title: 'Systemload'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+          - type: section
+        - type: entities
+          entities:
+            - entity: input_select.load_graph
+
+        - type: conditional
+          conditions:
+            - entity: input_select.load_graph
+              state: "Stunde"
+          card:
+           type: history-graph
+           title: 'Systemload (Stunde)'
+           hours_to_show: 1
+           entities:
+              - entity: sensor.load_1m
+                name: 1m
+              - entity: sensor.load_5m
+                name: 5m
+              - entity: sensor.load_15m
+                name: 15m
+        - type: conditional
+          conditions:
+            - entity: input_select.load_graph
+              state: "Tag"
+          card:
+           type: history-graph
+           title: 'Systemload (Tag)'
+           hours_to_show: 24
+           entities:
+              - entity: sensor.load_1m
+                name: 1m
+              - entity: sensor.load_5m
+                name: 5m
+              - entity: sensor.load_15m
+                name: 15m
+        - type: conditional
+          conditions:
+            - entity: input_select.load_graph
+              state: "Woche"
+          card:
+           type: history-graph
+           title: 'Systemload (Woche)'
+           hours_to_show: 168
+           entities:
+              - entity: sensor.load_1m
+                name: 1m
+              - entity: sensor.load_5m
+                name: 5m
+              - entity: sensor.load_15m
+                name: 15m
+        - type: conditional
+          conditions:
+            - entity: input_select.load_graph
+              state: "Monat"
+          card:
+           type: history-graph
+           title: 'Systemload (Monat)'
+           hours_to_show: 720
+           entities:
+              - entity: sensor.load_1m
+                name: 1m
+              - entity: sensor.load_5m
+                name: 5m
+              - entity: sensor.load_15m
+                name: 15m
+    - type: vertical-stack
+      cards:
+        - type: custom:bar-card
+          title: Load 1m
+          min: 0
+          max: 4.0
+          entity: sensor.load_1m
+          severity:
+          - value: 0.1
+            hue: '100'
+          - value: 0.2
+            hue: '100'
+          - value: 0.3
+            hue: '100'
+          - value: 0.4
+            hue: '80'
+          - value: 0.5
+            hue: '80'
+          - value: 0.6
+            hue: '30'
+          - value: 0.7
+            hue: '20'
+          - value: 0.8
+            hue: '360'
+          - value: 0.9
+            hue: '360'
+          - value: 1.0
+            hue: '360'
+          - value: 1.1
+            hue: '360'
+          - value: 1.2
+            hue: '360'
+          - value: 1.3
+            hue: '360'
+          - value: 1.4
+            hue: '360'
+          - value: 1.5
+            hue: '360'
+          - value: 1.6
+            hue: '360'
+          - value: 1.7
+            hue: '360'
+          - value: 1.8
+            hue: '360'
+          - value: 1.9
+            hue: '360'
+          - value: 2.0
+            hue: '360'
+          - value: 4.0
+            hue: '360'
+        - type: custom:bar-card
+          title: Load 5m
+          min: 0
+          max: 4.0
+          entity: sensor.load_5m
+          severity:
+          - value: 0.1
+            hue: '100'
+          - value: 0.2
+            hue: '100'
+          - value: 0.3
+            hue: '100'
+          - value: 0.4
+            hue: '80'
+          - value: 0.5
+            hue: '80'
+          - value: 0.6
+            hue: '30'
+          - value: 0.7
+            hue: '20'
+          - value: 0.8
+            hue: '360'
+          - value: 0.9
+            hue: '360'
+          - value: 1.0
+            hue: '360'
+          - value: 1.1
+            hue: '360'
+          - value: 1.2
+            hue: '360'
+          - value: 1.3
+            hue: '360'
+          - value: 1.4
+            hue: '360'
+          - value: 1.5
+            hue: '360'
+          - value: 1.6
+            hue: '360'
+          - value: 1.7
+            hue: '360'
+          - value: 1.8
+            hue: '360'
+          - value: 1.9
+            hue: '360'
+          - value: 2.0
+            hue: '360'
+          - value: 4.0
+            hue: '360'
+        - type: custom:bar-card
+          title: Load 15m
+          min: 0
+          max: 4.0
+          entity: sensor.load_15m
+          severity:
+          - value: 0.1
+            hue: '100'
+          - value: 0.2
+            hue: '100'
+          - value: 0.3
+            hue: '100'
+          - value: 0.4
+            hue: '80'
+          - value: 0.5
+            hue: '80'
+          - value: 0.6
+            hue: '30'
+          - value: 0.7
+            hue: '20'
+          - value: 0.8
+            hue: '360'
+          - value: 0.9
+            hue: '360'
+          - value: 1.0
+            hue: '360'
+          - value: 1.1
+            hue: '360'
+          - value: 1.2
+            hue: '360'
+          - value: 1.3
+            hue: '360'
+          - value: 1.4
+            hue: '360'
+          - value: 1.5
+            hue: '360'
+          - value: 1.6
+            hue: '360'
+          - value: 1.7
+            hue: '360'
+          - value: 1.8
+            hue: '360'
+          - value: 1.9
+            hue: '360'
+          - value: 2.0
+            hue: '360'
+          - value: 4.0
+            hue: '360'
+        - type: horizontal-stack
+          cards:
+            - type: gauge
+              name: CPU
+              unit: '%'
+              entity: sensor.processor_use
+              severity:
+                green: 0
+                yellow: 45
+                red: 85
+            - type: gauge
+              name: CPU Temp.
+              unit: '°C'
+              entity: sensor.cpu_temperature
+              severity:
+                green: 0
+                yellow: 60
+                red: 85
+        - type: history-graph
+          title: 'Freier Speicherplatz'
+          hours_to_show: 720
+          entities:
+           - entity: sensor.disk_free
+             name: NUC
+           - entity: sensor.qnap1_free_space_datavol1_gib
+             name: QNAP
+
+    - type: custom:vertical-stack-in-card
+      title: 'Speedtest'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+          - type: section
+          - entity: sensor.speedtest_ping
+          - entity: sensor.speedtest_download
+          - entity: sensor.speedtest_upload
+          - entity: sensor.fast_com_download
+          - type: section
+        - type: entities
+          entities:
+            - entity: input_select.speedtest_graph
+
+        - type: conditional
+          conditions:
+            - entity: input_select.speedtest_graph
+              state: "Stunde"
+          card:
+           type: history-graph
+           title: 'Speedtest (1h)'
+           hours_to_show: 1
+           entities:
+              - entity: sensor.speedtest_download
+                name: Speedtest Down
+              - entity: sensor.speedtest_upload
+                name: Speedtest Up
+              - entity: sensor.fast_com_download
+                name: Fast.com Down
+        - type: conditional
+          conditions:
+            - entity: input_select.speedtest_graph
+              state: "Tag"
+          card:
+           type: history-graph
+           title: 'Speedtest (Tag)'
+           hours_to_show: 24
+           entities:
+              - entity: sensor.speedtest_download
+                name: Speedtest Down
+              - entity: sensor.speedtest_upload
+                name: Speedtest Up
+              - entity: sensor.fast_com_download
+                name: Fast.com Down
+        - type: conditional
+          conditions:
+            - entity: input_select.speedtest_graph
+              state: "Woche"
+          card:
+           type: history-graph
+           title: 'Speedtest (Woche)'
+           hours_to_show: 168
+           entities:
+              - entity: sensor.speedtest_download
+                name: Speedtest Down
+              - entity: sensor.speedtest_upload
+                name: Speedtest Up
+              - entity: sensor.fast_com_download
+                name: Fast.com Down
+        - type: conditional
+          conditions:
+            - entity: input_select.speedtest_graph
+              state: "Monat"
+          card:
+           type: history-graph
+           title: 'Speedtest (Monat)'
+           hours_to_show: 720
+           entities:
+              - entity: sensor.speedtest_download
+                name: Speedtest Down
+              - entity: sensor.speedtest_upload
+                name: Speedtest Up
+              - entity: sensor.fast_com_download
+                name: Fast.com Down
+
+
+    - break
+    - type: entities
+      title: Systemstatus
+      show_header_toggle: false
+      entities:
+        - type: section
+        - entity: automation.nuc_load_to_led
+        - entity: sensor.host_uptime_human
+        - entity: sensor.ha_uptime_human
+        - entity: sensor.ha_version
+          icon: mdi:home-assistant
+          name: HomeAssistant
+        - type: custom:hui-conditional-card
+          conditions:
+            - entity: sensor.ha_version
+              state_not: "Aktuell"
+          card:
+           type: entities
+           entities:
+              - entity: script.update_ha
+
+        - type: weblink
+          name: Blog
+          url: https://www.home-assistant.io/blog/
+          icon: mdi:home-assistant
+        - type: weblink
+          name: Release Notes
+          url: https://github.com/home-assistant/home-assistant/releases
+          icon: mdi:home-assistant
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+          - entity: sensor.ha_release
+            name: Aktuelle Version
+            icon: mdi:home-assistant
+          - entity: sensor.ha_release_local
+            name: Lokale Version
+            icon: mdi:home-assistant
+          - entity: sensor.mysql_ha_size
+          - entity: sensor.uname
+          - entity: sensor.cpu_temperature
+          - entity: sensor.processor_use
+          - entity: sensor.load_1m
+          - entity: sensor.load_5m
+          - entity: sensor.load_15m
+          - entity: sensor.disk_use
+          - entity: sensor.disk_use_percent
+          - entity: sensor.disk_free
+          - entity: sensor.swap_free
+          - entity: sensor.swap_use
+          - entity: sensor.swap_use_percent
+          - entity: sensor.memory_free
+          - entity: sensor.memory_use
+          - entity: sensor.memory_use_percent
+          - entity: sensor.ipv4_address_eno1
+          - entity: sensor.ipv6_address_eno1
+          - entity: sensor.packets_in_eno1
+          - entity: sensor.packets_out_eno1
+          - entity: sensor.network_in_eno1
+          - entity: sensor.network_out_eno1
+
+    - type: entities
+      title: QNAP
+      show_header_toggle: false
+      entities:
+      - type: section
+      - entity: sensor.qnap1
+      - entity: sensor.qnap1_status
+      - entity: sensor.qnap1_smart_status
+        name: SMART
+        icon: mdi:harddisk
+      - entity: sensor.qnap1_free_space_datavol1_gib
+        name: Freier Speicherplatz
+        icon: mdi:chart-pie
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Details
+        items:
+          - type: weblink
+            name: Admin
+            url: http://192.168.0.11:8080/cgi-bin/
+          - entity: sensor.qnap1_uptime
+          - entity: sensor.qnap1_cpu_temperature
+          - entity: sensor.qnap1_cpu_usage
+          - entity: sensor.qnap1_memory_available
+          - entity: sensor.qnap1_memory_usage
+          - entity: sensor.qnap1_network_down_eth0
+          - entity: sensor.qnap1_network_up_eth0
+    - break
+    - type: entities
+      title: Servicestatus
+      show_header_toggle: false
+      entities:
+      - type: section
+        label: Services
+      - entity: input_boolean.all_process_alarms
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Details
+        items:
+        - entity: automation.cpu_temp_alarm
+        - entity: automation.hdd_alarm
+        - entity: automation.dhcpd_alarm
+        - entity: automation.dockerd_alarm
+        - entity: automation.sshd_alarm
+        - entity: automation.tor_alarm
+        - entity: automation.speedtest_alarm
+        - entity: automation.alert_when_a_critical_container_goes_offline
+          name: Container Alarm
+      - type: section
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+          title: Started
+        filter:
+          include:
+            - state: "running"
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+          title: Stopped
+        filter:
+          include:
+            - state: "stopped"
+
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Docker Container
+        items:
+        - entity: switch.watchtower
+        - entity: switch.portainer
+        - entity: switch.grafana
+        - entity: switch.influx
+        - entity: switch.tasmoadmin

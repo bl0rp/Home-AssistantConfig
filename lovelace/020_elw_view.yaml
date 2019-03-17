@@ -1,0 +1,130 @@
+path: elw
+title: ELW
+cards:
+- type: vertical-stack
+  cards:
+
+    - type: entities
+      title: Licht ELW
+      show_header_toggle: false
+      entities:
+      - type: section
+      - entity: input_select.elw_scene
+      - entity: input_select.tuerlicht
+      - entity: automation.motion_zwave_sunset_flur_dimlight
+    - type: horizontal-stack
+      cards:
+        - type: light
+          entity: light.schlafzimmer
+        - type: light
+          entity: light.flur
+    - type: glance
+      entities:
+        - entity: switch.11011_a
+          name: Bett
+          tap_action:
+            action: toggle
+        - entity: switch.11011_b
+          name: Schreibtisch
+          tap_action:
+            action: toggle
+        - entity: switch.11011_c
+          name: Türe
+          tap_action:
+            action: toggle
+
+- type: vertical-stack
+  cards:
+    - type: entities
+      title: Temperatur und Luftfeuchtigkeit
+      show_header_toggle: false
+      entities:
+      - type: section
+        label: Außentempertur
+      - entity: sensor.esp32_02_temperature
+        secondary_info: last-changed
+      - entity: sensor.esp32_03_temperature
+        secondary_info: last-changed
+      - type: section
+        label: Innentemperatur
+      - entity: sensor.temperatur_esp8266_02
+        secondary_info: last-changed
+      - entity: sensor.aeotec_zw100_multisensor_6_temperature
+        secondary_info: last-changed
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Luftfeuchtugkeit
+        items:
+          - sensor.esp32_02_humidity
+          - sensor.esp32_03_humidity
+          - sensor.luftfeuchtigkeit_esp8266_02
+          - sensor.aeotec_zw100_multisensor_6_relative_humidity
+      - type: section
+        label: Graph
+      - type: custom:hui-history-graph-card
+        hours_to_show: 24
+        entities:
+         - entity: sensor.temperatur_esp8266_02
+           name: Regal
+         - entity: sensor.aeotec_zw100_multisensor_6_temperature
+           name: Flur
+    - type: entities
+      title: Bewegungsmelder / Türsensor
+      show_header_toggle: false
+      entities:
+      - type: section
+      - entity: automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
+        name: Alarme
+        icon: 'mdi:alarm-bell'
+      - entity: sensor.multisensor1_motion
+        name: ELW Flur
+        secondary_info: last-changed
+      - entity: binary_sensor.esp8266_02_pir
+        name: ELW
+        secondary_info: last-changed
+      - entity: binary_sensor.esp32_01_door_state
+        name: Türe ELW
+        secondary_info: last-changed
+- type: vertical-stack
+  cards:
+    - type: entities
+      title: Diverses
+      show_header_toggle: false
+      entities:
+      - type: section
+      - entity: person.christoph
+        secondary_info: last-changed
+      - entity: sensor.phonebatt_pixel3xl
+        icon: 'mdi:battery-charging-50'
+        name: Pixel3XL
+        secondary_info: last-changed
+      - entity: sensor.tasker_pixel3xl_battery
+        name: Pixel3XL JSON
+        secondary_info: last-changed
+      - type: section
+        label: Ortung
+      - entity: input_boolean.chrishome
+        icon: 'mdi:map-marker-circle'
+        name: Christoph Status
+        secondary_info: last-changed
+      - entity: device_tracker.pixel3_xl
+        secondary_info: last-changed
+        name: Christoph via nmap/unifi
+        icon: 'mdi:wifi'
+      - entity: device_tracker.897y04duz
+        secondary_info: last-changed
+        name: GPSLogger Pixel3XL
+        icon: 'mdi:radar'
+      - entity: input_boolean.chrisbluetooth
+        secondary_info: last-changed
+        name: Christoph Bluetooth ELW
+        icon: 'mdi:bluetooth'
+      - type: section
+      - entity: input_select.christoph_status
+      - type: section
+      - type: call-service
+        icon: mdi:battery-charging-40
+        name: Ladeautomatik
+        action_name: Ausführen
+        service: script.akkus_laden

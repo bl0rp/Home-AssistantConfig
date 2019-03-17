@@ -1,0 +1,65 @@
+path: erster_stock
+title: 1 OG
+cards:
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: Temperatur und Luftfeuchtigkeit
+      show_header_toggle: false
+      entities:
+      - type: section
+        label: Außentempertur
+      - entity: sensor.esp32_02_temperature
+        secondary_info: last-changed
+      - entity: sensor.esp32_03_temperature
+        secondary_info: last-changed
+      - type: section
+        label: Innentemperatur
+      - entity: sensor.temperatur_esp8266_01
+        secondary_info: last-changed
+      - entity: sensor.temperatur_esp8266_03
+        secondary_info: last-changed
+
+    - type: horizontal-stack
+      cards:
+      - type: sensor
+        entity: sensor.temperatur_esp8266_01
+        graph: line
+        detail: 2
+        name: Wohnzimmer
+      - type: sensor
+        entity: sensor.temperatur_esp8266_03
+        graph: line
+        detail: 2
+        name: Wintergarten
+
+
+
+
+  - type: vertical-stack
+    cards:
+    - type: entities
+      title: Licht
+      show_header_toggle: false
+      entities:
+        - type: section
+        - entity: script.1og_lampen_an
+        - entity: script.1og_lampen_aus
+    - type: glance
+      entities:
+        - entity: switch.wemoswitch1
+          name: Esszimmer
+          tap_action:
+            action: toggle
+        - entity: switch.wemoswitch2
+          name: Stehlampe
+          tap_action:
+            action: toggle
+    - type: history-graph
+      title: 'Innentemperatur (Woche)'
+      hours_to_show: 168
+      entities:
+         - entity: sensor.temperatur_esp8266_01
+           name: Wohnzimmer
+         - entity: sensor.temperatur_esp8266_03
+           name: Wintergarten
