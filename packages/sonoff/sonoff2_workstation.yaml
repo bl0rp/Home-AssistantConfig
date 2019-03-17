@@ -56,28 +56,8 @@ homeassistant:
       friendly_name: Maximale Leistung auf dem LCD?
       icon: mdi:monitor
 
-group:
-  sonoff2:
-    control: hidden
-    name: Sonoff 2
-    view: no
-    entities:
-      - switch.sonoff2
-      - sensor.sonoff2_ipv4
-      - sensor.sonoff2_uptime
-      - sensor.sonoff2_use
-      - sensor.sonoff2_momentane_leistung
-      - sensor.sonoff2_spannung
-      - sensor.sonoff2_stromstaerke
-      - sensor.sonoff2_max_load
-      - sensor.sonoff2_verbrauch_heute
-      - sensor.sonoff2_verbrauch_gestern
-      - sensor.sonoff2_gesamtverbrauch
-      - sensor.sonoff2_kosten_heute
-      - sensor.sonoff2_kosten_gestern
-      - sensor.sonoff2_kosten_gesamt
-      - automation.sonoff2_load_lcd
-      - script.del_sonoff2_power_log
+
+
 
 sensor:
 

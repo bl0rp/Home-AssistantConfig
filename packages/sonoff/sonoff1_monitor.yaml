@@ -53,28 +53,8 @@ homeassistant:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
 
-group:
-  sonoff1:
-    control: hidden
-    name: Sonoff 1
-    view: no
-    entities:
-      - switch.sonoff1
-      - sensor.sonoff1_ipv4
-      - sensor.sonoff1_uptime
-      - sensor.sonoff1_use
-      - sensor.sonoff1_momentane_leistung
-      - sensor.sonoff1_spannung
-      - sensor.sonoff1_stromstaerke
-      - sensor.sonoff1_max_load
-      - sensor.sonoff1_verbrauch_heute
-      - sensor.sonoff1_verbrauch_gestern
-      - sensor.sonoff1_gesamtverbrauch
-      - sensor.sonoff1_kosten_heute
-      - sensor.sonoff1_kosten_gestern
-      - sensor.sonoff1_kosten_gesamt
-      - automation.sonoff1_load_lcd
-      - script.del_sonoff1_power_log
+
+
 
 sensor:
 
@@ -191,8 +171,8 @@ notify:
 switch:
   - platform: mqtt
     name: "sonoff1"
-    state_topic: "stat/sonoff1/POWER"
-    command_topic: "cmnd/sonoff1/POWER"
+    state_topic: "stat/sonoff1/POWER1"
+    command_topic: "cmnd/sonoff1/POWER1"
     availability_topic: "tele/sonoff1/LWT"
     qos: 1
     payload_on: "ON"

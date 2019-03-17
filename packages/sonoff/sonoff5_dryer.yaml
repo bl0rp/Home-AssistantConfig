@@ -61,30 +61,6 @@ homeassistant:
     input_boolean.dryer_switch:
       friendly_name: Trockenvorgang aktiv?
 
-group:
-  sonoff5:
-    control: hidden
-    name: Sonoff 5
-    view: no
-    entities:
-      - switch.sonoff5
-      - sensor.sonoff5_ipv4
-      - sensor.sonoff5_uptime
-      - sensor.sonoff5_use
-      - sensor.sonoff5_momentane_leistung
-      - sensor.sonoff5_spannung
-      - sensor.sonoff5_stromstaerke
-      - sensor.sonoff5_max_load
-      - sensor.sonoff5_verbrauch_heute
-      - sensor.sonoff5_verbrauch_gestern
-      - sensor.sonoff5_gesamtverbrauch
-      - sensor.sonoff5_kosten_heute
-      - sensor.sonoff5_kosten_gestern
-      - sensor.sonoff5_kosten_gesamt
-      - script.del_sonoff5_power_log
-      - input_boolean.dryer_switch
-      - automation.dryer_start
-      - automation.dryer_done
 
 sensor:
 

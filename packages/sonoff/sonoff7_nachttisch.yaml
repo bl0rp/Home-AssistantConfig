@@ -54,27 +54,6 @@ homeassistant:
       icon: mdi:eraser
 
 
-group:
-  sonoff7:
-    control: hidden
-    name: Sonoff 7
-    view: no
-    entities:
-      - switch.sonoff7
-      - sensor.sonoff7_ipv4
-      - sensor.sonoff7_uptime
-      - sensor.sonoff7_use
-      - sensor.sonoff7_momentane_leistung
-      - sensor.sonoff7_spannung
-      - sensor.sonoff7_stromstaerke
-      - sensor.sonoff7_max_load
-      - sensor.sonoff7_verbrauch_heute
-      - sensor.sonoff7_verbrauch_gestern
-      - sensor.sonoff7_gesamtverbrauch
-      - sensor.sonoff7_kosten_heute
-      - sensor.sonoff7_kosten_gestern
-      - sensor.sonoff7_kosten_gesamt
-      - script.del_sonoff7_power_log
 
 
 sensor:

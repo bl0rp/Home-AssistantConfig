@@ -61,32 +61,6 @@ homeassistant:
     input_boolean.washer_switch:
       friendly_name: Waschvorgang aktiv?
 
-group:
-  sonoff3:
-    control: hidden
-    name: Sonoff 3
-    view: no
-    entities:
-      - switch.sonoff3
-      - sensor.sonoff3_ipv4
-      - sensor.sonoff3_uptime
-      - sensor.sonoff3_use
-      - sensor.sonoff3_momentane_leistung
-      - sensor.sonoff3_spannung
-      - sensor.sonoff3_stromstaerke
-      - sensor.sonoff3_max_load
-      - sensor.sonoff3_verbrauch_heute
-      - sensor.sonoff3_verbrauch_gestern
-      - sensor.sonoff3_gesamtverbrauch
-      - sensor.sonoff3_kosten_heute
-      - sensor.sonoff3_kosten_gestern
-      - sensor.sonoff3_kosten_gesamt
-      - script.del_sonoff3_power_log
-      - input_boolean.washer_switch
-      - input_boolean.washer_notify_traude
-      - input_boolean.washer_notify_christoph
-      - automation.washer_start
-      - automation.washer_done
 
 sensor:
 
@@ -219,6 +193,7 @@ input_boolean:
     initial: on
   washer_notify_christoph:
     initial: on
+
 ### Record all power levels to a file (see notify)
 automation:
   - alias: sonoff3 Load logfile

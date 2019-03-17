@@ -34,8 +34,21 @@ group:
       - sensor.esp32_04_state
       - sensor.esp32_04_last_change_temp
       - binary_sensor.esp32_04_state_raw
+#############
+#  switch   #
+#############
+switch:
+  - platform: mqtt
+    name: ESP32_04 Restart
+    state_topic: esp32_4/switch/restart/state
+    command_topic: esp32_4/switch/restart/command
+    availability_topic: "esp32_4/status"
 
-
+  - platform: mqtt
+    name: ESP32_04 Shutdown
+    state_topic: esp32_4/switch/shutdown/state
+    command_topic: esp32_4/switch/shutdown/command
+    availability_topic: "esp32_4/status"
 
 
 #############
@@ -120,6 +133,12 @@ sensor:
             {%- endmacro %}
             {{ human_time(states.sensor.esp32_04_uptime_raw.state | int   ) }}
             {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.esp32_04_state_raw', 'on') %}
+            mdi:server-network
+          {% else %}
+            mdi:server-network-off
+          {% endif %}
       esp32_04_last_change_temp:
         friendly_name: "Letzte Änderung Temperatur"
         value_template: >-

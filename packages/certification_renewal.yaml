@@ -2,32 +2,19 @@
 ### Packages / Certification Renewal                       ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
 ##############################################################
-
 homeassistant:
-  customize:
-    sensor.nullx_cert_expiry:
-      friendly_name: SSL Cert. 0x711
-      icon: mdi:lock
-    sensor.cvoid_cert_expiry:
-      friendly_name: SSL Cert. cvoid
-      icon: mdi:lock
-group:
-  ssl_cert:
-    name: "SSL Cert. Status"
-    control: hidden
-    entities:
-      - sensor.nullx_cert_expiry
-      - sensor.cvoid_cert_expiry
-
 
 sensor:
+
   - platform: cert_expiry
     host: 0x711.de
     name: nullx_cert_expiry
 
+
   - platform: cert_expiry
     host: cvoid.de
     name: cvoid_cert_expiry
+
 
 
 automation:

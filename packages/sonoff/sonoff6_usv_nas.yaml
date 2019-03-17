@@ -11,7 +11,7 @@ homeassistant:
 
   customize:
     switch.sonoff6:
-      friendly_name: MPD Schwarz
+      friendly_name: USV & NAS
       icon: mdi:power-socket-eu
     sensor.sonoff6_ipv4:
       friendly_name: IPv4 Sonoff 6
@@ -54,27 +54,7 @@ homeassistant:
       icon: mdi:eraser
 
 
-group:
-  sonoff6:
-    control: hidden
-    name: Sonoff 6
-    view: no
-    entities:
-      - switch.sonoff6
-      - sensor.sonoff6_ipv4
-      - sensor.sonoff6_uptime
-      - sensor.sonoff6_use
-      - sensor.sonoff6_momentane_leistung
-      - sensor.sonoff6_spannung
-      - sensor.sonoff6_stromstaerke
-      - sensor.sonoff6_max_load
-      - sensor.sonoff6_verbrauch_heute
-      - sensor.sonoff6_verbrauch_gestern
-      - sensor.sonoff6_gesamtverbrauch
-      - sensor.sonoff6_kosten_heute
-      - sensor.sonoff6_kosten_gestern
-      - sensor.sonoff6_kosten_gesamt
-      - script.del_sonoff6_power_log
+
 
 
 sensor:

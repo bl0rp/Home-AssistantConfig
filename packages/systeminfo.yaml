@@ -18,15 +18,6 @@ homeassistant:
     sensor.server_uptime:
       friendly_name: Server Uptime
       icon: mdi:timer
-    sensor.ha_release:
-      friendly_name: 'HA Aktuelle Version:'
-      entity_picture: /local/ha.png
-    sensor.ha_release_local:
-      friendly_name: 'HA Installierte Version:'
-      entity_picture: /local/ha.png
-    sensor.ha_version:
-      friendly_name: 'HA aktuell?'
-      entity_picture: /local/ha.png
     sensor.cpu_temperature:
       friendly_name: CPU Temperatur
       icon: mdi:thermometer
@@ -75,6 +66,10 @@ homeassistant:
     sensor.mysql_ha_size:
       friendly_name: Datenbankgröße
       icon: mdi:harddisk
+    sensor.process_autossh_format:
+      friendly_name: Tunnelscript (autossh)
+
+
     ##automations
     automation.nuc_load_to_led:
       friendly_name: Load 2 LED
@@ -100,45 +95,33 @@ homeassistant:
     automation.speedtest_alarm:
       friendly_name: Alarm Bandbreite
       icon: mdi:speedometer
-
-###### STATE CARD
+input_select:
+  speedtest_graph:
+    name: Zeitintervall?
+    options:
+     - Stunde
+     - Tag
+     - Woche
+     - Monat
+    initial: Stunde
+    icon: mdi:speedometer
+  load_graph:
+    name: Zeitintervall?
+    options:
+     - Stunde
+     - Tag
+     - Woche
+     - Monat
+    initial: Stunde
+    icon: mdi:worker
+input_boolean:
+  all_process_alarms:
+    name: Alarme aktivieren?
+    initial: on
+    icon: mdi:alarm-bell
 
 group:
 
-  systeminfo:
-    control: hidden
-    icon: mdi:ethernet-cable
-    name: Systemstatus
-    entities:
-      - automation.nuc_load_to_led
-      - sensor.ha_release
-      - sensor.ha_release_local
-      - sensor.ha_version
-      - weblink.release_log
-      - sensor.host_uptime_human
-      - sensor.ha_uptime_human
-      - sensor.mysql_ha_size
-      - sensor.uname
-      - sensor.cpu_temperature
-      - sensor.processor_use
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.load_15m
-      - sensor.disk_use
-      - sensor.disk_use_percent
-      - sensor.disk_free
-      - sensor.swap_free
-      - sensor.swap_use
-      - sensor.swap_use_percent
-      - sensor.memory_free
-      - sensor.memory_use
-      - sensor.memory_use_percent
-      - sensor.ipv4_address_eno1
-      - sensor.ipv6_address_eno1
-      - sensor.packets_in_eno1
-      - sensor.packets_out_eno1
-      - sensor.network_in_eno1
-      - sensor.network_out_eno1
 
   services:
     name: Servicestatus
@@ -164,11 +147,18 @@ group:
      - automation.tor_alarm
      - automation.speedtest_alarm
 
-input_boolean:
-  all_process_alarms:
-    name: Alarme aktivieren?
-    initial: on
-    icon: mdi:alarm-bell
+
+speedtestdotnet:
+  scan_interval:
+    minutes: 15
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
+fastdotcom:
+  scan_interval:
+      minutes: 15
 
 weblink:
   entities:
@@ -294,16 +284,8 @@ sensor:
         friendly_name: 'Docker Daemon'
         icon_template: '{% if is_state("sensor.process_dockerd", "on") %}mdi:checkbox-marked-circle-outline{% else %}mdi:alert{% endif %}'
         value_template: "{{ 'running' if is_state('sensor.process_dockerd', 'on') else 'stopped' }}"
-  - platform: speedtest
-    minute:
-      - 0
-      - 15
-      - 30
-      - 45
-    monitored_conditions:
-      - ping
-      - download
-      - upload
+
+
 
 ###### Latest HA Release
   - platform: command_line
@@ -321,7 +303,7 @@ sensor:
   - platform: template
     sensors:
       ha_version:
-        value_template: "{%- if states.sensor.ha_release.state == states.sensor.ha_release_local.state-%} Ja! {% else %}{{states.sensor.ha_release.state}} verfügbar! {% endif%}"
+        value_template: "{%- if states.sensor.ha_release.state == states.sensor.ha_release_local.state-%} Aktuell {% else %}{{states.sensor.ha_release.state}} verfügbar! {% endif%}"
         icon_template: >-
           {% if states.sensor.ha_release.state == states.sensor.ha_release_local.state %}
             mdi:checkbox-marked
@@ -439,7 +421,7 @@ automation:
               - automation.dhcpd_alarm
               - automation.dockerd_alarm
               - automation.sshd_alarm
-              - automation.tor_alarm
+#              - automation.tor_alarm
 
     # Notification if X happens
   - alias: "HDD Alarm"
@@ -509,7 +491,7 @@ automation:
 
 
   - alias: "tor Alarm"
-    initial_state: True
+    initial_state: False
     trigger:
       platform: state
       entity_id: sensor.process_tor

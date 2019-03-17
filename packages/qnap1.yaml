@@ -26,26 +26,6 @@ homeassistant:
       friendly_name: 'Downlink'
 
 
-###### STATE CARD for views.yaml
-
-group:
-  qnap1:
-    name: Systemstatus QNAP1
-    control: hidden
-    icon: mdi:nas
-    view: no
-    entities:
-      - sensor.qnap1
-      - sensor.qnap1_status
-      - sensor.qnap1_smart_status
-      - sensor.qnap1_uptime
-      - sensor.qnap1_free_space_datavol1
-      - sensor.qnap1_cpu_temperature
-      - sensor.qnap1_cpu_usage
-      - sensor.qnap1_memory_available
-      - sensor.qnap1_memory_usage
-      - sensor.qnap1_network_down_eth0
-      - sensor.qnap1_network_up_eth0
 
 sensor:
   - platform: qnap
@@ -72,6 +52,7 @@ sensor:
       qnap1_uptime:
         entity_id: sun.sun
         value_template: "{{ states.sensor.qnap1_status.attributes.Uptime }}"
+#SMART report
       qnap1_smart_status:
         entity_id: sun.sun
         value_template: >-
@@ -85,3 +66,8 @@ sensor:
           {%- else -%}
           ERROR
           {%- endif %}
+#calculate GB to GiB
+      qnap1_free_space_datavol1_gib:
+        entity_id: sun.sun
+        unit_of_measurement: 'GiB'
+        value_template: "{{ states('sensor.qnap1_free_space_datavol1') |multiply(0.93132257461548) |round(2) }}"

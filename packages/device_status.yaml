@@ -14,6 +14,9 @@ homeassistant:
     sensor.ddwrt:
       icon: mdi:router-wireless
       friendly_name: 'DD-WRT Router 1.OG'
+    sensor.unifi_ap_elw:
+      icon: mdi:router-wireless
+      friendly_name: 'Unifi NanoHD ELW'
     sensor.qnap1:
       entity_picture: /local/qnap.png
       friendly_name: 'QNAP TS-563'
@@ -26,6 +29,9 @@ homeassistant:
     sensor.pi1eth:
       entity_picture: /local/raspi.jpg
       friendly_name: 'RaspberryPi 1 via Ethernet'
+    sensor.pizero:
+      icon: mdi:chip
+      friendly_name: 'RaspberryPi Zero'
     sensor.pi2kodi:
       entity_picture: /local/kodi.jpg
       friendly_name: 'RaspberryPi 2 (Kodi)'
@@ -76,11 +82,13 @@ group:
       - automation.esp8266_sensor_state
       - sensor.gateway
       - sensor.ddwrt
+      - sensor.unifi_ap_elw
       - sensor.qnap1
       - sensor.alekto
       - sensor.pi1wlan
       - sensor.pi1eth
       - sensor.pi2kodi
+      - sensor.pizero
       - sensor.chmbp
       - sensor.ipad
       - sensor.nexus7
@@ -117,6 +125,8 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.gateway', 'home') else 'Offline' }}"
       ddwrt:
         value_template: "{{ 'Online' if is_state('device_tracker.ddwrt', 'home') else 'Offline' }}"
+      unifi_ap_elw:
+        value_template: "{{ 'Online' if is_state('device_tracker.b4_fb_e4_21_4e_da', 'home') else 'Offline' }}"
       qnap1:
         value_template: "{{ 'Online' if is_state('device_tracker.qnap1', 'home') else 'Offline' }}"
       alekto:
@@ -127,6 +137,8 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.pi1eth', 'home') else 'Offline' }}"
       pi2kodi:
         value_template: "{{ 'Online' if is_state('device_tracker.pi2kodi', 'home') else 'Offline' }}"
+      pizero:
+        value_template: "{{ 'Online' if is_state('device_tracker.pizero', 'home') else 'Offline' }}"
       chmbp:
         value_template: "{{ 'Online' if is_state('device_tracker.chmbp', 'home') else 'Offline' }}"
       ipad:
@@ -142,7 +154,7 @@ sensor:
       yamaha_rxv473:
         value_template:  "{{ 'Online' if is_state('device_tracker.yamaha_rxv473', 'home') else 'Offline' }}"
       volumio:
-        value_template:  "{{ 'Online' if is_state('device_tracker.volumio', 'home') else 'Offline' }}"
+        value_template:  "{{ 'Online' if is_state('device_tracker.b827ebb2a989', 'home') else 'Offline' }}"
       echo_dot:
         value_template:  "{{ 'Online' if is_state('device_tracker.echo_dot', 'home') else 'Offline' }}"
 

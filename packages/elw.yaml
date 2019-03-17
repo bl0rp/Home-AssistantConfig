@@ -75,6 +75,7 @@ automation:
       - service: notify.echodot
         data_template:
           message: >
+             {% set person = 'Christoph' %}
              {% if now().strftime("%H")|int < 12 %}
              Guten Morgen
              {% elif now().strftime("%H")|int < 18 %}
@@ -82,6 +83,11 @@ automation:
              {% else %}
              Guten Abend
              {% endif %}
+             {{ [
+             "schön dass du da bist " + person,
+             "Sei gegrüßt " + person,
+             "und willkommen zu hause " + person
+             ] |random }}
       - condition: or
         conditions:
           - condition: template

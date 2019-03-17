@@ -20,38 +20,12 @@ homeassistant:
       icon: mdi:wifi
       friendly_name: "ESP32 #1 Signalstärke"
 
-    sensor.esp32_01_motion_last_changed:
-      icon: mdi:delta
-      friendly_name: Letzte Änderung
 
     automation.benachrichtigung_batterie_esp32_01:
       icon: mdi:power-socket-eu
       friendly_name: Akkuwarnung
 
 
-#############
-#  group    #
-#############
-group:
-
-  esp32_01:
-    control: hidden
-    icon: mdi:door
-    name: Türsensor ELW
-    entities:
-      - binary_sensor.esp32_01_door_state
-      - sensor.esp32_01_rssi
-      - sensor.esp32_01_battery
-      - sensor.esp32_01_battery_state
-      - sensor.esp32_01_motion_last_changed
-      - automation.benachrichtigung_batterie_esp32_01
-  esp32_01_short:
-    control: hidden
-    icon: mdi:door
-    name: Türsensor ELW
-    entities:
-      - binary_sensor.esp32_01_door_state
-      - sensor.esp32_01_motion_last_changed
 
 
 #############
@@ -79,10 +53,6 @@ sensor:
 
   - platform: template
     sensors:
-
-      esp32_01_door_motion:
-        value_template: '{% if is_state("sensor.esp32_01_door_state", "ON") %}Türe geöffnet!{% else %}Türe geschlossen.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp32_01_door_state", "ON") %}mdi:door-open{% else %}mdi:door-closed{% endif %}'
 
       esp32_01_battery_state:
         value_template: "{{ 'Geladen' if states.sensor.esp32_01_battery.state | float >3.3  else 'Leer' }}"

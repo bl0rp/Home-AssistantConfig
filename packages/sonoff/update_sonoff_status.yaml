@@ -6,10 +6,45 @@
 ##############################################################
 homeassistant:
   customize:
-    script.update_update_sonoff_info:
-      icon: mdi:update
-      friendly_name: 'Info neu laden'
 
+    sensor.sonoff1_sw_version:
+      friendly_name: "Sonoff #1 Version"
+      icon: mdi:counter
+    sensor.sonoff2_sw_version:
+      friendly_name: "Sonoff #2 Version"
+      icon: mdi:counter
+    sensor.sonoff3_sw_version:
+      friendly_name: "Sonoff #3 Version"
+      icon: mdi:counter
+    sensor.sonoff4_sw_version:
+      friendly_name: "Sonoff #4 Version"
+      icon: mdi:counter
+    sensor.sonoff5_sw_version:
+      friendly_name: "Sonoff #5 Version"
+      icon: mdi:counter
+    sensor.sonoff6_sw_version:
+      friendly_name: "Sonoff #6 Version"
+      icon: mdi:counter
+    sensor.sonoff7_sw_version:
+      friendly_name: "Sonoff #7 Version"
+      icon: mdi:counter
+    sensor.sonoff8_sw_version:
+      friendly_name: "Sonoff #8 Version"
+      icon: mdi:counter
+#group file for auto-entity filter
+group:
+  sonoff_sw_version:
+    entities:
+      - sensor.sonoff1_sw_version
+      - sensor.sonoff2_sw_version
+      - sensor.sonoff3_sw_version
+      - sensor.sonoff4_sw_version
+      - sensor.sonoff5_sw_version
+      - sensor.sonoff6_sw_version
+      - sensor.sonoff7_sw_version
+      - sensor.sonoff8_sw_version
+
+#get alle sonoff information upon hass boot
 automation:
     - alias: get_sonoff_info
       trigger:
@@ -24,6 +59,20 @@ automation:
           data:
             topic: "cmnd/sonoffs/Status"
             payload: "2"
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/state"
+            payload: ""
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER2
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER3
+#notification for new release
     - alias: tasmota_update_notification
       initial_state: True
       trigger:
@@ -49,48 +98,93 @@ automation:
             title: "Tasmota Update"
             message: "Es gibt eine neue Tasmota Version! {{ states('sensor.sonoff_latest_release') }}. - {{ as_timestamp(now()) | timestamp_custom('%d.%m.%Y %H:%M:%S', true) }}"
             notification_id: "tasmota_update"
-
+#update manually
 script:
   update_update_sonoff_info:
     sequence:
-      - service: mqtt.publish
-        data:
-          topic: "cmnd/sonoffs/Status"
-          payload: "5"
-      - service: mqtt.publish
-        data:
-          topic: "cmnd/sonoffs/Status"
-          payload: "2"
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/Status"
+            payload: "5"
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/Status"
+            payload: "2"
+        - service: mqtt.publish
+          data:
+            topic: "cmnd/sonoffs/state"
+            payload: ""
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER2
+        - service: mqtt.publish
+          data:
+            topic: cmnd/sonoffs/POWER3
 
-group:
-  sonoff_firmware:
-    control: hidden
-    entities:
-      - script.update_update_sonoff_info
-      - sensor.sonoff_latest_release
-      - sensor.sonoff1_sw_version
-      - sensor.sonoff2_sw_version
-      - sensor.sonoff3_sw_version
-      - sensor.sonoff4_sw_version
-      - sensor.sonoff5_sw_version
-      - sensor.sonoff6_sw_version
-      - sensor.sonoff7_sw_version
-      - sensor.sonoff8_sw_version
+#binary_sensor for every device
+binary_sensor:
+  - platform: mqtt
+    name: sonoff1_state
+    state_topic: "tele/sonoff1/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
 
-  sonoff_alle_ips:
-    name: IPv4 Adressen Sonoff
-    entities:
-      - sensor.sonoff1_ipv4
-      - sensor.sonoff2_ipv4
-      - sensor.sonoff3_ipv4
-      - sensor.sonoff4_ipv4
-      - sensor.sonoff5_ipv4
-      - sensor.sonoff6_ipv4
-      - sensor.sonoff7_ipv4
-      - sensor.sonoff8_ipv4
+  - platform: mqtt
+    name: sonoff2_state
+    state_topic: "tele/sonoff2/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
 
-sensor:
+  - platform: mqtt
+    name: sonoff3_state
+    state_topic: "tele/sonoff3/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff4_state
+    state_topic: "tele/sonoff4/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff5_state
+    state_topic: "tele/sonoff5/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff6_state
+    state_topic: "tele/sonoff6/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff7_state
+    state_topic: "tele/sonoff7/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff8_state
+    state_topic: "tele/sonoff8/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+
   #Latest Release
+sensor:
   - platform: rest
     name: sonoff_latest_release_raw
     resource: https://api.github.com/repos/arendst/Sonoff-Tasmota/releases/latest

@@ -21,7 +21,11 @@ include:
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_03
-    #systestats
+    #internet weather
+    - sensor.dark_sky_temperature
+    - sensor.yr_temperature
+
+    #systemstats
     - sensor.load_1m
     - sensor.load_5m
     - sensor.load_15m
@@ -32,41 +36,62 @@ include:
     - sensor.disk_use_percent
     #qnap stats
     - sensor.qnap1_free_space_datavol1
+    - sensor.qnap1_free_space_datavol1_gib
     - sensor.qnap1_cpu_usage
     - sensor.qnap1_network_down_eth0
     - sensor.qnap1_network_up_eth0
     #sonoff stats
 
     - sensor.sonoff1_gesamtverbrauch
+    - sensor.sonoff2_gesamtverbrauch
+    - sensor.sonoff3_gesamtverbrauch
+    - sensor.sonoff4_gesamtverbrauch
+    - sensor.sonoff5_gesamtverbrauch
+    - sensor.sonoff6_gesamtverbrauch
+    - sensor.sonoff7_gesamtverbrauch
+    - sensor.sonoff8_gesamtverbrauch
+
     - sensor.sonoff1_kosten_gesamt
     - sensor.sonoff1_kosten_gestern
     - sensor.sonoff1_kosten_heute
-    - sensor.sonoff1_momentane_leistung
-    - sensor.sonoff2_gesamtverbrauch
     - sensor.sonoff2_kosten_gesamt
     - sensor.sonoff2_kosten_gestern
     - sensor.sonoff2_kosten_heute
-    - sensor.sonoff2_momentane_leistung
-    - sensor.sonoff3_gesamtverbrauch
     - sensor.sonoff3_kosten_gesamt
     - sensor.sonoff3_kosten_gestern
     - sensor.sonoff3_kosten_heute
-    - sensor.sonoff3_momentane_leistung
-    - sensor.sonoff4_gesamtverbrauch
     - sensor.sonoff4_kosten_gesamt
     - sensor.sonoff4_kosten_gestern
     - sensor.sonoff4_kosten_heute
-    - sensor.sonoff4_momentane_leistung
-    - sensor.sonoff5_gesamtverbrauch
     - sensor.sonoff5_kosten_gesamt
     - sensor.sonoff5_kosten_gestern
     - sensor.sonoff5_kosten_heute
-    - sensor.sonoff6_momentane_leistung
-    - sensor.sonoff6_gesamtverbrauch
     - sensor.sonoff6_kosten_gesamt
     - sensor.sonoff6_kosten_gestern
     - sensor.sonoff6_kosten_heute
+    - sensor.sonoff7_kosten_gesamt
+    - sensor.sonoff7_kosten_gestern
+    - sensor.sonoff7_kosten_heute
+    - sensor.sonoff8_kosten_gesamt
+    - sensor.sonoff8_kosten_gestern
+    - sensor.sonoff8_kosten_heute
+
+    - sensor.sonoff1_momentane_leistung
+    - sensor.sonoff2_momentane_leistung
+    - sensor.sonoff3_momentane_leistung
+    - sensor.sonoff4_momentane_leistung
+    - sensor.sonoff5_momentane_leistung
     - sensor.sonoff6_momentane_leistung
+    - sensor.sonoff7_momentane_leistung
+    - sensor.sonoff8_momentane_leistung
+
+
+
+
+
+
+
+
     #gas price
     - sensor.tankstelle_super
     #google travel time
@@ -79,6 +104,7 @@ include:
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping
+    - sensor.fast_com_download
     #pihole stats
     - switch.pihole
     - sensor.ads_blocked_today

@@ -177,8 +177,13 @@ group:
       - sensor.dark_sky_visibility
       - sensor.dark_sky_wind_bearing
       - sensor.dark_sky_wind_speed
-
-
+########################
+### weather platform ###
+########################
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    mode: daily
 ###############
 ### Sensors ###
 ###############
@@ -204,7 +209,7 @@ sensor:
 #Darksky
   - platform: darksky
     api_key: !secret darksky_api_key
-    update_interval: '00:03'
+    scan_interval: '00:05'
     language: de
     monitored_conditions:
       - summary
@@ -269,8 +274,9 @@ script:
   sun_info_pushbullet:
     alias: "Sun Information via PB"
     sequence:
-      service: notify.pushbullet
-      data:
+      service: telegram_bot.send_message
+      data_template:
+        target: !secret telegram_chat_id_christoph
         title: "({{ now().strftime('%d.%m.%Y %H:%M:%S') }}): Die Sonne ist {{ states.sensor.sunstate.state }}."
         message: >
            Nächster Sonnenuntergang: {{ states.sensor.sun_next_setting.state }}

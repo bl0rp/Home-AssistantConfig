@@ -11,7 +11,7 @@ homeassistant:
 
   customize:
     switch.sonoff4:
-      friendly_name: "Server & Router"
+      friendly_name: "Hub & Gateway"
       icon: mdi:led-on
     sensor.sonoff4_ipv4:
       friendly_name: IPv4 Sonoff 4
@@ -53,28 +53,7 @@ homeassistant:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
 
-group:
-  sonoff4:
-    control: hidden
-    name: Sonoff 4
-    view: no
-    entities:
-      - switch.sonoff4
-      - sensor.sonoff4_ipv4
-      - sensor.sonoff4_uptime
-      - sensor.sonoff4_use
-      - sensor.sonoff4_momentane_leistung
-      - sensor.sonoff4_spannung
-      - sensor.sonoff4_stromstaerke
-      - sensor.sonoff4_max_load
-      - sensor.sonoff4_verbrauch_heute
-      - sensor.sonoff4_verbrauch_gestern
-      - sensor.sonoff4_gesamtverbrauch
-      - sensor.sonoff4_kosten_heute
-      - sensor.sonoff4_kosten_gestern
-      - sensor.sonoff4_kosten_gesamt
-      - automation.sonoff4_load_lcd
-      - script.del_sonoff4_power_log
+
 
 sensor:
 

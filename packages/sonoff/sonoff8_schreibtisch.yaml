@@ -11,8 +11,8 @@ homeassistant:
 
   customize:
     switch.sonoff8:
-      friendly_name: MPD Weiß
-      icon: mdi:power-socket-eu
+      friendly_name: MPD Charger
+      icon: mdi:battery-30
     sensor.sonoff8_ipv4:
       friendly_name: IPv4 Sonoff 8
       icon: mdi:server-network
@@ -52,29 +52,10 @@ homeassistant:
     script.del_sonoff8_power_log:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
+    script.akkus_laden:
+      friendly_name: Akkuladeautomatik
+      icon: mdi:flash
 
-
-group:
-  sonoff8:
-    control: hidden
-    name: Sonoff 8
-    view: no
-    entities:
-      - switch.sonoff8
-      - sensor.sonoff8_ipv4
-      - sensor.sonoff8_uptime
-      - sensor.sonoff8_use
-      - sensor.sonoff8_momentane_leistung
-      - sensor.sonoff8_spannung
-      - sensor.sonoff8_stromstaerke
-      - sensor.sonoff8_max_load
-      - sensor.sonoff8_verbrauch_heute
-      - sensor.sonoff8_verbrauch_gestern
-      - sensor.sonoff8_gesamtverbrauch
-      - sensor.sonoff8_kosten_heute
-      - sensor.sonoff8_kosten_gestern
-      - sensor.sonoff8_kosten_gesamt
-      - script.del_sonoff8_power_log
 
 
 sensor:
@@ -169,8 +150,8 @@ sensor:
 
       sonoff8_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff8_momentane_leistung') | int > 3 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff8_momentane_leistung') | int > 3 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff8_momentane_leistung') | int > 1 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff8_momentane_leistung') | int > 1 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
@@ -215,12 +196,44 @@ automation:
           message: >
             {{ states.sensor.sonoff8_momentane_leistung.state }}
 
+  - alias: "Akkuladeautomatik"
+    initial_state: False
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.sonoff8_momentane_leistung
+        below: 1
+    action:
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.sensor.date_time.state }} Das Ladegerät verbaucht keinen Strom mehr und die Steckdose wurde ausgeschaltet!'
+      - service: switch.turn_off
+        entity_id: switch.sonoff8
+      - service: automation.turn_off
+        entity_id: automation.akkuladeautomatik
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: vape
+
+
+
 ### Delete the logfile (reset the maximum power sensor)
 
 script:
   del_sonoff8_power_log:
      sequence:
        - service: shell_command.del_sonoff8_power_log
+  akkus_laden:
+    alias: "Akkuladeautomatik"
+    sequence:
+     - service: automation.turn_on
+       entity_id: automation.akkuladeautomatik
+     - service: switch.turn_on
+       entity_id: switch.sonoff8
+     - service: persistent_notification.create
+       data:
+         message: '{{ states.sensor.date_time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'
+         title: "Akkuladegerät 18650"
+         notification_id: "vape"
 
 shell_command:
   del_sonoff8_power_log: rm /home/homeassistant/log/sonoff8/power.txt && touch /home/homeassistant/log/sonoff8/power.txt && chown -R -v homeassistant:homeassistant /home/homeassistant/log/sonoff8/power.txt

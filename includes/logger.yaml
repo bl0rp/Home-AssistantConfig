@@ -1,4 +1,4 @@
-default: error
+default: WARN
 logs:
   homeassistant.components.camera.generic: fatal
   homeassistant.components.shell_command: fatal

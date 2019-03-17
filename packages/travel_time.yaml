@@ -4,25 +4,6 @@
 ##############################################################
 
 homeassistant:
-  customize:
-    sensor.ZuhauseMarienhospital:
-      friendly_name: Fahrzeit MaHo
-      icon: mdi:car-sports
-    sensor.ZuhauseHauptrettungswache:
-      friendly_name: Fahrzeit HRW
-      icon: mdi:car-sports
-    sensor.HauptrettungswacheZuhause:
-      friendly_name:
-      icon: mdi:car-sports
-    sensor.waze_zuhause_hrw:
-      friendly_name: Fahrzeit HRW heimwärts (Waze)
-      icon: mdi:car-sports
-    sensor.StuttgartBerlin:
-      friendly_name:
-      icon: mdi:car-sports
-    sensor.waze_stuttgart_berlin:
-      friendly_name: Fahrzeit Hauptstadt (Waze)
-      icon: mdi:car-sports
 
 group:
   traveltime:

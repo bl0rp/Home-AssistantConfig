@@ -40,12 +40,6 @@ binary_sensor:
     payload_off: "OFF"
 sensor:
 
-  - platform: mqtt
-    name: "ESP8266 02 Status"
-    state_topic: "sensor_esp8266_02/status"
-    payload_on: "online"
-    payload_off: "offline"
-    qos: 0
 
   - platform: mqtt
     name: "Temperatur ESP8266 02"
@@ -97,7 +91,12 @@ sensor:
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
-
+        icon_template: >-
+          {% if is_state('device_tracker.esp8266_02_ping', 'home') %}
+            mdi:server-network
+          {% else %}
+            mdi:server-network-off
+          {% endif %}
       esp8266_02_uptime_human:
         friendly_name: Uptime esp8266_02
         value_template: >-

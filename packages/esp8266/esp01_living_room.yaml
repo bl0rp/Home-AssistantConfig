@@ -82,7 +82,12 @@ sensor:
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
-
+        icon_template: >-
+          {% if is_state('device_tracker.esp8266_01_ping', 'home') %}
+            mdi:server-network
+          {% else %}
+            mdi:server-network-off
+          {% endif %}
       esp8266_01_uptime_human:
         friendly_name: Uptime ESP8266_01
         value_template: >-
@@ -99,21 +104,21 @@ sensor:
 
              {%- set weeks = seconds // intervals.weeks -%}
              {%- set seconds = seconds % intervals.weeks -%}
-             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
+             {{- comma() ~ weeks ~ 'w' if weeks -}}
 
              {%- set days = seconds // intervals.days -%}
              {%- set seconds = seconds % intervals.days -%}
-             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
+             {{- comma() ~ days ~ 'd' if days -}}
 
              {%- set hours = seconds // intervals.hours -%}
              {%- set seconds = seconds % intervals.hours -%}
-             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
+             {{- comma() ~ hours ~ 'h' if hours -}}
 
              {%- set minutes = seconds // intervals.minutes -%}
-             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
+             {{- comma() ~ minutes ~ 'm' if minutes -}}
 
              {%- set seconds = seconds % intervals.minutes -%}
-             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
+             {{- comma() ~ seconds ~ 's' if seconds -}}
            {%- endmacro %}
            {{ human_time(states.sensor.esp8266_01_uptime.state | int * 60) }}
 

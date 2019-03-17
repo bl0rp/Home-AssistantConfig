@@ -54,7 +54,7 @@ sensor:
         value_template: >-
           {{ states.sensor.tasker_home.state }} via {{ states.sensor.tasker_home_connection.state }}
 
-#bt state from rpi zero https://github.com/andrewjfreyer/presence
+#bt state from rpi zero/nuc https://github.com/andrewjfreyer/presence
 
   - platform: mqtt
     state_topic: 'location/elw/B4:F1:DA:2C:91:4E'
@@ -68,6 +68,17 @@ sensor:
     unit_of_measurement: '%'
     name: 'monitor_pixel3_elw'
 
+  # - platform: mqtt
+  #   state_topic: 'location/1og/B4:F1:DA:2C:91:4E'
+  #   value_template: '{{ value_json.confidence }}'
+  #   unit_of_measurement: '%'
+  #   name: 'monitor_pixel2_1og'
+  #
+  # - platform: mqtt
+  #   state_topic: 'location/1og/3C:28:6D:08:DD:DA'
+  #   value_template: '{{ value_json.confidence }}'
+  #   unit_of_measurement: '%'
+  #   name: 'monitor_pixel3_1og'
 ###### STATE CARD for views.yaml
 
 group:
@@ -108,13 +119,20 @@ group:
 input_boolean:
   chrishome:
     name: "Christoph Status"
-    initial: on
+    initial: off
     icon: mdi:cellphone-android
 
   chrisbluetooth:
     name: "Christoph Bluetooth Status ELW"
-    initial: on
+    initial: off
     icon:  mdi:bluetooth-audio
+
+  # chrisbluetooth_1og:
+  #   name: "Christoph Bluetooth Status 1OG"
+  #   initial: off
+  #   icon:  mdi:bluetooth-audio
+
+
 input_select:
   christoph_status:
     name: Status Christoph
@@ -160,6 +178,36 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.chrisbluetooth
+#switch input_boolean bluetooth from on to off
+  - alias: 'input_boolean_chrisbluetooth_1og_off'
+    initial_state: True
+    condition:
+      condition: state
+      entity_id: input_boolean.chrisbluetooth_1og
+      state: 'on'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.monitor_pixel3_1og
+        below: 25
+        # for:
+        #   minutes: 2
+    action:
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.chrisbluetooth_1og
+#switch input_boolean_1og bluetooth from off to on
+  - alias: 'input_boolean_chrisbluetooth_1og_on'
+    initial_state: True
+    condition:
+      condition: state
+      entity_id: input_boolean.chrisbluetooth_1og
+      state: 'off'
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.monitor_pixel3_1og
+        above: 30
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.chrisbluetooth_1og
 #Switch input_boolean homestate  from on to off when gone
 
   - alias: 'DeviceTracker_Christoph_not_home'
@@ -202,7 +250,7 @@ automation:
       entity_id: input_boolean.chrishome
       state: 'off'
     trigger:
-#nmap/unifi 
+#nmap/unifi
       - platform: state
         entity_id: device_tracker.pixel3_xl
         to: 'home'
