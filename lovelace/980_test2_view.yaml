@@ -6,99 +6,12 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-    - type: entities
-      title: Geräte Netzwerk
-      show_header_toggle: false
-      entities:
-        - type: section
-        - sensor.clients_online
-        - type: custom:hui-history-graph-card
-          title: 'Clients (24h)'
-          hours_to_show: 24
-          entities:
-             - entity: sensor.clients_online
-               name: Geräte im Netzwerk
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Benachrichtigung
-          items:
-          - entity: automation.notify_to_logfile_if_device_goes_offline
-          - entity: automation.esp8266_sensor_state
-
-
-    - break
-    - type: entities
-      title: Online
-      show_header_toggle: false
-      entities:
-        - type: section
-        - type: custom:auto-entities
-          show_empty: false
-          card:
-            type: entities
-            show_header_toggle: false
-
-          filter:
-            include:
-              - state: "Online"
-                group: "group.device_status"
-                options:
-                  secondary_info: last-changed
-    - break
-    - type: entities
-      title: Offline
-      show_header_toggle: false
-      entities:
-        - type: section
-        - type: custom:auto-entities
-          show_empty: false
-          card:
-            type: entities
-            show_header_toggle: false
-          filter:
-            include:
-              - state: "Offline"
-                options:
-                  secondary_info: last-changed
-                group: "group.device_status"
-
-    - break
-    - type: entities
-      title: device_tracker
-      show_header_toggle: false
-      entities:
-        - type: section
-          label: Status
-        - type: custom:auto-entities
-          show_empty: false
-          card:
-            type: entities
-            show_header_toggle: false
-            title: home
-          filter:
-            include:
-              - domain: device_tracker
-                options:
-                  secondary_info: last-changed
-                state: "home"
-    - break
-    - type: entities
-      title: device_tracker
-      show_header_toggle: false
-      entities:
-        - type: section
-          label: Status
-        - sensor.pizero
-        - type: custom:auto-entities
-          show_empty: false
-          card:
-            type: entities
-            show_header_toggle: false
-            title: not_home
-          filter:
-            include:
-              - domain: device_tracker
-                options:
-                  secondary_info: last-changed
-                state: "not_home"
+    - type: custom:tracker-card
+    - type: markdown
+      title: TEST
+      content: >
+        **Oink**
+    - type: markdown
+      title: Test2
+      content: >
+        **Oin22323k**

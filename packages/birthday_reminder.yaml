@@ -34,11 +34,12 @@ sensor:
         entity_id: sensor.date_time
         value_template: >-
           {{ (as_timestamp(states.calendar.contacts.attributes.start_time) - as_timestamp(now()) )|int }}
- 
+
 # show next calendar entry
   - platform: template
     sensors:
       next_birthday:
+        entity_id: sensor.date_time
         value_template: >-
           {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.contacts.attributes.message|replace("hat Geburtstag", "")}}
 
@@ -61,8 +62,4 @@ automation:
         data_template:
           title: 'Erinnerung Geburtstag'
           message: >
-              {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.contacts.attributes.message}}
-
-
-
-
+              {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }}: Morgen {{states.calendar.contacts.attributes.message}}!

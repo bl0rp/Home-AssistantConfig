@@ -397,7 +397,7 @@ cards:
       show_header_toggle: false
       entities:
       - type: section
-      - entity: sensor.qnap1
+      - entity: binary_sensor.network_storage_qnap1
       - entity: sensor.qnap1_status
       - entity: sensor.qnap1_smart_status
         name: SMART

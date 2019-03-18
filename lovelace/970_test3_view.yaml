@@ -1,0 +1,47 @@
+2title: test3
+path: test3
+icon: mdi:close-octagon
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: custom:tracker-card
+    - break
+    - type: custom:auto-entities
+      show_empty: true
+      card:
+        type: entities
+        title: Maybe broken?
+      filter:
+        include:
+          - state: "unknown"
+            options:
+              secondary_info: entity-id
+        exclude:
+          - entity_id: group.*
+    - break
+    - type: custom:auto-entities
+      show_empty: true
+      card:
+        type: entities
+        title: Maybe lost?
+      filter:
+        include:
+          - state: "unavailable"
+            options:
+              secondary_info: entity-id
+        exclude:
+          - entity_id: group.*
+    - break
+    - type: entities
+      title: Folding groups
+      entities:
+        - type: custom:fold-entity-row
+          head: group.all_lights
+        - type: custom:fold-entity-row
+          head: group.all_scripts
+        - type: custom:fold-entity-row
+          head: group.all_automations
+        - type: custom:fold-entity-row
+          head: group.all_switches

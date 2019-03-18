@@ -13,14 +13,14 @@ cards:
           show_header_toggle: false
           entities:
             - type: section
-            - entity: input_boolean.chrishome
+            - entity: binary_sensor.chrishome_template
               secondary_info: last-changed
               name: Christoph
-            - entity: device_tracker.ewald_ip
+            - entity: device_tracker.user_devices_phone_ewald
               secondary_info: last-changed
-            - entity: device_tracker.traude_ip
+            - entity: device_tracker.user_devices_phone_traude
               secondary_info: last-changed
-            - entity: device_tracker.hanni_iphone_ip
+            - entity: device_tracker.user_devices_phone_johanna
               secondary_info: last-changed
 
     - type: custom:vertical-stack-in-card
@@ -30,9 +30,9 @@ cards:
           show_header_toggle: false
           entities:
             - type: section
-            - entity: device_tracker.iphonexs_petros
+            - entity: device_tracker.user_devices_phone_petros
               secondary_info: last-changed
-            - entity: device_tracker.64_a2_f9_f2_5c_9b
+            - entity: device_tracker.user_devices_phone_jan
               secondary_info: last-changed
 
 

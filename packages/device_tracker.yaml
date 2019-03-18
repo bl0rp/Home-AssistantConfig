@@ -31,14 +31,14 @@ sensor:
       device_tracker_traude_last_changed:
         friendly_name: "Traude letzte Änderung"
         value_template: >-
-          {{ as_timestamp(states.device_tracker.traude_ip.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.device_tracker.user_devices_phone_traude.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
   - platform: template
     sensors:
       device_tracker_ewald_last_changed:
         friendly_name: "Ewald letzte Änderung"
         value_template: >-
-          {{ as_timestamp(states.device_tracker.ewald_ip.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.device_tracker.user_devices_phone_ewald.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
   - platform: template
     sensors:
@@ -102,9 +102,9 @@ group:
     icon: mdi:account-multiple
     entities:
       - input_boolean.chrishome
-      - device_tracker.ewald_ip
-      - device_tracker.traude_ip
-      - device_tracker.hanni_iphone_ip
+      - device_tracker.user_devices_phone_ewald
+      - device_tracker.user_devices_phone_traude
+      - device_tracker.user_devices_phone_johanna
 
   familiegrpstate:
     name: Letzte Änderung
@@ -218,7 +218,7 @@ automation:
       state: 'on'
     trigger:
       - platform: state
-        entity_id: device_tracker.pixel3_xl
+        entity_id: device_tracker.user_devices_phone_christoph
         to: 'not_home'
         for:
           minutes: 10
@@ -228,7 +228,7 @@ automation:
       #   for:
       #     minutes: 5
       - platform: state
-        entity_id: device_tracker.897y04duz
+        entity_id: device_tracker.user_devices_phone_christoph_gpslogger
         to: 'not_home'
         for:
           minutes: 5
@@ -252,11 +252,11 @@ automation:
     trigger:
 #nmap/unifi
       - platform: state
-        entity_id: device_tracker.pixel3_xl
+        entity_id: device_tracker.user_devices_phone_christoph
         to: 'home'
 #gpslogger
       - platform: state
-        entity_id: device_tracker.897y04duz
+        entity_id: device_tracker.user_devices_phone_christoph_gpslogger
         to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_nuc
@@ -428,17 +428,17 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - device_tracker.traude_ip
-          - device_tracker.ewald_ip
-          - device_tracker.hanni_iphone_ip
+          - device_tracker.user_devices_phone_traude
+          - device_tracker.user_devices_phone_ewald
+          - device_tracker.user_devices_phone_johanna
         from: 'not_home'
         to: 'home'
 
       - platform: state
         entity_id:
-          - device_tracker.traude_ip
-          - device_tracker.ewald_ip
-          - device_tracker.hanni_iphone_ip
+          - device_tracker.user_devices_phone_traude
+          - device_tracker.user_devices_phone_ewald
+          - device_tracker.user_devices_phone_johanna
         from: 'home'
         to: 'not_home'
 

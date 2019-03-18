@@ -30,8 +30,7 @@
   exclude:
     - !secret hass_ip
 
-#- platform: owntracks
-#  max_gps_accuracy: 200
+
 
 #- platform: bluetooth_tracker
 
@@ -40,15 +39,15 @@
     chris_bluetooth_nuc: 'bluetooth_nuc/presence/pixel2'
 
 
-- platform: ping
-  hosts:
-    esp8266_01_ping: !secret esp8266_01_ip
-    esp8266_02_ping: !secret esp8266_02_ip
-    esp8266_03_ping: !secret esp8266_03_ip
-    esp8266_04_ping: !secret esp8266_04_ip
-    esp8266_05_ping: !secret esp8266_05_ip
-    esp8266_06_ping: !secret esp8266_06_ip
-    esp8266_07_ping: !secret esp8266_07_ip
+# - platform: ping
+#   hosts:
+#     esp8266_01_ping: !secret esp8266_01_ip
+#     esp8266_02_ping: !secret esp8266_02_ip
+#     esp8266_03_ping: !secret esp8266_03_ip
+#     esp8266_04_ping: !secret esp8266_04_ip
+#     esp8266_05_ping: !secret esp8266_05_ip
+#     esp8266_06_ping: !secret esp8266_06_ip
+#     esp8266_07_ping: !secret esp8266_07_ip
 
 
 - platform: unifi

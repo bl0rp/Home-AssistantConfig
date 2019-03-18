@@ -30,9 +30,6 @@ homeassistant:
       icon: mdi:wifi
       friendly_name: "ESP32 #3 Signalstärke"
 
-    sensor.esp32_03_uptime_human:
-      icon: mdi:timer
-      friendly_name: Uptime
 
     sensor.esp32_03_temperature_last_changed:
       icon: mdi:delta
@@ -41,33 +38,11 @@ homeassistant:
     automation.benachrichtigung_batterie_esp32_03:
       icon: mdi:power-socket-eu
       friendly_name: Akkuwarnung
-#############
-#  group    #
-#############
-group:
-  esp32_03:
-    control: hidden
-    icon: mdi:door
-    name: Temperatursensor BME280
-    entities:
-#      - sensor.esp32_03_uptime_human
-      - sensor.esp32_03_rssi
-      - sensor.esp32_03_battery
-      - sensor.esp32_03_battery_state
-      - sensor.esp32_03_temperature
-      - sensor.esp32_03_humidity
-      - sensor.esp32_03_pressure
-      - sensor.esp32_03_temperature_last_changed
-      - automation.benachrichtigung_batterie_esp32_03
+
 #############
 #  switch   #
 #############
 switch:
-  - platform: mqtt
-    name: ESP32_3 Restart
-    state_topic: esp32_3/switch/esp32_3_restart/state
-    command_topic: esp32_3/switch/esp32_3_restart/command
-
   - platform: mqtt
     name: ESP32_3 Shutdown
     state_topic: esp32_3/switch/esp32_3_shutdown/state
@@ -115,48 +90,11 @@ sensor:
     unit_of_measurement: "dB"
     force_update: true
 
-  - platform: mqtt
-    name: "esp32_03_uptime"
-    state_topic: "esp32_3/sensor/uptime/state"
-    qos: 0
-    unit_of_measurement: "s"
+
 
 
   - platform: template
     sensors:
-      esp32_03_uptime_human:
-        value_template: >-
-           {% macro human_time(seconds) -%}
-             {%- set seconds = seconds|int -%}
-             {%- set comma = joiner(', ') -%}
-             {%- set intervals = {
-               'weeks': 60 * 60 * 24 * 7,
-               'days': 60 * 60 * 24,
-               'hours': 60 * 60,
-               'minutes': 60,
-               'seconds': 1,
-             } -%}
-
-             {%- set weeks = seconds // intervals.weeks -%}
-             {%- set seconds = seconds % intervals.weeks -%}
-             {{- comma() ~ weeks ~ ' week' ~ ('s' if weeks != 1) if weeks -}}
-
-             {%- set days = seconds // intervals.days -%}
-             {%- set seconds = seconds % intervals.days -%}
-             {{- comma() ~ days ~ ' day' ~ ('s' if days != 1) if days -}}
-
-             {%- set hours = seconds // intervals.hours -%}
-             {%- set seconds = seconds % intervals.hours -%}
-             {{- comma() ~ hours ~ ' hour' ~ ('s' if hours != 1) if hours -}}
-
-             {%- set minutes = seconds // intervals.minutes -%}
-             {{- comma() ~ minutes ~ ' minute' ~ ('s' if minutes != 1) if minutes -}}
-
-             {%- set seconds = seconds % intervals.minutes -%}
-             {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
-           {%- endmacro %}
-           {{ human_time(states.sensor.esp32_03_uptime.state | int ) }}
-
 
       esp32_03_battery_state:
         value_template: "{{ 'Geladen ' if states.sensor.esp32_03_battery.state | float >3.3  else 'Leer' }}"

@@ -1,0 +1,158 @@
+title: net
+path: net
+icon: mdi:ethernet-cable
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: entities
+      title: Geräte Netzwerk
+      show_header_toggle: false
+      entities:
+        - type: section
+        - sensor.clients_online
+        - type: custom:hui-history-graph-card
+          title: 'Clients (24h)'
+          hours_to_show: 24
+          entities:
+             - entity: sensor.clients_online
+               name: Geräte im Netzwerk
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Benachrichtigung
+          items:
+          - entity: automation.notify_to_logfile_if_device_goes_offline
+          - entity: automation.esp8266_sensor_state
+
+
+    - break
+    - type: entities
+      title: Netzwerkgeräte
+      show_header_toggle: false
+      entities:
+        - type: section
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: binary_sensor.network_ap*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_hub*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_storage*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_printer*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_media_player*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.soc_pi*
+                options:
+                  secondary_info: last-changed
+            exclude:
+              - state: 'off'
+
+
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Offline
+          filter:
+            include:
+              - entity_id: binary_sensor.network_ap*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_hub*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_storage*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_printer*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.network_media_player*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.soc_pi*
+                options:
+                  secondary_info: last-changed
+            exclude:
+              - state: 'on'
+
+
+
+    - break
+    - type: entities
+      title: Netzwerkgeräte (Benutzer)
+      show_header_toggle: false
+      entities:
+        - type: section
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: binary_sensor.user_devices_computer_*
+                options:
+                  secondary_info: last-changed
+
+            exclude:
+              - state: 'off'
+
+
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Offline
+          filter:
+            include:
+              - entity_id: binary_sensor.user_devices_computer_*
+                options:
+                  secondary_info: last-changed
+            exclude:
+              - state: 'on'
+    - break
+    - type: entities
+      title: Controller
+      show_header_toggle: false
+      entities:
+        - type: section
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: binary_sensor.soc_*
+                options:
+                  secondary_info: last-changed
+
+            exclude:
+              - state: 'off'
+
+
+        - type: custom:auto-entities
+          card:
+            type: custom:fold-entity-row
+            head:
+              type: section
+              label: Offline
+          filter:
+            include:
+              - entity_id: binary_sensor.soc_*
+                options:
+                  secondary_info: last-changed
+
+            exclude:
+              - state: 'on'

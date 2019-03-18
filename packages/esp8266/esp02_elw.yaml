@@ -79,20 +79,18 @@ sensor:
   - platform: template
     sensors:
 
-      esp8266_02:
-        friendly_name: 'ESP8266 #2'
-        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_02_ping', 'home') else 'Offline' }}"
+
 
       esp8266_02_status_var:
         friendly_name: "ESP8266 02 Status"
         value_template: >-
-           {%- if is_state('device_tracker.esp8266_02_ping', 'home') -%}
+           {%- if is_state('device_tracker.soc_esp8266_02', 'home') -%}
              Online! Uptime: {{ states.sensor.esp8266_02_uptime_human.state }}
            {%- else -%}
              Sensor ist offline!
            {%- endif -%}
         icon_template: >-
-          {% if is_state('device_tracker.esp8266_02_ping', 'home') %}
+          {% if is_state('device_tracker.soc_esp8266_02', 'home') %}
             mdi:server-network
           {% else %}
             mdi:server-network-off

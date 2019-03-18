@@ -75,8 +75,6 @@ homeassistant:
        friendly_name: Stündliche Zusammenfassung (DarkSky)
     sensor.dark_sky_humidity:
        friendly_name: Luftfeuchtigkeit (DarkSky)
-    sensor.dark_sky_minutely_summary:
-       friendly_name: Minütliche Zusammenfassung (DarkSky)
     sensor.dark_sky_ozone:
        friendly_name: Ozon (DarkSky)
     sensor.dark_sky_precip:
@@ -166,7 +164,6 @@ group:
       - sensor.dark_sky_dew_point
       - sensor.dark_sky_hourly_summary
       - sensor.dark_sky_humidity
-      - sensor.dark_sky_minutely_summary
       - sensor.dark_sky_ozone
       - sensor.dark_sky_precip
       - sensor.dark_sky_precip_intensity
@@ -227,7 +224,6 @@ sensor:
       - pressure
       - visibility
       - ozone
-      - minutely_summary
       - hourly_summary
       - daily_summary
       - temperature_high

@@ -37,6 +37,7 @@ cards:
                       - group: "group.sonoff_sw_version"
                     exclude:
                       - state: "unknown"
+                      - state: "unavailable"
 
     - type: history-graph
       title: 'WKS'

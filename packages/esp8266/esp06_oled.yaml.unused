@@ -3,33 +3,13 @@
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
 homeassistant:
-  customize:
 
-    sensor.esp8266_06:
-      entity_picture: /local/esp.jpg
-
-    sensor.temperatur_esp8266_06:
-      icon: mdi:thermometer
-      friendly_name: Temperatur esp06
-
-    sensor.luftfeuchtigkeit_esp8266_06:
-      icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit esp06
-
-    sensor.esp8266_06_ip:
-      icon: mdi:server-network
-      friendly_name: IPv4 ESP 06
-
-###############################################################################
+#############################
 #  Sensors
 ###############################################################################
 sensor:
 
-  - platform: mqtt
-    name: "Temperatur ESP8266 06"
-    state_topic: "sensor_esp8266_06/dht22/Temperature"
-    qos: 0
-    unit_of_measurement: "°C"
+
 
   - platform: mqtt
     name: "ESP8266 06 IP"
@@ -39,16 +19,7 @@ sensor:
     payload_not_available: "Connection Lost"
     qos: 0
 
-  - platform: mqtt
-    name: "Luftfeuchtigkeit ESP8266 06"
-    state_topic: "sensor_esp8266_06/dht22/Humidity"
-    qos: 0
-    unit_of_measurement: "%"
 
-  - platform: mqtt
-    name: "ESP8266 06 PIR"
-    state_topic: "sensor_esp8266_06/pir/motion"
-    qos: 0
 
   - platform: mqtt
     name: "ESP8266 06 Status"
@@ -70,9 +41,6 @@ sensor:
   - platform: template
     sensors:
 
-      esp8266_06:
-        friendly_name: 'ESP8266 #6'
-        value_template: "{{ 'Online' if is_state('device_tracker.esp8266_06_ping', 'home') else 'Offline' }}"
 
       esp8266_06_status_var:
         friendly_name: "ESP8266 06 Status"
@@ -116,14 +84,3 @@ sensor:
              {{- comma() ~ seconds ~ ' second' ~ ('s' if seconds != 1) if seconds -}}
            {%- endmacro %}
            {{ human_time(states.sensor.esp8266_06_uptime.state | int * 60) }}
-
-      esp8266_06_motion:
-        friendly_name: esp06
-        value_template: '{% if is_state("sensor.esp8266_06_pir", "1") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.esp8266_06_pir", "1") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
-
-
-      esp06_motion_last_triggered:
-        friendly_name: "esp06 Motion Last Triggered"
-        value_template: >-
-          {{ as_timestamp(states.sensor.esp8266_06_motion.last_changed)|timestamp_custom('%H:%M:%S %d.%m.%Y') }}

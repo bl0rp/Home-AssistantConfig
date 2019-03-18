@@ -3,19 +3,6 @@
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
 ########################################################################
 homeassistant:
-  customize:
-    sensor.multisensor_motion_last_triggered:
-      friendly_name: Multisensor
-      icon: mdi:camera
-    sensor.elw_motion_last_triggered:
-      friendly_name: PIR
-      icon: mdi:camera
-    device_tracker.pixel3_xl:
-      friendly_name: Christoph via nmap/unifi
-      icon: mdi:radar
-    device_tracker.897y04duz:
-      friendly_name: GPSLogger Pixel3 XL
-      icon: mdi:radar
 
 #############
 #  group    #
@@ -39,8 +26,8 @@ group:
     control: hidden
     entities:
       - sensor.phonebatt_pixel3xl
-      - device_tracker.pixel3_xl
-      - device_tracker.897y04duz
+      - device_tracker.user_devices_phone_christoph
+      - device_tracker.user_devices_phone_christoph_gpslogger
       - input_boolean.chrisbluetooth
       - input_boolean.chrishome
       - input_select.christoph_status
@@ -162,7 +149,7 @@ automation:
             minutes: 2
     condition:
     - condition: state
-      entity_id: 'device_tracker.hanni_iphone_ip'
+      entity_id: 'device_tracker.user_devices_phone_johanna'
       state: 'not_home'
     action:
       - service: scene.turn_on

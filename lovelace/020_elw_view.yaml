@@ -108,7 +108,7 @@ cards:
         icon: 'mdi:map-marker-circle'
         name: Christoph Status
         secondary_info: last-changed
-      - entity: device_tracker.pixel3_xl
+      - entity: device_tracker.user_devices_phone_christoph
         secondary_info: last-changed
         name: Christoph via nmap/unifi
         icon: 'mdi:wifi'
