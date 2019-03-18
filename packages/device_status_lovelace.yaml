@@ -31,6 +31,10 @@
 homeassistant:
 
   customize:
+#template input_boolean from device_tracker.yaml to home/nicole_phone_to_home
+    binary_sensor.chrishome_template:
+      friendly_name: Christoph
+
 #GPSLogger
     device_tracker.897y04duz:
       friendly_name: GPSLogger Pixel3 XL
@@ -165,7 +169,7 @@ homeassistant:
       friendly_name: "Petros (WiFi)"
       icon: mdi:wifi
     device_tracker.user_devices_phone_steffi:
-      friendly_name: "Steffio (WiFi)"
+      friendly_name: "Steffi (WiFi)"
       icon: mdi:wifi
     device_tracker.user_devices_phone_traude:
       friendly_name: "Traude (Wifi)"
@@ -181,138 +185,138 @@ homeassistant:
       friendly_name: GPSLogger Pixel3 XL
       icon: mdi:radar
 #network
-    sensor.network_ap_ddwrt:
+    binary_sensor.network_ap_ddwrt:
       friendly_name: "WiFi AP DD-WRT"
       icon: mdi:router-wireless
-    sensor.network_ap_gateway:
+    binary_sensor.network_ap_gateway:
       friendly_name: "Router ISP"
       icon: mdi:router-wireless
-    sensor.network_ap_unifi_elw:
+    binary_sensor.network_ap_unifi_elw:
       friendly_name: "WiFi AP Unifi ELW"
       icon: mdi:router-wireless
 #network hub
-    sensor.network_hub_echo_dot:
+    binary_sensor.network_hub_echo_dot:
       friendly_name: "Echo Dot"
       icon: mdi:amazon-alexa
-    sensor.network_hub_tradfri:
+    binary_sensor.network_hub_tradfri:
       friendly_name: "Tradfri Hub"
       icon: mdi:zigbee
 #media player
-    sensor.network_media_player_pi2kodi:
+    binary_sensor.network_media_player_pi2kodi:
       friendly_name: "Kodi"
       icon: mdi:kodi
-    sensor.network_media_player_volumio:
+    binary_sensor.network_media_player_volumio:
       friendly_name: "Volumio"
       icon: mdi:library-music
-    sensor.network_media_player_yamaha_rxv473:
+    binary_sensor.network_media_player_yamaha_rxv473:
       friendly_name: "Verstärker"
       icon: mdi:speaker
 #printer
-    sensor.network_printer_hp_1og:
+    binary_sensor.network_printer_hp_1og:
       friendly_name: "HP Deskjet Büro"
       icon: mdi:printer
 #storage
-    sensor.network_storage_qnap1:
+    binary_sensor.network_storage_qnap1:
       friendly_name: "Qnap 1"
       icon: mdi:nas
 #espxx, RaspberryPi
-    sensor.soc_esp32_01:
+    binary_sensor.soc_esp32_01:
       friendly_name: "ESP32 #1"
       icon: mdi:chip
-    sensor.soc_esp32_02:
+    binary_sensor.soc_esp32_02:
       friendly_name: "ESP32 #2"
       icon: mdi:chip
-    sensor.soc_esp32_03:
+    binary_sensor.soc_esp32_03:
       friendly_name: "ESP32 #3"
       icon: mdi:chip
-    sensor.soc_esp8266_01:
+    binary_sensor.soc_esp8266_01:
       friendly_name: "ESP8266 #1"
       icon: mdi:chip
-    sensor.soc_esp8266_02:
+    binary_sensor.soc_esp8266_02:
       friendly_name: "ESP8266 #2"
       icon: mdi:chip
-    sensor.soc_esp8266_03:
+    binary_sensor.soc_esp8266_03:
       friendly_name: "ESP8266 #3"
       icon: mdi:chip
-    sensor.soc_esp8266_04:
+    binary_sensor.soc_esp8266_04:
       friendly_name: "ESP8266 #4"
       icon: mdi:chip
-    sensor.soc_esp8266_05:
+    binary_sensor.soc_esp8266_05:
       friendly_name: "ESP8266 #5"
       icon: mdi:chip
-    sensor.soc_esp8266_07:
+    binary_sensor.soc_esp8266_07:
       friendly_name: "ESP8266 #7 (OpenMQTT RF)"
       icon: mdi:chip
-    sensor.soc_pi1_wifi:
+    binary_sensor.soc_pi1_wifi:
       friendly_name: "RaspberryPi WiFi (Camera)"
       icon: mdi:chip
-    sensor.soc_pizero_wifi:
+    binary_sensor.soc_pizero_wifi:
       friendly_name: "RaspberryPi Zero (BT)"
       icon: mdi:chip
 #sonoff wemo
-    sensor.switch_sonoff_sonoff1:
+    binary_sensor.switch_sonoff_sonoff1:
       friendly_name: "Sonoff #1"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff2:
+    binary_sensor.switch_sonoff_sonoff2:
       friendly_name: "Sonoff #2"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff3:
+    binary_sensor.switch_sonoff_sonoff3:
       friendly_name: "Sonoff #3"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff4:
+    binary_sensor.switch_sonoff_sonoff4:
       friendly_name: "Sonoff #4"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff5:
+    binary_sensor.switch_sonoff_sonoff5:
       friendly_name: "Sonoff #5"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff6:
+    binary_sensor.switch_sonoff_sonoff6:
       friendly_name: "Sonoff #6"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff7:
+    binary_sensor.switch_sonoff_sonoff7:
       friendly_name: "Sonoff #7"
       icon: mdi:power-socket-eu
-    sensor.switch_sonoff_sonoff8:
+    binary_sensor.switch_sonoff_sonoff8:
       friendly_name: "Sonoff #8"
       icon: mdi:power-socket-eu
-    sensor.switch_wemo_wemoswitch1:
+    binary_sensor.switch_wemo_wemoswitch1:
       friendly_name: "WeMo Switch #1"
       icon: mdi:power-socket-eu
-    sensor.switch_wemo_wemoswitch2:
+    binary_sensor.switch_wemo_wemoswitch2:
       friendly_name: "WeMo Switch #2"
       icon: mdi:power-socket-eu
 #computers, tablets
-    sensor.user_devices_computer_chris_macbook:
+    binary_sensor.user_devices_computer_chris_macbook:
       friendly_name: "Macbook Christoph"
       icon: mdi:laptop-mac
-    sensor.user_devices_computer_chris_workstation:
+    binary_sensor.user_devices_computer_chris_workstation:
       friendly_name: "Workstation Christoph"
       icon: mdi:desktop-tower-monitor
-    sensor.user_devices_computer_ipad:
+    binary_sensor.user_devices_computer_ipad:
       friendly_name: "iPad"
       icon: mdi:tablet-ipad
-    sensor.user_devices_computer_nexus7:
+    binary_sensor.user_devices_computer_nexus7:
       friendly_name: "Tablet Android"
       icon: mdi:tablet-android
 #mobile phones
-    sensor.user_devices_phone_christoph:
+    binary_sensor.user_devices_phone_christoph:
       friendly_name: "Christoph (Wifi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_ewald:
+    binary_sensor.user_devices_phone_ewald:
       friendly_name: "Ewald (WiFi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_jan:
+    binary_sensor.user_devices_phone_jan:
       friendly_name: "Jan (WiFi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_johanna:
+    binary_sensor.user_devices_phone_johanna:
       friendly_name: "Johanna (WiFi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_petros:
+    binary_sensor.user_devices_phone_petros:
       friendly_name: "Petros (WiFi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_steffi:
-      friendly_name: "Steffio (WiFi)"
+    binary_sensor.user_devices_phone_steffi:
+      friendly_name: "Steffi (WiFi)"
       icon: mdi:wifi
-    sensor.user_devices_phone_traude:
+    binary_sensor.user_devices_phone_traude:
       friendly_name: "Traude (Wifi)"
       icon: mdi:wifi
 
@@ -371,76 +375,76 @@ group:
     entities:
       - device_tracker.897y04duz
       - device_tracker.user_devices_phone_christoph
-      - sensor.user_devices_computer_chris_macbook
-      - sensor.user_devices_computer_chris_workstation
+      - binary_sensor.user_devices_computer_chris_macbook
+      - binary_sensor.user_devices_computer_chris_workstation
 
 
   device_tracker_network:
     entities:
-      - sensor.network_ap_ddwrt
-      - sensor.network_ap_gateway
-      - sensor.network_ap_unifi_elw
-      - sensor.network_hub_echo_dot
-      - sensor.network_hub_tradfri
-      - sensor.network_media_player_pi2kodi
-      - sensor.network_media_player_volumio
-      - sensor.network_media_player_yamaha_rxv473
-      - sensor.network_printer_hp_1og
-      - sensor.network_storage_qnap1
-      - sensor.soc_pi1_wifi
-      - sensor.soc_pizero_wifi
+      - binary_sensor.network_ap_ddwrt
+      - binary_sensor.network_ap_gateway
+      - binary_sensor.network_ap_unifi_elw
+      - binary_sensor.network_hub_echo_dot
+      - binary_sensor.network_hub_tradfri
+      - binary_sensor.network_media_player_pi2kodi
+      - binary_sensor.network_media_player_volumio
+      - binary_sensor.network_media_player_yamaha_rxv473
+      - binary_sensor.network_printer_hp_1og
+      - binary_sensor.network_storage_qnap1
+      - binary_sensor.soc_pi1_wifi
+      - binary_sensor.soc_pizero_wifi
   device_tracker_network_gateway:
     entities:
-      - sensor.network_ap_ddwrt
-      - sensor.network_ap_gateway
-      - sensor.network_ap_unifi_elw
+      - binary_sensor.network_ap_ddwrt
+      - binary_sensor.network_ap_gateway
+      - binary_sensor.network_ap_unifi_elw
 
   device_tracker_hub:
     entities:
-      - sensor.network_hub_echo_dot
-      - sensor.network_hub_tradfri
+      - binary_sensor.network_hub_echo_dot
+      - binary_sensor.network_hub_tradfri
 
   device_tracker_media_player:
     entities:
-      - sensor.network_media_player_pi2kodi
-      - sensor.network_media_player_volumio
-      - sensor.network_media_player_yamaha_rxv473
+      - binary_sensor.network_media_player_pi2kodi
+      - binary_sensor.network_media_player_volumio
+      - binary_sensor.network_media_player_yamaha_rxv473
 
 
   device_tracker_soc:
     entities:
-      - sensor.soc_esp32_01
-      - sensor.soc_esp32_02
-      - sensor.soc_esp32_03
-      - sensor.soc_esp8266_01
-      - sensor.soc_esp8266_02
-      - sensor.soc_esp8266_03
-      - sensor.soc_esp8266_04
-      - sensor.soc_esp8266_05
-      - sensor.soc_esp8266_07
-      - sensor.soc_pi1_wifi
-      - sensor.soc_pizero_wifi
+      - binary_sensor.soc_esp32_01
+      - binary_sensor.soc_esp32_02
+      - binary_sensor.soc_esp32_03
+      - binary_sensor.soc_esp8266_01
+      - binary_sensor.soc_esp8266_02
+      - binary_sensor.soc_esp8266_03
+      - binary_sensor.soc_esp8266_04
+      - binary_sensor.soc_esp8266_05
+      - binary_sensor.soc_esp8266_07
+      - binary_sensor.soc_pi1_wifi
+      - binary_sensor.soc_pizero_wifi
 
 
   device_tracker_switch:
     entities:
-      - sensor.switch_sonoff_sonoff1
-      - sensor.switch_sonoff_sonoff2
-      - sensor.switch_sonoff_sonoff3
-      - sensor.switch_sonoff_sonoff4
-      - sensor.switch_sonoff_sonoff5
-      - sensor.switch_sonoff_sonoff6
-      - sensor.switch_sonoff_sonoff7
-      - sensor.switch_sonoff_sonoff8
-      - sensor.switch_wemo_wemoswitch1
-      - sensor.switch_wemo_wemoswitch2
+      - binary_sensor.switch_sonoff_sonoff1
+      - binary_sensor.switch_sonoff_sonoff2
+      - binary_sensor.switch_sonoff_sonoff3
+      - binary_sensor.switch_sonoff_sonoff4
+      - binary_sensor.switch_sonoff_sonoff5
+      - binary_sensor.switch_sonoff_sonoff6
+      - binary_sensor.switch_sonoff_sonoff7
+      - binary_sensor.switch_sonoff_sonoff8
+      - binary_sensor.switch_wemo_wemoswitch1
+      - binary_sensor.switch_wemo_wemoswitch2
 
   device_tracker_user_devices:
     entities:
-      - sensor.user_devices_computer_chris_macbook
-      - sensor.user_devices_computer_chris_workstation
-      - sensor.user_devices_computer_ipad
-      - sensor.user_devices_computer_nexus7
+      - binary_sensor.user_devices_computer_chris_macbook
+      - binary_sensor.user_devices_computer_chris_workstation
+      - binary_sensor.user_devices_computer_ipad
+      - binary_sensor.user_devices_computer_nexus7
   device_tracker_user_phone:
     entities:
       - device_tracker.user_devices_phone_christoph
@@ -476,6 +480,15 @@ sensor:
             {%- for d in states.device_tracker if d.state == 'home' -%}
             {{- loop.length if loop.first -}}
             {%- endfor -%}
+#template input_boolean from device_tracker.yaml to home/nicole_phone_to_home
+binary_sensor:
+  - platform: template
+    sensors:
+      chrishome_template:
+        value_template: "{{ is_state('input_boolean.chrishome', 'on') }}"
+        device_class: presence
+
+
 
 
 
@@ -486,141 +499,138 @@ sensor:
 # {%- set domains = [ states.device_tracker ] %}
 # {%- for domain in domains %}
 # {% for item in domain %}
-# {{ item.entity_id.ljust(0)|replace("device_tracker.","") }}:{% raw %}
-#   value_template: "{{'Online' if is_state('{% endraw %}{{
-#  item.entity_id.ljust(0)}}{% raw %}', 'home') else 'Offline'}}"
-#   {% endraw %}
+# {{ item.entity_id.ljust(0)|replace("device_tracker.","") }}:
+#   value_template: {% raw %}"{{ is_state('{% endraw %}{{item.entity_id.ljust(0)}}{% raw %}', 'home') }}"{% endraw %}
+#   device_class: connectivity
 # {%- endfor %}
 # {%- endfor %}
 
       network_ap_ddwrt:
-        value_template: "{{'Online' if is_state('device_tracker.network_ap_ddwrt', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_ap_ddwrt', 'home') }}"
+        device_class: connectivity
       network_ap_gateway:
-        value_template: "{{'Online' if is_state('device_tracker.network_ap_gateway', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_ap_gateway', 'home') }}"
+        device_class: connectivity
       network_ap_unifi_elw:
-        value_template: "{{'Online' if is_state('device_tracker.network_ap_unifi_elw', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_ap_unifi_elw', 'home') }}"
+        device_class: connectivity
       network_hub_echo_dot:
-        value_template: "{{'Online' if is_state('device_tracker.network_hub_echo_dot', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_hub_echo_dot', 'home') }}"
+        device_class: connectivity
       network_hub_tradfri:
-        value_template: "{{'Online' if is_state('device_tracker.network_hub_tradfri', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_hub_tradfri', 'home') }}"
+        device_class: connectivity
       network_media_player_pi2kodi:
-        value_template: "{{'Online' if is_state('device_tracker.network_media_player_pi2kodi', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_media_player_pi2kodi', 'home') }}"
+        device_class: connectivity
       network_media_player_volumio:
-        value_template: "{{'Online' if is_state('device_tracker.network_media_player_volumio', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_media_player_volumio', 'home') }}"
+        device_class: connectivity
       network_media_player_yamaha_rxv473:
-        value_template: "{{'Online' if is_state('device_tracker.network_media_player_yamaha_rxv473', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_media_player_yamaha_rxv473', 'home') }}"
+        device_class: connectivity
       network_printer_hp_1og:
-        value_template: "{{'Online' if is_state('device_tracker.network_printer_hp_1og', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_printer_hp_1og', 'home') }}"
+        device_class: connectivity
       network_storage_qnap1:
-        value_template: "{{'Online' if is_state('device_tracker.network_storage_qnap1', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.network_storage_qnap1', 'home') }}"
+        device_class: connectivity
       soc_esp32_01:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp32_01', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp32_01', 'home') }}"
+        device_class: connectivity
       soc_esp32_02:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp32_02', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp32_02', 'home') }}"
+        device_class: connectivity
       soc_esp32_03:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp32_03', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp32_03', 'home') }}"
+        device_class: connectivity
       soc_esp8266_01:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_01', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_01', 'home') }}"
+        device_class: connectivity
       soc_esp8266_02:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_02', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_02', 'home') }}"
+        device_class: connectivity
       soc_esp8266_03:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_03', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_03', 'home') }}"
+        device_class: connectivity
       soc_esp8266_04:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_04', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_04', 'home') }}"
+        device_class: connectivity
       soc_esp8266_05:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_05', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_05', 'home') }}"
+        device_class: connectivity
       soc_esp8266_07:
-        value_template: "{{'Online' if is_state('device_tracker.soc_esp8266_07', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_esp8266_07', 'home') }}"
+        device_class: connectivity
       soc_pi1_wifi:
-        value_template: "{{'Online' if is_state('device_tracker.soc_pi1_wifi', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_pi1_wifi', 'home') }}"
+        device_class: connectivity
       soc_pizero_wifi:
-        value_template: "{{'Online' if is_state('device_tracker.soc_pizero_wifi', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.soc_pizero_wifi', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff1:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff1', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff1', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff2:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff2', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff2', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff3:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff3', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff3', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff4:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff4', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff4', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff5:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff5', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff5', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff6:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff6', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff6', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff7:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff7', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff7', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff8:
-        value_template: "{{'Online' if is_state('device_tracker.switch_sonoff_sonoff8', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff8', 'home') }}"
+        device_class: connectivity
       switch_wemo_wemoswitch1:
-        value_template: "{{'Online' if is_state('device_tracker.switch_wemo_wemoswitch1', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_wemo_wemoswitch1', 'home') }}"
+        device_class: connectivity
       switch_wemo_wemoswitch2:
-        value_template: "{{'Online' if is_state('device_tracker.switch_wemo_wemoswitch2', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.switch_wemo_wemoswitch2', 'home') }}"
+        device_class: connectivity
       user_devices_computer_chris_macbook:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_computer_chris_macbook', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_computer_chris_macbook', 'home') }}"
+        device_class: connectivity
       user_devices_computer_chris_workstation:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_computer_chris_workstation', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_computer_chris_workstation', 'home') }}"
+        device_class: connectivity
       user_devices_computer_ipad:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_computer_ipad', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_computer_ipad', 'home') }}"
+        device_class: connectivity
       user_devices_computer_nexus7:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_computer_nexus7', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_computer_nexus7', 'home') }}"
+        device_class: connectivity
       user_devices_phone_christoph:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_christoph', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_christoph', 'home') }}"
+        device_class: connectivity
       user_devices_phone_ewald:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_ewald', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_ewald', 'home') }}"
+        device_class: connectivity
       user_devices_phone_jan:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_jan', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_jan', 'home') }}"
+        device_class: connectivity
       user_devices_phone_johanna:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_johanna', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_johanna', 'home') }}"
+        device_class: connectivity
       user_devices_phone_petros:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_petros', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_petros', 'home') }}"
+        device_class: connectivity
       user_devices_phone_steffi:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_steffi', 'home') else 'Offline'}}"
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_steffi', 'home') }}"
+        device_class: connectivity
       user_devices_phone_traude:
-        value_template: "{{'Online' if is_state('device_tracker.user_devices_phone_traude', 'home') else 'Offline'}}"
-
-
-
+        value_template: "{{ is_state('device_tracker.user_devices_phone_traude', 'home') }}"
+        device_class: connectivity
 #automation
 
 automation:
@@ -633,48 +643,48 @@ automation:
       platform: state
       entity_id:
 
-        - sensor.network_ap_ddwrt
-        - sensor.network_ap_gateway
-        - sensor.network_ap_unifi_elw
-        - sensor.network_hub_echo_dot
-        - sensor.network_hub_tradfri
-        - sensor.network_media_player_pi2kodi
-        - sensor.network_media_player_volumio
-        - sensor.network_media_player_yamaha_rxv473
-        - sensor.network_printer_hp_1og
-        - sensor.network_storage_qnap1
-        - sensor.soc_esp32_01
-        - sensor.soc_esp32_02
-        - sensor.soc_esp32_03
-        - sensor.soc_esp8266_01
-        - sensor.soc_esp8266_02
-        - sensor.soc_esp8266_03
-        - sensor.soc_esp8266_04
-        - sensor.soc_esp8266_05
-        - sensor.soc_esp8266_07
-        - sensor.soc_pi1_wifi
-        - sensor.soc_pizero_wifi
-        - sensor.switch_sonoff_sonoff1
-        - sensor.switch_sonoff_sonoff2
-        - sensor.switch_sonoff_sonoff3
-        - sensor.switch_sonoff_sonoff4
-        - sensor.switch_sonoff_sonoff5
-        - sensor.switch_sonoff_sonoff6
-        - sensor.switch_sonoff_sonoff7
-        - sensor.switch_sonoff_sonoff8
-        - sensor.switch_wemo_wemoswitch1
-        - sensor.switch_wemo_wemoswitch2
-        - sensor.user_devices_computer_chris_macbook
-        - sensor.user_devices_computer_chris_workstation
-        - sensor.user_devices_computer_ipad
-        - sensor.user_devices_computer_nexus7
-        - sensor.user_devices_phone_christoph
-        - sensor.user_devices_phone_ewald
-        - sensor.user_devices_phone_jan
-        - sensor.user_devices_phone_johanna
-        - sensor.user_devices_phone_petros
-        - sensor.user_devices_phone_steffi
-        - sensor.user_devices_phone_traude
+        - binary_sensor.network_ap_ddwrt
+        - binary_sensor.network_ap_gateway
+        - binary_sensor.network_ap_unifi_elw
+        - binary_sensor.network_hub_echo_dot
+        - binary_sensor.network_hub_tradfri
+        - binary_sensor.network_media_player_pi2kodi
+        - binary_sensor.network_media_player_volumio
+        - binary_sensor.network_media_player_yamaha_rxv473
+        - binary_sensor.network_printer_hp_1og
+        - binary_sensor.network_storage_qnap1
+        - binary_sensor.soc_esp32_01
+        - binary_sensor.soc_esp32_02
+        - binary_sensor.soc_esp32_03
+        - binary_sensor.soc_esp8266_01
+        - binary_sensor.soc_esp8266_02
+        - binary_sensor.soc_esp8266_03
+        - binary_sensor.soc_esp8266_04
+        - binary_sensor.soc_esp8266_05
+        - binary_sensor.soc_esp8266_07
+        - binary_sensor.soc_pi1_wifi
+        - binary_sensor.soc_pizero_wifi
+        - binary_sensor.switch_sonoff_sonoff1
+        - binary_sensor.switch_sonoff_sonoff2
+        - binary_sensor.switch_sonoff_sonoff3
+        - binary_sensor.switch_sonoff_sonoff4
+        - binary_sensor.switch_sonoff_sonoff5
+        - binary_sensor.switch_sonoff_sonoff6
+        - binary_sensor.switch_sonoff_sonoff7
+        - binary_sensor.switch_sonoff_sonoff8
+        - binary_sensor.switch_wemo_wemoswitch1
+        - binary_sensor.switch_wemo_wemoswitch2
+        - binary_sensor.user_devices_computer_chris_macbook
+        - binary_sensor.user_devices_computer_chris_workstation
+        - binary_sensor.user_devices_computer_ipad
+        - binary_sensor.user_devices_computer_nexus7
+        - binary_sensor.user_devices_phone_christoph
+        - binary_sensor.user_devices_phone_ewald
+        - binary_sensor.user_devices_phone_jan
+        - binary_sensor.user_devices_phone_johanna
+        - binary_sensor.user_devices_phone_petros
+        - binary_sensor.user_devices_phone_steffi
+        - binary_sensor.user_devices_phone_traude
 
     condition:
       - condition: template
@@ -683,7 +693,7 @@ automation:
       - service: notify.device_tracker
         data_template:
           message: >
-            {% if trigger.to_state.state | lower == "offline" %}
+            {% if trigger.to_state.state | lower == "off" %}
               {{ trigger.to_state.attributes.friendly_name }} ist offline ({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
             {% else %}
               {{ trigger.to_state.attributes.friendly_name }} ist online({{ now().strftime('%d.%m.%Y %H:%M:%S') }})!
@@ -696,12 +706,12 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - sensor.soc_esp8266_01
-        - sensor.soc_esp8266_02
-        - sensor.soc_esp8266_03
-        - sensor.soc_esp8266_07
-      from: 'Online'
-      to: 'Offline'
+        - binary_sensor.soc_esp8266_01
+        - binary_sensor.soc_esp8266_02
+        - binary_sensor.soc_esp8266_03
+        - binary_sensor.soc_esp8266_07
+      from: 'on'
+      to: 'off'
       for:
         minutes: 2
     action:
@@ -717,24 +727,25 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - sensor.network_ap_ddwrt
-        - sensor.network_ap_unifi_elw
-        - sensor.network_hub_echo_dot
-        - sensor.network_hub_tradfri
-        - sensor.network_storage_qnap1
-        - sensor.switch_sonoff_sonoff1
-        - sensor.switch_sonoff_sonoff2
-        - sensor.switch_sonoff_sonoff3
-        - sensor.switch_sonoff_sonoff4
-        - sensor.switch_sonoff_sonoff5
-        - sensor.switch_sonoff_sonoff6
-        - sensor.switch_sonoff_sonoff7
-        - sensor.switch_sonoff_sonoff8
-        - sensor.switch_wemo_wemoswitch1
-        - sensor.switch_wemo_wemoswitch2
+        - binary_sensor.network_ap_ddwrt
+        - binary_sensor.network_ap_unifi_elw
+        - binary_sensor.network_hub_echo_dot
+        - binary_sensor.network_hub_tradfri
+        - binary_sensor.network_storage_qnap1
+        - binary_sensor.switch_sonoff_sonoff1
+        - binary_sensor.switch_sonoff_sonoff2
+        - binary_sensor.switch_sonoff_sonoff3
+        - binary_sensor.switch_sonoff_sonoff4
+        - binary_sensor.switch_sonoff_sonoff5
+        - binary_sensor.switch_sonoff_sonoff6
+        - binary_sensor.switch_sonoff_sonoff7
+        - binary_sensor.switch_sonoff_sonoff8
+        - binary_sensor.switch_wemo_wemoswitch1
+        - binary_sensor.switch_wemo_wemoswitch2
+        - binary_sensor.soc_esp8266_07
 
-      from: 'Online'
-      to: 'Offline'
+      from: 'on'
+      to: 'on'
       for:
         minutes: 2
     action:
@@ -752,19 +763,19 @@ automation:
       platform: state
       entity_id:
 
-        - sensor.switch_sonoff_sonoff1
-        - sensor.switch_sonoff_sonoff2
-        - sensor.switch_sonoff_sonoff3
-        - sensor.switch_sonoff_sonoff4
-        - sensor.switch_sonoff_sonoff5
-        - sensor.switch_sonoff_sonoff6
-        - sensor.switch_sonoff_sonoff7
-        - sensor.switch_sonoff_sonoff8
-        - sensor.switch_wemo_wemoswitch1
-        - sensor.switch_wemo_wemoswitch2
+        - binary_sensor.switch_sonoff_sonoff1
+        - binary_sensor.switch_sonoff_sonoff2
+        - binary_sensor.switch_sonoff_sonoff3
+        - binary_sensor.switch_sonoff_sonoff4
+        - binary_sensor.switch_sonoff_sonoff5
+        - binary_sensor.switch_sonoff_sonoff6
+        - binary_sensor.switch_sonoff_sonoff7
+        - binary_sensor.switch_sonoff_sonoff8
+        - binary_sensor.switch_wemo_wemoswitch1
+        - binary_sensor.switch_wemo_wemoswitch2
 
-      from: 'Online'
-      to: 'Offline'
+      from: 'on'
+      to: 'off'
       for:
         minutes: 2
     action:
