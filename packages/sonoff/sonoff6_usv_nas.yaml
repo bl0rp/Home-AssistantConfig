@@ -143,7 +143,7 @@ sensor:
         friendly_name: Gesamtkosten
         unit_of_measurement: "€"
         value_template: >-
-          {{ states.sensor.sonoff6_gesamtverbrauch.state  | multiply(0.2657) | round(2) }}
+          {{states('sensor.sonoff6_gesamtverbrauch') | multiply(0.2657) | round(2) }}
 
 ### Usage sensor for other scripts/automations
 

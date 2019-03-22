@@ -84,6 +84,9 @@ homeassistant:
     device_tracker.soc_esp32_03:
       friendly_name: "ESP32 #3"
       icon: mdi:chip
+    device_tracker.soc_esp32_04:
+      friendly_name: "ESP32 #4"
+      icon: mdi:chip
     device_tracker.soc_esp8266_01:
       friendly_name: "ESP8266 #1"
       icon: mdi:chip
@@ -98,6 +101,9 @@ homeassistant:
       icon: mdi:chip
     device_tracker.soc_esp8266_05:
       friendly_name: "ESP8266 #5"
+      icon: mdi:chip
+    device_tracker.soc_esp8266_06:
+      friendly_name: "ESP8266 #6"
       icon: mdi:chip
     device_tracker.soc_esp8266_07:
       friendly_name: "ESP8266 #7"
@@ -229,6 +235,9 @@ homeassistant:
     binary_sensor.soc_esp32_03:
       friendly_name: "ESP32 #3"
       icon: mdi:chip
+    binary_sensor.soc_esp32_04:
+      friendly_name: "ESP32 #4"
+      icon: mdi:chip
     binary_sensor.soc_esp8266_01:
       friendly_name: "ESP8266 #1"
       icon: mdi:chip
@@ -243,6 +252,9 @@ homeassistant:
       icon: mdi:chip
     binary_sensor.soc_esp8266_05:
       friendly_name: "ESP8266 #5"
+      icon: mdi:chip
+    binary_sensor.soc_esp8266_06:
+      friendly_name: "ESP8266 #6"
       icon: mdi:chip
     binary_sensor.soc_esp8266_07:
       friendly_name: "ESP8266 #7 (OpenMQTT RF)"
@@ -341,11 +353,13 @@ group:
       - device_tracker.soc_esp32_01
       - device_tracker.soc_esp32_02
       - device_tracker.soc_esp32_03
+      - device_tracker.soc_esp32_04
       - device_tracker.soc_esp8266_01
       - device_tracker.soc_esp8266_02
       - device_tracker.soc_esp8266_03
       - device_tracker.soc_esp8266_04
       - device_tracker.soc_esp8266_05
+      - device_tracker.soc_esp8266_06
       - device_tracker.soc_esp8266_07
       - device_tracker.soc_pi1_wifi
       - device_tracker.soc_pizero_wifi
@@ -416,11 +430,13 @@ group:
       - binary_sensor.soc_esp32_01
       - binary_sensor.soc_esp32_02
       - binary_sensor.soc_esp32_03
+      - binary_sensor.soc_esp32_04
       - binary_sensor.soc_esp8266_01
       - binary_sensor.soc_esp8266_02
       - binary_sensor.soc_esp8266_03
       - binary_sensor.soc_esp8266_04
       - binary_sensor.soc_esp8266_05
+      - binary_sensor.soc_esp8266_06
       - binary_sensor.soc_esp8266_07
       - binary_sensor.soc_pi1_wifi
       - binary_sensor.soc_pizero_wifi
@@ -544,6 +560,9 @@ binary_sensor:
       soc_esp32_03:
         value_template: "{{ is_state('device_tracker.soc_esp32_03', 'home') }}"
         device_class: connectivity
+      soc_esp32_04:
+        value_template: "{{ is_state('device_tracker.soc_esp32_04', 'home') }}"
+        device_class: connectivity
       soc_esp8266_01:
         value_template: "{{ is_state('device_tracker.soc_esp8266_01', 'home') }}"
         device_class: connectivity
@@ -558,6 +577,9 @@ binary_sensor:
         device_class: connectivity
       soc_esp8266_05:
         value_template: "{{ is_state('device_tracker.soc_esp8266_05', 'home') }}"
+        device_class: connectivity
+      soc_esp8266_06:
+        value_template: "{{ is_state('device_tracker.soc_esp8266_06', 'home') }}"
         device_class: connectivity
       soc_esp8266_07:
         value_template: "{{ is_state('device_tracker.soc_esp8266_07', 'home') }}"
@@ -656,11 +678,13 @@ automation:
         - binary_sensor.soc_esp32_01
         - binary_sensor.soc_esp32_02
         - binary_sensor.soc_esp32_03
+        - binary_sensor.soc_esp32_04
         - binary_sensor.soc_esp8266_01
         - binary_sensor.soc_esp8266_02
         - binary_sensor.soc_esp8266_03
         - binary_sensor.soc_esp8266_04
         - binary_sensor.soc_esp8266_05
+        - binary_sensor.soc_esp8266_06
         - binary_sensor.soc_esp8266_07
         - binary_sensor.soc_pi1_wifi
         - binary_sensor.soc_pizero_wifi
@@ -709,7 +733,8 @@ automation:
         - binary_sensor.soc_esp8266_01
         - binary_sensor.soc_esp8266_02
         - binary_sensor.soc_esp8266_03
-        - binary_sensor.soc_esp8266_07
+        - binary_sensor.soc_esp8266_06
+
       from: 'on'
       to: 'off'
       for:
@@ -757,7 +782,7 @@ automation:
 #################################################
 ### Notify when a switch goes Offline         ###
 #################################################
-  - alias: critical device Sensor State
+  - alias: critical device Sensor State switch
     initial_state: True
     trigger:
       platform: state

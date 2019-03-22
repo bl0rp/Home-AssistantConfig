@@ -37,3 +37,9 @@
     longitude: !secret maho_longitude
     radius: 50
     icon: mdi:hospital-building
+
+  - name: mobilemedic
+    latitude: !secret mobilemedic_latitude
+    longitude: !secret mobilemedic_longitude
+    radius: 50
+    icon: mdi:school

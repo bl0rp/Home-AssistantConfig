@@ -11,6 +11,7 @@ group:
     view: no
     entities:
       - sensor.zuhausehauptrettungswache
+      - sensor.zuhauserettungswache2
       - sensor.hauptrettungswachezuhause
       - sensor.waze_zuhause_hrw
       - sensor.zuhausemarienhospital
@@ -32,6 +33,18 @@ sensor:
     destination: Neckarstraße 143, Stuttgart, Germany
 
   - platform: google_travel_time
+    name: ZuhauseRettungswache2
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: zone.rw2
+
+  - platform: google_travel_time
+    name: ZuhauseMobileMedic
+    api_key: !secret google_traveltime_apikey
+    origin: zone.home
+    destination: zone.mobilemedic
+
+  - platform: google_travel_time
     name: HauptrettungswacheZuhause
     api_key: !secret google_traveltime_apikey
     origin: Neckarstraße 143, Stuttgart, Germany
@@ -47,6 +60,18 @@ sensor:
     name: waze_zuhause_hrw
     origin: zone.home
     destination: Neckarstraße 143, Stuttgart, Germany
+    region: 'EU'
+
+  - platform: waze_travel_time
+    name: waze_zuhause_rw2
+    origin: zone.home
+    destination: zone.rw2
+    region: 'EU'
+
+  - platform: waze_travel_time
+    name: waze_zuhause_mobilemedic
+    origin: zone.home
+    destination: zone.mobilemedic
     region: 'EU'
 
   - platform: waze_travel_time

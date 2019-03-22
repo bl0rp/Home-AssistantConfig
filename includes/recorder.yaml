@@ -18,6 +18,8 @@ include:
     - sensor.temperatur_esp8266_01
     - sensor.temperatur_esp8266_02
     - sensor.temperatur_esp8266_03
+    - sensor.esp8266_06_temperature
+    - sensor.esp8266_06_humidity
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_03
@@ -40,7 +42,9 @@ include:
     - sensor.qnap1_cpu_usage
     - sensor.qnap1_network_down_eth0
     - sensor.qnap1_network_up_eth0
-    #sonoff stats
+    #fibaro plug stats
+    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+      #sonoff stats
 
     - sensor.sonoff1_gesamtverbrauch
     - sensor.sonoff2_gesamtverbrauch

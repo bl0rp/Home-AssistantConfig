@@ -272,7 +272,7 @@ sensor:
   - platform: mqtt
     name: "sonoff1 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(release-sonoff)','')  }}"
     availability_topic: "tele/sonoff1/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -280,7 +280,7 @@ sensor:
   - platform: mqtt
     name: "sonoff2 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -288,7 +288,7 @@ sensor:
   - platform: mqtt
     name: "sonoff3 sw version"
     state_topic: "stat/sonoff3/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','')  }}"
     availability_topic: "tele/sonoff3/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -296,7 +296,7 @@ sensor:
   - platform: mqtt
     name: "sonoff4 sw version"
     state_topic: "stat/sonoff4/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff4/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -304,7 +304,7 @@ sensor:
   - platform: mqtt
     name: "sonoff5 sw version"
     state_topic: "stat/sonoff5/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -312,7 +312,7 @@ sensor:
   - platform: mqtt
     name: "sonoff6 sw version"
     state_topic: "stat/sonoff6/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff6/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -320,7 +320,7 @@ sensor:
   - platform: mqtt
     name: "sonoff7 sw version"
     state_topic: "stat/sonoff7/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff7/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -328,7 +328,7 @@ sensor:
   - platform: mqtt
     name: "sonoff8 sw version"
     state_topic: "stat/sonoff8/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
     availability_topic: "tele/sonoff8/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"

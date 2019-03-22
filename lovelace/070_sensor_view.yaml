@@ -22,7 +22,7 @@ cards:
           name: LCD
         - entity: sensor.esp8266_07_status_var
           name: MQTT2RF
-        - entity: sensor.esp32_04_uptime_format
+        - entity: sensor.esp8266_06_status_var
           name: ELW Klo
 
     #movement
@@ -189,50 +189,50 @@ cards:
               - entity: binary_sensor.sensor_esp8266_02_status_binary
                 secondary_info: last-changed
                 name: 'Status'
-        #esp32_4 Klo ELW
+        #esp8266_06_4 Klo ELW
         - type: section
           label: ELW Klo
         - type: custom:hui-conditional-card
           conditions:
-            - entity: binary_sensor.esp32_04_state_raw
+            - entity: binary_sensor.esp8266_06_status
               state: "on"
           card:
             type: entities
             show_header_toggle: false
             entities:
-              - entity: binary_sensor.esp32_04_state_raw
+              - entity: binary_sensor.esp8266_06_status
                 name: Status
                 secondary_info: last-changed
-              - entity: sensor.esp32_04_rssi
+              - entity: sensor.esp8266_06_rssi
                 icon: 'mdi:access-point-network'
                 name: Signalstärke
                 secondary_info: last-changed
-              - entity: sensor.esp32_04_uptime_format
+              - entity: sensor.esp8266_06_uptime_format
                 icon: 'mdi:timer'
                 name: Uptime
-              - entity: sensor.esp32_04_temperature
+              - entity: sensor.esp8266_06_temperature
                 name: Temperatur
                 secondary_info: last-changed
-              - entity: sensor.esp32_04_humidity
+              - entity: sensor.esp8266_06_humidity
                 name: Luftfeuchtigkeit
                 icon: mdi:water-percent
-              - entity: switch.esp32_04_shutdown
+              - entity: switch.esp8266_06_shutdown
                 name: Ausschalten
                 icon: mdi:power
-              - entity: switch.esp32_04_restart
+              - entity: switch.esp8266_06_restart
                 name: Neustart
                 icon: mdi:restart
         - type: custom:hui-conditional-card
           conditions:
-            - entity: binary_sensor.esp32_04_state_raw
+            - entity: binary_sensor.esp8266_06_status
               state: "off"
           card:
             type: entities
             show_header_toggle: false
             entities:
-              - entity: binary_sensor.esp32_04_state_raw
+              - entity: binary_sensor.esp8266_06_status
                 name: Status
                 secondary_info: last-changed
-              - entity: sensor.esp32_04_uptime_format
+              - entity: sensor.esp8266_06_uptime_format
                 name: Uptime
                 icon: 'mdi:timer'

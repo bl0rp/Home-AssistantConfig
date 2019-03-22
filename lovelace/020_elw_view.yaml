@@ -51,6 +51,8 @@ cards:
         secondary_info: last-changed
       - entity: sensor.aeotec_zw100_multisensor_6_temperature
         secondary_info: last-changed
+      - entity: sensor.esp8266_06_temperature
+        secondary_info: last-changed
       - type: custom:fold-entity-row
         head:
           type: section
@@ -60,6 +62,7 @@ cards:
           - sensor.esp32_03_humidity
           - sensor.luftfeuchtigkeit_esp8266_02
           - sensor.aeotec_zw100_multisensor_6_relative_humidity
+          - sensor.esp8266_06_humidity
       - type: section
         label: Graph
       - type: custom:hui-history-graph-card
@@ -69,6 +72,8 @@ cards:
            name: Regal
          - entity: sensor.aeotec_zw100_multisensor_6_temperature
            name: Flur
+         - entity: sensor.esp8266_06_temperature
+           name: Klo
     - type: entities
       title: Bewegungsmelder / Türsensor
       show_header_toggle: false

@@ -76,7 +76,7 @@ sensor:
         friendly_name: Gesamtkosten
         unit_of_measurement: "€"
         value_template: >-
-          {{ states.sensor.fibaro_system_fgwpef_wall_plug_gen5_energy.state  | multiply(0.2657) | round(2) }}
+          {{ states('sensor.fibaro_system_fgwpef_wall_plug_gen5_energy')   | multiply(0.2657) | round(2) }}
 
 ### Multisensor1 Battery
   - platform: template

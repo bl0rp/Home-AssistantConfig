@@ -15,3 +15,30 @@ cards:
       title: Test2
       content: >
         **Oin22323k**
+    - break
+
+    - type: map
+      aspect_ratio: 16:9
+      default_zoom: 14
+      entities:
+        - device_tracker.897y04duz
+        - zone.home
+    - type: entities
+      title: 8266#6
+      show_header_toggle: false
+      entities:
+        - type: section
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.esp8266_06*
+                options:
+                  secondary_info: entity-id
+              - entity_id: sensor.binary_sensor.esp8266_06*
+                options:
+                  secondary_info: entity-id
+              - entity_id: switch.esp8266_06*
+                options:
+                  secondary_info: entity-id
