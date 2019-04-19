@@ -1,0 +1,66 @@
+########################################################################
+## Packages / Alexa Dummy for Custom Response                         ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+#https://github.com/keatontaylor/alexa_media_player/wiki/Automation-examples#
+homeassistant:
+
+
+sensor:
+- platform: template
+  sensors:
+      last_alexa:
+        entity_id:
+          - media_player.christophs_echo_dot
+        value_template: >
+          {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
+
+light:
+  - platform: template
+    lights:
+      alexa_virtual:
+        friendly_name: "Alexa Dummy Light"
+        turn_on:
+        turn_off:
+        set_level:
+
+automation:
+- alias: "Alexa Report"
+  trigger:
+  - platform: state
+    entity_id: light.alexa_virtual
+    to: 'on'
+  condition:
+  action:
+  - service: alexa_media.update_last_called  #this will force update the last Alexa attribute used by the sensor
+  - delay: 00:00:01  # you may need to increase this value if you dont get the response on the echo you asked the question
+  - service: notify.alexa_media
+    data_template:
+      target:
+        -  '{{ states.sensor.last_alexa.state }}'
+      data:
+        type: tts
+      message: >-
+        {% if (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 1  %}
+          Die Uptime von Home Assistant ist  {{ states('sensor.ha_uptime_human') }} die vom Server {{ states('sensor.host_uptime_human') }}
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 2 %}
+          Testschleife 2  {{ states('sensor.host_uptime_human') }} Uptime des Servers
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 3 %}
+          Es hat {{ states('sensor.esp32_03_temperature')|replace('.',',') }} Grad unter dem Carport
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 4 %}
+          Es hat {{ states('sensor.esp32_02_temperature')|replace('.',',') }} Grad am Haupteingang
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 5 %}
+          Words.  What you want to say {{ states('sensor.name_of_sensor') }} follow on informtion
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 6 %}
+          Words.  What you want to say {{ states('sensor.name_of_sensor') }} follow on informtion
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 7 %}
+          Words.  What you want to say {{ states('sensor.name_of_sensor') }} follow on informtion
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 9 %}
+          Words.  What you want to say {{ states('sensor.name_of_sensor') }} follow on informtion
+        {% elif (states.light.alexa_virtual.attributes.brightness | int / 255 * 100 ) | round  == 10 %}
+          Words.  What you want to say {{ states('sensor.name_of_sensor') }} follow on informtion
+        {% else %}
+         {{ states('light.alexa_virtual.attributes.brightness') }}
+        {% endif %}
+  - service: light.turn_off
+    entity_id: light.alexa_virtual
