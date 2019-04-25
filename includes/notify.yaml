@@ -44,3 +44,6 @@
   - name: 'echodot'
     platform: command_line
     command: "/home/homeassistant/.homeassistant/alexa_wrapper.sh -d 'Christophs Echo Dot'"
+
+  - platform: alexa_media
+    name: alexa_media

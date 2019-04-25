@@ -1,4 +1,4 @@
-  - platform: google
+  - platform: google_translate
     language: 'de'
 
   - platform: amazon_polly

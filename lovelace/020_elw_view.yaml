@@ -100,15 +100,13 @@ cards:
       - type: section
       - entity: person.christoph
         secondary_info: last-changed
-      - entity: sensor.phonebatt_pixel3xl
-        icon: 'mdi:battery-charging-50'
-        name: Pixel3XL
-        secondary_info: last-changed
       - entity: sensor.tasker_pixel3xl_battery
-        name: Pixel3XL JSON
+        name: Pixel3XL
         secondary_info: last-changed
       - type: section
         label: Ortung
+      # - type: text
+      #   entity: input_boolean.chrishome
       - entity: input_boolean.chrishome
         icon: 'mdi:map-marker-circle'
         name: Christoph Status

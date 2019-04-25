@@ -15,30 +15,53 @@ cards:
       title: Test2
       content: >
         **Oin22323k**
+    - type: gauge
+      name: Wakue.
+      unit: '°C'
+      entity: sensor.esp32_04_temperature
+      severity:
+        green: 0
+        yellow: 32
+        red: 45
+
     - break
 
-    - type: map
-      aspect_ratio: 16:9
-      default_zoom: 14
-      entities:
-        - device_tracker.897y04duz
-        - zone.home
+
     - type: entities
-      title: 8266#6
+      title: BLA
       show_header_toggle: false
       entities:
         - type: section
+
         - type: custom:auto-entities
           card:
             type: entities
           filter:
             include:
-              - entity_id: sensor.esp8266_06*
+              - entity_id: sensor.esp32_04*
                 options:
                   secondary_info: entity-id
-              - entity_id: sensor.binary_sensor.esp8266_06*
+              - entity_id: binary_sensor.esp32_04*
                 options:
                   secondary_info: entity-id
-              - entity_id: switch.esp8266_06*
+              - entity_id: switch.esp32_04*
                 options:
                   secondary_info: entity-id
+
+
+        - type: custom:bar-card
+          title: Temp WaKue
+          min: 22.0
+          max: 50.0
+          entity: sensor.esp32_04_temperature
+          severity:
+          - value: 22.0
+            hue: '100'
+          - value: 30.0
+            hue: '100'
+          - value: 32.0
+            hue: '80'
+          - value: 33.0
+            hue: '30'
+          - value: 40.0
+            hue: '360'

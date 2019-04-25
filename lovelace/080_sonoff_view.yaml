@@ -83,6 +83,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff1
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff1_ipv4
                   - entity: sensor.sonoff1_uptime
                   - entity: sensor.sonoff1_use
@@ -129,6 +130,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff2
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff2_ipv4
                   - entity: sensor.sonoff2_uptime
                   - entity: sensor.sonoff2_use
@@ -174,6 +176,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff3
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff3_ipv4
                   - entity: sensor.sonoff3_uptime
                   - entity: sensor.sonoff3_use
@@ -220,6 +223,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff4
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff4_ipv4
                   - entity: sensor.sonoff4_uptime
                   - entity: sensor.sonoff4_use
@@ -265,6 +269,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff5
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff5_ipv4
                   - entity: sensor.sonoff5_uptime
                   - entity: sensor.sonoff5_use
@@ -310,6 +315,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff6
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff6_ipv4
                   - entity: sensor.sonoff6_uptime
                   - entity: sensor.sonoff6_use
@@ -356,6 +362,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff7
+                    type: custom:toggle-lock-entity-row
                   - entity: sensor.sonoff7_ipv4
                   - entity: sensor.sonoff7_uptime
                   - entity: sensor.sonoff7_use
@@ -401,6 +408,7 @@ cards:
               - type: entities
                 entities:
                   - entity: switch.sonoff8
+                  - entity: script.akkus_laden
                   - entity: sensor.sonoff8_ipv4
                   - entity: sensor.sonoff8_uptime
                   - entity: sensor.sonoff8_use

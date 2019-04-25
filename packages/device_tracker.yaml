@@ -221,14 +221,14 @@ automation:
         entity_id: device_tracker.user_devices_phone_christoph
         to: 'not_home'
         for:
-          minutes: 10
+          minutes: 5
       # - platform: state
       #   entity_id: sensor.tasker_home
       #   to: 'not_home'
       #   for:
       #     minutes: 5
       - platform: state
-        entity_id: device_tracker.user_devices_phone_christoph_gpslogger
+        entity_id: device_tracker.897y04duz
         to: 'not_home'
         for:
           minutes: 5
@@ -256,7 +256,7 @@ automation:
         to: 'home'
 #gpslogger
       - platform: state
-        entity_id: device_tracker.user_devices_phone_christoph_gpslogger
+        entity_id: device_tracker.897y04duz
         to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_nuc
@@ -468,8 +468,20 @@ automation:
         entity_id: input_boolean.chrisbluetooth
         state: 'on'
 
-      - service: notify.echodot
+      # - service: notify.echodot
+      #   data_template:
+      #     message: >
+      #       {% if (trigger.to_state.state  == "not_home" ) or (trigger.to_state.state == "off") %}
+      #           {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist gegangen!
+      #       {% else %}
+      #         {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist daheim!
+      #       {% endif %}
+
+      - service: notify.alexa_media
         data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
           message: >
             {% if (trigger.to_state.state  == "not_home" ) or (trigger.to_state.state == "off") %}
                 {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist gegangen!

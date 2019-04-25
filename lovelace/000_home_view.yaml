@@ -11,7 +11,7 @@ cards:
     - type: markdown
       title: HomeAssistant
       content: >
-         **Hommel Stuttgart**
+        **Hommel Stuttgart**
 
     - type: entities
       show_header_toggle: false
@@ -28,7 +28,7 @@ cards:
       - entity: script.clear_log
       - entity: script.clear_tts_cache
       - entity: script.reset_router
-
+        type: custom:toggle-lock-entity-row
     - break
 
     - type: entities

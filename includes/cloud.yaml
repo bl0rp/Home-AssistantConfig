@@ -3,6 +3,7 @@ alexa:
     include_entities:
       - light.flur
       - light.schlafzimmer
+      - light.alexa_virtual
       - script.akkus_laden
     include_domains:
       - switch

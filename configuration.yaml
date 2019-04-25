@@ -24,7 +24,14 @@ custom_updater:
   card_urls:
     - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
     - https://raw.githubusercontent.com/Gluwc/bar-card/master/tracker.json
+  component_urls:
+    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
 #discovery:
+alexa_media:
+  accounts:
+    - email: !secret alexa_email
+      password: !secret alexa_password
+      url: amazon.de
 
 conversation:
 

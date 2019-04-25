@@ -7,6 +7,7 @@ homeassistant:
 
     binary_sensor.esp32_01_door_state:
       friendly_name: Türe ELW
+
     sensor.esp32_01_battery:
       icon: mdi:car-battery
       friendly_name: Batteriewert ESP32 01

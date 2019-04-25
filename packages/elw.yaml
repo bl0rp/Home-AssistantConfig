@@ -59,8 +59,28 @@ automation:
       - service: automation.turn_off
         entity_id: automation.turn_on_lights_when_coming_home
       - delay: '00:00:20'
-      - service: notify.echodot
+      # - service: notify.echodot
+      #   data_template:
+      #     message: >
+      #        {% set person = 'Christoph' %}
+      #        {% if now().strftime("%H")|int < 12 %}
+      #        Guten Morgen
+      #        {% elif now().strftime("%H")|int < 18 %}
+      #        Guten Mittag
+      #        {% else %}
+      #        Guten Abend
+      #        {% endif %}
+      #        {{ [
+      #        "schön dass du da bist " + person,
+      #        "Sei gegrüßt " + person,
+      #        "und willkommen zu hause " + person
+      #        ] |random }}
+
+      - service: notify.alexa_media
         data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
           message: >
              {% set person = 'Christoph' %}
              {% if now().strftime("%H")|int < 12 %}
@@ -75,6 +95,7 @@ automation:
              "Sei gegrüßt " + person,
              "und willkommen zu hause " + person
              ] |random }}
+
       - condition: or
         conditions:
           - condition: template

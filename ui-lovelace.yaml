@@ -3,7 +3,7 @@ resources:
   - url: /local/bar-card.js
     type: js
   #https://github.com/kalkih/mini-media-player
-  - url: /local/mini-media-player-bundle.js?v=1.0.3
+  - url: /local/mini-media-player-bundle.js
     type: module
    #https://github.com/thomasloven/lovelace-card-tools
   - url: /local/card-tools.js
@@ -12,7 +12,7 @@ resources:
   - url: /local/layout-card.js
     type: js
   #https://github.com/custom-cards/vertical-stack-in-card
-  - url: /local/vertical-stack-in-card.js?v=0.0.9
+  - url: /local/vertical-stack-in-card.js
     type: js
   #https://github.com/custom-cards/tracker-card
   - url: /customcards/github/custom-cards/tracker-card.js?track=true
@@ -23,6 +23,10 @@ resources:
   #https://github.com/thomasloven/lovelace-fold-entity-row/blob/master/fold-entity-row.js
   - url: /local/fold-entity-row.js
     type: js
+#https://github.com/thomasloven/lovelace-toggle-lock-entity-row
+  - url: /local/toggle-lock-entity-row.js
+    type: js
+
 title: HomeAssistant
 views:
   - !include lovelace/000_home_view.yaml

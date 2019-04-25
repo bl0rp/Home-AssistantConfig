@@ -22,8 +22,8 @@ cards:
       title: Router Killswitch
       show_header_toggle: false
       entities:
-
-      - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+      - entity: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
+        type: custom:toggle-lock-entity-row
       - sensor.zwave_mpd1_use
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
