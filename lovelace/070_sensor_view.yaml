@@ -63,12 +63,14 @@ cards:
         - entity: sensor.esp32_02_rssi
           secondary_info: last-changed
         - entity: sensor.esp32_02_battery
-        - entity: sensor.esp32_02_battery_state
+          secondary_info: last-changed
+          name: Spannung Akku
+          icon: mdi:car-battery
         - entity: sensor.esp32_02_temperature
           secondary_info: last-changed
         - entity: sensor.esp32_02_humidity
         - entity: sensor.esp32_02_pressure
-        - entity: automation.benachrichtigung_batterie_esp32_02
+
         #esp32_3 Tempsensor Carport
         - type: section
           label: 'Temperatursensor Carport'
