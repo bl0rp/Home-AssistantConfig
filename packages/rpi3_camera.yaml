@@ -1,0 +1,120 @@
+#####################################################################################################################
+### Packages / ffmpeg raspberrypi camera                                                                          ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig                                                        ###
+### thnx 2 https://einar.slaskete.net/2018/08/16/using-a-raspberry-pi-as-a-surveillance-camera-in-home-assistant/ ###
+#####################################################################################################################
+homeassistant:
+
+#the camera itself \o/
+camera:
+  - platform: ffmpeg
+    name: Raspicam
+    input: tcp://192.168.0.26:9000
+
+
+sensor:
+#remote temp via ssh
+  - platform: command_line
+    name: rpi3_cputemp_ssh
+    command: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo cat /sys/class/thermal/thermal_zone0/temp'"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+#disk space used
+  - platform: command_line
+    name: raspicam_data_used
+    command: "du -s /home/homeassistant/raspicam | cut -f 1"
+    unit_of_measurement: "Mib"
+    value_template: "{{ (value | multiply(0.0009765625)) | round(0) }}"
+
+
+shell_command:
+#Image Processing
+  record_raspicam_minute: ffmpeg -y -i tcp://192.168.0.26:9000 -an -c:v copy -t 00:00:30 /home/homeassistant/raspicam/raspicam.mkv
+# H.264/MPEG4 to autoplay video in telegram
+  record_raspicam_telegram: ffmpeg -y -i /home/homeassistant/raspicam/raspicam.mkv -an -c:v libx264 -crf 26 -vf scale=640:-1 -t 00:00:20 /home/homeassistant/raspicam/raspicam_telegram.mp4
+  archive_raspicam_video: cp /home/homeassistant/raspicam/raspicam.mkv /home/homeassistant/raspicam/raspicam-{{ now().strftime("%Y-%m-%d_%H-%M-%S") }}.mkv
+#Remote Control
+  ssh_shutdown_rpi3: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo shutdown -h now'"
+  ssh_reboot_rpi3: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo shutdown -r now'"
+  ssh_restart_camservice: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo systemctl restart raspicam.service'"
+#Data Statistics/Operations
+  delete_raspicam_videos: rm -f /home/homeassistant/raspicam/raspicam*
+
+script:
+  ssh_shutdown_rpi3:
+    sequence:
+      - service: shell_command.ssh_shutdown_rpi3
+      - delay: '00:00:30'
+      - service: switch.turn_off
+        data:
+          entity_id: switch.11001_B
+
+  ssh_reboot_rpi3:
+    sequence:
+      - service: shell_command.ssh_reboot_rpi3
+
+  delete_raspicam_videos:
+    sequence:
+      - service: shell_command.delete_raspicam_videos
+
+
+automation:
+#auto on/off camera depending on home state
+  - id: turn_on_camera_when_not_at_home
+    alias: turn_on_camera_when_not_at_home
+    trigger:
+      - platform: state
+        entity_id: input_boolean.chrishome
+        to: 'off'
+        for:
+          minutes: 2
+    action:
+      - service: switch.turn_on
+        data:
+          entity_id: switch.11001_b
+
+  - id: turn_off_camera_when_home
+    alias: turn_off_camera_when_home
+    trigger:
+      - platform: state
+        entity_id: input_boolean.chrishome
+        to: 'on'
+        for:
+          minutes: 1
+    action:
+      - service: script.ssh_shutdown_rpi3
+
+
+#record stream and send it via telegram
+  - id: record_camera_on_motion
+    alias: record_camera_on_motion
+    trigger:
+      - platform: template
+        value_template: "{{ is_state('binary_sensor.esp8266_02_pir', 'on') }}"
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('input_boolean.chrishome', 'on') }}"
+    action:
+      - service: switch.turn_on
+        data:
+          entity_id: switch.11011_c
+      - service: shell_command.record_raspicam_minute
+      - delay: 00:00:30
+      - service: switch.turn_off
+        data:
+          entity_id: switch.11011_c
+      - service: shell_command.record_raspicam_telegram
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Motion was detected!
+      - service: notify.telegram_christoph
+        data:
+          title: MotionCameraELW
+          message: "Cat Cam"
+          data:
+            video:
+              - file: /home/homeassistant/raspicam/raspicam_telegram.mp4
+                caption: "Cat Cam"
+      - delay: 00:01:00
+      - service: shell_command.archive_raspicam_video
