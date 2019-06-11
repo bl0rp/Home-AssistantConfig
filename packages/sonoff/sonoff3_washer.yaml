@@ -52,14 +52,6 @@ homeassistant:
     script.del_sonoff3_power_log:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
-    automation.washer_start:
-      friendly_name: Waschvorgang begonnen
-      icon: mdi:washing-machine
-    automation.washer_done:
-      friendly_name: Benachrichtigung Waschvorgang beendet
-      icon: mdi:washing-machine
-    input_boolean.washer_switch:
-      friendly_name: Waschvorgang aktiv?
 
 
 sensor:
@@ -207,42 +199,6 @@ automation:
           message: >
             {{ states.sensor.sonoff3_momentane_leistung.state }}
 
-### Notification when Washer is done
-  - alias: 'Washer_Start'
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: sensor.sonoff3_use
-        from: 'Nein'
-        to: 'Ja'
-        for:
-          minutes: 2
-    action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.washer_switch
-
-  - alias: 'Washer_Done'
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: sensor.sonoff3_use
-        from: 'Ja'
-        to: 'Nein'
-        for:
-          minutes: 5
-    condition:
-        condition: state
-        entity_id: input_boolean.washer_switch
-        state: 'on'
-    action:
-      - service: notify.pushbullet
-        data_template:
-          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Die Waschmaschine verbraucht keinen Strom mehr."
-      - service: notify.pushbullet_traude
-        data_template:
-          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Die Waschmaschine verbraucht keinen Strom mehr."
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.washer_switch
 
 ### Delete the logfile (reset the maximum power sensor)
 

@@ -1,0 +1,214 @@
+##############################################################
+### Packages / Washer Dryer Notification                   ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+
+  customize:
+
+    input_boolean.laundry_notify_traude:
+      friendly_name: Benachrichtigung Waschküche
+      icon: mdi:hanger
+    input_boolean.laundry_notify_christoph:
+      friendly_name: Benachrichtigung Waschküche
+      icon: mdi:hanger
+    sensor.washer_state:
+      friendly_name: "Waschmaschine"
+      icon: mdi:washing-machine
+    sensor.dryer_state:
+      friendly_name: "Trockner"
+      icon: mdi:tumble-dryer
+
+### default notifcation on or off
+input_boolean:
+  washer_switch:
+    initial: off
+  dryer_switch:
+    initial: off
+  laundry_notify_traude:
+    initial: on
+  laundry_notify_christoph:
+    initial: on
+
+
+
+sensor:
+  - platform: template
+    sensors:
+      washer_state:
+        value_template: >-
+          {% if is_state('input_boolean.washer_switch', 'on') %}
+            wäscht gerade
+          {% else %}
+            ausgeschaltet
+          {% endif %}
+      dryer_state:
+        value_template: >-
+          {% if is_state('input_boolean.dryer_switch', 'on') %}
+            trocknet gerade
+          {% else %}
+            ausgeschaltet
+          {% endif %}
+automation:
+#washer
+### washer start
+  - alias: 'Washer_Start'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff3_use
+        from: 'Nein'
+        to: 'Ja'
+        for:
+          minutes: 2
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.washer_switch
+### washer stop
+  - alias: 'Washer_Done'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff3_use
+        from: 'Ja'
+        to: 'Nein'
+        for:
+          minutes: 5
+    condition:
+        condition: state
+        entity_id: input_boolean.washer_switch
+        state: 'on'
+    action:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.washer_switch
+### notifcation traude
+  - alias: 'Washer_Done_notification_traude'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.washer_switch
+        from: 'on'
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+        condition: state
+        entity_id: input_boolean.laundry_notify_traude
+        state: 'on'
+    action:
+      - service: notify.pushbullet_traude
+        data_template:
+          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Die Waschmaschine ist fertig!"
+#notifcation Christoph
+  - alias: 'Washer_Done_notification_christoph'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.washer_switch
+        from: 'on'
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+        condition: state
+        entity_id: input_boolean.laundry_notify_christoph
+        state: 'on'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Die Waschmaschine ist fertig!"
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: 'on'
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+            Die Waschmaschine ist fertig
+#dryer
+
+  - alias: 'dryer_Start'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff5_use
+        from: 'Nein'
+        to: 'Ja'
+        for:
+          minutes: 2
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.dryer_switch
+
+  - alias: 'dryer_Done'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.sonoff5_use
+        from: 'Ja'
+        to: 'Nein'
+        for:
+          minutes: 5
+    condition:
+        condition: state
+        entity_id: input_boolean.dryer_switch
+        state: 'on'
+    action:
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.dryer_switch
+
+
+### notifcation traude
+  - alias: 'dryer_Done_notification_traude'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.dryer_switch
+        from: 'on'
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+        condition: state
+        entity_id: input_boolean.laundry_notify_traude
+        state: 'on'
+    action:
+      - service: notify.pushbullet_traude
+        data_template:
+          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Der Trockner ist fertig!"
+#notifcation Christoph
+  - alias: 'dryer_Done_notification_christoph'
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: input_boolean.dryer_switch
+        from: 'on'
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+        condition: state
+        entity_id: input_boolean.laundry_notify_christoph
+        state: 'on'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Der Trockner ist fertig!"
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: 'on'
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+            Der Trockner ist fertig
+

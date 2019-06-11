@@ -52,14 +52,6 @@ homeassistant:
     script.del_sonoff5_power_log:
       friendly_name: Maximale Leistung zurücksetzen
       icon: mdi:eraser
-    automation.dryer_start:
-      friendly_name: Trockenvorgang begonnen
-      icon: mdi:washing-machine
-    automation.dryer_done:
-      friendly_name: Benachrichtigung Trockenvorgang beendet
-      icon: mdi:washing-machine
-    input_boolean.dryer_switch:
-      friendly_name: Trockenvorgang aktiv?
 
 
 sensor:
@@ -185,11 +177,6 @@ switch:
     payload_off: "OFF"
     retain: false
 
-### Input boolen for washing state
-
-input_boolean:
-  dryer_switch:
-    initial: off
 
 
 ### Record all power levels to a file (see notify)
@@ -205,42 +192,6 @@ automation:
           message: >
             {{ states.sensor.sonoff5_momentane_leistung.state }}
 
-### Notification when dryer is done
-  - alias: 'dryer_Start'
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: sensor.sonoff5_use
-        from: 'Nein'
-        to: 'Ja'
-        for:
-          minutes: 2
-    action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.dryer_switch
-
-  - alias: 'dryer_Done'
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: sensor.sonoff5_use
-        from: 'Ja'
-        to: 'Nein'
-        for:
-          minutes: 5
-    condition:
-        condition: state
-        entity_id: input_boolean.dryer_switch
-        state: 'on'
-    action:
-      - service: notify.pushbullet
-        data_template:
-          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Der Trockner verbraucht keinen Strom mehr."
-      - service: notify.pushbullet_traude
-        data_template:
-          message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:Der Trockner verbraucht keinen Strom mehr."
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.dryer_switch
 
 ### Delete the logfile (reset the maximum power sensor)
 
