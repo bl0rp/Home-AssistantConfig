@@ -20,20 +20,7 @@ cards:
               secondary_info: last-changed
             - entity: device_tracker.user_devices_phone_traude
               secondary_info: last-changed
-            - entity: device_tracker.user_devices_phone_johanna
-              secondary_info: last-changed
 
-    - type: custom:vertical-stack-in-card
-      title: 'Freunde'
-      cards:
-        - type: entities
-          show_header_toggle: false
-          entities:
-            - type: section
-            - entity: device_tracker.user_devices_phone_petros
-              secondary_info: last-changed
-            - entity: device_tracker.user_devices_phone_jan
-              secondary_info: last-changed
 
 
     - type: custom:vertical-stack-in-card
@@ -54,26 +41,6 @@ cards:
         - type: entities
           show_header_toggle: false
           entities:
-            - type: section
-              label: Google
-            - entity: sensor.zuhausehauptrettungswache
-              name: HRW
-              icon: mdi:ambulance
-            - entity: sensor.zuhauserettungswache2
-              name: RW2
-              icon: mdi:ambulance
-            - entity: sensor.zuhausemobilemedic
-              name: Mobile Medic
-              icon: mdi:school
-            - entity: sensor.zuhausemarienhospital
-              name: Marienhospital
-              icon: mdi:hospital
-            - entity: sensor.stuttgartberlin
-              name: Berlin
-              icon: mdi:city-variant
-            - entity: sensor.hauptrettungswachezuhause
-              name: "Nach Hause (HRW)"
-              icon: mdi:home-map-marker
             - type: section
               label: Waze
             - entity: sensor.waze_zuhause_hrw

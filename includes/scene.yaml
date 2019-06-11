@@ -12,6 +12,9 @@
         state: off
       switch.11011_C:
         state: off
+      switch.11001_C:
+        state: off
+
 #Alles An Hell
   - name: ELW_Hell
     entities:
@@ -20,6 +23,8 @@
       switch.11011_A:
         state: on
       switch.11011_C:
+        state: on
+      switch.11001_C:
         state: on
       light.schlafzimmer:
         state: on

@@ -71,9 +71,6 @@ homeassistant:
 
 
     ##automations
-    automation.nuc_load_to_led:
-      friendly_name: Load 2 LED
-      icon: mdi:led-on
     automation.hdd_alarm:
       friendly_name: Alarm Speicherplatz
       icon: mdi:harddisk
@@ -368,40 +365,8 @@ sensor:
         column: 'value'
         unit_of_measurement: MiB
 
-### Visualize load with LEDs (-> packages/esp04)
+
 automation:
-  - alias: nuc Load to LED
-    initial_state: False
-    trigger:
-      - platform: state
-        entity_id: sensor.load_1m
-    action:
-      - service_template: >-
-          {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.2 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.esp04_led_green
-
-      - service_template: >-
-          {% if 0.2 <= trigger.to_state.state|float < 0.6 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.esp04_led_yellow
-
-      - service_template: >-
-          {% if 0.6 <= trigger.to_state.state|float < 30.0 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.esp04_led_red
 #disable_process_notification if input_boolean is changed
   - alias: toggle_process_alarm_automations
     initial_state: True

@@ -32,7 +32,15 @@ cards:
         graph: line
         detail: 2
         name: Wintergarten
-
+    - type: entities
+      title: Waschküche
+      show_header_toggle: false
+      entities:
+      - entity: input_boolean.laundry_notify_traude
+      - entity: sensor.washer_state
+        secondary_info: last-changed
+      - entity: sensor.dryer_state
+        secondary_info: last-changed
 
 
 
@@ -63,3 +71,4 @@ cards:
            name: Wohnzimmer
          - entity: sensor.temperatur_esp8266_03
            name: Wintergarten
+

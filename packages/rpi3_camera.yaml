@@ -11,6 +11,14 @@ camera:
     name: Raspicam
     input: tcp://192.168.0.26:9000
 
+binary_sensor:
+  - platform: ping
+    host: 192.168.0.26
+    name: rpi3_cam_ping
+    count: 5
+    scan_interval: 30
+
+
 
 sensor:
 #remote temp via ssh

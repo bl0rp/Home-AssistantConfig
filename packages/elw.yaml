@@ -168,10 +168,6 @@ automation:
           to: 'off'
           for:
             minutes: 2
-    condition:
-    - condition: state
-      entity_id: 'device_tracker.user_devices_phone_johanna'
-      state: 'not_home'
     action:
       - service: scene.turn_on
         entity_id: scene.elw_aus

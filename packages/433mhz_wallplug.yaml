@@ -26,8 +26,8 @@ homeassistant:
       icon: mdi:raspberrypi
       persistent: true
     switch.11001_C:
-      friendly_name: IR Strahler
-      icon: mdi:spotlight
+      friendly_name: Nachttisch
+      icon: mdi:desk-lamp
       persistent: true
 
 switch:

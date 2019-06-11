@@ -40,7 +40,7 @@ cards:
             include:
               - entity_id: sensor.esp32_04*
                 options:
-                  secondary_info: entity-id
+                  secondary_info: last-changed
               - entity_id: binary_sensor.esp32_04*
                 options:
                   secondary_info: entity-id
@@ -48,6 +48,56 @@ cards:
                 options:
                   secondary_info: entity-id
 
+    - type: entities
+      title: BLA2
+      show_header_toggle: false
+      entities:
+        - type: section
+
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.esp8266_lcd*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.esp8266_lcd*
+                options:
+                  secondary_info: last-changed
+              - entity_id: switch.esp8266_lcd*
+                options:
+                  secondary_info: entity-id
+    - break
+    - type: entities
+      title: BLA3
+      show_header_toggle: false
+      entities:
+        - type: section
+
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.esp8266_led*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.esp8266_led*
+                options:
+                  secondary_info: last-changed
+              - entity_id: switch.esp8266_led*
+                options:
+                  secondary_info: entity-id
+
+    - type: entities
+      title: LEDs
+      show_header_toggle: true
+      entities:
+        - type: section
+        - entity: switch.rote_led
+        - entity: switch.gelbe_led
+        - entity: switch.gruene_led
 
         - type: custom:bar-card
           title: Temp WaKue

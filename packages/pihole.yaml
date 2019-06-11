@@ -259,7 +259,7 @@ automation:
   initial_state: True
   trigger:
     - platform: template
-      value_template: "{% if 'states.sensor.pihole_version_current.state' != 'states.sensor.pihole_version_latest.state' %}true{% else %}false{% endif %}"
+      value_template: "{{states('sensor.pihole_version_current') != states('sensor.pihole_version_latest')}}"
   condition:
     condition: and
     conditions:
@@ -267,6 +267,14 @@ automation:
           value_template: "{{ states('sensor.pihole_version_latest') != 'unaailable' }}"
         - condition: template
           value_template: "{{ states('sensor.pihole_version_latest') != '' }}"
+        - condition: template
+          value_template: "{{ states('sensor.pihole_version_latest') != 'unknown' }}"
+        - condition: template
+          value_template: "{{ states('sensor.pihole_version_current') != 'unavailable' }}"
+        - condition: template
+          value_template: "{{ states('sensor.pihole_version_current') != '' }}"
+        - condition: template
+          value_template: "{{ states('sensor.pihole_version_current') != 'unknown' }}"
   action:
     - service: notify.pushbullet
       data_template:

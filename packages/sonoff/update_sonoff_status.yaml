@@ -86,7 +86,15 @@ automation:
             - condition: template
               value_template: "{{ states('sensor.sonoff_latest_release') != 'unaailable' }}"
             - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release_raw') != 'unknown' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff_latest_release') != 'unknown' }}"
+            - condition: template
               value_template: "{{ states('sensor.sonoff_latest_release_raw') != '' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff1_sw_version') != 'unknown' }}"
+            - condition: template
+              value_template: "{{ states('sensor.sonoff1_sw_version') != '' }}"
             - condition: template
               value_template: "{{ states('sensor.sonoff_latest_release') != states('sensor.sonoff1_sw_version')}}"
       action:
@@ -332,3 +340,4 @@ sensor:
     availability_topic: "tele/sonoff8/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
+

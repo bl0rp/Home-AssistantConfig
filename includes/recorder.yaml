@@ -9,6 +9,9 @@ include:
     - media_player
     - device_tracker
   entities:
+    - sensor.sonoff_latest_release
+    - sensor.pihole_version_latest
+    - sensor.pihole_version_current
     #input_boolean (device tracker)
     - input_boolean.chrishome
     #network

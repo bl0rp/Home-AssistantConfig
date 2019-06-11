@@ -32,6 +32,7 @@ views:
   - !include lovelace/000_home_view.yaml
   - !include lovelace/010_service_view.yaml
   - !include lovelace/020_elw_view.yaml
+  - !include lovelace/025_elw_camera_view.yaml
   - !include lovelace/030_media_view.yaml
   - !include lovelace/040_first_floor_view.yaml
   - !include lovelace/050_weather_view.yaml

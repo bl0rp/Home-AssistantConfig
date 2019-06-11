@@ -6,30 +6,34 @@ cards:
   cards:
     - type: conditional
       conditions:
-        - entity: binary_sensor.soc_pi3_wifi
+        - entity: binary_sensor.rpi3_cam_ping
           state: "off"
       card:
         type: entities
         title: 'Raspberry Camera'
         show_header_toggle: false
         entities:
-          - entity: binary_sensor.soc_pi3_wifi
+          - entity: binary_sensor.rpi3_cam_ping
             name: "Status"
+            secondary_info: last-changed
           - entity: switch.11001_b
             name: Power
             icon: mdi:power-plug
 
     - type: conditional
       conditions:
-        - entity: binary_sensor.soc_pi3_wifi
+        - entity: binary_sensor.rpi3_cam_ping
           state: "on"
       card:
         type: entities
         title: 'Raspberry Camera'
         show_header_toggle: false
         entities:
-          - entity: binary_sensor.soc_pi3_wifi
+          - entity: binary_sensor.rpi3_cam_ping
             name: "Status"
+            secondary_info: last-changed
+          - entity: switch.11011_c
+            name: "Beleuchtung"
           - entity: script.ssh_shutdown_rpi3
             name: Ausschalten
             icon: mdi:power

@@ -31,7 +31,7 @@
 homeassistant:
 
   customize:
-#template input_boolean from device_tracker.yaml to home/nicole_phone_to_home
+#template input_boolean from device_tracker.yaml
     binary_sensor.chrishome_template:
       friendly_name: Christoph
 
@@ -114,6 +114,9 @@ homeassistant:
     device_tracker.soc_pizero_wifi:
       friendly_name: "RaspberryPi Zero (BT)"
       icon: mdi:chip
+    device_tracker.soc_pi3_wifi:
+      friendly_name: "RaspberryPi 3 Camera"
+      icon: mdi:chip
 #sonoff wemo
     device_tracker.switch_sonoff_sonoff1:
       friendly_name: "Sonoff #1"
@@ -167,9 +170,6 @@ homeassistant:
       icon: mdi:wifi
     device_tracker.user_devices_phone_jan:
       friendly_name: "Jan (WiFi)"
-      icon: mdi:wifi
-    device_tracker.user_devices_phone_johanna:
-      friendly_name: "Johanna (WiFi)"
       icon: mdi:wifi
     device_tracker.user_devices_phone_petros:
       friendly_name: "Petros (WiFi)"
@@ -265,6 +265,9 @@ homeassistant:
     binary_sensor.soc_pizero_wifi:
       friendly_name: "RaspberryPi Zero (BT)"
       icon: mdi:chip
+    binary_sensor.soc_pi3_wifi:
+      friendly_name: "RaspberryPi 3 Camera"
+      icon: mdi:chip
 #sonoff wemo
     binary_sensor.switch_sonoff_sonoff1:
       friendly_name: "Sonoff #1"
@@ -319,9 +322,6 @@ homeassistant:
     binary_sensor.user_devices_phone_jan:
       friendly_name: "Jan (WiFi)"
       icon: mdi:wifi
-    binary_sensor.user_devices_phone_johanna:
-      friendly_name: "Johanna (WiFi)"
-      icon: mdi:wifi
     binary_sensor.user_devices_phone_petros:
       friendly_name: "Petros (WiFi)"
       icon: mdi:wifi
@@ -363,6 +363,7 @@ group:
       - device_tracker.soc_esp8266_07
       - device_tracker.soc_pi1_wifi
       - device_tracker.soc_pizero_wifi
+      - device_tracker.soc_pi3_wifi
       - device_tracker.switch_sonoff_sonoff1
       - device_tracker.switch_sonoff_sonoff2
       - device_tracker.switch_sonoff_sonoff3
@@ -380,7 +381,6 @@ group:
       - device_tracker.user_devices_phone_christoph
       - device_tracker.user_devices_phone_ewald
       - device_tracker.user_devices_phone_jan
-      - device_tracker.user_devices_phone_johanna
       - device_tracker.user_devices_phone_petros
       - device_tracker.user_devices_phone_steffi
       - device_tracker.user_devices_phone_traude
@@ -407,6 +407,7 @@ group:
       - binary_sensor.network_storage_qnap1
       - binary_sensor.soc_pi1_wifi
       - binary_sensor.soc_pizero_wifi
+      - binary_sensor.soc_pi3_wifi
   device_tracker_network_gateway:
     entities:
       - binary_sensor.network_ap_ddwrt
@@ -440,6 +441,7 @@ group:
       - binary_sensor.soc_esp8266_07
       - binary_sensor.soc_pi1_wifi
       - binary_sensor.soc_pizero_wifi
+      - binary_sensor.soc_pi3_wifi
 
 
   device_tracker_switch:
@@ -466,7 +468,6 @@ group:
       - device_tracker.user_devices_phone_christoph
       - device_tracker.user_devices_phone_ewald
       - device_tracker.user_devices_phone_jan
-      - device_tracker.user_devices_phone_johanna
       - device_tracker.user_devices_phone_petros
       - device_tracker.user_devices_phone_steffi
       - device_tracker.user_devices_phone_traude
@@ -475,7 +476,6 @@ group:
     entities:
       - device_tracker.user_devices_phone_christoph
       - device_tracker.user_devices_phone_ewald
-      - device_tracker.user_devices_phone_johanna
       - device_tracker.user_devices_phone_traude
 
   device_tracker_user_phone_guest:
@@ -490,7 +490,7 @@ sensor:
   - platform: template
     sensors:
       clients_online:
-        entity_id: sun.sun
+        entity_id: sensor.time
         unit_of_measurement: '#'
         value_template: >-
             {%- for d in states.device_tracker if d.state == 'home' -%}
@@ -590,6 +590,9 @@ binary_sensor:
       soc_pizero_wifi:
         value_template: "{{ is_state('device_tracker.soc_pizero_wifi', 'home') }}"
         device_class: connectivity
+      soc_pi3_wifi:
+        value_template: "{{ is_state('device_tracker.soc_pi3_wifi', 'home') }}"
+        device_class: connectivity
       switch_sonoff_sonoff1:
         value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff1', 'home') }}"
         device_class: connectivity
@@ -641,9 +644,6 @@ binary_sensor:
       user_devices_phone_jan:
         value_template: "{{ is_state('device_tracker.user_devices_phone_jan', 'home') }}"
         device_class: connectivity
-      user_devices_phone_johanna:
-        value_template: "{{ is_state('device_tracker.user_devices_phone_johanna', 'home') }}"
-        device_class: connectivity
       user_devices_phone_petros:
         value_template: "{{ is_state('device_tracker.user_devices_phone_petros', 'home') }}"
         device_class: connectivity
@@ -688,6 +688,7 @@ automation:
         - binary_sensor.soc_esp8266_07
         - binary_sensor.soc_pi1_wifi
         - binary_sensor.soc_pizero_wifi
+        - binary_sensor.soc_pi3_wifi
         - binary_sensor.switch_sonoff_sonoff1
         - binary_sensor.switch_sonoff_sonoff2
         - binary_sensor.switch_sonoff_sonoff3
@@ -705,7 +706,6 @@ automation:
         - binary_sensor.user_devices_phone_christoph
         - binary_sensor.user_devices_phone_ewald
         - binary_sensor.user_devices_phone_jan
-        - binary_sensor.user_devices_phone_johanna
         - binary_sensor.user_devices_phone_petros
         - binary_sensor.user_devices_phone_steffi
         - binary_sensor.user_devices_phone_traude
@@ -772,7 +772,7 @@ automation:
       from: 'on'
       to: 'on'
       for:
-        minutes: 2
+        minutes: 5
     action:
       - service: notify.pushbullet
         data_template:
@@ -802,7 +802,7 @@ automation:
       from: 'on'
       to: 'off'
       for:
-        minutes: 2
+        minutes: 5
     action:
       - service: notify.pushbullet
         data_template:
@@ -822,3 +822,22 @@ automation:
         data_template:
           message: >
             Neues Gerät gefunden: {{ trigger.event.data.entity_id }} Hostname: {{ trigger.event.data.host_name }}
+#################################################
+### Announce guests      on the network       ###
+#################################################
+  - alias: guest_online_notification
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id:
+        - device_tracker.user_devices_phone_jan
+        - device_tracker.user_devices_phone_petros
+        - device_tracker.user_devices_phone_steffi
+      from: 'not_home'
+      to: 'home'
+
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} {{ trigger.to_state.attributes.friendly_name }} scheint im WiFi zu sein!

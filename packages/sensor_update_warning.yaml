@@ -7,6 +7,8 @@ homeassistant:
   customize:
     sensor.phonebatt_watch:
       friendly_name: Handyakku Pixel3XL
+    sensor.esp32_01_watch:
+      friendly_name: Türsensor ELW
     sensor.esp32_02_watch:
       friendly_name: Haupteingang
     sensor.esp32_03_watch:
@@ -49,34 +51,40 @@ sensor:
   - platform: template
     sensors:
       phonebatt_watch:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel3xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       phonebatt_debug:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel3xl_battery.last_updated)  }}"
       phonebatt_debug2:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ states.sensor.tasker_pixel3xl_battery.last_updated  }}"
+#door_sensor_elw
+      esp32_01_watch:
+        entity_id: sensor.time
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_01_rssi.last_updated) > 420*60 %}true{% else %}false{% endif %}"
 #outdoor sensor 2
       esp32_02_watch:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       esp32_02_debug:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated)  }}"
       esp32_02_debug2:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ states.sensor.esp32_02_temperature.last_updated  }}"
 #outdoor sensor 3
       esp32_03_watch:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
       esp32_03_debug:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated)  }}"
       esp32_03_debug2:
-        entity_id: sun.sun
+        entity_id: sensor.time
         value_template: "{{ states.sensor.esp32_03_temperature.last_updated  }}"
+
+
 #################################################
 ### Notify when a Sensor does not update      ###
 #################################################
@@ -87,6 +95,7 @@ automation:
       - platform: state
         entity_id:
           - sensor.phonebatt_watch
+          - sensor.esp32_01_watch
           - sensor.esp32_02_watch
           - sensor.esp32_03_watch
         to: 'true'

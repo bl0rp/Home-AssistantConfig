@@ -10,51 +10,51 @@ group:
     name: Fahrzeit
     view: no
     entities:
-      - sensor.zuhausehauptrettungswache
-      - sensor.zuhauserettungswache2
-      - sensor.hauptrettungswachezuhause
+      # - sensor.zuhausehauptrettungswache
+      # - sensor.zuhauserettungswache2
+      # - sensor.hauptrettungswachezuhause
       - sensor.waze_zuhause_hrw
-      - sensor.zuhausemarienhospital
-      - sensor.stuttgartberlin
+      # - sensor.zuhausemarienhospital
+      # - sensor.stuttgartberlin
       - sensor.waze_stuttgart_berlin
 
 
 sensor:
-  - platform: google_travel_time
-    name: ZuhauseMarienhospital
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: place_id:ChIJHSlDllnbmUcRFTau-VG69RA
-
-  - platform: google_travel_time
-    name: ZuhauseHauptrettungswache
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Neckarstraße 143, Stuttgart, Germany
-
-  - platform: google_travel_time
-    name: ZuhauseRettungswache2
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: zone.rw2
-
-  - platform: google_travel_time
-    name: ZuhauseMobileMedic
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: zone.mobilemedic
-
-  - platform: google_travel_time
-    name: HauptrettungswacheZuhause
-    api_key: !secret google_traveltime_apikey
-    origin: Neckarstraße 143, Stuttgart, Germany
-    destination: zone.home
-
-  - platform: google_travel_time
-    name: StuttgartBerlin
-    api_key: !secret google_traveltime_apikey
-    origin: zone.home
-    destination: Berlin, Germany
+  # - platform: google_travel_time
+  #   name: ZuhauseMarienhospital
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: zone.home
+  #   destination: place_id:ChIJHSlDllnbmUcRFTau-VG69RA
+  #
+  # - platform: google_travel_time
+  #   name: ZuhauseHauptrettungswache
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: zone.home
+  #   destination: Neckarstraße 143, Stuttgart, Germany
+  #
+  # - platform: google_travel_time
+  #   name: ZuhauseRettungswache2
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: zone.home
+  #   destination: zone.rw2
+  #
+  # - platform: google_travel_time
+  #   name: ZuhauseMobileMedic
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: zone.home
+  #   destination: zone.mobilemedic
+  #
+  # - platform: google_travel_time
+  #   name: HauptrettungswacheZuhause
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: Neckarstraße 143, Stuttgart, Germany
+  #   destination: zone.home
+  #
+  # - platform: google_travel_time
+  #   name: StuttgartBerlin
+  #   api_key: !secret google_traveltime_apikey
+  #   origin: zone.home
+  #   destination: Berlin, Germany
 
   - platform: waze_travel_time
     name: waze_zuhause_hrw

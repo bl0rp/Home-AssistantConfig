@@ -30,6 +30,13 @@ cards:
     - type: entities
       title: Severity Test2
       entities:
+      - entity: input_boolean.washer_notify_christoph_test
+      - entity: input_boolean.washer_notify_traude_test
+      - entity: script.washer_test
+      - entity: sensor.pihole_version_latest
+      - entity: sensor.pihole_version_latest_raw
+      - entity: sensor.pihole_version_current
+      - entity: sensor.sonoff_latest_release
       - entity: input_number.severity
       - entity: input_number.load_sim
       - entity: sensor.load_1m

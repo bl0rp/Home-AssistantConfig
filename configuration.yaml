@@ -7,7 +7,8 @@ homeassistant:
   time_zone: Europe/Berlin
   customize: !include includes/customize.yaml
   packages: !include_dir_named packages
-
+  whitelist_external_dirs:
+    - /home/homeassistant/raspicam
 frontend:
 
 lovelace:

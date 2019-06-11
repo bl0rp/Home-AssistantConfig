@@ -24,6 +24,11 @@ cards:
           name: Bett
           tap_action:
             action: toggle
+        - entity: switch.11001_c
+          name: Nachttisch
+          tap_action:
+            action: toggle
+
         - entity: switch.11011_b
           name: Schreibtisch
           tap_action:
@@ -103,6 +108,7 @@ cards:
       - entity: sensor.tasker_pixel3xl_battery
         name: Pixel3XL
         secondary_info: last-changed
+      - entity: input_boolean.laundry_notify_christoph
       - type: section
         label: Ortung
       # - type: text

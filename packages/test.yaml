@@ -1,0 +1,25 @@
+homeassistant:
+
+input_boolean:
+  washer_notify_traude_test:
+    initial: on
+  washer_notify_christoph_test:
+    initial: on
+
+
+script:
+  washer_test:
+     sequence:
+       - service: notify.pushbullet
+         data_template:
+           message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:test"
+       - condition: template
+         value_template: '{{ is_state("input_boolean.washer_notify_christoph_test", "on")  }}'
+       - service: notify.pushbullet
+         data_template:
+           message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:boolean chris an"
+       - condition: template
+         value_template: '{{ is_state("input_boolean.washer_notify_traude_test", "on")  }}'
+       - service: notify.pushbullet
+         data_template:
+           message: "{{ now().strftime('%d.%m.%Y %H:%M:%S') }}:boolean traude an"

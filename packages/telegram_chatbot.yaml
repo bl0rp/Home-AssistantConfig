@@ -52,7 +52,24 @@ automation:
       data_template:
         target: "{{ trigger.event.data.user_id }}"
         message: "Commands..."
-        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate"]
+        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate", "/routerreset"]
+## router reset
+  - alias: 'telegram_router_reset'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/routerreset'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: "{{ trigger.event.data.user_id }}"
+          message: >
+              Router wird neugestartet!
+          keyboard: ["/menu"]
+      - service: script.turn_on
+        entity_id: script.reset_router
 
 #home state
   - alias: 'telegram_homestate'
@@ -243,3 +260,4 @@ automation:
 
            {{ states.sensor.esp32_03_temperature.attributes.friendly_name }}: {{ states.sensor.esp32_03_temperature.state}}°C"
         keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+

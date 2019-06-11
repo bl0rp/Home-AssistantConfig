@@ -104,7 +104,7 @@ group:
       - input_boolean.chrishome
       - device_tracker.user_devices_phone_ewald
       - device_tracker.user_devices_phone_traude
-      - device_tracker.user_devices_phone_johanna
+
 
   familiegrpstate:
     name: Letzte Änderung
@@ -430,7 +430,6 @@ automation:
         entity_id:
           - device_tracker.user_devices_phone_traude
           - device_tracker.user_devices_phone_ewald
-          - device_tracker.user_devices_phone_johanna
         from: 'not_home'
         to: 'home'
 
@@ -438,7 +437,6 @@ automation:
         entity_id:
           - device_tracker.user_devices_phone_traude
           - device_tracker.user_devices_phone_ewald
-          - device_tracker.user_devices_phone_johanna
         from: 'home'
         to: 'not_home'
 
@@ -488,3 +486,4 @@ automation:
             {% else %}
               {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist daheim!
             {% endif %}
+
