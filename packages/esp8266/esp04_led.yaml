@@ -3,69 +3,11 @@
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
 homeassistant:
-  customize:
-
-    sensor.esp8266_04:
-      entity_picture: /local/esp.jpg
-
-    sensor.temperatur_esp8266_04:
-      icon: mdi:thermometer
-      friendly_name: Temperatur esp04
-
-    sensor.luftfeuchtigkeit_esp8266_04:
-      icon: mdi:water-percent
-      friendly_name: Luftfeuchtigkeit esp04
-
-    switch.esp04_led_green:
-      icon: mdi:led-outline
-      friendly_name: Grüne LED
-
-    switch.esp04_led_yellow:
-      icon: mdi:led-outline
-      friendly_name: Gelbe LED
-
-    switch.esp04_led_red:
-      icon: mdi:led-outline
-      friendly_name: Rote LED
-
-    sensor.esp8266_04_ip:
-      icon: mdi:server-network
-      friendly_name: IPv4 ESP 04
 
 ###############################################################################
 #  Sensors
 ###############################################################################
 sensor:
-
-  - platform: mqtt
-    name: "ESP8266 04 IP"
-    state_topic: "sensor_esp8266_04/IP"
-    availability_topic: "sensor_esp8266_04/status"
-    payload_available: "Connected"
-    payload_not_available: "Connection Lost"
-    qos: 0
-
-
-
-
-
-  - platform: mqtt
-    name: "ESP8266 04 Status"
-    state_topic: "sensor_esp8266_04/status"
-    qos: 0
-
-  - platform: mqtt
-    name: "ESP8266 04 Uptime"
-    state_topic: "sensor_esp8266_04/uptime/minutes"
-    qos: 0
-    unit_of_measurement: "minutes"
-
-  - platform: mqtt
-    name: "ESP8266 04 Signal"
-    state_topic: "sensor_esp8266_04/signal/rssi"
-    qos: 0
-    unit_of_measurement: "dB"
-
   - platform: template
     sensors:
 
@@ -116,38 +58,4 @@ sensor:
              {%- set seconds = seconds % intervals.minutes -%}
              {{- comma() ~ seconds ~ 's' if seconds -}}
            {%- endmacro %}
-           {{ human_time(states.sensor.esp8266_04_uptime.state | int * 60) }}
-
-
-
-###############################################################################
-#  switch
-###############################################################################
-switch:
-
-  - platform: mqtt
-    name: "esp04_led_red"
-    state_topic: "sensor_esp8266_04/rot/Switch"
-    command_topic: "sensor_esp8266_04/gpio/14"
-    payload_on: "1"
-    payload_off: "0"
-    optimistic: false
-    qos: 0
-
-  - platform: mqtt
-    name: "esp04_led_green"
-    state_topic: "sensor_esp8266_04/gruen/Switch"
-    command_topic: "sensor_esp8266_04/gpio/13"
-    payload_on: "1"
-    payload_off: "0"
-    optimistic: false
-    qos: 0
-
-  - platform: mqtt
-    name: "esp04_led_yellow"
-    state_topic: "sensor_esp8266_04/gelb/Switch"
-    command_topic: "sensor_esp8266_04/gpio/12"
-    payload_on: "1"
-    payload_off: "0"
-    optimistic: false
-    qos: 0
+           {{ human_time(states.sensor.esp8266_led_oled_uptime.state | int) }}

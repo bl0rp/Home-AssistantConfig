@@ -8,33 +8,6 @@ homeassistant:
 ###############################################################################
 sensor:
 
-  - platform: mqtt
-    name: "ESP8266 05 IP"
-    state_topic: "sensor_esp8266_05/IP"
-    availability_topic: "sensor_esp8266_05/status"
-    payload_available: "Connected"
-    payload_not_available: "Connection Lost"
-    qos: 0
-
-
-
-  - platform: mqtt
-    name: "ESP8266 05 Status"
-    state_topic: "sensor_esp8266_05/status"
-    qos: 0
-
-  - platform: mqtt
-    name: "ESP8266 05 Uptime"
-    state_topic: "sensor_esp8266_05/uptime/minutes"
-    qos: 0
-    unit_of_measurement: "minutes"
-
-  - platform: mqtt
-    name: "ESP8266 05 Signal"
-    state_topic: "sensor_esp8266_05/signal/rssi"
-    qos: 0
-    unit_of_measurement: "dB"
-
   - platform: template
     sensors:
 
@@ -85,4 +58,4 @@ sensor:
              {%- set seconds = seconds % intervals.minutes -%}
              {{- comma() ~ seconds ~ 's' if seconds -}}
            {%- endmacro %}
-           {{ human_time(states.sensor.esp8266_05_uptime.state | int * 60) }}
+           {{ human_time(states.sensor.esp8266_lcd_uptime.state | int) }}
