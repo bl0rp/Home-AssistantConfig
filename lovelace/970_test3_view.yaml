@@ -1,4 +1,4 @@
-2title: test3
+title: test3
 path: test3
 icon: mdi:close-octagon
 panel: true
@@ -6,7 +6,13 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-    - type: custom:tracker-card
+    - type: entities
+      title: Updates
+      show_header_toggle: false
+      entities:
+        - entity: sensor.hacs
+        - entity: sensor.potential_breaking_changes
+
     - break
     - type: custom:auto-entities
       show_empty: true

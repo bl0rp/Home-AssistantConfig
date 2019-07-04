@@ -4,6 +4,7 @@
 *.crt
 *.key
 2remind
+custom_components
 www
 gtfs
 OZW_Log.txt

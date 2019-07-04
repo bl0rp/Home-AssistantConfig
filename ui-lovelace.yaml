@@ -24,7 +24,11 @@ resources:
 #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
   - url: /community_plugin/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
     type: js
-
+  - url: /community_plugin/lovelace-swipe-navigation/swipe-navigation.js
+    type: js
+swipe_nav:
+  animate: swipe
+  swipe_amount: 15
 title: HomeAssistant
 views:
   - !include lovelace/000_home_view.yaml

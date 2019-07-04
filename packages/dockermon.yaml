@@ -28,6 +28,10 @@ homeassistant:
       icon: mdi:chart-line-variant
 
 switch:
+
+    - platform: hadockermon
+      host: 127.0.0.1
+      port: 8126
     - platform: rest
       resource: http://127.0.0.1:8126/container/influxdb
       name: influx

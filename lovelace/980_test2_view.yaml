@@ -7,7 +7,12 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-    - type: custom:tracker-card
+    - type: entities
+      title: Updates
+      show_header_toggle: false
+      entities:
+        - entity: switch.ha_dockermon_grafana
+        - entity: sensor.potential_breaking_changes
     - type: markdown
       title: TEST
       content: >
