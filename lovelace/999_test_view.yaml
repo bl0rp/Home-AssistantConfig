@@ -9,163 +9,42 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-
-
-
-
+    - type: markdown
+      title: Markdown Test
+      content: >
+        # 1 Normal
+          Normal
+        ## 2 Italic
+          *Italic*
+        ### 3 Bold
+          **BOLD**
 
     - type: markdown
-      title: TEST
+      title: Markdown 2
       content: >
-        **Oink**
-    - type: markdown
-      title: Test2
-      content: >
-        **Oin22323k**
-
-
-
-
-
+        # 1 Normal
+          Normal
+        # 2 Italic
+          *Italic*
+        # 3 Bold
+        ---
+          **BOLD**
+    - break
     - type: entities
-      title: Severity Test2
+      title: Calendar Bla
+      show_header_toggle: false
       entities:
-      - entity: input_boolean.washer_notify_christoph_test
-      - entity: input_boolean.washer_notify_traude_test
-      - entity: script.washer_test
-      - entity: sensor.pihole_version_latest
-      - entity: sensor.pihole_version_latest_raw
-      - entity: sensor.pihole_version_current
-      - entity: sensor.sonoff_latest_release
-      - entity: input_number.severity
-      - entity: input_number.load_sim
-      - entity: sensor.load_1m
-        secondary_info: last-changed
-      - type: custom:bar-card
-        title: Severity Test2
-        min: 0
-        max: 360
-        entity: input_number.severity
-        severity:
-        - value: 0
-          hue: '0'
-        - value: 10
-          hue: '10'
-        - value: 20
-          hue: '20'
-        - value: 30
-          hue: '30'
-        - value: 40
-          hue: '40'
-        - value: 50
-          hue: '50'
-        - value: 60
-          hue: '60'
-        - value: 70
-          hue: '70'
-        - value: 80
-          hue: '80'
-        - value: 90
-          hue: '90'
-        - value: 100
-          hue: '100'
-        - value: 110
-          hue: '110'
-        - value: 120
-          hue: '120'
-        - value: 130
-          hue: '130'
-        - value: 140
-          hue: '140'
-        - value: 150
-          hue: '150'
-        - value: 160
-          hue: '160'
-        - value: 170
-          hue: '170'
-        - value: 180
-          hue: '180'
-        - value: 190
-          hue: '190'
-        - value: 200
-          hue: '200'
-        - value: 210
-          hue: '210'
-        - value: 220
-          hue: '220'
-        - value: 230
-          hue: '230'
-        - value: 240
-          hue: '240'
-        - value: 250
-          hue: '250'
-        - value: 260
-          hue: '260'
-        - value: 270
-          hue: '270'
-        - value: 280
-          hue: '280'
-        - value: 290
-          hue: '290'
-        - value: 300
-          hue: '300'
-        - value: 310
-          hue: '310'
-        - value: 320
-          hue: '320'
-        - value: 330
-          hue: '330'
-        - value: 340
-          hue: '340'
-        - value: 350
-          hue: '350'
-        - value: 360
-          hue: '360'
-      - type: custom:bar-card
-        title: LoadSim
-        min: 0
-        max: 4.0
-        entity: input_number.load_sim
-        severity:
-        - value: 0.1
-          hue: '100'
-        - value: 0.2
-          hue: '100'
-        - value: 0.3
-          hue: '100'
-        - value: 0.4
-          hue: '80'
-        - value: 0.5
-          hue: '80'
-        - value: 0.6
-          hue: '30'
-        - value: 0.7
-          hue: '20'
-        - value: 0.8
-          hue: '360'
-        - value: 0.9
-          hue: '360'
-        - value: 1.0
-          hue: '360'
-        - value: 1.1
-          hue: '360'
-        - value: 1.2
-          hue: '360'
-        - value: 1.3
-          hue: '360'
-        - value: 1.4
-          hue: '360'
-        - value: 1.5
-          hue: '360'
-        - value: 1.6
-          hue: '360'
-        - value: 1.7
-          hue: '360'
-        - value: 1.8
-          hue: '360'
-        - value: 1.9
-          hue: '360'
-        - value: 2.0
-          hue: '360'
-        - value: 4.0
-          hue: '360'
+      - entity: input_number.eintreffzeit_rtw
+        name: RTW
+      - entity: input_number.eintreffzeit_nef
+        name: NEF
+      - entity: input_number.eintreffzeit_generell
+        name: Generell
+      - entity: sensor.next_calendar_work_location
+      - entity: sensor.next_calendar_main_location
+      - entity: automation.notify_next_calendar_event
+      - entity: automation.notify_calendar_event_time_to_leave_without_traffic
+      - entity: automation.notify_calendar_event_time_to_leave_rw2_nef_with_traffic
+        name: Traffic NEF Slider RW2
+
+    - break

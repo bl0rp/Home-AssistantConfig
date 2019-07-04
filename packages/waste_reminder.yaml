@@ -11,7 +11,7 @@ homeassistant:
       icon: mdi:delete-empty
     sensor.next_waste_gelbersack:
       friendly_name: "Nächste Abholung Gelber Sack"
-      icon: mdi:delete-empty
+      icon: mdi:sack
     automation.waste_alert_12h:
       friendly_name: "Benachrichtigung Mülltonnen Morgen"
       icon: mdi:delete-empty
@@ -51,13 +51,13 @@ sensor:
   - platform: template
     sensors:
       cal_alert_time_waste:
-        entity_id: sensor.date_time
+        entity_id: sensor.time
         value_template: >-
           {{ (as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time) - as_timestamp(now()) )|int }}
   - platform: template
     sensors:
       cal_alert_time_waste_gelbersack:
-        entity_id: sensor.date_time
+        entity_id: sensor.time
         value_template: >-
           {{ (as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time) - as_timestamp(now()) )|int }}
 # show next calendar entry

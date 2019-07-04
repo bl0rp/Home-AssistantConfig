@@ -9,9 +9,9 @@ include:
     - media_player
     - device_tracker
   entities:
-    - sensor.sonoff_latest_release
-    - sensor.pihole_version_latest
-    - sensor.pihole_version_current
+    #dryer/washer sensor
+    - sensor.washer_state
+    - sensor.dryer_state
     #input_boolean (device tracker)
     - input_boolean.chrishome
     #network
@@ -101,10 +101,11 @@ include:
 
     #gas price
     - sensor.tankstelle_super
-    #google travel time
-    - sensor.zuhausemarienhospital
-    - sensor.hauptrettungswachezuhause
+    #travel time
     - sensor.waze_zuhause_hrw
+    - sensor.waze_zuhause_rw2
+    - sensor.waze_zuhause_maho
+    - sensor.waze_zuhause_mobilemedic
     - sensor.waze_stuttgart_berlin
 
     #speedtest

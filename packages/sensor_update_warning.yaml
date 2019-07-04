@@ -13,32 +13,9 @@ homeassistant:
       friendly_name: Haupteingang
     sensor.esp32_03_watch:
       friendly_name: Carport
-###### STATE CARD for views.yaml
 
-group:
-  sensor_warn:
-    control: hidden
-    icon: mdi:ethernet-cable
-    name: Sensorwarn
-    entities:
-    - sensor.tasker_pixel3xl_battery
-    - sensor.phonebatt_debug
-    - sensor.phonebatt_debug2
-    - sensor.phonebatt_watch
-    - sensor.esp32_02_temperature
-    - sensor.esp32_02_debug
-    - sensor.esp32_02_debug2
-    - sensor.esp32_02_watch
-    - sensor.esp32_03_temperature
-    - sensor.esp32_03_debug
-    - sensor.esp32_03_debug2
-    - sensor.esp32_03_watch
-    - automation.notify_sensor_update
 
 ##### notify component -> logfile
-
-
-
 notify:
     - name: sensor_watch_log
       platform: file
@@ -47,42 +24,25 @@ notify:
 sensor:
 
 ###### warning if battery powered sensor does not update
-#battery mobile
+#battery mobile 2hours
   - platform: template
     sensors:
       phonebatt_watch:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel3xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
-      phonebatt_debug:
-        entity_id: sensor.time
-        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel3xl_battery.last_updated)  }}"
-      phonebatt_debug2:
-        entity_id: sensor.time
-        value_template: "{{ states.sensor.tasker_pixel3xl_battery.last_updated  }}"
-#door_sensor_elw
+#door_sensor_elw 7hours
       esp32_01_watch:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_01_rssi.last_updated) > 420*60 %}true{% else %}false{% endif %}"
-#outdoor sensor 2
+#outdoor sensor 2 2hours
       esp32_02_watch:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
-      esp32_02_debug:
-        entity_id: sensor.time
-        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated)  }}"
-      esp32_02_debug2:
-        entity_id: sensor.time
-        value_template: "{{ states.sensor.esp32_02_temperature.last_updated  }}"
-#outdoor sensor 3
+#outdoor sensor 3 2hours
       esp32_03_watch:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
-      esp32_03_debug:
-        entity_id: sensor.time
-        value_template: "{{ as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated)  }}"
-      esp32_03_debug2:
-        entity_id: sensor.time
-        value_template: "{{ states.sensor.esp32_03_temperature.last_updated  }}"
+
 
 
 #################################################
@@ -105,7 +65,7 @@ automation:
         - condition: template
           value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
     action:
-    - service: notify.pushbullet
+    - service: notify.telegram_christoph
       data_template:
         message: >
           NO UPDATE: {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Sensor {{ trigger.to_state.attributes.friendly_name }}

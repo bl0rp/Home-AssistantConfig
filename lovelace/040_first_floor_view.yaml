@@ -63,6 +63,13 @@ cards:
           name: Stehlampe
           tap_action:
             action: toggle
+    - type: entities
+      title: Müllabfuhr
+      show_header_toggle: false
+      entities:
+        - type: section
+        - entity: sensor.next_waste
+        - entity: sensor.next_waste_gelbersack
     - type: history-graph
       title: 'Innentemperatur (Woche)'
       hours_to_show: 168
@@ -71,4 +78,3 @@ cards:
            name: Wohnzimmer
          - entity: sensor.temperatur_esp8266_03
            name: Wintergarten
-

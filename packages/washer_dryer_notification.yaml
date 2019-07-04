@@ -29,7 +29,7 @@ input_boolean:
   laundry_notify_traude:
     initial: on
   laundry_notify_christoph:
-    initial: on
+    initial: off
 
 
 
@@ -39,16 +39,16 @@ sensor:
       washer_state:
         value_template: >-
           {% if is_state('input_boolean.washer_switch', 'on') %}
-            wäscht gerade
+            wäscht
           {% else %}
-            ausgeschaltet
+            wäscht nicht
           {% endif %}
       dryer_state:
         value_template: >-
           {% if is_state('input_boolean.dryer_switch', 'on') %}
-            trocknet gerade
+            trocknet
           {% else %}
-            ausgeschaltet
+            trocknet nicht
           {% endif %}
 automation:
 #washer
@@ -211,4 +211,3 @@ automation:
           target: media_player.christophs_echo_dot
           message: >
             Der Trockner ist fertig
-

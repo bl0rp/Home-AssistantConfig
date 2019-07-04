@@ -3,6 +3,30 @@ path: test2
 icon: mdi:test-tube
 panel: true
 cards:
+
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: custom:tracker-card
+    - type: markdown
+      title: TEST
+      content: >
+        **Oinasdasdk**
+    - type: markdown
+      title: Test2
+      content: >
+        **Oin22323k**
+    - type: gauge
+      name: Wakue.
+      unit: '°C'
+      entity: sensor.esp32_04_temperature
+      severity:
+        green: 0
+        yellow: 32
+        red: 45
+
+    - break
+
 - type: custom:layout-card
   layout: vertical
   cards:

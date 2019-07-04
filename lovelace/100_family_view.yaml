@@ -52,6 +52,9 @@ cards:
             - entity: sensor.waze_zuhause_mobilemedic
               name: Mobile Medic
               icon: mdi:school
+            - entity: sensor.waze_zuhause_maho
+              name: Marienhospital
+              icon: mdi:hospital-building
             - entity: sensor.waze_stuttgart_berlin
               name: Berlin
               icon: mdi:city-variant
@@ -69,3 +72,4 @@ cards:
           entities:
             - device_tracker.897y04duz
             - zone.home
+

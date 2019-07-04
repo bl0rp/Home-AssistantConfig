@@ -1,47 +1,8 @@
 ########################################################################
-## Packages / ELW                                             ##
+## Packages / ELW                                                     ##
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
 ########################################################################
 homeassistant:
-
-#############
-#  group    #
-#############
-group:
-  sensordata_elw:
-    name: Temperatur und Luftfeuchtigkeit
-    entities:
-      - sensor.esp32_02_temperature
-      - sensor.esp32_03_temperature
-      - sensor.temperatur_esp8266_02
-      - sensor.aeotec_zw100_multisensor_6_temperature
-      - sensor.esp32_04_temperature
-      - sensor.esp32_02_humidity
-      - sensor.esp32_03_humidity
-      - sensor.luftfeuchtigkeit_esp8266_02
-      - sensor.aeotec_zw100_multisensor_6_relative_humidity
-
-  chrisdata:
-    name: Diverses
-    control: hidden
-    entities:
-      - sensor.phonebatt_pixel3xl
-      - device_tracker.user_devices_phone_christoph
-      - device_tracker.user_devices_phone_christoph_gpslogger
-      - input_boolean.chrisbluetooth
-      - input_boolean.chrishome
-      - input_select.christoph_status
-
-
-  last_motion_elw:
-    name: Letzte Bewegung
-    entities:
-      - sensor.multisensor_motion_last_triggered
-      - sensor.elw_motion_last_triggered
-
-
-
-
 
 ####################################
 ### automation lights auto on/off ##
@@ -59,23 +20,6 @@ automation:
       - service: automation.turn_off
         entity_id: automation.turn_on_lights_when_coming_home
       - delay: '00:00:20'
-      # - service: notify.echodot
-      #   data_template:
-      #     message: >
-      #        {% set person = 'Christoph' %}
-      #        {% if now().strftime("%H")|int < 12 %}
-      #        Guten Morgen
-      #        {% elif now().strftime("%H")|int < 18 %}
-      #        Guten Mittag
-      #        {% else %}
-      #        Guten Abend
-      #        {% endif %}
-      #        {{ [
-      #        "schön dass du da bist " + person,
-      #        "Sei gegrüßt " + person,
-      #        "und willkommen zu hause " + person
-      #        ] |random }}
-
       - service: notify.alexa_media
         data_template:
           data:
@@ -122,42 +66,6 @@ automation:
       - service: automation.turn_on
         entity_id: automation.turn_on_lights_when_coming_home
 
-#notification about all sensors when not home
-### Thanks 2 @brahmafear (initial version)
-  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
-    initial_state: True
-    trigger:
-      - platform: state
-        entity_id: sensor.aeotec_zw100_multisensor_6_burglar
-        from: '0'
-        to: '8'
-      - platform: state
-        entity_id: binary_sensor.esp8266_02_pir
-        from: 'off'
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.esp32_01_door_state
-        from: 'off'
-        to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: 'input_boolean.chrishome'
-          state: 'off'
-        - condition: template
-          value_template: >
-            {% if states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.last_triggered is not none %}
-              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.attributes.last_triggered) | int > 60 %} true {% else %} false
-              {% endif %}
-            {% else %}
-            false
-            {% endif %}
-    action:
-      - service: notify.pushbullet
-        data_template:
-          message: >
-             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!
 
 #disable lights when leaving
   - alias: 'ELW Licht ausschalten wenn BT nicht gefunden'

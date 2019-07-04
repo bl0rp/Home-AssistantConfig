@@ -75,7 +75,21 @@ sensor:
     region: 'EU'
 
   - platform: waze_travel_time
+    name: waze_zuhause_maho
+    origin: zone.home
+    destination: zone.maho
+    region: 'EU'
+
+  - platform: waze_travel_time
     name: waze_stuttgart_berlin
     origin: Stuttgart, Germany
     destination: Berlin, Germany
     region: 'EU'
+
+
+  - platform: gtfs
+    origin: 5
+    destination: 6074
+    data: vvs.zip
+    name: vvs_Fauststr_Rathaus
+

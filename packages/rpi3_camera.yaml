@@ -24,7 +24,7 @@ sensor:
 #remote temp via ssh
   - platform: command_line
     name: rpi3_cputemp_ssh
-    command: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo cat /sys/class/thermal/thermal_zone0/temp'"
+    command: "ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  pi@192.168.0.26 -i /home/homeassistant/.keys/ssh2rpi3 'sudo cat /sys/class/thermal/thermal_zone0/temp' || echo Connection failed."
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 #disk space used
