@@ -3,10 +3,23 @@ path: test2
 icon: mdi:test-tube
 panel: true
 cards:
-
 - type: custom:layout-card
   layout: vertical
   cards:
+    - type: 'custom:home-feed-card'
+      title: Home Feed
+      show_empty: false
+      calendars:
+        - calender.cvoid12_googlemail_com
+        - calender.contacts
+      entities:
+        - binary_sensor.esp32_01_door_state
+        - binary_sensor.aeotec_zw100_multisensor_6_sensor
+        - binary_sensor.esp8266_02_pir
+        - entity: binary_sensor.aeotec_zw100_multisensor_6_sensor
+          name: Bla
+          secondary_info: last-changed
+
     - type: entities
       title: Updates
       show_header_toggle: false

@@ -42,28 +42,6 @@ cards:
       - entity: sensor.ha_version
         name: HomeAssistant
 
-    - type: entities
-      title: "PiHole"
-      show_header_toggle: false
-      entities:
-        - entity: switch.pihole
-        - entity: sensor.pi_hole_version
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Details
-          items:
-            - script.pihole_update
-            - sensor.ads_blocked_today
-            - sensor.ads_percentage_today
-            - sensor.dns_queries_today
-            - sensor.domains_being_blocked
-            - sensor.ads_blocked_today
-            - sensor.unique_domains
-            - sensor.queries_forwarded
-            - sensor.queries_cached
-            - sensor.pihole_dns
-            - sensor.pihole_blocking
 
     - break
 

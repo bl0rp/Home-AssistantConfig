@@ -48,3 +48,14 @@ cards:
         name: Traffic NEF Slider RW2
 
     - break
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: Battery warning
+      filter:
+        include:
+          - domain: zwave
+            options:
+              secondary_info: last-changed
+              
+

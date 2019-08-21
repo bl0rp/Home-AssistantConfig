@@ -19,14 +19,20 @@ http:
   ssl_key: /home/homeassistant/sslcert/privkey.pem
 
 config:
+
 system_health:
+
 updater:
+
 hacs:
   token: !secret github_token_hacs
   theme: true
   python_script: true
+
 breaking_changes:
+
 discovery:
+
 alexa_media:
   accounts:
     - email: !secret alexa_email
@@ -44,6 +50,7 @@ influxdb:
 
 logbook:
 person:
+
 zwave:
   usb_path: /dev/ttyACM0
   device_config: !include zwave_device_config.yaml

@@ -76,5 +76,6 @@ cards:
             - sensor.dark_sky_precip_intensity
             - sensor.dark_sky_precip_probability
 
-    - type: weather-forecast
+    - type: custom:weather-card
       entity: weather.dark_sky
+      name: DarkSky

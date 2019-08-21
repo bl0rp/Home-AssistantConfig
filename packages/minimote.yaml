@@ -59,6 +59,154 @@ automation:
           button: "{{ (trigger.event.data.scene_id|int + 1) // 2 }}"
           action: "{{ 'click' if trigger.event.data.scene_id|int is odd else 'hold' }}"
 
+#############
+## Buttons ##
+#############
+  - alias: Minimote Button 1 Pressed Long
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 2
+    action:
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+             Lichter werden ausgeschaltet
+      - service: scene.turn_on
+        entity_id: scene.elw_aus
+
+  - alias: Minimote Button 1 Pressed
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 1
+    action:
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+             Licht geht an
+      - service: scene.turn_on
+        entity_id: scene.elw_relax
+
+  - alias: Minimote Button 2 Pressed long
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 4
+    action:
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: tts
+          target: media_player.christophs_echo_dot
+          message: >
+             {% if now().strftime("%H")|int < 12 %}
+             Guten Morgen.
+             {% elif now().strftime("%H")|int < 18 %}
+             Guten Nachmittag.
+             {% else %}
+             Guten Abend.
+             {% endif %}
+             Es hat {{ states('sensor.temperatur_esp8266_02')|round(1)|replace(".", ",") }} Grad in der E L W und die Außentemperatur ist {{ states('sensor.esp32_02_temperature')|round(1)|replace(".", ",") }} Grad.
+             Die Fahrzeit zur Hauptrettungswache beträgt momentan {{ states('sensor.zuhause__hauptrettungswache') }} Minuten.
+
+  - alias: Minimote Button 2 Pressed short
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 3
+    action:
+      - service: switch.toggle
+        entity_id: switch.11001_A
+
+
+  - alias: Minimote Button 3 Pressed Long
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 6
+    action:
+      - service: notify.pushbullet
+        data_template:
+          title: "button 3 long"
+          message: >
+             Button 3 long  pressed!  {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+              Knopf 3 lang
+
+  - alias: Minimote Button 3 Pressed
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 5
+    action:
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+              Knopf 3 kurz
+
+
+
+  - alias: Minimote Button 4 Pressed Long
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 8
+    action:
+      - service: media_player.toggle
+        entity_id: media_player.yamaha_receiver
+
+
+  - alias: Minimote Button 4 Pressed
+    initial_state: True
+    trigger:
+      platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        node_id: 6
+        scene_id: 7
+    action:
+      - service: switch.toggle
+        entity_id: switch.receiver_source_pc
+
+
+
+
 ################################################
 ## Script
 ################################################

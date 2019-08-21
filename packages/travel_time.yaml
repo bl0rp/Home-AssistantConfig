@@ -85,11 +85,3 @@ sensor:
     origin: Stuttgart, Germany
     destination: Berlin, Germany
     region: 'EU'
-
-
-  - platform: gtfs
-    origin: 5
-    destination: 6074
-    data: vvs.zip
-    name: vvs_Fauststr_Rathaus
-
