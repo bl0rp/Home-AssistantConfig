@@ -135,7 +135,7 @@ automation:
         scene_id: 3
     action:
       - service: switch.toggle
-        entity_id: switch.11001_A
+        entity_id: switch.11001_a
 
 
   - alias: Minimote Button 3 Pressed Long

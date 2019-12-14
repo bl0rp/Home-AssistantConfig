@@ -2,6 +2,6 @@ funksteckdosen433mhz_plug:
   name: Steckdosen (via 433Mhz)
   view: no
   entities:
-    - switch.11001_A
-    - switch.11001_B
-    - switch.11001_C
+    - switch.11001_a
+    - switch.11001_b
+    - switch.11001_c

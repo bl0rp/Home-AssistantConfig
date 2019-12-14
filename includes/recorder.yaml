@@ -26,6 +26,17 @@ include:
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_03
+    #custom sensor average
+    - sensor.avg_temp_outside_esp_1day
+    - sensor.avg_temp_outside_esp_3day
+    - sensor.avg_temp_outside_esp_7day
+    - sensor.avg_temp_inside_elw_1day
+    - sensor.avg_temp_inside_elw_3day
+    - sensor.avg_temp_inside_elw_7day
+    - sensor.avg_free_space_qnap_1y
+
+
+
     #internet weather
     - sensor.dark_sky_temperature
     - sensor.yr_temperature
@@ -57,6 +68,9 @@ include:
     - sensor.sonoff6_gesamtverbrauch
     - sensor.sonoff7_gesamtverbrauch
     - sensor.sonoff8_gesamtverbrauch
+
+    - sensor.sonoff2_kosten_heute
+    - sensor.sonoff2_kosten_gestern
 
     - sensor.sonoff1_kosten_gesamt
     - sensor.sonoff1_kosten_gestern

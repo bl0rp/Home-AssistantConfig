@@ -36,8 +36,11 @@ homeassistant:
       friendly_name: Christoph
 
 #GPSLogger
-    device_tracker.897y04duz:
+    device_tracker.p3xl:
       friendly_name: GPSLogger Pixel3 XL
+      icon: mdi:radar
+    device_tracker.p4xl:
+      friendly_name: GPSLogger Pixel4 XL
       icon: mdi:radar
 #network
     device_tracker.network_ap_ddwrt:
@@ -339,7 +342,8 @@ homeassistant:
 group:
   device_tracker_complete:
     entities:
-      - device_tracker.897y04duz
+      - device_tracker.p3xl
+      - device_tracker.p4xl
       - device_tracker.network_ap_ddwrt
       - device_tracker.network_ap_gateway
       - device_tracker.network_ap_unifi_elw
@@ -387,7 +391,7 @@ group:
 #use sensors for devices and device_tracker for people (home vs online)
   device_tracker_christoph:
     entities:
-      - device_tracker.897y04duz
+      - device_tracker.p4xl
       - device_tracker.user_devices_phone_christoph
       - binary_sensor.user_devices_computer_chris_macbook
       - binary_sensor.user_devices_computer_chris_workstation
@@ -738,7 +742,7 @@ automation:
       from: 'on'
       to: 'off'
       for:
-        minutes: 2
+        minutes: 5
     action:
       - service: notify.pushbullet
         data_template:
@@ -802,7 +806,7 @@ automation:
       from: 'on'
       to: 'off'
       for:
-        minutes: 5
+        minutes: 10
     action:
       - service: notify.pushbullet
         data_template:

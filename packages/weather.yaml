@@ -27,7 +27,7 @@ homeassistant:
       friendly_name: Nächster Sonnenaufgang
       icon: mdi:weather-sunset-up
 
-    script.sun_info_pushbullet:
+    script.send_sun_info:
       friendly_name: Pushbullet Sonneninfo
       icon: mdi:white-balance-sunny
 
@@ -139,7 +139,7 @@ group:
       - sensor.dark_sky_precip
       - sensor.dark_sky_precip_intensity
       - sensor.dark_sky_precip_probability
-      - script.sun_info_pushbullet
+      - script.send_sun_info
 
   wetter_yr:
     name: Wetter via yr.no
@@ -267,8 +267,8 @@ sensor:
 ###############
 
 script:
-  sun_info_pushbullet:
-    alias: "Sun Information via PB"
+  send_sun_info:
+    alias: "Sun Information via Telegram"
     sequence:
       service: telegram_bot.send_message
       data_template:

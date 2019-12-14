@@ -10,7 +10,7 @@ homeassistant:
       icon: mdi:lamp
     switch.wemoswitch2:
       friendly_name: Stehlampe
-      icon: mdi:lamp
+      icon: mdi:floor-lamp
     script.1og_lampen_an:
       friendly_name: Alle Lampen an!
       icon: mdi:lamp
@@ -126,6 +126,10 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.wemoswitch1
+      - service: switch.turn_on
+        entity_id: switch.sonoff9
+      - service: switch.turn_on
+        entity_id: switch.sonoff10
 
 
 ###
@@ -142,6 +146,10 @@ automation:
     action:
       - service: switch.turn_off
         entity_id: switch.wemoswitch1
+      - service: switch.turn_off
+        entity_id: switch.sonoff9
+      - service: switch.turn_off
+        entity_id: switch.sonoff10
 
 #############
 ### script ##
@@ -158,10 +166,17 @@ script:
          entity_id: switch.wemoswitch1
        - service: switch.turn_on
          entity_id: switch.wemoswitch2
-
+       - service: switch.turn_on
+         entity_id: switch.sonoff9
+       - service: switch.turn_on
+         entity_id: switch.sonoff10
   1og_lampen_aus:
     sequence:
        - service: switch.turn_off
          entity_id: switch.wemoswitch1
        - service: switch.turn_off
          entity_id: switch.wemoswitch2
+       - service: switch.turn_off
+         entity_id: switch.sonoff9
+       - service: switch.turn_off
+         entity_id: switch.sonoff10

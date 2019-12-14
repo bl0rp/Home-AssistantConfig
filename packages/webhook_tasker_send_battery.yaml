@@ -13,6 +13,12 @@ sensor:
     unit_of_measurement: '%'
     force_update: true
     device_class: battery
+  - platform: mqtt
+    state_topic: 'tasker/pixel4_xl/battery'
+    name: 'tasker_pixel4xl_battery'
+    unit_of_measurement: '%'
+    force_update: true
+    device_class: battery
 
 automation:
 
@@ -25,5 +31,16 @@ automation:
     - service: mqtt.publish
       data_template:
           topic: 'tasker/pixel3_xl/battery'
+          payload: '{{ trigger.json.state }}'
+          retain: yes
+- alias: webhook_tasker_battery_pixel4xl
+  initial_state: true
+  trigger:
+  - platform: webhook
+    webhook_id: !secret webhook_id_tasker_battery_pixel4xl
+  action:
+    - service: mqtt.publish
+      data_template:
+          topic: 'tasker/pixel4_xl/battery'
           payload: '{{ trigger.json.state }}'
           retain: yes

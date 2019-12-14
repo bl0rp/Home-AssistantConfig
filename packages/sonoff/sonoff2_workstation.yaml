@@ -176,8 +176,8 @@ notify:
 switch:
   - platform: mqtt
     name: "sonoff2"
-    state_topic: "stat/sonoff2/POWER1"
-    command_topic: "cmnd/sonoff2/POWER1"
+    state_topic: "stat/sonoff2/POWER"
+    command_topic: "cmnd/sonoff2/POWER"
     availability_topic: "tele/sonoff2/LWT"
     qos: 1
     payload_on: "ON"

@@ -9,6 +9,7 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
+
     - type: markdown
       title: Markdown Test
       content: >
@@ -51,11 +52,11 @@ cards:
     - type: custom:auto-entities
       card:
         type: entities
-        title: Battery warning
+        title: ZWAVE
       filter:
         include:
           - domain: zwave
             options:
               secondary_info: last-changed
-              
 
+        

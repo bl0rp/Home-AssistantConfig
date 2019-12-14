@@ -6,20 +6,69 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-    - type: 'custom:home-feed-card'
-      title: Home Feed
-      show_empty: false
-      calendars:
-        - calender.cvoid12_googlemail_com
-        - calender.contacts
-      entities:
-        - binary_sensor.esp32_01_door_state
-        - binary_sensor.aeotec_zw100_multisensor_6_sensor
-        - binary_sensor.esp8266_02_pir
-        - entity: binary_sensor.aeotec_zw100_multisensor_6_sensor
-          name: Bla
-          secondary_info: last-changed
+    # - type: 'custom:home-feed-card'
+    #   title: Home Feed
+    #   show_empty: false
+    #   entities:
+    #     - binary_sensor.esp32_01_door_state
+    #     - binary_sensor.esp8266_02_pir
+    #     - entity: binary_sensor.aeotec_zw100_multisensor_6_sensor
+    #       name: Bla
+    #       secondary_info: last-changed
 
+    - type: custom:mini-graph-card
+      entities:
+        - entity: binary_sensor.esp32_01_door_state
+          name: Türe ELW
+        - entity: binary_sensor.esp8266_02_pir
+          name: ELW
+
+      name: Motion last hour
+      hours_to_show: 24
+      points_per_hour: 10
+      update_interval: 30
+      aggregate_func: max
+      line_width: 2
+      smoothing: false
+      state_map:
+        - value: "off"
+          label: Clear
+        - value: "on"
+          label: Detected
+
+    - type: custom:hui-history-graph-card
+      title: 'Außentemperataur'
+      hours_to_show: 72
+      entities:
+       - entity: sensor.esp32_02_temperature
+         name: Haupteingang
+       - entity: sensor.esp32_03_temperature
+         name: Carport
+       - entity: sensor.avg_temp_outside_esp_1day
+         name: Durchschnitt
+    - break
+    - type: entities
+      title: AVG Sensors
+      show_header_toggle: false
+      entities:
+        - entity: sensor.avg_temp_outside_esp_1day
+        - entity: sensor.avg_temp_outside_esp_3day
+        - entity: sensor.avg_temp_outside_esp_7day
+        - entity: sensor.avg_temp_inside_elw_1day
+        - entity: sensor.avg_temp_inside_elw_3day
+        - entity: sensor.avg_temp_inside_elw_7day
+        - entity: sensor.avg_free_space_qnap_1y
+
+    - type: custom:hui-history-graph-card
+      title: 'Außentemperatur'
+      hours_to_show: 72
+      entities:
+       - entity: sensor.avg_temp_outside_esp_1day
+         name: 1 Tag
+       - entity: sensor.avg_temp_outside_esp_3day
+         name: 3 Tag
+       - entity: sensor.avg_temp_outside_esp_7day
+         name: 7 Tag
     - type: entities
       title: Updates
       show_header_toggle: false
@@ -34,6 +83,7 @@ cards:
       title: Test2
       content: >
         **Oin22323k**
+    - break
     - type: gauge
       name: Wakue.
       unit: '°C'
@@ -43,30 +93,7 @@ cards:
         yellow: 32
         red: 45
 
-    - break
 
-- type: custom:layout-card
-  layout: vertical
-  cards:
-    - type: custom:tracker-card
-    - type: markdown
-      title: TEST
-      content: >
-        **Oink**
-    - type: markdown
-      title: Test2
-      content: >
-        **Oin22323k**
-    - type: gauge
-      name: Wakue.
-      unit: '°C'
-      entity: sensor.esp32_04_temperature
-      severity:
-        green: 0
-        yellow: 32
-        red: 45
-
-    - break
 
 
     - type: entities

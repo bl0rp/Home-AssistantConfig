@@ -5,27 +5,27 @@
 
 homeassistant:
   customize:
-    switch.11011_A:
+    switch.11011_a:
       friendly_name: Bettlicht
       icon: mdi:lamp
       persistent: true
-    switch.11011_B:
+    switch.11011_b:
       friendly_name: Schreibtischlicht
       icon: mdi:spotlight-beam
       persistent: true
-    switch.11011_C:
+    switch.11011_c:
       friendly_name: Türlicht
       icon: mdi:spotlight
       persistent: true
-    switch.11001_A:
+    switch.11001_a:
       friendly_name: ESP Schreibtisch
       icon: mdi:power-plug
       persistent: true
-    switch.11001_B:
+    switch.11001_b:
       friendly_name: RPi IR Cam
       icon: mdi:raspberrypi
       persistent: true
-    switch.11001_C:
+    switch.11001_c:
       friendly_name: Nachttisch
       icon: mdi:desk-lamp
       persistent: true

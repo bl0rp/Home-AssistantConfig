@@ -5,13 +5,6 @@ cards:
   - type: vertical-stack
     cards:
     - type: entities
-      title: Verstärker
-      show_header_toggle: false
-      entities:
-      - switch.receiver
-      - switch.receiver_source_pc
-      - input_boolean.all_receiver_automations
-    - type: entities
       title: Media
       show_header_toggle: false
       entities:

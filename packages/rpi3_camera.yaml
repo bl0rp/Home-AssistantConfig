@@ -55,7 +55,7 @@ script:
       - delay: '00:00:30'
       - service: switch.turn_off
         data:
-          entity_id: switch.11001_B
+          entity_id: switch.11001_b
 
   ssh_reboot_rpi3:
     sequence:

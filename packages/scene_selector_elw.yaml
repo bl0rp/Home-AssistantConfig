@@ -159,7 +159,7 @@ group:
       - input_select.tuerlicht
       - light.flur
       - light.schlafzimmer
-      - switch.11011_A
-      - switch.11011_B
-      - switch.11011_C
+      - switch.11011_a
+      - switch.11011_b
+      - switch.11011_c
       - automation.motion_zwave_sunset_flur_dimlight

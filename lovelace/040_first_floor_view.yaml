@@ -56,11 +56,22 @@ cards:
     - type: glance
       entities:
         - entity: switch.wemoswitch1
-          name: Esszimmer
+          name: Esszimmer Fenster
           tap_action:
             action: toggle
+        - entity: switch.sonoff9
+          name: Esszimmer Türe
+          tap_action:
+            action: toggle
+
+    - type: glance
+      entities:
         - entity: switch.wemoswitch2
           name: Stehlampe
+          tap_action:
+            action: toggle
+        - entity: switch.sonoff10
+          name: Wintergarten
           tap_action:
             action: toggle
     - type: entities

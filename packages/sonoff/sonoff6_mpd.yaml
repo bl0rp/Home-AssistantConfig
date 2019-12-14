@@ -11,7 +11,7 @@ homeassistant:
 
   customize:
     switch.sonoff6:
-      friendly_name: USV & NAS
+      friendly_name: MPD
       icon: mdi:power-socket-eu
     sensor.sonoff6_ipv4:
       friendly_name: IPv4 Sonoff 6

@@ -59,17 +59,3 @@ cards:
               name: Berlin
               icon: mdi:city-variant
     - break
-    - type: custom:vertical-stack-in-card
-      title: 'Karte Christoph'
-      cards:
-        - type: entities
-          show_header_toggle: false
-          entities:
-            - type: section
-        - type: map
-          aspect_ratio: 16:9
-          default_zoom: 14
-          entities:
-            - device_tracker.897y04duz
-            - zone.home
-

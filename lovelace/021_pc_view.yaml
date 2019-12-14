@@ -1,0 +1,218 @@
+title: Sonoff
+icon: mdi:desktop-tower-monitor
+path: pc
+panel: true
+cards:
+
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: entities
+      title: Leistung (Tag)
+      show_header_toggle: False
+      entities:
+      - type: section
+        label: Workstation
+
+      - type: custom:mini-graph-card
+        hours_to_show: 12
+        hour24: true
+        entities:
+          - sensor.sonoff2_momentane_leistung
+        show:
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: false
+          extrema: true
+          graph: line
+        color_thresholds:
+          - value: 40
+            color: "#7ef542"
+          - value: 100
+            color: "#d35400"
+          - value: 200
+            color: "#c0392b"
+      - type: section
+        label: Temperatur Radiator
+
+      - type: custom:mini-graph-card
+        hours_to_show: 12
+        hour24: true
+        entities:
+          - sensor.esp32_04_temperature
+        show:
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: true
+          extrema: true
+        color_thresholds:
+          - value: 20
+            color: "#7ef542"
+          - value: 40
+            color: "#d35400"
+          - value: 45
+            color: "#c0392b"
+    - break
+    - type: horizontal-stack
+      cards:
+      - type: gauge
+        name: Workstation
+        unit: 'W'
+        entity: sensor.sonoff2_momentane_leistung
+        max: 300
+        severity:
+          green: 0
+          yellow: 100
+          red: 300
+      - type: gauge
+        name: Radiator
+        unit: '°C'
+        entity: sensor.esp32_04_temperature
+        min: 20
+        max: 60
+        severity:
+          green: 0
+          yellow: 32
+          red: 50
+
+
+
+
+
+    #sonoff2
+    - type: conditional
+      conditions:
+        - entity: switch.11001_a
+          state: "off"
+      card:
+        type: entities
+        title: 'ESP Hauptschalter'
+        show_header_toggle: false
+        entities:
+          - entity: switch.11001_a
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: switch.11001_a
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: 'ESP Hauptschalter'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.11001_a
+                    type: custom:toggle-lock-entity-row
+                  - type: custom:fold-entity-row
+                    head:
+                      type: section
+                      label: Details
+                    items:
+                      - entity: sensor.esp32_04_uptime_format
+                        name: Radiator
+                      - entity: sensor.esp8266_04_uptime_human
+                        name: OLED
+                        icon: mdi:server-network
+                      - entity: sensor.esp8266_05_uptime_human
+                        icon: mdi:server-network
+                        name: LCD
+    - type: entities
+      title: Stromverbrauch (Woche)
+      show_header_toggle: False
+      entities:
+
+      - type: custom:mini-graph-card
+        hours_to_show: 168
+        hour24: true
+        entities:
+
+          - sensor.sonoff2_verbrauch_heute
+          - sensor.sonoff2_verbrauch_gestern
+        show:
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: false
+          extrema: true
+          graph: bar
+
+
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.sonoff2_verbrauch_heute
+        name: Energy consumption
+        hours_to_show: 168
+        aggregate_func: max
+        group_by: date
+        show:
+          graph: bar
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.sonoff2_momentane_leistung
+          - entity: sensor.sonoff1_momentane_leistung
+        name: Maximale Leistung
+        hours_to_show: 168
+        hour24: true
+        aggregate_func: max
+        group_by: date
+        show:
+          graph: bar
+
+    - break
+    - type: entities
+      title: Leistung (Woche)
+      show_header_toggle: False
+      entities:
+      - type: section
+        label: Workstation
+
+      - type: custom:mini-graph-card
+        hours_to_show: 168
+        hour24: true
+        entities:
+          - sensor.sonoff2_momentane_leistung
+        show:
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: false
+          extrema: true
+          graph: line
+        color_thresholds:
+          - value: 40
+            color: "#7ef542"
+          - value: 100
+            color: "#d35400"
+          - value: 200
+            color: "#c0392b"
+      - type: section
+        label: Temperatur Radiator
+
+      - type: custom:mini-graph-card
+        hours_to_show: 168
+        hour24: true
+        entities:
+          - sensor.esp32_04_temperature
+        show:
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: true
+          extrema: true
+        color_thresholds:
+          - value: 20
+            color: "#7ef542"
+          - value: 40
+            color: "#d35400"
+          - value: 45
+            color: "#c0392b"

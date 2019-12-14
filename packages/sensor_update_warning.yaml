@@ -6,7 +6,7 @@
 homeassistant:
   customize:
     sensor.phonebatt_watch:
-      friendly_name: Handyakku Pixel3XL
+      friendly_name: Handyakku Pixel4XL
     sensor.esp32_01_watch:
       friendly_name: Türsensor ELW
     sensor.esp32_02_watch:
@@ -29,7 +29,7 @@ sensor:
     sensors:
       phonebatt_watch:
         entity_id: sensor.time
-        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel3xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel4xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
 #door_sensor_elw 7hours
       esp32_01_watch:
         entity_id: sensor.time

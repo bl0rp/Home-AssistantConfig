@@ -1,6 +1,6 @@
 title: Wetter
 path: wetter
-icon: mdi:weather-partlycloudy
+icon: mdi:weather-partly-lightning
 cards:
   - type: vertical-stack
     cards:
@@ -39,7 +39,8 @@ cards:
            name: Haupteingang
          - entity: sensor.esp32_03_temperature
            name: Carport
-
+         - entity: sensor.avg_temp_outside_esp_1day
+           name: Durchschnitt
   - type: vertical-stack
     cards:
     - type: iframe
@@ -59,7 +60,7 @@ cards:
         - entity: sensor.sun_next_setting
         - entity: sensor.sun_next_rising
         - entity: sensor.moon
-        - entity: script.sun_info_pushbullet
+        - entity: script.send_sun_info
 
     - type: entities
       title: "Vorhersage Internet"

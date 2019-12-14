@@ -105,8 +105,8 @@ cards:
       - type: section
       - entity: person.christoph
         secondary_info: last-changed
-      - entity: sensor.tasker_pixel3xl_battery
-        name: Pixel3XL
+      - entity: sensor.tasker_pixel4xl_battery
+        name: Pixel4XL
         secondary_info: last-changed
       - entity: input_boolean.laundry_notify_christoph
       - type: section
@@ -121,9 +121,9 @@ cards:
         secondary_info: last-changed
         name: Christoph via nmap/unifi
         icon: 'mdi:wifi'
-      - entity: device_tracker.897y04duz
+      - entity: device_tracker.p4xl
         secondary_info: last-changed
-        name: GPSLogger Pixel3XL
+        name: GPSLogger Pixel4XL
         icon: 'mdi:radar'
       - entity: input_boolean.chrisbluetooth
         secondary_info: last-changed

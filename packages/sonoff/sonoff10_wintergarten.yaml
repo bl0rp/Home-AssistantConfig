@@ -1,0 +1,53 @@
+##############################################################
+### Packages / sonoff10                                     ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### Thanks to cnrd                                         ###
+### https://github.com/cnrd                                ###
+### Inspired by mihalski                                   ###
+### https://github.com/mihalski/homeassistant-config       ###
+##############################################################
+
+homeassistant:
+
+  customize:
+    switch.sonoff10:
+      friendly_name: "Wintergarten"
+      icon: mdi:lamp
+    sensor.sonoff10_ipv4:
+      friendly_name: IPv4 Sonoff 8
+      icon: mdi:server-network
+    sensor.sonoff10_uptime:
+      friendly_name: Laufzeit
+      icon: mdi:clock-fast
+
+
+
+sensor:
+
+### Reading the values from the tasmota mqtt string
+
+
+
+  - platform: mqtt
+    name: "sonoff10 uptime"
+    state_topic: "tele/sonoff10/STATE"
+    value_template: "{{ value_json.Uptime }}"
+    availability_topic: "tele/sonoff10/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+
+
+
+
+### main switch on/off
+
+switch:
+  - platform: mqtt
+    name: "sonoff10"
+    state_topic: "stat/sonoff10/POWER"
+    command_topic: "cmnd/sonoff10/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: false

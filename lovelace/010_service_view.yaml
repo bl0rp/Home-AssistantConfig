@@ -172,7 +172,7 @@ cards:
                 red: 85
         - type: history-graph
           title: 'Freier Speicherplatz'
-          hours_to_show: 720
+          hours_to_show: 8544
           entities:
            - entity: sensor.disk_free
              name: NUC
@@ -321,35 +321,67 @@ cards:
           - entity: sensor.packets_out_eno1
           - entity: sensor.network_in_eno1
           - entity: sensor.network_out_eno1
+   
+ 
+                  
 
-    - type: entities
-      title: QNAP
-      show_header_toggle: false
-      entities:
-      - type: section
-      - entity: binary_sensor.network_storage_qnap1
-      - entity: sensor.qnap1_status
-      - entity: sensor.qnap1_smart_status
-        name: SMART
-        icon: mdi:harddisk
-      - entity: sensor.qnap1_free_space_datavol1_gib
-        name: Freier Speicherplatz
-        icon: mdi:chart-pie
-      - type: custom:fold-entity-row
-        head:
-          type: section
-          label: Details
-        items:
-          - type: weblink
-            name: Admin
-            url: http://192.168.0.11:8080/cgi-bin/
-          - entity: sensor.qnap1_uptime
-          - entity: sensor.qnap1_cpu_temperature
-          - entity: sensor.qnap1_cpu_usage
-          - entity: sensor.qnap1_memory_available
-          - entity: sensor.qnap1_memory_usage
-          - entity: sensor.qnap1_network_down_eth0
-          - entity: sensor.qnap1_network_up_eth0
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.network_storage_qnap1
+          state: "off"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: 'QNAP'
+            cards:
+
+              - type: entities
+                entities:
+                      - type: section
+                      - entity: binary_sensor.network_storage_qnap1
+      
+ 
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.network_storage_qnap1
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: 'QNAP'
+            cards:
+
+              - type: entities
+                entities:
+                      - type: section
+                      - entity: binary_sensor.network_storage_qnap1
+                      - entity: sensor.qnap1_status
+                      - entity: sensor.qnap1_smart_status
+                        name: SMART
+                        icon: mdi:harddisk
+                      - entity: sensor.qnap1_free_space_datavol1_gib
+                        name: Freier Speicherplatz
+                        icon: mdi:chart-pie
+                      - type: custom:fold-entity-row
+                        head:
+                          type: section
+                          label: Details
+                        items:
+                          - type: weblink
+                            name: Admin
+                            url: http://192.168.0.11:8080/cgi-bin/
+                          - entity: sensor.qnap1_uptime
+                          - entity: sensor.qnap1_cpu_temperature
+                          - entity: sensor.qnap1_cpu_usage
+                          - entity: sensor.qnap1_memory_available
+                          - entity: sensor.qnap1_memory_usage
+                          - entity: sensor.qnap1_network_down_eth0
+                          - entity: sensor.qnap1_network_up_eth0
+
+
+
     - break
     - type: entities
       title: Servicestatus

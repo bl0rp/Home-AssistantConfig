@@ -296,7 +296,7 @@ cards:
           state: "off"
       card:
         type: entities
-        title: '#6 NN'
+        title: '#6 MPD'
         show_header_toggle: false
         entities:
           - entity: binary_sensor.sonoff6_state
@@ -309,7 +309,7 @@ cards:
         type: entities
         entities:
           - type: custom:vertical-stack-in-card
-            title: '#6 NN'
+            title: '#6 MPD'
             cards:
 
               - type: entities
@@ -428,3 +428,62 @@ cards:
                       - entity: sensor.sonoff8_kosten_gestern
                       - entity: sensor.sonoff8_kosten_gesamt
                       - entity: script.del_sonoff8_power_log
+
+    - break
+    #sonoff9
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff9_state
+          state: "off"
+      card:
+        type: entities
+        title: '#9 Esszimmer'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff9_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff9_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#9 Esszimmer'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff9
+                  - entity: sensor.sonoff9_ipv4
+                  - entity: sensor.sonoff9_uptime
+
+    #sonoff10
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff10_state
+          state: "off"
+      card:
+        type: entities
+        title: '#10 Wintergarten'
+        show_header_toggle: false
+        entities:
+          - entity: binary_sensor.sonoff10_state
+            name: "Status"
+    - type: conditional
+      conditions:
+        - entity: binary_sensor.sonoff10_state
+          state: "on"
+      card:
+        type: entities
+        entities:
+          - type: custom:vertical-stack-in-card
+            title: '#10 Wintergarten'
+            cards:
+
+              - type: entities
+                entities:
+                  - entity: switch.sonoff10
+                  - entity: sensor.sonoff10_ipv4
+                  - entity: sensor.sonoff10_uptime

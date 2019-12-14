@@ -68,6 +68,11 @@ sensor:
     unit_of_measurement: '%'
     name: 'monitor_pixel3_elw'
 
+  - platform: mqtt
+    state_topic: 'location/elw/F0:5C:77:F1:28:21'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'monitor_pixel4_elw'
   # - platform: mqtt
   #   state_topic: 'location/1og/B4:F1:DA:2C:91:4E'
   #   value_template: '{{ value_json.confidence }}'
@@ -157,7 +162,7 @@ automation:
       state: 'on'
     trigger:
       - platform: numeric_state
-        entity_id: sensor.monitor_pixel3_elw
+        entity_id: sensor.monitor_pixel4_elw
         below: 25
         # for:
         #   minutes: 2
@@ -173,7 +178,7 @@ automation:
       state: 'off'
     trigger:
       - platform: numeric_state
-        entity_id: sensor.monitor_pixel3_elw
+        entity_id: sensor.monitor_pixel4_elw
         above: 30
     action:
       - service: homeassistant.turn_on
@@ -228,7 +233,7 @@ automation:
       #   for:
       #     minutes: 5
       - platform: state
-        entity_id: device_tracker.897y04duz
+        entity_id: device_tracker.p4xl
         to: 'not_home'
         for:
           minutes: 5
@@ -256,7 +261,7 @@ automation:
         to: 'home'
 #gpslogger
       - platform: state
-        entity_id: device_tracker.897y04duz
+        entity_id: device_tracker.p4xl
         to: 'home'
       # - platform: state
       #   entity_id: device_tracker.chris_bluetooth_nuc
@@ -486,4 +491,3 @@ automation:
             {% else %}
               {{ trigger.to_state.attributes.friendly_name|replace ('Christoph Status','Christoph') }} ist daheim!
             {% endif %}
-

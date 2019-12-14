@@ -31,6 +31,12 @@ homeassistant:
     sensor.sonoff8_sw_version:
       friendly_name: "Sonoff #8 Version"
       icon: mdi:counter
+    sensor.sonoff9_sw_version:
+      friendly_name: "Sonoff #9 Version"
+      icon: mdi:counter
+    sensor.sonoff10_sw_version:
+      friendly_name: "Sonoff #10 Version"
+      icon: mdi:counter
 #group file for auto-entity filter
 group:
   sonoff_sw_version:
@@ -43,35 +49,46 @@ group:
       - sensor.sonoff6_sw_version
       - sensor.sonoff7_sw_version
       - sensor.sonoff8_sw_version
+      - sensor.sonoff9_sw_version
+      - sensor.sonoff10_sw_version
 
 #get alle sonoff information upon hass boot
 automation:
-    - alias: get_sonoff_info
+    - alias: "Tasmota State on HA Restart"
       trigger:
         platform: homeassistant
         event: start
       action:
         - service: mqtt.publish
           data:
-            topic: "cmnd/sonoffs/Status"
-            payload: "5"
+            topic: "cmnd/sonoffs/backlog"
+            payload: "status 0; power"
+
+#get sonoff info when device is Online
+
+    - alias: "sonoff_online_state_request"
+      trigger:
+        platform: state
+        entity_id:
+          - binary_sensor.switch_sonoff_sonoff1
+          - binary_sensor.switch_sonoff_sonoff2
+          - binary_sensor.switch_sonoff_sonoff3
+          - binary_sensor.switch_sonoff_sonoff4
+          - binary_sensor.switch_sonoff_sonoff5
+          - binary_sensor.switch_sonoff_sonoff6
+          - binary_sensor.switch_sonoff_sonoff7
+          - binary_sensor.switch_sonoff_sonoff8
+          - binary_sensor.switch_sonoff_sonoff9
+          - binary_sensor.switch_sonoff_sonoff10
+        from: 'off'
+        to: 'on'
+      action:
         - service: mqtt.publish
           data:
-            topic: "cmnd/sonoffs/Status"
-            payload: "2"
-        - service: mqtt.publish
-          data:
-            topic: "cmnd/sonoffs/state"
-            payload: ""
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER2
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER3
+            topic: "cmnd/sonoffs/backlog"
+            payload: "status 0; power"
+
+
 #notification for new release
     - alias: tasmota_update_notification
       initial_state: True
@@ -112,26 +129,8 @@ script:
     sequence:
         - service: mqtt.publish
           data:
-            topic: "cmnd/sonoffs/Status"
-            payload: "5"
-        - service: mqtt.publish
-          data:
-            topic: "cmnd/sonoffs/Status"
-            payload: "2"
-        - service: mqtt.publish
-          data:
-            topic: "cmnd/sonoffs/state"
-            payload: ""
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER2
-        - service: mqtt.publish
-          data:
-            topic: cmnd/sonoffs/POWER3
-
+            topic: "cmnd/sonoffs/backlog"
+            payload: "status 0;power "
 #binary_sensor for every device
 binary_sensor:
   - platform: mqtt
@@ -186,6 +185,20 @@ binary_sensor:
   - platform: mqtt
     name: sonoff8_state
     state_topic: "tele/sonoff8/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff9_state
+    state_topic: "tele/sonoff9/LWT"
+    payload_on: "Online"
+    payload_off: "Offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: sonoff10_state
+    state_topic: "tele/sonoff10/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
@@ -275,12 +288,28 @@ sensor:
     payload_available: "Online"
     payload_not_available: "Offline"
 
+  - platform: mqtt
+    name: "sonoff9 IPv4"
+    state_topic: "stat/sonoff9/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+    availability_topic: "tele/sonoff9/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff10 IPv4"
+    state_topic: "stat/sonoff10/STATUS5"
+    value_template: "{{ value_json.StatusNET.IPAddress }}"
+    availability_topic: "tele/sonoff10/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
   #SW Version
 
   - platform: mqtt
     name: "sonoff1 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(release-sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','')  }}"
     availability_topic: "tele/sonoff1/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -288,7 +317,7 @@ sensor:
   - platform: mqtt
     name: "sonoff2 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -296,7 +325,7 @@ sensor:
   - platform: mqtt
     name: "sonoff3 sw version"
     state_topic: "stat/sonoff3/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','')  }}"
     availability_topic: "tele/sonoff3/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -304,7 +333,7 @@ sensor:
   - platform: mqtt
     name: "sonoff4 sw version"
     state_topic: "stat/sonoff4/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff4/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -312,7 +341,7 @@ sensor:
   - platform: mqtt
     name: "sonoff5 sw version"
     state_topic: "stat/sonoff5/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -320,7 +349,7 @@ sensor:
   - platform: mqtt
     name: "sonoff6 sw version"
     state_topic: "stat/sonoff6/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff6/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -328,7 +357,7 @@ sensor:
   - platform: mqtt
     name: "sonoff7 sw version"
     state_topic: "stat/sonoff7/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff7/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -336,8 +365,23 @@ sensor:
   - platform: mqtt
     name: "sonoff8 sw version"
     state_topic: "stat/sonoff8/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(release-sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
     availability_topic: "tele/sonoff8/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
+  - platform: mqtt
+    name: "sonoff9 sw version"
+    state_topic: "stat/sonoff9/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    availability_topic: "tele/sonoff9/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
+  - platform: mqtt
+    name: "sonoff10 sw version"
+    state_topic: "stat/sonoff10/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    availability_topic: "tele/sonoff10/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
