@@ -241,8 +241,13 @@ automation:
       - service: homeassistant.turn_off
         entity_id: input_boolean.chrishome
 
-      - service: notify.pushbullet
+      # - service: notify.pushbullet
+      #   data_template:
+      #     message: >
+      #        {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
+      - service: notify.mobile_app_pixel_4_xl
         data_template:
+          title: HomeSwitch OFF
           message: >
              {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Trigger: {{ trigger.to_state.attributes.friendly_name }} HomeSwitch now: {{ states.input_boolean.chrishome.state }}!
 
@@ -279,11 +284,17 @@ automation:
     - service: homeassistant.turn_on
       entity_id: input_boolean.chrishome
 
-    - service: telegram_bot.send_message
+    # - service: telegram_bot.send_message
+    #   data_template:
+    #     target: !secret telegram_chat_id_christoph
+    #     message: >
+    #       home state triggered by {{ trigger.to_state.attributes.friendly_name }}
+
+    - service: notify.mobile_app_pixel_4_xl
       data_template:
-        target: !secret telegram_chat_id_christoph
+        title: Welcome Home!
         message: >
-          home state triggered by {{ trigger.to_state.attributes.friendly_name }}
+           {{ now().strftime('%d.%m.%Y %H:%M:%S') }} home state triggered by {{ trigger.to_state.attributes.friendly_name }}
 # input select for home
 
   - alias: "select_christoph_Home_status_from_input_boolean"

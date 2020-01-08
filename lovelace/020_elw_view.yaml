@@ -57,6 +57,7 @@ cards:
       - entity: sensor.aeotec_zw100_multisensor_6_temperature
         secondary_info: last-changed
       - entity: sensor.esp8266_06_temperature
+        name: ELW Klo
         secondary_info: last-changed
       - type: custom:fold-entity-row
         head:
@@ -79,6 +80,26 @@ cards:
            name: Flur
          - entity: sensor.esp8266_06_temperature
            name: Klo
+      - type: custom:mini-graph-card
+        hours_to_show: 24
+        hour24: true
+        entities:
+          - entity: sensor.aeotec_zw100_multisensor_6_temperature
+            name: Flur
+          - entity: sensor.esp8266_06_temperature
+          - entity: sensor.temperatur_esp8266_02
+            name: Regal
+        show:
+          show_legend: true
+          fill: false
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: true
+          extrema: true
+          y_axis: secondary
+
     - type: entities
       title: Bewegungsmelder / Türsensor
       show_header_toggle: false

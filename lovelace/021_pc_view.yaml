@@ -1,4 +1,4 @@
-title: Sonoff
+title: pc_view
 icon: mdi:desktop-tower-monitor
 path: pc
 panel: true
@@ -41,7 +41,7 @@ cards:
         hours_to_show: 12
         hour24: true
         entities:
-          - sensor.esp32_04_temperature
+          - sensor.esp32_7_temp
         show:
           labels: true
           name: false
@@ -71,7 +71,7 @@ cards:
       - type: gauge
         name: Radiator
         unit: '°C'
-        entity: sensor.esp32_04_temperature
+        entity: sensor.esp32_7_temp
         min: 20
         max: 60
         severity:
@@ -115,49 +115,19 @@ cards:
                       type: section
                       label: Details
                     items:
-                      - entity: sensor.esp32_04_uptime_format
+                      - entity: sensor.esp32_7_uptime_format
                         name: Radiator
                       - entity: sensor.esp8266_04_uptime_human
                         name: OLED
                         icon: mdi:server-network
-                      - entity: sensor.esp8266_05_uptime_human
-                        icon: mdi:server-network
-                        name: LCD
+
     - type: entities
       title: Stromverbrauch (Woche)
       show_header_toggle: False
       entities:
-
-      - type: custom:mini-graph-card
-        hours_to_show: 168
-        hour24: true
-        entities:
-
-          - sensor.sonoff2_verbrauch_heute
-          - sensor.sonoff2_verbrauch_gestern
-        show:
-          labels: true
-          name: false
-          state: false
-          icon: false
-          average: false
-          extrema: true
-          graph: bar
-
-
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.sonoff2_verbrauch_heute
-        name: Energy consumption
-        hours_to_show: 168
-        aggregate_func: max
-        group_by: date
-        show:
-          graph: bar
       - type: custom:mini-graph-card
         entities:
           - entity: sensor.sonoff2_momentane_leistung
-          - entity: sensor.sonoff1_momentane_leistung
         name: Maximale Leistung
         hours_to_show: 168
         hour24: true
@@ -201,7 +171,7 @@ cards:
         hours_to_show: 168
         hour24: true
         entities:
-          - sensor.esp32_04_temperature
+          - sensor.esp32_7_temp
         show:
           labels: true
           name: false

@@ -3,97 +3,17 @@
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
 homeassistant:
-  customize:
-
-    sensor.esp8266_06_temperature:
-      friendly_name: Klo
-    sensor.esp8266_06_humidity:
-      friendly_name: Luftfeuchtigkeit Klo
-    sensor.esp8266_06_pressure:
-      friendly_name: Klo
-    sensor.esp8266_06_rssi:
-      friendly_name: Klo
-    binary_sensor.esp8266_06_status:
-      friendly_name: Status
 
 
 
-#############
-#  switch   #
-#############
-switch:
-  - platform: mqtt
-    name: esp8266_06 Restart
-    state_topic: esp8266_06/switch/restart/state
-    command_topic: esp8266_06/switch/restart/command
-    availability_topic: "esp8266_06/status"
 
-  - platform: mqtt
-    name: esp8266_06 Shutdown
-    state_topic: esp8266_06/switch/shutdown/state
-    command_topic: esp8266_06/switch/shutdown/command
-    availability_topic: "esp8266_06/status"
+
 ###############################################################################
 #  Sensors
 ###############################################################################
-binary_sensor:
-  - platform: mqtt
-    name: "esp8266_06_status"
-    state_topic: "esp8266_06/status"
-    payload_on: "online"
-    payload_off: "offline"
-    device_class: "connectivity"
-
 
 
 sensor:
-
-  - platform: mqtt
-    name: esp8266_06_ip
-    state_topic: "esp8266_06/sensor/ip/state"
-    availability_topic: "esp8266_06/status"
-
-
-  - platform: mqtt
-    name: esp8266_06_temperature
-    state_topic: "esp8266_06/sensor/temperature/state"
-    availability_topic: "esp8266_06/status"
-    qos: 0
-    unit_of_measurement: "°C"
-    device_class: temperature
-
-
-  - platform: mqtt
-    name: esp8266_06_humidity
-    state_topic: "esp8266_06/sensor/humidity/state"
-    availability_topic: "esp8266_06/status"
-    qos: 0
-    unit_of_measurement: "%"
-    device_class: humidity
-
-  - platform: mqtt
-    name: esp8266_06_pressure
-    state_topic: "esp8266_06/sensor/pressure/state"
-    availability_topic: "esp8266_06/status"
-    qos: 0
-    unit_of_measurement: "hPa"
-    device_class: pressure
-
-
-
-  - platform: mqtt
-    name: esp8266_06_uptime_seconds
-    state_topic: "esp8266_06/sensor/uptime/state"
-    availability_topic: "esp8266_06/status"
-    qos: 0
-    unit_of_measurement: "seconds"
-
-  - platform: mqtt
-    name: esp8266_06_rssi
-    state_topic: "esp8266_06/sensor/rssi/state"
-    availability_topic: "esp8266_06/status"
-    qos: 0
-    unit_of_measurement: "dB"
 
   - platform: template
     sensors:
@@ -150,5 +70,5 @@ sensor:
               {%- set seconds = seconds % intervals.minutes -%}
               {{- comma() ~ seconds ~ 's' if seconds -}}
             {%- endmacro %}
-            {{ human_time(states.sensor.esp8266_06_uptime_seconds.state | int   ) }}
+            {{ human_time(states.sensor.esp8266_06_uptime.state | int   ) }}
             {% endif %}

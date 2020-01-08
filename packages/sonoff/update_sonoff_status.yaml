@@ -8,31 +8,31 @@ homeassistant:
   customize:
 
     sensor.sonoff1_sw_version:
-      friendly_name: "Sonoff #1 Version"
+      friendly_name: "Sonoff #01 Version"
       icon: mdi:counter
     sensor.sonoff2_sw_version:
-      friendly_name: "Sonoff #2 Version"
+      friendly_name: "Sonoff #02 Version"
       icon: mdi:counter
     sensor.sonoff3_sw_version:
-      friendly_name: "Sonoff #3 Version"
+      friendly_name: "Sonoff #03 Version"
       icon: mdi:counter
     sensor.sonoff4_sw_version:
-      friendly_name: "Sonoff #4 Version"
+      friendly_name: "Sonoff #04 Version"
       icon: mdi:counter
     sensor.sonoff5_sw_version:
-      friendly_name: "Sonoff #5 Version"
+      friendly_name: "Sonoff #05 Version"
       icon: mdi:counter
     sensor.sonoff6_sw_version:
-      friendly_name: "Sonoff #6 Version"
+      friendly_name: "Sonoff #06 Version"
       icon: mdi:counter
     sensor.sonoff7_sw_version:
-      friendly_name: "Sonoff #7 Version"
+      friendly_name: "Sonoff #07 Version"
       icon: mdi:counter
     sensor.sonoff8_sw_version:
-      friendly_name: "Sonoff #8 Version"
+      friendly_name: "Sonoff #08 Version"
       icon: mdi:counter
     sensor.sonoff9_sw_version:
-      friendly_name: "Sonoff #9 Version"
+      friendly_name: "Sonoff #09 Version"
       icon: mdi:counter
     sensor.sonoff10_sw_version:
       friendly_name: "Sonoff #10 Version"
@@ -309,15 +309,15 @@ sensor:
   - platform: mqtt
     name: "sonoff1 sw version"
     state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(tasmota)','')  }}"
     availability_topic: "tele/sonoff1/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
     name: "sonoff2 sw version"
-    state_topic: "stat/sonoff1/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(sonoff)','') }}"
+    state_topic: "stat/sonoff2/STATUS2"
+    value_template: "{{ value_json['StatusFWR'].Version |replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff2/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -325,7 +325,7 @@ sensor:
   - platform: mqtt
     name: "sonoff3 sw version"
     state_topic: "stat/sonoff3/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','')  }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','')  }}"
     availability_topic: "tele/sonoff3/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -333,7 +333,7 @@ sensor:
   - platform: mqtt
     name: "sonoff4 sw version"
     state_topic: "stat/sonoff4/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff4/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -341,7 +341,7 @@ sensor:
   - platform: mqtt
     name: "sonoff5 sw version"
     state_topic: "stat/sonoff5/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff5/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -349,7 +349,7 @@ sensor:
   - platform: mqtt
     name: "sonoff6 sw version"
     state_topic: "stat/sonoff6/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff6/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -357,7 +357,7 @@ sensor:
   - platform: mqtt
     name: "sonoff7 sw version"
     state_topic: "stat/sonoff7/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff7/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -365,7 +365,7 @@ sensor:
   - platform: mqtt
     name: "sonoff8 sw version"
     state_topic: "stat/sonoff8/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff8/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -373,7 +373,7 @@ sensor:
   - platform: mqtt
     name: "sonoff9 sw version"
     state_topic: "stat/sonoff9/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff9/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
@@ -381,7 +381,7 @@ sensor:
   - platform: mqtt
     name: "sonoff10 sw version"
     state_topic: "stat/sonoff10/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(sonoff)','') }}"
+    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
     availability_topic: "tele/sonoff10/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"

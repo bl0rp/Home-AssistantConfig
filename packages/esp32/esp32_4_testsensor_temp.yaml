@@ -1,20 +1,9 @@
 ########################################################################
-## Packages / ESP32 #4                                                ##
+## Packages / ESP32 #7                                                ##
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
 ########################################################################
 homeassistant:
-  # customize:
-  #   sensor.esp32_04_rssi:
-  #     icon: mdi:wifi
-  #     friendly_name: "ESP32_04 Signalstärke"
-  #
-  #   sensor.esp32_04_temperature:
-  #     icon: mdi:thermometer
-  #     friendly_name: Temperatur Klo ELW
-  #
-  #   sensor.esp32_04_humidity:
-  #     icon: mdi:water-percent
-  #     friendly_name: Luftfeuchtigkeit Klo ELW
+
 
 
 #############
@@ -22,76 +11,31 @@ homeassistant:
 #############
 group:
 
-  esp32_04:
+  esp32_7:
     control: hidden
     name: Tempsensor
     entities:
-      - sensor.esp32_04_rssi
-      - sensor.esp32_04_uptime_raw
-      - sensor.esp32_04_uptime_format
-      - sensor.esp32_04_temperature
-      - sensor.esp32_04_humidity
-      - sensor.esp32_04_state
-      - sensor.esp32_04_last_change_temp
-      - binary_sensor.esp32_04_state_raw
-#############
-#  switch   #
-#############
-switch:
-  - platform: mqtt
-    name: ESP32_04 Restart
-    state_topic: esp32_4/switch/esp32_4_restart/state
-    command_topic: esp32_4/switch/esp32_4_restart/command
-    availability_topic: "esp32_4/status"
-
-  - platform: mqtt
-    name: ESP32_04 Shutdown
-    state_topic: esp32_4/switch/esp32_4_shutdown/state
-    command_topic: esp32_4/switch/esp32_4_shutdown/command
-    availability_topic: "esp32_4/status"
+      - sensor.esp32_7_rssi
+      - sensor.esp32_7_uptime
+      - sensor.esp32_7_uptime_format
+      - sensor.esp32_7_temperature
+      - sensor.esp32_7_humidity
+      - sensor.esp32_7_state
+      - sensor.esp32_7_last_change_temp
+      - binary_sensor.esp32_7_status
 
 
 #############
 #  sensors  #
 #############
-binary_sensor:
-  - platform: mqtt
-    name: esp32_04_state_raw
-    state_topic: "esp32_4/status"
-    payload_on: "online"
-    payload_off: "offline"
-    device_class: connectivity
-
 sensor:
-
-
-  - platform: mqtt
-    name: "esp32_04_rssi"
-    state_topic: "esp32_4/sensor/wifi_signal_sensor/state"
-    qos: 0
-    unit_of_measurement: "dB"
-
-  - platform: mqtt
-    name: "esp32_04_uptime_raw"
-    state_topic: "esp32_4/sensor/uptime/state"
-    qos: 0
-    unit_of_measurement: "s"
-  - platform: mqtt
-    name: "esp32_04_temperature"
-    state_topic: "esp32_4/sensor/temperature/state"
-    qos: 0
-    unit_of_measurement: "°C"
-
-
-
-
   - platform: template
     sensors:
 
-      esp32_04_uptime_format:
+      esp32_7_uptime_format:
         friendly_name: Uptime
         value_template: >-
-           {% if states('binary_sensor.esp32_04_state_raw') | lower == "off" %}
+           {% if states('binary_sensor.esp32_7_status') | lower == "off" %}
              Node offline
            {% else %}
            {% macro human_time(seconds) -%}
@@ -123,10 +67,10 @@ sensor:
               {%- set seconds = seconds % intervals.minutes -%}
               {{- comma() ~ seconds ~ 's' if seconds -}}
             {%- endmacro %}
-            {{ human_time(states.sensor.esp32_04_uptime_raw.state | int   ) }}
+            {{ human_time(states.sensor.esp32_7_uptime.state | int   ) }}
             {% endif %}
         icon_template: >-
-          {% if is_state('binary_sensor.esp32_04_state_raw', 'on') %}
+          {% if is_state('binary_sensor.esp32_7_status', 'on') %}
             mdi:server-network
           {% else %}
             mdi:server-network-off

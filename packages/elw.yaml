@@ -79,3 +79,25 @@ automation:
     action:
       - service: scene.turn_on
         entity_id: scene.elw_aus
+#switch chargers on/off when not_home/home
+  - alias: 'disable_charger_sonoff_when_not_home'
+    initial_state: True
+    trigger:
+        - platform: state
+          entity_id: input_boolean.chrisbluetooth
+          to: 'off'
+          for:
+            minutes: 15
+    action:
+      - service: switch.turn_off
+        entity_id: switch.sonoff7
+
+  - alias: 'enable_charger_sonoff_when_home'
+    initial_state: True
+    trigger:
+        - platform: state
+          entity_id: input_boolean.chrisbluetooth
+          to: 'on'
+    action:
+      - service: switch.turn_on
+        entity_id: switch.sonoff7

@@ -293,7 +293,7 @@ sensor:
 ###### Local HA Release
   - platform: command_line
     scan_interval: 3600
-    command: "/home/homeassistant/homeassistant/bin/hass --version"
+    command: "/home/homeassistant/homeassistant_venv_3.7/bin/hass --version"
     name: HA_release_local
 
 ###### CUSTOM HA/Version

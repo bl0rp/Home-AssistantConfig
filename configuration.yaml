@@ -32,7 +32,7 @@ hacs:
 breaking_changes:
 
 #discovery:
-
+mobile_app:
 alexa_media:
   accounts:
     - email: !secret alexa_email

@@ -196,6 +196,8 @@ automation:
             {{ states.sensor.sonoff6_momentane_leistung.state }}
 
 
+
+
 ### Delete the logfile (reset the maximum power sensor)
 
 script:

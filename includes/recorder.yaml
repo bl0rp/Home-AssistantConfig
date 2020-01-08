@@ -27,13 +27,13 @@ include:
     - sensor.luftfeuchtigkeit_esp8266_02
     - sensor.luftfeuchtigkeit_esp8266_03
     #custom sensor average
-    - sensor.avg_temp_outside_esp_1day
-    - sensor.avg_temp_outside_esp_3day
-    - sensor.avg_temp_outside_esp_7day
-    - sensor.avg_temp_inside_elw_1day
-    - sensor.avg_temp_inside_elw_3day
-    - sensor.avg_temp_inside_elw_7day
-    - sensor.avg_free_space_qnap_1y
+    # - sensor.avg_temp_outside_esp_1day
+    # - sensor.avg_temp_outside_esp_3day
+    # - sensor.avg_temp_outside_esp_7day
+    # - sensor.avg_temp_inside_elw_1day
+    # - sensor.avg_temp_inside_elw_3day
+    # - sensor.avg_temp_inside_elw_7day
+    # - sensor.avg_free_space_qnap_1y
 
 
 
@@ -158,6 +158,5 @@ include:
     - sensor.esp32_03_pressure
     - sensor.esp32_03_rssi
 
-    - sensor.esp32_04_humidity
-    - sensor.esp32_04_temperature
-    - sensor.esp32_04_rssi
+
+    - sensor.esp32_7_temp
