@@ -13,6 +13,8 @@ homeassistant:
       friendly_name: Haupteingang
     sensor.esp32_03_watch:
       friendly_name: Carport
+    sensor.esp32_08_watch:
+      friendly_name: Katzenklappe
 
 
 ##### notify component -> logfile
@@ -43,6 +45,11 @@ sensor:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
 
+#catflap sensor 8 7hours
+      esp32_08_watch:
+        entity_id: sensor.time
+        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_08_rssi.last_updated) > 420*60 %}true{% else %}false{% endif %}"
+
 
 
 #################################################
@@ -58,6 +65,7 @@ automation:
           - sensor.esp32_01_watch
           - sensor.esp32_02_watch
           - sensor.esp32_03_watch
+          - sensor.esp32_08_watch
         to: 'true'
     condition:
       condition: and

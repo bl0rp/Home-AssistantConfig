@@ -9,6 +9,7 @@ include:
     - media_player
     - device_tracker
   entities:
+    - sensor.katzenklappe
     #dryer/washer sensor
     - sensor.washer_state
     - sensor.dryer_state

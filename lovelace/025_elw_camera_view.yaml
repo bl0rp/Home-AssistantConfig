@@ -1,8 +1,10 @@
 path: camera
 title: camera
 icon: mdi:camera
+panel: true
 cards:
-- type: vertical-stack
+- type: custom:layout-card
+  layout: vertical
   cards:
     - type: conditional
       conditions:
@@ -13,13 +15,13 @@ cards:
         title: 'Raspberry Camera'
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.rpi3_cam_ping
             name: "Status"
             secondary_info: last-changed
           - entity: switch.11001_b
             name: Power
             icon: mdi:power-plug
-
     - type: conditional
       conditions:
         - entity: binary_sensor.rpi3_cam_ping
@@ -29,6 +31,7 @@ cards:
         title: 'Raspberry Camera'
         show_header_toggle: false
         entities:
+          - type: section
           - entity: binary_sensor.rpi3_cam_ping
             name: "Status"
             secondary_info: last-changed
@@ -49,6 +52,7 @@ cards:
               - type: picture-glance
                 entities: []
                 camera_image: camera.raspicam
+
     - type: entities
       title: Videos
       show_header_toggle: false
@@ -63,3 +67,43 @@ cards:
       - entity: script.delete_raspicam_videos
         name: Daten löschen?
         icon: mdi:delete
+    - break
+    - type: entities
+      title: Katzenklappe
+      show_header_toggle: false
+      entities:
+      - type: section
+      - entity: sensor.katzenklappe
+        icon: mdi:cat
+        secondary_info: last-changed
+      - entity: sensor.esp32_08_motion_last_changed
+        name: Letzte Bewegung
+        icon: mdi:cctv
+      - entity: script.reset_catflap_count
+        icon: mdi:delete-forever
+        name: Besuche zurücksetzen
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Details
+        items:
+          - entity: binary_sensor.esp32_08_door_state
+          - entity: sensor.esp32_08_battery
+          - entity: sensor.esp32_08_battery_state
+          - entity: sensor.esp32_08_rssi
+
+
+    - type: entities
+      title: Besuche (Woche)
+      show_header_toggle: False
+      entities:
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.katzenklappe
+        hours_to_show: 168
+        icon: mdi:gate
+        hour24: true
+        aggregate_func: max
+        group_by: date
+        show:
+          graph: bar

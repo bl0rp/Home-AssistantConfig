@@ -742,12 +742,14 @@ automation:
       from: 'on'
       to: 'off'
       for:
-        minutes: 5
+        minutes: 30
     action:
       - service: notify.pushbullet
         data_template:
           message: >
              Achtung! {{ now().strftime('%d.%m.%Y %H:%M:%S') }} {{ trigger.to_state.attributes.friendly_name }} ist offline!
+
+
 #################################################
 ### Notify when a critical device goes Offline ###
 #################################################
@@ -774,9 +776,9 @@ automation:
         - binary_sensor.soc_esp8266_07
 
       from: 'on'
-      to: 'on'
+      to: 'off'
       for:
-        minutes: 5
+        minutes: 10
     action:
       - service: notify.pushbullet
         data_template:

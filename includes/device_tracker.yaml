@@ -24,18 +24,14 @@
     # - !secret christoph_ip
     # - !secret ipad_ip
     #   #    - !secret nexus7_ip
-  scan_options: "--host-timeout 5s --privileged -sP "
+  scan_options: "--host-timeout 5s --privileged -sP"
   home_interval: 10
   exclude:
     - !secret hass_ip
 
 
 
-#- platform: bluetooth_tracker
 
-- platform: mqtt
-  devices:
-    chris_bluetooth_nuc: 'bluetooth_nuc/presence/pixel2'
 
 
 # - platform: ping
