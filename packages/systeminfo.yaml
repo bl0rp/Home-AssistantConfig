@@ -134,7 +134,6 @@ group:
 
   server_alarm_automations:
     name: Alarme
-    control: hidden
     entities:
      - automation.cpu_temp_alarm
      - automation.hdd_alarm
@@ -394,7 +393,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.disk_use_percent
-      above: 50.0
+      above: 70.0
     action:
       - service: notify.pushbullet
         data:
@@ -409,7 +408,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-      above: 60.0
+      above: 65.0
     action:
       - service: notify.pushbullet
         data:

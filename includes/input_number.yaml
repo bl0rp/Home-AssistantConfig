@@ -6,19 +6,3 @@
     step: 1
     unit_of_measurement: seconds
     icon: mdi:target
-
-  severity:
-      name: severity
-      initial: 0
-      min: 0
-      max: 360
-      step: 10
-      icon: mdi:target
-
-  load_sim:
-      name: load_sim
-      initial: 0
-      min: 0
-      max: 4
-      step: 0.1
-      icon: mdi:target

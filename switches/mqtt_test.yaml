@@ -1,9 +1,0 @@
-platform: mqtt
-name: "temperatur"
-state_topic: "notify"
-command_topic: "notify"
-payload_on: "pushover_test"
-payload_off: "pushover_test2"
-optimistic: false
-qos: 0
-retain: false

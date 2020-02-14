@@ -6,24 +6,6 @@ homeassistant:
 
 
 
-#############
-#  group    #
-#############
-group:
-
-  esp32_7:
-    control: hidden
-    name: Tempsensor
-    entities:
-      - sensor.esp32_7_rssi
-      - sensor.esp32_7_uptime
-      - sensor.esp32_7_uptime_format
-      - sensor.esp32_7_temperature
-      - sensor.esp32_7_humidity
-      - sensor.esp32_7_state
-      - sensor.esp32_7_last_change_temp
-      - binary_sensor.esp32_7_status
-
 
 #############
 #  sensors  #

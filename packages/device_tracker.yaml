@@ -88,7 +88,6 @@ sensor:
 
 group:
   device_tracker:
-    control: hidden
     icon: mdi:crosshairs-gps
     name: DeviceTracker
     entities:
@@ -103,7 +102,6 @@ group:
       - automation.select_christoph_home_status_home_oben
   familiegrp:
     name: Familie
-    view: no
     icon: mdi:account-multiple
     entities:
       - input_boolean.chrishome
@@ -113,7 +111,6 @@ group:
 
   familiegrpstate:
     name: Letzte Änderung
-    view: no
     icon: mdi:account-multiple
     entities:
       - sensor.device_tracker_christoph_last_changed

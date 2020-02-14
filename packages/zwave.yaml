@@ -38,29 +38,6 @@ homeassistant:
     sensor.aeotec_zw100_multisensor_6_ultraviolet:
       friendly_name: UV Z-Wave Multisensor 1
 
-group:
-  zwave_aeotec_multisensor6:
-    name: Multisensor ELW
-    view: no
-    entities:
-      - sensor.multisensor1_battery
-      - sensor.aeotec_zw100_multisensor_6_luminance
-      - sensor.aeotec_zw100_multisensor_6_relative
-      - sensor.aeotec_zw100_multisensor_6_temperature
-      - sensor.aeotec_zw100_multisensor_6_ultraviolet
-      - sensor.multisensor1_motion
-      - binary_sensor.aeotec_zw100_multisensor_6_sensor
-  zwave_fibaro_plug:
-    name: MPD ELW (Z-Wave)
-    view: no
-    entities:
-      - switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-      - sensor.zwave_mpd1_use
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
-      - sensor.zwave_mpd1_kosten_gesamt
-      - script.reset_router
 
 
 sensor:

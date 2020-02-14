@@ -2,10 +2,7 @@
   - platform: kodi
     host: !secret mediapi_ip
     port: 80
-# #Volumio ELW
-#   - platform: volumio
-#     host: !secret volumio_ip
-#     port: 3000
+
 #Spotify
   - platform: spotify
     client_id: !secret spotify_client

@@ -55,8 +55,24 @@ cards:
         **Oin22323k**
     - break
 
+    - type: entities
+      title: ipv4*
+      show_header_toggle: false
+      entities:
+        - type: section
 
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.*ipv4*
+                options:
+                  secondary_info: last-changed
 
+              - entity_id: sensor.*esp*ip*
+                options:
+                  secondary_info: last-changed
 
 
     - type: entities

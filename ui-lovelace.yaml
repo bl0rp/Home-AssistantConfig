@@ -42,7 +42,7 @@ views:
   - !include lovelace/020_elw_view.yaml
   - !include lovelace/021_pc_view.yaml
   - !include lovelace/025_elw_camera_view.yaml
-  - !include lovelace/030_media_view.yaml
+#  - !include lovelace/030_media_view.yaml
   - !include lovelace/040_first_floor_view.yaml
   - !include lovelace/050_weather_view.yaml
   - !include lovelace/060_waste_view.yaml
@@ -51,7 +51,7 @@ views:
   - !include lovelace/080_sonoff_view.yaml
   - !include lovelace/090_zwave_view.yaml
   - !include lovelace/100_family_view.yaml
-
+  - !include lovelace/101_health_data.yaml
   - !include lovelace/970_test3_view.yaml
   - !include lovelace/980_test2_view.yaml
   - !include lovelace/999_test_view.yaml

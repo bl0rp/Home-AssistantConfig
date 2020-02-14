@@ -730,7 +730,7 @@ automation:
 ### Notify when a NodeMCU device goes Offline ###
 #################################################
   - alias: ESP8266 Sensor State
-    initial_state: True
+    initial_state: false
     trigger:
       platform: state
       entity_id:
@@ -754,7 +754,7 @@ automation:
 ### Notify when a critical device goes Offline ###
 #################################################
   - alias: critical device Sensor State
-    initial_state: True
+    initial_state: false
     trigger:
       platform: state
       entity_id:
@@ -789,7 +789,7 @@ automation:
 ### Notify when a switch goes Offline         ###
 #################################################
   - alias: critical device Sensor State switch
-    initial_state: True
+    initial_state: false
     trigger:
       platform: state
       entity_id:
@@ -841,7 +841,15 @@ automation:
         - device_tracker.user_devices_phone_steffi
       from: 'not_home'
       to: 'home'
-
+    condition:
+    - condition: template
+      value_template: >
+        {% if states.automation.guest_online_notification.last_triggered is not none %}
+          {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.guest_online_notification.attributes.last_triggered) | int > 3600 %} true {% else %} false
+          {% endif %}
+        {% else %}
+        false
+        {% endif %}
     action:
       - service: notify.pushbullet
         data_template:

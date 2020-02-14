@@ -25,19 +25,7 @@ homeassistant:
       friendly_name: Letzte Änderung
 
 
-#############
-#  group    #
-#############
-group:
-  esp32_02:
-    name: Temperatursensor Haupteingang
-    entities:
-      - sensor.esp32_02_rssi
-      - sensor.esp32_02_battery
-      - sensor.esp32_02_temperature
-      - sensor.esp32_02_humidity
-      - sensor.esp32_02_pressure
-      - sensor.esp32_02_temperature_last_changed
+
 
 
 #############

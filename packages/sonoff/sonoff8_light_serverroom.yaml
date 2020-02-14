@@ -11,7 +11,7 @@ homeassistant:
 
   customize:
     switch.sonoff8:
-      friendly_name: MPD Charger
+      friendly_name: Light Serverroom
       icon: mdi:battery-30
     sensor.sonoff8_ipv4:
       friendly_name: IPv4 Sonoff 8
@@ -196,23 +196,7 @@ automation:
           message: >
             {{ states.sensor.sonoff8_momentane_leistung.state }}
 
-  - alias: "Akkuladeautomatik"
-    initial_state: False
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.sonoff8_momentane_leistung
-        below: 1
-    action:
-      - service: notify.pushbullet
-        data:
-          message: '{{ states.sensor.date_time.state }} Das Ladegerät verbaucht keinen Strom mehr und die Steckdose wurde ausgeschaltet!'
-      - service: switch.turn_off
-        entity_id: switch.sonoff8
-      - service: automation.turn_off
-        entity_id: automation.akkuladeautomatik
-      - service: persistent_notification.dismiss
-        data:
-          notification_id: vape
+
 
 
 
@@ -222,18 +206,7 @@ script:
   del_sonoff8_power_log:
      sequence:
        - service: shell_command.del_sonoff8_power_log
-  akkus_laden:
-    alias: "Akkuladeautomatik"
-    sequence:
-     - service: automation.turn_on
-       entity_id: automation.akkuladeautomatik
-     - service: switch.turn_on
-       entity_id: switch.sonoff8
-     - service: persistent_notification.create
-       data:
-         message: '{{ states.sensor.date_time.state }} Abschaltautomatikprogramm Akkuladegerät gestartet.'
-         title: "Akkuladegerät 18650"
-         notification_id: "vape"
+
 
 shell_command:
   del_sonoff8_power_log: rm /home/homeassistant/log/sonoff8/power.txt && touch /home/homeassistant/log/sonoff8/power.txt && chown -R -v homeassistant:homeassistant /home/homeassistant/log/sonoff8/power.txt

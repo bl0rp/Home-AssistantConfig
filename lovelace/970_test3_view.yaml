@@ -43,6 +43,14 @@ cards:
     - type: entities
       title: Folding groups
       entities:
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: switch.HOME A*
+                options:
+                  secondary_info: last-changed
         - type: custom:fold-entity-row
           head: group.all_lights
         - type: custom:fold-entity-row

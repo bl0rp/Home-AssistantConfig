@@ -1,0 +1,94 @@
+title: Health
+path: health
+icon: mdi:heart-circle
+panel: true
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+    - type: custom:vertical-stack-in-card
+      title: 'Garmin Christoph'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+            - entity: sensor.active_kilocalories
+            - entity: sensor.active_time
+            - entity: sensor.activity_stress_duration
+            - entity: sensor.average_spo2
+            - entity: sensor.avg_stress_level
+            - entity: sensor.awake_duration
+            - entity: sensor.bmr_kilocalories
+            - entity: sensor.body_battery_charged
+            - entity: sensor.body_battery_drained
+            - entity: sensor.body_battery_highest
+            - entity: sensor.body_battery_lowest
+            - entity: sensor.body_battery_most_recent
+            - entity: sensor.burned_kilocalories
+            - entity: sensor.daily_step_goal
+            - entity: sensor.floors_ascended
+            - entity: sensor.floors_ascended_goal
+            - entity: sensor.floors_descended
+            - entity: sensor.high_stress_duration
+            - entity: sensor.highest_respiration
+            - entity: sensor.latest_respiration
+            - entity: sensor.latest_spo2
+            - entity: sensor.low_stress_duration
+            - entity: sensor.lowest_respiration
+            - entity: sensor.lowest_spo2
+            - entity: sensor.max_heart_rate
+            - entity: sensor.max_stress_level
+            - entity: sensor.medium_stress_duration
+            - entity: sensor.min_heart_rate
+            - entity: sensor.rest_stress_duration
+            - entity: sensor.resting_heart_rate
+            - entity: sensor.sedentary_time
+            - entity: sensor.sleep_duration
+            - entity: sensor.sleeping_time
+            - entity: sensor.total_distance_mtr
+            - entity: sensor.total_kilocalories
+            - entity: sensor.total_steps
+            - entity: sensor.total_stress_duration
+            - entity: sensor.uncat_stress_duration
+
+
+
+
+    - type: custom:vertical-stack-in-card
+      title: 'Geburtstag'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+            - sensor.next_birthday
+            - automation.birthday_alert_today
+
+    - break
+
+    - type: custom:vertical-stack-in-card
+      title: 'Fahrzeit'
+      cards:
+        - type: entities
+          show_header_toggle: false
+          entities:
+            - type: section
+              label: Waze
+            - entity: sensor.waze_zuhause_hrw
+              name: HRW
+              icon: mdi:ambulance
+            - entity: sensor.waze_zuhause_rw2
+              name: RW2
+              icon: mdi:ambulance
+            - entity: sensor.waze_zuhause_mobilemedic
+              name: Mobile Medic
+              icon: mdi:school
+            - entity: sensor.waze_zuhause_maho
+              name: Marienhospital
+              icon: mdi:hospital-building
+            - entity: sensor.waze_stuttgart_berlin
+              name: Berlin
+              icon: mdi:city-variant
+    - break
+

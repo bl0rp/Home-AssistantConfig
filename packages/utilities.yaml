@@ -27,30 +27,7 @@ homeassistant:
     sensor.last_backup:
       icon: mdi:backup-restore
 
-###### STATE CARD #######################################################
-group:
-  utilities:
-    name: Utilities
-    control: hidden
-    entities:
-      - script.restart_ha
-      - script.update_ha
-      - script.clear_log
-      - script.clear_tts_cache
-      ### see packages/zwave.yaml
-      - script.reset_router
-  backup:
-    name: Backup
-    control: hidden
-    entities:
-      - automation.auto_backup
-      - script.backup_config
-      - sensor.last_commit
-      - sensor.last_backup
-### Customization and Setup in packages/systeminfo
-      - sensor.ha_release
-      - sensor.ha_release_local
-#########################################################################
+
 script:
   update_ha:
     sequence:

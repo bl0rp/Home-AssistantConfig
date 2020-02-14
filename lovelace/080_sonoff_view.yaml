@@ -204,7 +204,7 @@ cards:
           state: "off"
       card:
         type: entities
-        title: '#4 Hub'
+        title: '#4 Serverroom'
         show_header_toggle: false
         entities:
           - entity: binary_sensor.sonoff4_state
@@ -217,7 +217,7 @@ cards:
         type: entities
         entities:
           - type: custom:vertical-stack-in-card
-            title: '#4 Hub'
+            title: '#4 Serverroom'
             cards:
 
               - type: entities
@@ -389,7 +389,7 @@ cards:
           state: "off"
       card:
         type: entities
-        title: '#8 Schreibtisch'
+        title: '#8 Serverraum Licht'
         show_header_toggle: false
         entities:
           - entity: binary_sensor.sonoff8_state
@@ -402,7 +402,7 @@ cards:
         type: entities
         entities:
           - type: custom:vertical-stack-in-card
-            title: '#8 Schreibtisch'
+            title: '#8 Server Licht'
             cards:
 
               - type: entities

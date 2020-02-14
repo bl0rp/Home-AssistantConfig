@@ -14,7 +14,7 @@ homeassistant:
       friendly_name: "Esszimmer"
       icon: mdi:lamp
     sensor.sonoff9_ipv4:
-      friendly_name: IPv4 Sonoff 8
+      friendly_name: IPv4 Sonoff 9
       icon: mdi:server-network
     sensor.sonoff9_uptime:
       friendly_name: Laufzeit

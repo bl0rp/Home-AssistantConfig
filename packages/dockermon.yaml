@@ -69,7 +69,6 @@ switch:
 group:
 
   dockercontainer:
-    control: hidden
     icon: mdi:ethernet-cable
     name: Docker Container
     entities:

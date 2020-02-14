@@ -82,6 +82,8 @@ cards:
       - entity: script.reset_catflap_count
         icon: mdi:delete-forever
         name: Besuche zurücksetzen
+      - entity: binary_sensor.esp8266_06_motion
+        secondary_info: last-changed
       - type: custom:fold-entity-row
         head:
           type: section

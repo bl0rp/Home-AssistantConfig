@@ -36,7 +36,13 @@ binary_sensor:
   - platform: mqtt
     name: esp32_08_door_state
     state_topic: "esp32_8/binary_sensor/esp32_8_catflap/state"
-    device_class: door
+    device_class: opening
+  - platform: mqtt
+    name: esp32_08_status
+    state_topic: "esp32_8/binary_sensor/status"
+    payload_on: "online"
+    payload_off: "offline"
+    device_class: connectivity
 
 sensor:
   - platform: mqtt

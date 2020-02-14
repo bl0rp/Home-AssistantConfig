@@ -5,18 +5,6 @@
 
 homeassistant:
 
-group:
-  traveltime:
-    name: Fahrzeit
-    view: no
-    entities:
-      # - sensor.zuhausehauptrettungswache
-      # - sensor.zuhauserettungswache2
-      # - sensor.hauptrettungswachezuhause
-      - sensor.waze_zuhause_hrw
-      # - sensor.zuhausemarienhospital
-      # - sensor.stuttgartberlin
-      - sensor.waze_stuttgart_berlin
 
 
 sensor:

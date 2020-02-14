@@ -32,6 +32,52 @@ cards:
     - break
 
     - type: entities
+      title: "Serverraum"
+      show_header_toggle: false
+      entities:
+      - entity: sensor.sonoff4_momentane_leistung
+        name: Stromverbrauch
+      - entity: sensor.esp32_4_temperature
+        name: Temperatur
+      - entity: input_number.light_serverroom
+        icon: mdi:spotlight-beam
+      - entity: binary_sensor.esp32_4_motion
+        name: PIR
+        secondary_info: last-changed
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Sensordaten
+        items:
+          - entity: sensor.esp32_4_pressure
+            name: Luftdruck
+          - entity: sensor.esp32_4_humidity
+            name: Luftfeuchtigkeit
+
+      - type: section
+        label: Graph
+      - type: custom:mini-graph-card
+        hours_to_show: 24
+        hour24: true
+        entities:
+          - entity: sensor.esp32_4_temperature
+            name: Temperatur
+          - entity: sensor.sonoff4_momentane_leistung
+            name: Leistung
+        show:
+          show_legend: true
+          fill: false
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: true
+          extrema: true
+          y_axis: secondary
+
+    - break
+
+    - type: entities
       title: "Version & Backup"
       show_header_toggle: false
       entities:
@@ -43,7 +89,7 @@ cards:
         name: HomeAssistant
 
 
-    - break
+
 
     - type: entities
       title: SSL Zertifikate

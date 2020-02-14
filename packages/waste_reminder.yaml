@@ -25,25 +25,7 @@ homeassistant:
       friendly_name: "Benachrichtigung Gelber Sack Heute"
       icon: mdi:delete-empty
 
-group:
-  waste:
-    control: hidden
-    name: Abfallkalender
-    view: no
-    entities:
-      - sensor.next_waste
-      - sensor.next_waste_gelbersack
-      - group.waste_automation
 
-  waste_automation:
-    control: hidden
-    name: "Benachrichtigung Abfall"
-    view: no
-    entities:
-      - automation.waste_alert_12h
-      - automation.waste_alert_today
-      - automation.waste_alert_gelb_12h
-      - automation.waste_alert_gelb_today
 
 
 sensor:

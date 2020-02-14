@@ -36,6 +36,47 @@ include:
     # - sensor.avg_temp_inside_elw_7day
     # - sensor.avg_free_space_qnap_1y
 
+    #garmin data
+
+    - sensor.active_kilocalories
+    - sensor.active_time
+    - sensor.activity_stress_duration
+    - sensor.average_spo2
+    - sensor.avg_stress_level
+    - sensor.awake_duration
+    - sensor.bmr_kilocalories
+    - sensor.body_battery_charged
+    - sensor.body_battery_drained
+    - sensor.body_battery_highest
+    - sensor.body_battery_lowest
+    - sensor.body_battery_most_recent
+    - sensor.burned_kilocalories
+    - sensor.daily_step_goal
+    - sensor.floors_ascended
+    - sensor.floors_ascended_goal
+    - sensor.floors_descended
+    - sensor.high_stress_duration
+    - sensor.highest_respiration
+    - sensor.latest_respiration
+    - sensor.latest_spo2
+    - sensor.low_stress_duration
+    - sensor.lowest_respiration
+    - sensor.lowest_spo2
+    - sensor.max_heart_rate
+    - sensor.max_stress_level
+    - sensor.medium_stress_duration
+    - sensor.min_heart_rate
+    - sensor.rest_stress_duration
+    - sensor.resting_heart_rate
+    - sensor.sedentary_time
+    - sensor.sleep_duration
+    - sensor.sleeping_time
+    - sensor.total_distance_mtr
+    - sensor.total_kilocalories
+    - sensor.total_steps
+    - sensor.total_stress_duration
+    - sensor.uncat_stress_duration
+
 
 
     #internet weather
@@ -160,4 +201,11 @@ include:
     - sensor.esp32_03_rssi
 
 
+    - sensor.esp32_4_humidity
+    - sensor.esp32_4_temperature
+    - sensor.esp32_4_pressure
+
+
+
     - sensor.esp32_7_temp
+

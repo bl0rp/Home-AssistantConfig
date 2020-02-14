@@ -11,7 +11,7 @@ homeassistant:
 
   customize:
     switch.sonoff4:
-      friendly_name: "Hub & Gateway"
+      friendly_name: "Server"
       icon: mdi:led-on
     sensor.sonoff4_ipv4:
       friendly_name: IPv4 Sonoff 4

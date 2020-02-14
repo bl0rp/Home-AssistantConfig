@@ -14,7 +14,7 @@ homeassistant:
       friendly_name: "Wintergarten"
       icon: mdi:lamp
     sensor.sonoff10_ipv4:
-      friendly_name: IPv4 Sonoff 8
+      friendly_name: IPv4 Sonoff 10
       icon: mdi:server-network
     sensor.sonoff10_uptime:
       friendly_name: Laufzeit

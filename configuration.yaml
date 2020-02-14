@@ -5,11 +5,12 @@ homeassistant:
   elevation: 429
   unit_system: metric
   time_zone: Europe/Berlin
-  customize: !include includes/customize.yaml
+  #customize: !include includes/customize.yaml
   packages: !include_dir_named packages
   whitelist_external_dirs:
     - /home/homeassistant/raspicam
 frontend:
+  themes: !include_dir_merge_named themes
 
 lovelace:
   mode: yaml
@@ -84,7 +85,7 @@ wemo:
 ##################
 automation: !include_dir_list automations/
 #binary_sensor: !include includes/binary_sensor.yaml
-camera: !include includes/camera.yaml
+#camera: !include includes/camera.yaml
 cloud: !include includes/cloud.yaml
 device_tracker: !include includes/device_tracker.yaml
 #group: !include_dir_merge_named groups/
@@ -92,13 +93,11 @@ input_boolean: !include includes/input_boolean.yaml
 input_select: !include includes/input_select.yaml
 input_number: !include includes/input_number.yaml
 logger: !include includes/logger.yaml
-media_player: !include includes/media_player.yaml
+#media_player: !include includes/media_player.yaml
 recorder: !include includes/recorder.yaml
 notify: !include includes/notify.yaml
 scene: !include includes/scene.yaml
 script: !include_dir_merge_named scripts/
 sensor: !include_dir_merge_list sensors/
-shell_command: !include includes/shell_command.yaml
-switch: !include_dir_list switches/
 tts: !include includes/tts.yaml
 zone: !include includes/zone.yaml

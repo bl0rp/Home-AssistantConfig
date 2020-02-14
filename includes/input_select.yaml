@@ -1,9 +1,0 @@
-  led_mqtt:
-    name: welche led darf es sein?
-    options:
-     - Rot
-     - Gelb
-     - Grün
-     - Alle
-    initial: Alle
-    icon: mdi:panda

@@ -488,6 +488,7 @@ input_select:
       - Mono Night
       - Mono Light
       - Material Dark
+      - AMOLED Blue
 ###############################################
 ## Sensor                                     #
 ###############################################
@@ -536,4 +537,3 @@ automation:
       - service: frontend.set_theme
         data_template:
           name: "{{ states('input_select.hass_theme')|lower|replace(' ', '_') }}"
-

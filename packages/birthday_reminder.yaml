@@ -14,16 +14,6 @@ homeassistant:
       icon: mdi:alert
 
 
-group:
-  birthday:
-    control: hidden
-    name: Geburtstag
-    view: no
-    entities:
-      - sensor.next_birthday
-      - automation.birthday_alert_today
-
-
 
 
 sensor:

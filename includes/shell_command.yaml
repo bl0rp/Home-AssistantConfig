@@ -5,20 +5,3 @@
 #    /usr/bin/curl {{ url }}
   curl2: >-
     /usr/bin/curl {{ args|default('-sS') }} -X {{ method|default('get')|upper }} {%- for k in headers %} -H "{{ k }}: {{ headers[k] }}"{% endfor %} {{- (' -d \'' ~ payload|tojson ~ '\'') if payload }} {{ url }}
-#LCD Curl Wrapper -> ESP8266_5
-  lcd_on: curl http://192.168.0.84/control?cmd=lcdcmd,on
-  lcd_off: curl http://192.168.0.84/control?cmd=lcdcmd,off
-  lcd_clear: curl  http://192.168.0.84/control?cmd=lcdcmd,clear
-  lcd_send: curl http://192.168.0.84/control?cmd=lcd,1,1,{{ states.sensor.petros__ils.state }}
-  lcd_send_elw_temp1: "curl http://192.168.0.84/control?cmd=lcd,1,1,Temperatur%20ELW:"
-  lcd_send_elw_temp2: curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.temperatur_esp8266_02.state }}%20C
-  lcd_send_wiga_temp: "curl http://192.168.0.84/control?cmd=lcd,1,1,Temp.%20WiGa: && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.temperatur_esp8266_03.state }}%20C"
-  lcd_send_gtt: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20ILS && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.petros__ils.state }}%20Minuten"
-  lcd_send_traffic_hrw: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20HRW && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.zuhause__hauptrettungswache.state }}%20Minuten"
-  lcd_send_traffic_drkls: "curl http://192.168.0.84/control?cmd=lcd,1,1,Fahrtdauer%20DRKLS && curl http://192.168.0.84/control?cmd=lcd,2,1,{{ states.sensor.daheim__pfalzgrafenweiler.state }}%20Minuten"
-
-#Publish HA Data -> php on webserver
-  traffic_send_temp: curl -sS  -X POST -d "TrafficDuration={{ states.sensor.frank__abtis.state }};{{ states.sensor.abtis__frank.state }}"  https://fahrzeit:fahrzeit@chris.0x711.de/fahrzeit_frank/receive.php
-
-#Radartest log
-  rmradarlog: rm -f /home/homeassistant/log/elwmotion.txt
