@@ -14,7 +14,7 @@ c.github[at]0x711.de / cvoid#4858 on [Discord HA Server](https://discord.gg/c5Dv
 
 I moved from a Raspberry Pi3 to an [Intel NUC](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc7i3bnh.html), with 8GB of RAM, Gigabit Ethernet and a Samsung 850 Evo SSD.
 
-System Load with HomeAssistant, various Docker Containers, autossh brides and other services is moderate. All time laod average is below 0.6.
+System Load with HomeAssistant, various Docker Containers, autossh bridges and other services is moderate. All time laod average is below 0.6.
 
 
 ### VENV / Services
