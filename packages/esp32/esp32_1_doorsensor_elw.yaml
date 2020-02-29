@@ -8,6 +8,9 @@ homeassistant:
     binary_sensor.esp32_01_door_state:
       friendly_name: Türe ELW
 
+    binary_sensor.esp32_01_ota_status:
+      friendly_name: OTA Mode
+
     sensor.esp32_01_battery:
       icon: mdi:car-battery
       friendly_name: Batteriewert ESP32 01
@@ -38,19 +41,36 @@ binary_sensor:
     state_topic: "esp32_1/binary_sensor/door/state"
     device_class: door
 
+  - platform: mqtt
+    name: "esp32_01_status"
+    state_topic: "esp32_1/status"
+    payload_on: "online"
+    payload_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_01_ota_status"
+    state_topic: "esp32_1/ota_mode_status"
+    payload_on: "active"
+    payload_off: "disabled"
+
 sensor:
   - platform: mqtt
     name: "esp32_01_battery"
-    state_topic: "esp32_1/sensor/spannung_akku/state"
+    state_topic: "esp32_1/sensor/esp32_1_voltage/state"
     unit_of_measurement: "V"
     qos: 0
 
   - platform: mqtt
     name: "esp32_01_rssi"
-    state_topic: "esp32_1/sensor/esp32_1_wifi_signal_sensor/state"
+    state_topic: "esp32_1/sensor/esp32_1_rssi/state"
     qos: 0
     unit_of_measurement: "dB"
 
+  - platform: mqtt
+    name: "esp32_01_ip"
+    state_topic: "esp32_1/sensor/esp32_1_ip/state"
+    availability_topic: "esp32_1/status"
+    qos: 0
 
   - platform: template
     sensors:
@@ -63,29 +83,114 @@ sensor:
         value_template: >-
           {{ as_timestamp(states.binary_sensor.esp32_01_door_state.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
+switch:
+  - platform: mqtt
+    name: "esp32_01_shutdown"
+    state_topic: esp32_1/switch/esp32_1_shutdown/state
+    command_topic: esp32_1/switch/esp32_1_shutdown/command
+    availability_topic: "esp32_1/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_01_restart"
+    state_topic: esp32_1/switch/esp32_1_restart/state
+    command_topic: esp32_1/switch/esp32_1_restart/command
+    availability_topic: "esp32_1/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: template
+    switches:
+      esp32_01_switch_ota:
+        value_template: "{{ is_state('binary_sensor.esp32_01_ota_status', 'on') }}"
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_1/ota_mode"
+              payload: "ON"
+              retain: true
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_1/sleep_mode"
+              payload: "ON"
+          - service: mqtt.publish
+            data:
+              topic: "esp32_1/ota_mode"
+              payload: ""
+              retain: true
+
+
+
 
 ### automation battery empty
 automation:
-  alias: benachrichtigung_batterie_esp32_01
-  initial_state: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.esp32_01_battery
-      below: 3.0
-      for:
-        seconds: 5
+  - alias: benachrichtigung_batterie_esp32_01
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_01_battery
+        below: 3.0
+        for:
+          seconds: 5
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state != nan }}"
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
+      - service: persistent_notification.create
+        data_template:
+          title: "{{ trigger.to_state.attributes.friendly_name }}"
+          message: >
+              {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
+          notification_id: "esp01_battery_notification"
 
-  condition:
-    - condition: template
-      value_template: "{{ trigger.to_state.state != nan }}"
-  action:
-    - service: notify.pushbullet
+  - alias: esp32_01_ota_online
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_01_status
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+        - condition: state
+          entity_id: 'binary_sensor.esp32_01_ota_status'
+          state: 'on'
+    action:
+    - service: notify.telegram_christoph
       data_template:
         message: >
-           {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-    - service: persistent_notification.create
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ESP #1 Online and in OTA Mode!
+
+  - alias: esp32_01_update_warning
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_01_status
+        to: 'off'
+        for:
+          minutes: 730
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+
+    action:
+    - service: notify.telegram_christoph
       data_template:
-        title: "{{ trigger.to_state.attributes.friendly_name }}"
         message: >
-            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-        notification_id: "esp01_battery_notification"
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: ESP #1!
