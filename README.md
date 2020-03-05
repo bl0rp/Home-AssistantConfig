@@ -1,5 +1,5 @@
 [![HitCount](http://hits.dwyl.com/bl0rp/HomeAssistant-Config.svg)](http://hits.dwyl.com/bl0rp/HomeAssistant-Config)
-
+[![Stargazers][stars-shield]][stars-url]
 
 # Home Assistant Setup
 
@@ -55,3 +55,6 @@ Components I use:
 ![Living Room](screenshots/2020-02/screenshot3.png)
 ![Weather](screenshots/2020-02/screenshot4.png)
 ![Sonoffs](screenshots/2020-02/screenshot5.png)
+
+[stars-shield]: https://img.shields.io/github/stars/bl0rp/Home-AssistantConfig.svg?style=flat-square
+[stars-url]: https://github.com/bl0rp/Home-AssistantConfig/stargazers
