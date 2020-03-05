@@ -1,3 +1,6 @@
+[![HitCount](http://hits.dwyl.com/bl0rp/HomeAssistant-Config.svg)](http://hits.dwyl.com/bl0rp/HomeAssistant-Config)
+
+
 # Home Assistant Setup
 
 This repo contains the configuration for my [Home Assistant](https://www.home-assistant.io) installation.
