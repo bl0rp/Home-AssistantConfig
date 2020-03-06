@@ -1,0 +1,144 @@
+
+binary_sensor:
+  - platform: mqtt
+    name: "esp32_06_status"
+    state_topic: "esp32_6/status"
+    payload_on: "online"
+    payload_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_06_ota_status"
+    state_topic: "esp32_6/ota_mode_status"
+    payload_on: "active"
+    payload_off: "disabled"
+
+sensor:
+  - platform: mqtt
+    name: "esp32_06_rssi"
+    state_topic: "esp32_6/sensor/esp32_6_rssi/state"
+    availability_topic: "esp32_6/status"
+    qos: 0
+    unit_of_measurement: "dB"
+
+  - platform: mqtt
+    name: "esp32_06_uptime"
+    state_topic: "esp32_6/sensor/esp32_6_uptime/state"
+    availability_topic: "esp32_6/status"
+    qos: 0
+    unit_of_measurement: "seconds"
+
+  - platform: mqtt
+    name: "esp32_06_ip"
+    state_topic: "esp32_6/sensor/esp32_6_ip/state"
+    availability_topic: "esp32_6/status"
+    qos: 0
+
+
+  - platform: mqtt
+    name: "esp32_06_ssid"
+    state_topic: "esp32_6/sensor/esp32_6_ssid/state"
+    availability_topic: "esp32_6/status"
+    qos: 0
+
+
+  - platform: mqtt
+    name: "esp32_06_bssid"
+    state_topic: "esp32_6/sensor/esp32_6_bssid/state"
+    availability_topic: "esp32_6/status"
+    qos: 0
+
+
+
+
+
+
+
+switch:
+  - platform: mqtt
+    name: "esp32_06_shutdown"
+    state_topic: esp32_6/switch/esp32_6_shutdown/state
+    command_topic: esp32_6/switch/esp32_6_shutdown/command
+    availability_topic: "esp32_6/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+  - platform: mqtt
+    name: "esp32_06_restart"
+    state_topic: esp32_6/switch/esp32_6_restart/state
+    command_topic: esp32_6/switch/esp32_6_restart/command
+    availability_topic: "esp32_6/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+
+  - platform: template
+    switches:
+      esp32_06_switch_ota:
+        value_template: "{{ is_state('binary_sensor.esp32_06_ota_status', 'on') }}"
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_6/ota_mode"
+              payload: "ON"
+              retain: true
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_6/sleep_mode"
+              payload: "ON"
+          - service: mqtt.publish
+            data:
+              topic: "esp32_6/ota_mode"
+              payload: ""
+              retain: true
+
+
+
+
+
+
+automation:
+  - alias: esp32_06_ota_online
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_06_status
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+        - condition: state
+          entity_id: 'binary_sensor.esp32_06_ota_status'
+          state: 'on'
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ESP #6 Online and in OTA Mode!
+
+  - alias: esp32_06_update_warning
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_06_status
+        to: 'off'
+        for:
+          minutes: 2
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: ESP #6!

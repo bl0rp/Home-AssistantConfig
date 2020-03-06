@@ -4,16 +4,6 @@
 ########################################################################
 homeassistant:
   customize:
-
-
-    sensor.esp32_03_battery:
-      icon: mdi:car-battery
-      friendly_name: Batteriewert ESP32 03 Carport
-
-    sensor.esp32_03_battery_state:
-      icon: mdi:car-battery
-      friendly_name: Batteriestatus ESP32 03
-
     sensor.esp32_03_humidity:
       icon: mdi:water-percent
       friendly_name: Luftfeuchtigkeit Carport
@@ -30,101 +20,186 @@ homeassistant:
       icon: mdi:wifi
       friendly_name: "ESP32 #3 Signalstärke"
 
-
     sensor.esp32_03_temperature_last_changed:
       icon: mdi:delta
       friendly_name: Letzte Änderung
 
-    automation.benachrichtigung_batterie_esp32_03:
-      icon: mdi:power-socket-eu
-      friendly_name: Akkuwarnung
 
-#############
-#  switch   #
-#############
-switch:
-  - platform: mqtt
-    name: ESP32_3 Shutdown
-    state_topic: esp32_3/switch/esp32_3_shutdown/state
-    command_topic: esp32_3/switch/esp32_3_shutdown/command
 
 
 
 #############
 #  sensors  #
 #############
+binary_sensor:
+
+  - platform: mqtt
+    name: "esp32_03_status"
+    state_topic: "esp32_3/status"
+    payload_on: "online"
+    payload_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_03_ota_status"
+    state_topic: "esp32_3/ota_mode_status"
+    payload_on: "active"
+    payload_off: "disabled"
+
+
 sensor:
 
-  - platform: mqtt
-    name: "esp32_03_battery"
-    state_topic: "esp32_3/sensor/spannung_akku/state"
-    unit_of_measurement: "V"
-    qos: 0
-    force_update: true
-
+#bme280 values
   - platform: mqtt
     name: "esp32_03_humidity"
-    state_topic: "esp32_3/sensor/humidity/state"
+    state_topic: "esp32_3/sensor/esp32_3_humidity/state"
     qos: 0
     unit_of_measurement: "%"
     force_update: true
 
   - platform: mqtt
     name: "esp32_03_temperature"
-    state_topic: "esp32_3/sensor/temperature/state"
+    state_topic: "esp32_3/sensor/esp32_3_temperature/state"
     qos: 0
     unit_of_measurement: "°C"
     force_update: true
 
   - platform: mqtt
     name: "esp32_03_pressure"
-    state_topic: "esp32_3/sensor/pressure/state"
+    state_topic: "esp32_3/sensor/esp32_3_pressure/state"
     qos: 0
     unit_of_measurement: "hPa"
     force_update: true
-
+#wifi signal strength
   - platform: mqtt
     name: "esp32_03_rssi"
-    state_topic: "esp32_3/sensor/esp32_3_wifi_signal_sensor/state"
+    state_topic: "esp32_3/sensor/esp32_3_rssi/state"
     qos: 0
     unit_of_measurement: "dB"
+#battery value
+  - platform: mqtt
+    name: "esp32_03_battery"
+    state_topic: "esp32_3/sensor/esp32_3_voltage/state"
+    unit_of_measurement: "V"
+    qos: 0
     force_update: true
-
-
-
-
+# temp last changed
   - platform: template
     sensors:
-
-      esp32_03_battery_state:
-        value_template: "{{ 'Geladen ' if states.sensor.esp32_03_battery.state | float >3.3  else 'Leer' }}"
-        icon_template: "{{ 'mdi:battery ' if states.sensor.esp32_03_battery.state | float >3.3  else 'mdi:battery-10' }}"
-
       esp32_03_temperature_last_changed:
         value_template: >-
           {{ as_timestamp(states.sensor.esp32_03_temperature.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
+#############
+#  switch   #
+#############
+switch:
+  - platform: mqtt
+    name: "esp32_03_shutdown"
+    state_topic: esp32_3/switch/esp32_3_shutdown/state
+    command_topic: esp32_3/switch/esp32_3_shutdown/command
+    availability_topic: "esp32_3/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_03_restart"
+    state_topic: esp32_3/switch/esp32_3_restart/state
+    command_topic: esp32_3/switch/esp32_3_restart/command
+    availability_topic: "esp32_3/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: template
+    switches:
+      esp32_03_switch_ota:
+        value_template: "{{ is_state('binary_sensor.esp32_03_ota_status', 'on') }}"
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_3/ota_mode"
+              payload: "ON"
+              retain: true
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_3/sleep_mode"
+              payload: "ON"
+          - service: mqtt.publish
+            data:
+              topic: "esp32_3/ota_mode"
+              payload: ""
+              retain: true
+
+
+
 
 ### automation battery empty
 automation:
-  alias: benachrichtigung_batterie_esp32_03
-  initial_state: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.esp32_03_battery
-      below: 3.3
-      for:
-        seconds: 5
-  action:
-    - service: switch.turn_on
-      entity_id: switch.esp32_3_shutdown
-    - service: notify.pushbullet
+  - alias: benachrichtigung_batterie_esp32_03
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_03_battery
+        below: 3.0
+        for:
+          seconds: 5
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state != nan }}"
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
+      - service: persistent_notification.create
+        data_template:
+          title: "{{ trigger.to_state.attributes.friendly_name }}"
+          message: >
+              {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
+          notification_id: "esp02_battery_notification"
+
+  - alias: esp32_03_ota_online
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_03_status
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+        - condition: state
+          entity_id: 'binary_sensor.esp32_03_ota_status'
+          state: 'on'
+    action:
+    - service: notify.telegram_christoph
       data_template:
         message: >
-           {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-    - service: persistent_notification.create
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ESP #2 Online and in OTA Mode!
+
+  - alias: esp32_03_update_warning
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_03_status
+        to: 'off'
+        for:
+          minutes: 65
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+
+    action:
+    - service: notify.telegram_christoph
       data_template:
-        title: "{{ trigger.to_state.attributes.friendly_name }}"
         message: >
-            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Achtung!: {{ trigger.to_state.attributes.friendly_name }} Akku aufladen!
-        notification_id: "esp02_battery_notification"
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Temperatur Carport (ESP #3)!

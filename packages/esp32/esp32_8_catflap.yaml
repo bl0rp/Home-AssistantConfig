@@ -7,7 +7,8 @@ homeassistant:
 
     binary_sensor.esp32_08_door_state:
       friendly_name: "Katzenklappe"
-
+    binary_sensor.esp32_08_ota_status:
+      friendly_name: OTA Mode
     sensor.esp32_08_battery:
       icon: mdi:car-battery
       friendly_name: "Batterie Katzenklappe Spannung"
@@ -39,11 +40,15 @@ binary_sensor:
     device_class: opening
   - platform: mqtt
     name: esp32_08_status
-    state_topic: "esp32_8/binary_sensor/status"
+    state_topic: "esp32_8/status"
     payload_on: "online"
     payload_off: "offline"
     device_class: connectivity
-
+  - platform: mqtt
+    name: "esp32_08_ota_status"
+    state_topic: "esp32_8/ota_mode_status"
+    payload_on: "active"
+    payload_off: "disabled"
 sensor:
   - platform: mqtt
     name: "esp32_08_battery"
@@ -73,7 +78,47 @@ sensor:
       esp32_08_motion_last_changed:
         value_template: >-
           {{ as_timestamp(states.binary_sensor.esp32_08_door_state.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+switch:
+  - platform: mqtt
+    name: "esp32_08_shutdown"
+    state_topic: esp32_8/switch/esp32_8_shutdown/state
+    command_topic: esp32_8/switch/esp32_8_shutdown/command
+    availability_topic: "esp32_8/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
 
+  - platform: mqtt
+    name: "esp32_08_restart"
+    state_topic: esp32_8/switch/esp32_8_restart/state
+    command_topic: esp32_8/switch/esp32_8_restart/command
+    availability_topic: "esp32_8/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: template
+    switches:
+      esp32_08_switch_ota:
+        value_template: "{{ is_state('binary_sensor.esp32_08_ota_status', 'on') }}"
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_8/ota_mode"
+              payload: "ON"
+              retain: true
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_8/sleep_mode"
+              payload: "ON"
+          - service: mqtt.publish
+            data:
+              topic: "esp32_8/ota_mode"
+              payload: ""
+              retain: true
 
 ### automation battery empty
 automation:
@@ -132,6 +177,49 @@ automation:
           topic: "esp32_8/catflap/count"
           payload: 0
           retain: true
+  - alias: esp32_08_ota_online
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_08_status
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+        - condition: state
+          entity_id: 'binary_sensor.esp32_08_ota_status'
+          state: 'on'
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ESP #8 Online and in OTA Mode!
+
+  - alias: esp32_08_update_warning
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_08_status
+        to: 'off'
+        for:
+          minutes: 730
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: ESP #8!
+
+
 #reset manually
 script:
   reset_catflap_count:

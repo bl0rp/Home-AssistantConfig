@@ -193,4 +193,4 @@ automation:
     - service: notify.telegram_christoph
       data_template:
         message: >
-          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: ESP #1!
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Türsensor ELW (ESP #1)!
