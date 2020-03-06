@@ -59,5 +59,5 @@ Components I use:
 
 [stars-shield]: https://img.shields.io/github/stars/bl0rp/Home-AssistantConfig.svg?style=flat-square
 [stars-url]: https://github.com/bl0rp/Home-AssistantConfig/stargazers
-[commit-shield]: https://img.shields.io/github/last-commit/bl0rp/Home-AssistantConfig.svg
+[commit-shield]: https://img.shields.io/github/last-commit/bl0rp/Home-AssistantConfig.svg?style=flat-square
 [commit-url]: https://github.com/bl0rp/Home-AssistantConfig/commits/master
