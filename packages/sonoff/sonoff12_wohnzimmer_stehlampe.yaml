@@ -1,5 +1,5 @@
 ##############################################################
-### Packages / sonoff10                                     ###
+### Packages / sonoff12                                     ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
 ### Thanks to cnrd                                         ###
 ### https://github.com/cnrd                                ###
@@ -10,13 +10,13 @@
 homeassistant:
 
   customize:
-    switch.sonoff10:
-      friendly_name: "Wintergarten"
+    switch.sonoff12:
+      friendly_name: "Wohnzimmer Stehlampe"
       icon: mdi:lamp
-    sensor.sonoff10_ipv4:
-      friendly_name: IPv4 Sonoff 10
+    sensor.sonoff12_ipv4:
+      friendly_name: IPv4 Sonoff 12
       icon: mdi:server-network
-    sensor.sonoff10_uptime:
+    sensor.sonoff12_uptime:
       friendly_name: Laufzeit
       icon: mdi:clock-fast
 
@@ -29,10 +29,10 @@ sensor:
 
 
   - platform: mqtt
-    name: "sonoff10 uptime"
-    state_topic: "tele/sonoff10/STATE"
+    name: "sonoff12 uptime"
+    state_topic: "tele/sonoff12/STATE"
     value_template: "{{ value_json.Uptime }}"
-    availability_topic: "tele/sonoff10/LWT"
+    availability_topic: "tele/sonoff12/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
@@ -44,13 +44,13 @@ sensor:
 
 switch:
   - platform: mqtt
-    name: "sonoff10"
-    state_topic: "stat/sonoff10/POWER"
-    command_topic: "cmnd/sonoff10/POWER"
+    name: "sonoff12"
+    state_topic: "stat/sonoff12/POWER"
+    command_topic: "cmnd/sonoff12/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: false
-    availability_topic: "tele/sonoff10/LWT"
+    availability_topic: "tele/sonoff12/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"

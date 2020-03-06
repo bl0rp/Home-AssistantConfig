@@ -4,13 +4,6 @@
 ########################################################################
 homeassistant:
   customize:
-
-    switch.wemoswitch1:
-      friendly_name: Lampe Esszimmer
-      icon: mdi:lamp
-    switch.wemoswitch2:
-      friendly_name: Stehlampe
-      icon: mdi:floor-lamp
     script.1og_lampen_an:
       friendly_name: Alle Lampen an!
       icon: mdi:lamp
@@ -65,7 +58,7 @@ automation:
         state: "below_horizon"
     action:
       - service: switch.turn_on
-        entity_id: switch.wemoswitch2
+        entity_id: switch.sonoff12
       - service: automation.turn_off
         entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
       # - service: notify.pushbullet
@@ -85,7 +78,7 @@ automation:
         seconds: 00
     action:
       - service: switch.turn_off
-        entity_id: switch.wemoswitch2
+        entity_id: switch.sonoff12
 
 #Esszimmer on/off
 
@@ -100,9 +93,9 @@ automation:
         event: sunset
     action:
       - service: switch.turn_on
-        entity_id: switch.wemoswitch1
+        entity_id: switch.sonoff11
       - service: switch.turn_on
-        entity_id: switch.sonoff9
+        entity_id: switch.sonoff09
       - service: switch.turn_on
         entity_id: switch.sonoff10
 
@@ -120,9 +113,9 @@ automation:
         seconds: 00
     action:
       - service: switch.turn_off
-        entity_id: switch.wemoswitch1
+        entity_id: switch.sonoff11
       - service: switch.turn_off
-        entity_id: switch.sonoff9
+        entity_id: switch.sonoff09
       - service: switch.turn_off
         entity_id: switch.sonoff10
 
@@ -138,20 +131,20 @@ script:
   1og_lampen_an:
     sequence:
        - service: switch.turn_on
-         entity_id: switch.wemoswitch1
+         entity_id: switch.sonoff11
        - service: switch.turn_on
-         entity_id: switch.wemoswitch2
+         entity_id: switch.sonoff12
        - service: switch.turn_on
-         entity_id: switch.sonoff9
+         entity_id: switch.sonoff09
        - service: switch.turn_on
          entity_id: switch.sonoff10
   1og_lampen_aus:
     sequence:
        - service: switch.turn_off
-         entity_id: switch.wemoswitch1
+         entity_id: switch.sonoff11
        - service: switch.turn_off
-         entity_id: switch.wemoswitch2
+         entity_id: switch.sonoff12
        - service: switch.turn_off
-         entity_id: switch.sonoff9
+         entity_id: switch.sonoff09
        - service: switch.turn_off
          entity_id: switch.sonoff10
