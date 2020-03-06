@@ -16,35 +16,7 @@ cards:
     #       name: Bla
     #       secondary_info: last-changed
 
-    - type: custom:mini-graph-card
-      entities:
-        - entity: binary_sensor.esp32_01_door_state
-          name: Türe ELW
-        - entity: binary_sensor.esp8266_02_pir
-          name: ELW
 
-      name: Motion last hour
-      hours_to_show: 24
-      points_per_hour: 10
-      update_interval: 30
-      aggregate_func: max
-      line_width: 2
-      smoothing: false
-      state_map:
-        - value: "off"
-          label: Clear
-        - value: "on"
-          label: Detected
-
-
-
-    - type: entities
-      title: Debug sensor state
-      show_header_toggle: false
-      entities:
-        - entity: automation.debug_state
-          name: offline
-        - entity: automation.debug_state2
     - type: markdown
       title: TEST
       content: >
@@ -53,6 +25,14 @@ cards:
       title: Test2
       content: >
         **Oin22323k**
+    - type: custom:mini-graph-card
+      entities:
+       - sensor.aeotec_zw100_multisensor_6_luminance
+      align_icon: left
+      align_state: center
+      show:
+        fill: false
+
     - break
 
     - type: entities
@@ -151,16 +131,45 @@ cards:
             type: entities
           filter:
             include:
-              - entity_id: sensor.*esp32_6*
+              - entity_id: sensor.*esp32_06*
                 options:
                   secondary_info: last-changed
-              - entity_id: binary_sensor.*esp32_6*
-                options:
-                  secondary_info: entity-id
-              - entity_id: switch.*esp32_6*
+              - entity_id: binary_sensor.*esp32_06*
                 options:
                   secondary_info: entity-id
               - entity_id: device_tracker.*esp32_06*
+                options:
+                  secondary_info: entity-id
+              - entity_id: switch.*esp32_06*
+                options:
+                  secondary_info: entity-id
+              - entity_id: automation.*esp32_06*
+                options:
+                  secondary_info: entity-id
+    - type: entities
+      title: esp32_1*
+      show_header_toggle: false
+      entities:
+        - type: section
+
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.*esp32_01*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.*esp32_01*
+                options:
+                  secondary_info: entity-id
+              - entity_id: device_tracker.*esp32_01*
+                options:
+                  secondary_info: entity-id
+              - entity_id: switch.*esp32_01*
+                options:
+                  secondary_info: entity-id
+              - entity_id: automation.*esp32_01*
                 options:
                   secondary_info: entity-id
 

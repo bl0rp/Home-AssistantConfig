@@ -3,7 +3,7 @@ homeassistant:
 
 #Fibaro Z-Wave WallPlug 1
     switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
-      friendly_name: Universalsteckdose Z-Wave
+      friendly_name: Verstärker
       icon: mdi:power-plug
     sensor.fibaro_system_fgwpef_wall_plug_gen5_power:
       friendly_name: Aktuelle Leistung
@@ -16,8 +16,7 @@ homeassistant:
       icon: mdi:chart-line
     sensor.zwave_mpd1_kosten_gesamt:
       icon: mdi:currency-eur
-    script.reset_router:
-      icon: mdi:nuke
+
 #Aeotec Z-Wave Multisensor
     sensor.multisensor1_battery:
       icon: mdi:car-battery
@@ -83,25 +82,3 @@ sensor:
         friendly_name: "Multisensor Motion Last Triggered"
         value_template: >-
           {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
-
-
-
-script:
-  reset_router:
-    alias: "Router Reset"
-    sequence:
-      - service: persistent_notification.create
-        data:
-          message: '{{ states.sensor.date_time.state }} Router wurde neugestartet!'
-          title: "RouterReset"
-          notification_id: "RouterReset"
-      - service: telegram_bot.send_message
-        data_template:
-          target: !secret telegram_chat_id_christoph
-          disable_notification: true
-          message: "Router wird neugestartet! ({{ states.sensor.date_time.state }})"
-      - service: switch.turn_off
-        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-      - delay: 00:00:03
-      - service: switch.turn_on
-        entity_id: switch.fibaro_system_fgwpef_wall_plug_gen5_switch

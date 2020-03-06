@@ -102,51 +102,51 @@ include:
     - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
       #sonoff stats
 
-    - sensor.sonoff1_gesamtverbrauch
-    - sensor.sonoff2_gesamtverbrauch
-    - sensor.sonoff3_gesamtverbrauch
-    - sensor.sonoff4_gesamtverbrauch
-    - sensor.sonoff5_gesamtverbrauch
-    - sensor.sonoff6_gesamtverbrauch
-    - sensor.sonoff7_gesamtverbrauch
-    - sensor.sonoff8_gesamtverbrauch
+    - sensor.sonoff01_gesamtverbrauch
+    - sensor.sonoff02_gesamtverbrauch
+    - sensor.sonoff03_gesamtverbrauch
+    - sensor.sonoff04_gesamtverbrauch
+    - sensor.sonoff05_gesamtverbrauch
+    - sensor.sonoff06_gesamtverbrauch
+    - sensor.sonoff07_gesamtverbrauch
+    - sensor.sonoff08_gesamtverbrauch
 
-    - sensor.sonoff2_kosten_heute
-    - sensor.sonoff2_kosten_gestern
+    - sensor.sonoff02_kosten_heute
+    - sensor.sonoff02_kosten_gestern
 
-    - sensor.sonoff1_kosten_gesamt
-    - sensor.sonoff1_kosten_gestern
-    - sensor.sonoff1_kosten_heute
-    - sensor.sonoff2_kosten_gesamt
-    - sensor.sonoff2_kosten_gestern
-    - sensor.sonoff2_kosten_heute
-    - sensor.sonoff3_kosten_gesamt
-    - sensor.sonoff3_kosten_gestern
-    - sensor.sonoff3_kosten_heute
-    - sensor.sonoff4_kosten_gesamt
-    - sensor.sonoff4_kosten_gestern
-    - sensor.sonoff4_kosten_heute
-    - sensor.sonoff5_kosten_gesamt
-    - sensor.sonoff5_kosten_gestern
-    - sensor.sonoff5_kosten_heute
-    - sensor.sonoff6_kosten_gesamt
-    - sensor.sonoff6_kosten_gestern
-    - sensor.sonoff6_kosten_heute
-    - sensor.sonoff7_kosten_gesamt
-    - sensor.sonoff7_kosten_gestern
-    - sensor.sonoff7_kosten_heute
-    - sensor.sonoff8_kosten_gesamt
-    - sensor.sonoff8_kosten_gestern
-    - sensor.sonoff8_kosten_heute
+    - sensor.sonoff01_kosten_gesamt
+    - sensor.sonoff01_kosten_gestern
+    - sensor.sonoff01_kosten_heute
+    - sensor.sonoff02_kosten_gesamt
+    - sensor.sonoff02_kosten_gestern
+    - sensor.sonoff02_kosten_heute
+    - sensor.sonoff03_kosten_gesamt
+    - sensor.sonoff03_kosten_gestern
+    - sensor.sonoff03_kosten_heute
+    - sensor.sonoff04_kosten_gesamt
+    - sensor.sonoff04_kosten_gestern
+    - sensor.sonoff04_kosten_heute
+    - sensor.sonoff05_kosten_gesamt
+    - sensor.sonoff05_kosten_gestern
+    - sensor.sonoff05_kosten_heute
+    - sensor.sonoff06_kosten_gesamt
+    - sensor.sonoff06_kosten_gestern
+    - sensor.sonoff06_kosten_heute
+    - sensor.sonoff07_kosten_gesamt
+    - sensor.sonoff07_kosten_gestern
+    - sensor.sonoff07_kosten_heute
+    - sensor.sonoff08_kosten_gesamt
+    - sensor.sonoff08_kosten_gestern
+    - sensor.sonoff08_kosten_heute
 
-    - sensor.sonoff1_momentane_leistung
-    - sensor.sonoff2_momentane_leistung
-    - sensor.sonoff3_momentane_leistung
-    - sensor.sonoff4_momentane_leistung
-    - sensor.sonoff5_momentane_leistung
-    - sensor.sonoff6_momentane_leistung
-    - sensor.sonoff7_momentane_leistung
-    - sensor.sonoff8_momentane_leistung
+    - sensor.sonoff01_momentane_leistung
+    - sensor.sonoff02_momentane_leistung
+    - sensor.sonoff03_momentane_leistung
+    - sensor.sonoff04_momentane_leistung
+    - sensor.sonoff05_momentane_leistung
+    - sensor.sonoff06_momentane_leistung
+    - sensor.sonoff07_momentane_leistung
+    - sensor.sonoff08_momentane_leistung
 
 
 
@@ -208,4 +208,3 @@ include:
 
 
     - sensor.esp32_7_temp
-

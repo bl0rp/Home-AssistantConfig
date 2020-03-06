@@ -33,8 +33,16 @@ cards:
           name: Schreibtisch
           tap_action:
             action: toggle
-        - entity: switch.11011_c
-          name: Türe
+    - type: glance
+      entities:
+        - entity: switch.wemoswitch1
+          name: Stehlampe
+          icon: mdi:floor-lamp-dual
+          tap_action:
+            action: toggle
+        - entity: switch.wemoswitch2
+          name: NN
+          icon: mdi:help
           tap_action:
             action: toggle
 

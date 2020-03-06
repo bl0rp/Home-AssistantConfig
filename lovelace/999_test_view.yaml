@@ -58,5 +58,31 @@ cards:
           - domain: zwave
             options:
               secondary_info: last-changed
-
-        
+    - break
+    - type: custom:mini-graph-card
+      entities:
+        - entity: sensor.esp32_02_temperature
+          aggregate_func: max
+          name: Maximum Eingang
+          color: #e74c3c
+        - entity: sensor.esp32_02_temperature
+          aggregate_func: min
+          name: Min
+        - entity: sensor.esp32_02_temperature
+          aggregate_func: avg
+          name: Avg
+          color: green
+        - entity: sensor.esp32_03_temperature
+          aggregate_func: max
+          name: Max
+          color: #e74c3c
+        - entity: sensor.esp32_03_temperature
+          aggregate_func: min
+          name: Min
+        - entity: sensor.esp32_03_temperature
+          aggregate_func: avg
+          name: Avg
+          color: green
+      name: Temp outside daily (last week)
+      hours_to_show: 168
+      group_by: date

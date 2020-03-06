@@ -19,7 +19,7 @@ cards:
       - binary_sensor.aeotec_zw100_multisensor_6_sensor
 
     - type: entities
-      title: Router Killswitch
+      title: Teufel Concept C
       show_header_toggle: false
       entities:
       - entity: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
@@ -29,4 +29,13 @@ cards:
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
       - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
       - sensor.zwave_mpd1_kosten_gesamt
-      - script.reset_router
+    - type: horizontal-stack
+      cards:
+        - type: gauge
+          name: Leistung
+          unit: 'W'
+          entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+          severity:
+            green: 0
+            yellow: 45
+            red: 150

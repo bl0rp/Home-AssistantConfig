@@ -14,8 +14,6 @@ homeassistant:
       icon: mdi:spotlight-beam
       persistent: true
     switch.11011_c:
-      friendly_name: Türlicht
-      icon: mdi:spotlight
       persistent: true
     switch.11001_a:
       friendly_name: ESP Schreibtisch

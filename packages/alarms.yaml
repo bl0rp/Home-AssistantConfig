@@ -78,7 +78,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff2_use
+        entity_id: sensor.sonoff02_use
         to: 'Ja'
         for:
           minutes: 1

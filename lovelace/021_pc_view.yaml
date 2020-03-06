@@ -18,7 +18,7 @@ cards:
         hours_to_show: 12
         hour24: true
         entities:
-          - sensor.sonoff2_momentane_leistung
+          - sensor.sonoff02_momentane_leistung
         show:
           labels: true
           name: false
@@ -62,7 +62,7 @@ cards:
       - type: gauge
         name: Workstation
         unit: 'W'
-        entity: sensor.sonoff2_momentane_leistung
+        entity: sensor.sonoff02_momentane_leistung
         max: 300
         severity:
           green: 0
@@ -83,7 +83,7 @@ cards:
 
 
 
-    #sonoff2
+    #sonoff02
     - type: conditional
       conditions:
         - entity: switch.11001_a
@@ -127,7 +127,7 @@ cards:
       entities:
       - type: custom:mini-graph-card
         entities:
-          - entity: sensor.sonoff2_momentane_leistung
+          - entity: sensor.sonoff02_momentane_leistung
         name: Maximale Leistung
         hours_to_show: 168
         hour24: true
@@ -148,7 +148,7 @@ cards:
         hours_to_show: 168
         hour24: true
         entities:
-          - sensor.sonoff2_momentane_leistung
+          - sensor.sonoff02_momentane_leistung
         show:
           labels: true
           name: false

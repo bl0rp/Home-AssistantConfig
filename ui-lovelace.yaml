@@ -45,13 +45,11 @@ views:
 #  - !include lovelace/030_media_view.yaml
   - !include lovelace/040_first_floor_view.yaml
   - !include lovelace/050_weather_view.yaml
-  - !include lovelace/060_waste_view.yaml
   - !include lovelace/065_network.yaml
   - !include lovelace/070_sensor_view.yaml
   - !include lovelace/080_sonoff_view.yaml
   - !include lovelace/090_zwave_view.yaml
   - !include lovelace/100_family_view.yaml
-  - !include lovelace/101_health_data.yaml
   - !include lovelace/970_test3_view.yaml
   - !include lovelace/980_test2_view.yaml
   - !include lovelace/999_test_view.yaml

@@ -90,7 +90,7 @@ automation:
             minutes: 15
     action:
       - service: switch.turn_off
-        entity_id: switch.sonoff7
+        entity_id: switch.sonoff07
 
   - alias: 'enable_charger_sonoff_when_home'
     initial_state: True
@@ -100,4 +100,4 @@ automation:
           to: 'on'
     action:
       - service: switch.turn_on
-        entity_id: switch.sonoff7
+        entity_id: switch.sonoff07

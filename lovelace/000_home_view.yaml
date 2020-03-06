@@ -27,7 +27,6 @@ cards:
       - entity: script.update_ha
       - entity: script.clear_log
       - entity: script.clear_tts_cache
-      - entity: script.reset_router
         type: custom:toggle-lock-entity-row
     - break
 
@@ -35,7 +34,7 @@ cards:
       title: "Serverraum"
       show_header_toggle: false
       entities:
-      - entity: sensor.sonoff4_momentane_leistung
+      - entity: sensor.sonoff04_momentane_leistung
         name: Stromverbrauch
       - entity: sensor.esp32_4_temperature
         name: Temperatur
@@ -53,6 +52,8 @@ cards:
             name: Luftdruck
           - entity: sensor.esp32_4_humidity
             name: Luftfeuchtigkeit
+          - entity: sensor.esp32_4_uptime_format
+            name: Uptime ESP
 
       - type: section
         label: Graph
@@ -62,7 +63,7 @@ cards:
         entities:
           - entity: sensor.esp32_4_temperature
             name: Temperatur
-          - entity: sensor.sonoff4_momentane_leistung
+          - entity: sensor.sonoff04_momentane_leistung
             name: Leistung
         show:
           show_legend: true
@@ -81,8 +82,6 @@ cards:
       title: "Version & Backup"
       show_header_toggle: false
       entities:
-      - entity: automation.auto_backup
-      - entity: script.backup_config
       - entity: sensor.last_commit
       - entity: sensor.last_backup
       - entity: sensor.ha_version

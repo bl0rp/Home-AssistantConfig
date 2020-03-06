@@ -156,10 +156,6 @@ fastdotcom:
   scan_interval:
       minutes: 15
 
-weblink:
-  entities:
-    - name: release_log
-      url: https://github.com/home-assistant/home-assistant/releases
 
 sensor:
   - platform: systemmonitor
@@ -211,6 +207,7 @@ sensor:
     unit_of_measurement: "°C"
     value_template: '{{ value|multiply(0.001)|round(1)}}'
 
+  - platform: cpuspeed
 ### Calculating human readable uptime
 
   - platform: command_line

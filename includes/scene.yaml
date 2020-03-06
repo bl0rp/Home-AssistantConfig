@@ -39,7 +39,7 @@
       light.schlafzimmer:
         state: on
         brightness: 18
-        color_temp: 454.54545454545456
+        color_temp: 454
       switch.11011_b:
         state: on
 #Schlafzimmer Hell
@@ -49,13 +49,15 @@
         state: on
         brightness: 255
         color_temp: 250
+        transition: 3
 #Schlafzimmer Relax
   - name: Schlafzimmer_Relax
     entities:
       light.schlafzimmer:
         state: on
         brightness: 18
-        color_temp: 454.54545454545456
+        color_temp: 454
+        transition: 3
 #Schlafzimmer Aus
   - name: Schlafzimmer_Aus
     entities:
@@ -74,9 +76,35 @@
       light.flur:
         state: on
         brightness: 18
-        color_temp: 454.54545454545456
+        color_temp: 454
 #Flur Aus
   - name: Flur_Aus
     entities:
       light.flur:
         state: off
+
+#tradfri dim2max
+  - name: tradfri_dim_2_max
+    entities:
+      light.flur:
+        state: on
+        brightness: 255
+        color_temp: 250
+        transition: 3
+      light.schlafzimmer:
+        state: on
+        brightness: 255
+        color_temp: 250
+        transition: 3
+  - name: tradfri_dim_2_min
+    entities:
+      light.flur:
+        state: on
+        brightness: 5
+        color_temp: 450
+        transition: 3
+      light.schlafzimmer:
+        state: on
+        brightness: 5
+        color_temp: 450
+        transition: 3

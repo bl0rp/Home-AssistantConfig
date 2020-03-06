@@ -55,23 +55,21 @@ cards:
         - entity: script.1og_lampen_aus
     - type: glance
       entities:
-        - entity: switch.wemoswitch1
-          name: Esszimmer Fenster
+        - entity: switch.sonoff11
           tap_action:
             action: toggle
-        - entity: switch.sonoff9
-          name: Esszimmer Türe
+        - entity: switch.sonoff09
           tap_action:
             action: toggle
 
     - type: glance
       entities:
-        - entity: switch.wemoswitch2
-          name: Stehlampe
+        - entity: switch.sonoff12
+
           tap_action:
             action: toggle
         - entity: switch.sonoff10
-          name: Wintergarten
+
           tap_action:
             action: toggle
     - type: entities

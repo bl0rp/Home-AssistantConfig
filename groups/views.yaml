@@ -108,13 +108,13 @@ Sonoffs:
   icon: mdi:power
   entities:
      - group.sonoff1
-     - group.sonoff2
-     - group.sonoff3
-     - group.sonoff4
-     - group.sonoff5
-     - group.sonoff6
-     - group.sonoff7
-     - group.sonoff8
+     - group.sonoff02
+     - group.sonoff03
+     - group.sonoff04
+     - group.sonoff05
+     - group.sonoff06
+     - group.sonoff07
+     - group.sonoff08
      - group.sonoff_alle_ips
      - group.sonoff_firmware
 zwave:

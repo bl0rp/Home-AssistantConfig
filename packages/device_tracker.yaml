@@ -322,7 +322,7 @@ automation:
       - service: input_select.select_option
         data_template:
           entity_id: input_select.christoph_status
-          option: '{% if is_state("sensor.sonoff1_use", "Ja") %}Am PC{% else %}In der ELW{% endif %}'
+          option: '{% if is_state("sensor.sonoff01_use", "Ja") %}Am PC{% else %}In der ELW{% endif %}'
 
 #input select for away
 
@@ -346,7 +346,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff1_use
+        entity_id: sensor.sonoff01_use
         from: 'Nein'
         to: 'Ja'
     #     for:
@@ -368,7 +368,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff1_use
+        entity_id: sensor.sonoff01_use
         from: 'Ja'
         to: 'Nein'
     #     for:

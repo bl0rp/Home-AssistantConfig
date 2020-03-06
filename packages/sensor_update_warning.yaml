@@ -7,14 +7,7 @@ homeassistant:
   customize:
     sensor.phonebatt_watch:
       friendly_name: Handyakku Pixel4XL
-    sensor.esp32_01_watch:
-      friendly_name: Türsensor ELW
-    sensor.esp32_02_watch:
-      friendly_name: Haupteingang
-    sensor.esp32_03_watch:
-      friendly_name: Carport
-    sensor.esp32_08_watch:
-      friendly_name: Katzenklappe
+
 
 
 ##### notify component -> logfile
@@ -32,23 +25,7 @@ sensor:
       phonebatt_watch:
         entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel4xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
-#door_sensor_elw 7hours
-      esp32_01_watch:
-        entity_id: sensor.time
-        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_01_rssi.last_updated) > 420*60 %}true{% else %}false{% endif %}"
-#outdoor sensor 2 2hours
-      esp32_02_watch:
-        entity_id: sensor.time
-        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_02_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
-#outdoor sensor 3 2hours
-      esp32_03_watch:
-        entity_id: sensor.time
-        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_03_temperature.last_updated) > 120*60 %}true{% else %}false{% endif %}"
 
-#catflap sensor 8 7hours
-      esp32_08_watch:
-        entity_id: sensor.time
-        value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.esp32_08_rssi.last_updated) > 420*60 %}true{% else %}false{% endif %}"
 
 
 
@@ -62,10 +39,6 @@ automation:
       - platform: state
         entity_id:
           - sensor.phonebatt_watch
-          - sensor.esp32_01_watch
-          - sensor.esp32_02_watch
-          - sensor.esp32_03_watch
-          - sensor.esp32_08_watch
         to: 'true'
     condition:
       condition: and

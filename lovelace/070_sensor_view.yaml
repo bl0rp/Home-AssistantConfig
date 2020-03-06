@@ -18,8 +18,6 @@ cards:
           name: Wintergarten
         - entity: sensor.esp8266_04_status_var
           name: LED
-        - entity: sensor.esp8266_05_status_var
-          name: LCD
         - entity: sensor.esp8266_07_status_var
           name: MQTT2RF
         - entity: sensor.esp8266_06_status_var
@@ -52,37 +50,118 @@ cards:
           label: 'Türsensor ELW'
         - entity: binary_sensor.esp32_01_door_state
           secondary_info: last-changed
-        - entity: sensor.esp32_01_rssi
+        - entity: sensor.esp32_01_motion_last_changed
+          name: Letzte Bewegung
+          icon: mdi:door
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+            - entity: sensor.esp32_01_rssi
+              secondary_info: last-changed
+            - entity: binary_sensor.esp32_01_ota_status
+            - entity: binary_sensor.esp32_01_status
+              name: Status
+            - entity: switch.esp32_01_switch_ota
+              name: OTA Mode
+            - entity: sensor.esp32_01_battery
+            - entity: sensor.esp32_01_battery_state
+            - entity: automation.benachrichtigung_batterie_esp32_01
+            - entity: automation.esp32_01_ota_online
+              name: Benachrichtigung OTA Online
+            - entity: automation.esp32_01_update_warning
+              name: No Update
+        - type: section
+          label: 'Katzenklappe'
+        - entity: binary_sensor.esp32_08_door_state
           secondary_info: last-changed
-        - entity: sensor.esp32_01_battery
-        - entity: sensor.esp32_01_battery_state
-        - entity: automation.benachrichtigung_batterie_esp32_01
+        - entity: sensor.esp32_08_motion_last_changed
+          name: Letzte Bewegung
+          icon: mdi:door
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+            - entity: sensor.esp32_08_rssi
+              secondary_info: last-changed
+            - entity: binary_sensor.esp32_08_ota_status
+            - entity: binary_sensor.esp32_08_status
+              name: Status
+            - entity: switch.esp32_08_switch_ota
+              name: OTA Mode
+            - entity: switch.esp32_08_restart
+              name: Restart
+            - entity: switch.esp32_08_shutdown
+              name: Shutdown
+            - entity: sensor.esp32_08_battery
+            - entity: sensor.esp32_08_battery_state
+            - entity: automation.benachrichtigung_batterie_esp32_08
+            - entity: automation.esp32_08_ota_online
+              name: Benachrichtigung OTA Online
+            - entity: automation.esp32_08_update_warning
+              name: No Update
         #esp32_2 Tempsensor Haupteingang
         - type: section
           label: 'Temperatursensor Haupteingang'
-        - entity: sensor.esp32_02_rssi
-          secondary_info: last-changed
-        - entity: sensor.esp32_02_battery
-          secondary_info: last-changed
-          name: Spannung Akku
-          icon: mdi:car-battery
         - entity: sensor.esp32_02_temperature
           secondary_info: last-changed
         - entity: sensor.esp32_02_humidity
         - entity: sensor.esp32_02_pressure
-
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+            - entity: sensor.esp32_02_rssi
+              secondary_info: last-changed
+            - entity: binary_sensor.esp32_02_ota_status
+            - entity: binary_sensor.esp32_02_status
+              name: Status
+            - entity: switch.esp32_02_switch_ota
+              name: OTA Mode
+            - entity: switch.esp32_02_restart
+              name: Restart
+            - entity: switch.esp32_02_shutdown
+              name: Shutdown
+            - entity: sensor.esp32_02_battery
+            - entity: sensor.esp32_02_battery_state
+            - entity: automation.benachrichtigung_batterie_esp32_02
+            - entity: automation.esp32_02_ota_online
+              name: Benachrichtigung OTA Online
+            - entity: automation.esp32_02_update_warning
+              name: No Update
         #esp32_3 Tempsensor Carport
         - type: section
           label: 'Temperatursensor Carport'
-        - entity: sensor.esp32_03_rssi
-          secondary_info: last-changed
-        - entity: sensor.esp32_03_battery
-        - entity: sensor.esp32_03_battery_state
         - entity: sensor.esp32_03_temperature
           secondary_info: last-changed
         - entity: sensor.esp32_03_humidity
         - entity: sensor.esp32_03_pressure
-        - entity: automation.benachrichtigung_batterie_esp32_03
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: Details
+          items:
+            - entity: sensor.esp32_03_rssi
+              secondary_info: last-changed
+            - entity: binary_sensor.esp32_03_ota_status
+            - entity: binary_sensor.esp32_03_status
+              name: Status
+            - entity: switch.esp32_03_switch_ota
+              name: OTA Mode
+            - entity: switch.esp32_03_restart
+              name: Restart
+            - entity: switch.esp32_03_shutdown
+              name: Shutdown
+            - entity: sensor.esp32_03_battery
+            - entity: sensor.esp32_03_battery_state
+            - entity: automation.benachrichtigung_batterie_esp32_03
+            - entity: automation.esp32_03_ota_online
+              name: Benachrichtigung OTA Online
+            - entity: automation.esp32_03_update_warning
+              name: No Update
 
 
 
