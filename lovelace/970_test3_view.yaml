@@ -27,35 +27,81 @@ cards:
         exclude:
           - entity_id: group.*
     - break
-    - type: custom:auto-entities
-      show_empty: true
-      card:
-        type: entities
-        title: Maybe lost?
-      filter:
-        include:
-          - state: "unavailable"
-            options:
-              secondary_info: entity-id
-        exclude:
-          - entity_id: group.*
+    - type: entities
+      title: Maybe Lost
+      entities:
+        - type: custom:fold-entity-row
+          head:
+            type: section
+            label: unavailable
+          items:
+            - type: custom:auto-entities
+              show_empty: true
+              card:
+                type: entities
+                title: unavailable
+              filter:
+                include:
+                  - state: "unavailable"
+                    options:
+                      secondary_info: last-changed
     - break
     - type: entities
       title: Folding groups
       entities:
-        - type: custom:auto-entities
-          card:
-            type: entities
-          filter:
-            include:
-              - entity_id: switch.HOME A*
-                options:
-                  secondary_info: last-changed
         - type: custom:fold-entity-row
-          head: group.all_lights
+          head:
+            type: section
+            label: All Switch
+          items:
+            - type: custom:auto-entities
+              card:
+                type: entities
+                title: all_switch
+              filter:
+                include:
+                  - domain: switch
+                    options:
+                      secondary_info: last-changed
         - type: custom:fold-entity-row
-          head: group.all_scripts
+          head:
+            type: section
+            label: All Lights
+          items:
+            - type: custom:auto-entities
+              card:
+                type: entities
+                title: lights
+              filter:
+                include:
+                  - domain: light
+                    options:
+                      secondary_info: last-changed
         - type: custom:fold-entity-row
-          head: group.all_automations
+          head:
+            type: section
+            label: All Scripts
+          items:
+            - type: custom:auto-entities
+              card:
+                type: entities
+                title: Scripts
+              filter:
+                include:
+                  - domain: script
+                    options:
+                      secondary_info: last-changed
         - type: custom:fold-entity-row
-          head: group.all_switches
+          head:
+            type: section
+            label: All automation
+          items:
+            - type: custom:auto-entities
+              card:
+                type: entities
+                title: automation
+              filter:
+                include:
+                  - domain: automation
+                    options:
+                      secondary_info: last-changed

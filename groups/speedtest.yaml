@@ -1,8 +1,0 @@
-speedtest:
-  name: Speedtest
-  view: no
-  icon: mdi:speedometer
-  entities:
-    - sensor.speedtest_ping
-    - sensor.speedtest_download
-    - sensor.speedtest_upload

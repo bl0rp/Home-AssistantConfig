@@ -14,7 +14,7 @@ cards:
       popup: timeout
       cards:
         - entity: light.schlafzimmer
-          name: Lounge Lamp
+          name: Schlafzimmer
           type: light
     - type: custom:search-card
       max_results: 20
@@ -31,6 +31,13 @@ cards:
       filter:
         include:
           - domain: input_select
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: all_switch
+      filter:
+        include:
+          - domain: switch
     - type: custom:auto-entities
       card:
         type: entities

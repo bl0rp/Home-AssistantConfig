@@ -97,6 +97,7 @@ automation:
           - binary_sensor.switch_sonoff_sonoff13
         from: 'off'
         to: 'on'
+      mode: queued
       action:
         - service: mqtt.publish
           data:

@@ -76,7 +76,7 @@ sensor:
               {%- set seconds = seconds % intervals.minutes -%}
               {{- comma() ~ seconds ~ 's' if seconds -}}
             {%- endmacro %}
-            {{ human_time(states.sensor.esp8266_02_uptime.state | int   ) }}
+            {{ human_time(states.sensor.esp8266_02_uptime_2.state | int   ) }}
             {% endif %}
 
 

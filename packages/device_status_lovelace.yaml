@@ -36,9 +36,6 @@ homeassistant:
       friendly_name: Christoph
 
 #GPSLogger
-    device_tracker.p3xl:
-      friendly_name: GPSLogger Pixel3 XL
-      icon: mdi:radar
     device_tracker.p4xl:
       friendly_name: GPSLogger Pixel4 XL
       icon: mdi:radar
@@ -66,9 +63,7 @@ homeassistant:
     device_tracker.network_media_player_volumio:
       friendly_name: "Volumio"
       icon: mdi:library-music
-    device_tracker.network_media_player_yamaha_rxv473:
-      friendly_name: "Verstärker"
-      icon: mdi:speaker
+
 #printer
     device_tracker.network_printer_hp_1og:
       friendly_name: "HP Deskjet Büro"
@@ -189,10 +184,7 @@ homeassistant:
       friendly_name: "Geräte im Netzwerk"
       icon: mdi:binoculars
       unit_of_measurement: '#'
-#GPSLogger
-    sensor.897y04duz:
-      friendly_name: GPSLogger Pixel3 XL
-      icon: mdi:radar
+
 #network
     binary_sensor.network_ap_ddwrt:
       friendly_name: "WiFi AP DD-WRT"
@@ -217,9 +209,7 @@ homeassistant:
     binary_sensor.network_media_player_volumio:
       friendly_name: "Volumio"
       icon: mdi:library-music
-    binary_sensor.network_media_player_yamaha_rxv473:
-      friendly_name: "Verstärker"
-      icon: mdi:speaker
+
 #printer
     binary_sensor.network_printer_hp_1og:
       friendly_name: "HP Deskjet Büro"
@@ -342,7 +332,6 @@ homeassistant:
 group:
   device_tracker_complete:
     entities:
-      - device_tracker.p3xl
       - device_tracker.p4xl
       - device_tracker.network_ap_ddwrt
       - device_tracker.network_ap_gateway
@@ -351,7 +340,6 @@ group:
       - device_tracker.network_hub_tradfri
       - device_tracker.network_media_player_pi2kodi
       - device_tracker.network_media_player_volumio
-      - device_tracker.network_media_player_yamaha_rxv473
       - device_tracker.network_printer_hp_1og
       - device_tracker.network_storage_qnap1
       - device_tracker.soc_esp32_01
@@ -427,7 +415,6 @@ group:
     entities:
       - binary_sensor.network_media_player_pi2kodi
       - binary_sensor.network_media_player_volumio
-      - binary_sensor.network_media_player_yamaha_rxv473
 
 
   device_tracker_soc:
@@ -544,9 +531,6 @@ binary_sensor:
         device_class: connectivity
       network_media_player_volumio:
         value_template: "{{ is_state('device_tracker.network_media_player_volumio', 'home') }}"
-        device_class: connectivity
-      network_media_player_yamaha_rxv473:
-        value_template: "{{ is_state('device_tracker.network_media_player_yamaha_rxv473', 'home') }}"
         device_class: connectivity
       network_printer_hp_1og:
         value_template: "{{ is_state('device_tracker.network_printer_hp_1og', 'home') }}"
@@ -667,7 +651,6 @@ automation:
     trigger:
       platform: state
       entity_id:
-
         - binary_sensor.network_ap_ddwrt
         - binary_sensor.network_ap_gateway
         - binary_sensor.network_ap_unifi_elw
@@ -675,7 +658,6 @@ automation:
         - binary_sensor.network_hub_tradfri
         - binary_sensor.network_media_player_pi2kodi
         - binary_sensor.network_media_player_volumio
-        - binary_sensor.network_media_player_yamaha_rxv473
         - binary_sensor.network_printer_hp_1og
         - binary_sensor.network_storage_qnap1
         - binary_sensor.soc_esp32_01
@@ -716,6 +698,7 @@ automation:
     condition:
       - condition: template
         value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+    mode: queued
     action:
       - service: notify.device_tracker
         data_template:

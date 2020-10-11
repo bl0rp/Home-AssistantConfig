@@ -1,7 +1,0 @@
-mqtt_leds:
-  name: LEDs via MQTT
-  view: no
-  entities:
-    - switch.esp04_led_red
-    - switch.esp04_led_yellow
-    - switch.esp04_led_green

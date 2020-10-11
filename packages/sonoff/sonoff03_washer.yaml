@@ -193,6 +193,7 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.sonoff03_momentane_leistung
+    mode: queued
     action:
       - service: notify.sonoff03_power_log
         data_template:

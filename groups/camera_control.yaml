@@ -1,7 +1,0 @@
-camera_control:
-  name: Raspberry Pi IR Cam Control
-  entities:
-    - script.shutdown_rpi1
-    - switch.110013
-    - switch.110012
-    - switch.shutdown_pi1

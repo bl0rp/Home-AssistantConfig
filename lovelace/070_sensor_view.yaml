@@ -1,325 +1,337 @@
-title: sensor
+title: sensors
 icon: mdi:chip
-path: sensordaten
+path: sensor
+panel: true
 cards:
-- type: vertical-stack
+
+- type: custom:layout-card
+  layout: vertical
   cards:
-    - type: entities
+    - type: custom:vertical-stack-in-card
       title: 'Status/Uptime aller Sensoren'
-      show_header_toggle: false
-      entities:
-        - entity: sensor.multisensor1_battery
-          name: Multisensor Z-Wave
-        - entity: sensor.esp8266_01_status_var
-          name: Wohnzimmer
-        - entity: sensor.esp8266_02_status_var
-          name: ELW
-        - entity: sensor.esp8266_03_status_var
-          name: Wintergarten
-        - entity: sensor.esp8266_04_status_var
-          name: LED
-        - entity: sensor.esp8266_07_status_var
-          name: MQTT2RF
-        - entity: sensor.esp8266_06_status_var
-          name: ELW Klo
-
-    #movement
-    - type: entities
+      cards:
+        - type: entities
+          entities:
+          - entity: sensor.multisensor1_battery
+            name: Multisensor Z-Wave
+          - entity: sensor.esp8266_01_status_var
+            name: Wohnzimmer
+          - entity: sensor.esp8266_02_status_var
+            name: ELW
+          - entity: sensor.esp8266_03_status_var
+            name: Wintergarten
+          - entity: sensor.esp8266_07_status_var
+            name: MQTT2RF
+          - entity: sensor.esp8266_06_status_var
+            name: ELW Klo
+    - type: custom:vertical-stack-in-card
       title: 'Status aller Bewegungsmelder'
-      show_header_toggle: false
-      entities:
-        - entity: sensor.multisensor1_motion
-          secondary_info: last-changed
-          name: 'ELW Flur'
-        - entity: sensor.esp8266_02_motion
-          secondary_info: last-changed
-          name: 'ELW Schlafzimmer'
-        - entity: sensor.esp8266_01_motion
-          secondary_info: last-changed
-        - entity: sensor.esp8266_03_motion
-          secondary_info: last-changed
-        - entity: binary_sensor.esp8266_06_motion
-          secondary_info: last-changed
-          name: ELW Klo
+      cards:
+        - type: entities
+          entities:
+          - entity: sensor.multisensor1_motion
+            secondary_info: last-changed
+            name: 'ELW Flur'
+          - entity: sensor.esp8266_02_motion
+            secondary_info: last-changed
+            name: 'ELW Schlafzimmer'
+          - entity: sensor.esp8266_01_motion
+            secondary_info: last-changed
+          - entity: sensor.esp8266_03_motion
+            secondary_info: last-changed
+          - entity: binary_sensor.esp8266_06_motion
+            secondary_info: last-changed
+            name: ELW Klo
 
-- type: vertical-stack
-  cards:
-    - type: entities
+    - break
+    - type: custom:vertical-stack-in-card
       title: 'Ohne Netzanschluss'
-      show_header_toggle: false
-      entities:
-        #Türsensor ELW
-        - type: section
-          label: 'Türsensor ELW'
-        - entity: binary_sensor.esp32_01_door_state
-          secondary_info: last-changed
-        - entity: sensor.esp32_01_motion_last_changed
-          name: Letzte Bewegung
-          icon: mdi:door
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Details
-          items:
-            - entity: sensor.esp32_01_rssi
+      cards:
+
+#esp32_01 Türsensor
+        - type: custom:vertical-stack-in-card
+          title: 'Türsensor ELW'
+          cards:
+          - type: entities
+            entities:
+            - entity: binary_sensor.esp32_01_door_state
               secondary_info: last-changed
-            - entity: binary_sensor.esp32_01_ota_status
-            - entity: binary_sensor.esp32_01_status
-              name: Status
-            - entity: switch.esp32_01_switch_ota
-              name: OTA Mode
-            - entity: sensor.esp32_01_battery
-            - entity: sensor.esp32_01_battery_state
-            - entity: automation.benachrichtigung_batterie_esp32_01
-            - entity: automation.esp32_01_ota_online
-              name: Benachrichtigung OTA Online
-            - entity: automation.esp32_01_update_warning
-              name: No Update
-        - type: section
-          label: 'Katzenklappe'
-        - entity: binary_sensor.esp32_08_door_state
-          secondary_info: last-changed
-        - entity: sensor.esp32_08_motion_last_changed
-          name: Letzte Bewegung
-          icon: mdi:door
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Details
-          items:
-            - entity: sensor.esp32_08_rssi
-              secondary_info: last-changed
-            - entity: binary_sensor.esp32_08_ota_status
-            - entity: binary_sensor.esp32_08_status
-              name: Status
-            - entity: switch.esp32_08_switch_ota
-              name: OTA Mode
-            - entity: switch.esp32_08_restart
-              name: Restart
-            - entity: switch.esp32_08_shutdown
-              name: Shutdown
-            - entity: sensor.esp32_08_battery
-            - entity: sensor.esp32_08_battery_state
-            - entity: automation.benachrichtigung_batterie_esp32_08
-            - entity: automation.esp32_08_ota_online
-              name: Benachrichtigung OTA Online
-            - entity: automation.esp32_08_update_warning
-              name: No Update
-        #esp32_2 Tempsensor Haupteingang
-        - type: section
-          label: 'Temperatursensor Haupteingang'
-        - entity: sensor.esp32_02_temperature
-          secondary_info: last-changed
-        - entity: sensor.esp32_02_humidity
-        - entity: sensor.esp32_02_pressure
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Details
-          items:
-            - entity: sensor.esp32_02_rssi
-              secondary_info: last-changed
-            - entity: binary_sensor.esp32_02_ota_status
-            - entity: binary_sensor.esp32_02_status
-              name: Status
-            - entity: switch.esp32_02_switch_ota
-              name: OTA Mode
-            - entity: switch.esp32_02_restart
-              name: Restart
-            - entity: switch.esp32_02_shutdown
-              name: Shutdown
-            - entity: sensor.esp32_02_battery
-            - entity: sensor.esp32_02_battery_state
-            - entity: automation.benachrichtigung_batterie_esp32_02
-            - entity: automation.esp32_02_ota_online
-              name: Benachrichtigung OTA Online
-            - entity: automation.esp32_02_update_warning
-              name: No Update
-        #esp32_3 Tempsensor Carport
-        - type: section
-          label: 'Temperatursensor Carport'
-        - entity: sensor.esp32_03_temperature
-          secondary_info: last-changed
-        - entity: sensor.esp32_03_humidity
-        - entity: sensor.esp32_03_pressure
-        - type: custom:fold-entity-row
-          head:
-            type: section
-            label: Details
-          items:
-            - entity: sensor.esp32_03_rssi
-              secondary_info: last-changed
-            - entity: binary_sensor.esp32_03_ota_status
-            - entity: binary_sensor.esp32_03_status
-              name: Status
-            - entity: switch.esp32_03_switch_ota
-              name: OTA Mode
-            - entity: switch.esp32_03_restart
-              name: Restart
-            - entity: switch.esp32_03_shutdown
-              name: Shutdown
-            - entity: sensor.esp32_03_battery
-            - entity: sensor.esp32_03_battery_state
-            - entity: automation.benachrichtigung_batterie_esp32_03
-            - entity: automation.esp32_03_ota_online
-              name: Benachrichtigung OTA Online
-            - entity: automation.esp32_03_update_warning
-              name: No Update
+            - entity: sensor.esp32_01_motion_last_changed
+              name: Letzte Bewegung
+              icon: mdi:door
+            - type: custom:fold-entity-row
+              head:
+                type: section
+                label: Details
+              items:
+                - entity: sensor.esp32_01_rssi
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp32_01_ota_status
+                - entity: binary_sensor.esp32_01_status
+                  name: Status
+                - entity: switch.esp32_01_switch_ota
+                  name: OTA Mode
+                - entity: sensor.esp32_01_battery
+                - entity: sensor.esp32_01_battery_state
+                - entity: automation.benachrichtigung_batterie_esp32_01
+                - entity: automation.esp32_01_ota_online
+                  name: Benachrichtigung OTA Online
+                - entity: automation.esp32_01_update_warning
+                  name: No Update
+
+#esp32_02 temp haupteingang
+        - type: custom:vertical-stack-in-card
+          title: 'Temperatur Haupteingang'
+          cards:
+          - type: entities
+            entities:
 
 
+            - entity: sensor.esp32_02_temperature
+              secondary_info: last-changed
+            - entity: sensor.esp32_02_humidity
+            - entity: sensor.esp32_02_pressure
+            - type: custom:fold-entity-row
+              head:
+                type: section
+                label: Details
+              items:
+                - entity: sensor.esp32_02_rssi
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp32_02_ota_status
+                - entity: binary_sensor.esp32_02_status
+                  name: Status
+                - entity: switch.esp32_02_switch_ota
+                  name: OTA Mode
+                - entity: switch.esp32_02_restart
+                  name: Restart
+                - entity: switch.esp32_02_shutdown
+                  name: Shutdown
+                - entity: sensor.esp32_02_battery
+                - entity: sensor.esp32_02_battery_state
+                - entity: automation.benachrichtigung_batterie_esp32_02
+                - entity: automation.esp32_02_ota_online
+                  name: Benachrichtigung OTA Online
+                - entity: automation.esp32_02_update_warning
+                  name: No Update
 
-- type: vertical-stack
-  cards:
-    - type: entities
+
+#esp32_03 temp carport
+        - type: custom:vertical-stack-in-card
+          title: 'Temperatur Carport'
+          cards:
+          - type: entities
+            entities:
+
+
+            - entity: sensor.esp32_03_temperature
+              secondary_info: last-changed
+            - entity: sensor.esp32_03_humidity
+            - entity: sensor.esp32_03_pressure
+            - type: custom:fold-entity-row
+              head:
+                type: section
+                label: Details
+              items:
+                - entity: sensor.esp32_03_rssi
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp32_03_ota_status
+                - entity: binary_sensor.esp32_03_status
+                  name: Status
+                - entity: switch.esp32_03_switch_ota
+                  name: OTA Mode
+                - entity: switch.esp32_03_restart
+                  name: Restart
+                - entity: switch.esp32_03_shutdown
+                  name: Shutdown
+                - entity: sensor.esp32_03_battery
+                - entity: sensor.esp32_03_battery_state
+                - entity: automation.benachrichtigung_batterie_esp32_03
+                - entity: automation.esp32_03_ota_online
+                  name: Benachrichtigung OTA Online
+                - entity: automation.esp32_03_update_warning
+                  name: No Update
+    - break
+    - type: custom:vertical-stack-in-card
       title: 'Netzanschluss'
-      show_header_toggle: false
-      entities:
-        #esp8266 Wohnzimmer
-        - type: section
-          label: Wohnzimmer
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: sensor.esp8266_01_status
-              state: "Connected"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
-              - entity: sensor.esp8266_01_status_var
-                secondary_info: last-changed
-                name: 'Uptime'
-              - entity: sensor.temperatur_esp8266_01
-                secondary_info: last-changed
-                name: 'Temperatur'
-              - entity: sensor.esp8266_01_motion
-                secondary_info: last-changed
-                name: 'Bewegung'
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: sensor.esp8266_01_status
-              state: "Connection Lost"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
-              - entity: sensor.esp8266_01_status_var
-                secondary_info: last-changed
-                name: 'Status'
-        #esp8266 Wintergarten
-        - type: section
-          label: Wintergarten
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.sensor_esp8266_03_status_binary
-              state: "on"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
+      cards:
+
+#esp32_01 Türsensor
+        - type: custom:vertical-stack-in-card
+          title: 'Wohnzimmer'
+          cards:
+
+
+#online
+          - type: conditional
+            conditions:
+              - entity: sensor.esp8266_01_status
+                state: "Connected"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: sensor.esp8266_01_status_var
+                  secondary_info: last-changed
+                  name: 'Uptime'
+                - entity: sensor.temperatur_esp8266_01
+                  secondary_info: last-changed
+                  name: 'Temperatur'
+                - entity: sensor.esp8266_01_motion
+                  secondary_info: last-changed
+                  name: 'Bewegung'
+#offline
+          - type: conditional
+            conditions:
+              - entity: sensor.esp8266_01_status
+                state: "Connection Lost"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: sensor.esp8266_01_status_var
+                  secondary_info: last-changed
+                  name: 'Status'
+
+#esp8266_03 Wintergarten
+        - type: custom:vertical-stack-in-card
+          title: 'Wintergarten'
+          cards:
+#online
+
+          - type: conditional
+            conditions:
               - entity: binary_sensor.sensor_esp8266_03_status_binary
-                secondary_info: last-changed
-                name: 'Status'
-              - entity: sensor.esp8266_03_status_var
-                secondary_info: last-changed
-                name: 'Uptime'
-              - entity: sensor.temperatur_esp8266_03
-                secondary_info: last-changed
-                name: 'Temperatur'
-              - entity: sensor.esp8266_03_motion
-                secondary_info: last-changed
-                name: 'Bewegung'
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.sensor_esp8266_03_status_binary
-              state: "off"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
+                state: "on"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.sensor_esp8266_03_status_binary
+                  secondary_info: last-changed
+                  name: 'Status'
+                - entity: sensor.esp8266_03_status_var
+                  secondary_info: last-changed
+                  name: 'Uptime'
+                - entity: sensor.temperatur_esp8266_03
+                  secondary_info: last-changed
+                  name: 'Temperatur'
+                - entity: sensor.esp8266_03_motion
+                  secondary_info: last-changed
+                  name: 'Bewegung'
+
+#offline
+          - type: conditional
+            conditions:
               - entity: binary_sensor.sensor_esp8266_03_status_binary
-                secondary_info: last-changed
-                name: 'Status'
-        #esp8266 ELW
-        - type: section
-          label: ELW
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.sensor_esp8266_02_status_binary
-              state: "on"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
-              - entity: binary_sensor.sensor_esp8266_02_status_binary
-                secondary_info: last-changed
-                name: 'Status'
-              - entity: sensor.esp8266_02_status_var
-                secondary_info: last-changed
-                name: 'Uptime'
-              - entity: sensor.esp8266_02_temperature
-                secondary_info: last-changed
-                name: 'Temperatur'
-              - entity: sensor.esp8266_02_motion
-                secondary_info: last-changed
-                name: 'Bewegung'
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.sensor_esp8266_02_status_binary
-              state: "off"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
-              - entity: binary_sensor.sensor_esp8266_02_status_binary
-                secondary_info: last-changed
-                name: 'Status'
-        #esp8266_06_4 Klo ELW
-        - type: section
-          label: ELW Klo
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.esp8266_06_status
-              state: "on"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
+                state: "off"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.sensor_esp8266_03_status_binary
+                  secondary_info: last-changed
+                  name: 'Status'
+
+
+
+
+
+#esp8266_02 ELW Regal
+        - type: custom:vertical-stack-in-card
+          title: 'ELW Regal'
+          cards:
+#online
+
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.esp8266_02_status
+                state: "on"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp8266_02_status
+                  secondary_info: last-changed
+                  name: 'Status'
+                - entity: sensor.esp8266_02_status_var
+                  secondary_info: last-changed
+                  name: 'Uptime'
+                - entity: sensor.esp8266_02_temperature
+                  secondary_info: last-changed
+                  name: 'Temperatur'
+                - entity: sensor.esp8266_02_motion
+                  secondary_info: last-changed
+                  name: 'Bewegung'
+
+#offline
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.esp8266_02_status
+                state: "off"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp8266_02_status
+                  secondary_info: last-changed
+                  name: 'Status'
+
+
+#esp8266_06 ELW Klo
+        - type: custom:vertical-stack-in-card
+          title: 'ELW Klo'
+          cards:
+#online
+
+          - type: conditional
+            conditions:
               - entity: binary_sensor.esp8266_06_status
-                name: Status
-                secondary_info: last-changed
-              - entity: binary_sensor.esp8266_06_motion
-                secondary_info: last-changed
-                name: Bewegungsmelder
-              - entity: sensor.esp8266_06_rssi
-                icon: 'mdi:access-point-network'
-                name: Signalstärke
-                secondary_info: last-changed
-              - entity: sensor.esp8266_06_uptime_format
-                icon: 'mdi:timer-outline'
-                name: Uptime
-              - entity: sensor.esp8266_06_temperature
-                name: Temperatur
-                secondary_info: last-changed
-              - entity: sensor.esp8266_06_humidity
-                name: Luftfeuchtigkeit
-                icon: mdi:water-percent
-              - entity: switch.esp8266_06_shutdown
-                name: Ausschalten
-                icon: mdi:power
-              - entity: switch.esp8266_06_restart
-                name: Neustart
-                icon: mdi:restart
-        - type: custom:hui-conditional-card
-          conditions:
-            - entity: binary_sensor.esp8266_06_status
-              state: "off"
-          card:
-            type: entities
-            show_header_toggle: false
-            entities:
+                state: "on"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp8266_06_status
+                  secondary_info: last-changed
+                  name: 'Status'
+                - entity: sensor.esp8266_06_uptime_format
+                  icon: 'mdi:timer-outline'
+                  name: Uptime
+                - entity: sensor.esp8266_06_temperature
+                  name: Temperatur
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp8266_06_motion
+                  secondary_info: last-changed
+                  name: Bewegungsmelder
+
+                - type: custom:fold-entity-row
+                  head:
+                    type: section
+                    label: Details
+                  items:
+                    - entity: sensor.esp8266_06_rssi
+                      icon: 'mdi:access-point-network'
+                      name: Signalstärke
+                      secondary_info: last-changed
+                    - entity: sensor.esp8266_06_humidity
+                      name: Luftfeuchtigkeit
+                      icon: mdi:water-percent
+                    - entity: switch.esp8266_06_shutdown
+                      name: Ausschalten
+                      icon: mdi:power
+                    - entity: switch.esp8266_06_restart
+                      name: Neustart
+                      icon: mdi:restart
+#offline
+          - type: conditional
+            conditions:
               - entity: binary_sensor.esp8266_06_status
-                name: Status
-                secondary_info: last-changed
-              - entity: sensor.esp8266_06_uptime_format
-                name: Uptime
-                icon: 'mdi:timer-outline'
+                state: "off"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp8266_06_status
+                  secondary_info: last-changed
+                  name: 'Status'
