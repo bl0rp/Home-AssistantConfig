@@ -8,12 +8,12 @@ sensor:
 
   - platform: cert_expiry
     host: 0x711.de
-    name: nullx_cert_expiry
+
 
 
   - platform: cert_expiry
     host: cvoid.de
-    name: cvoid_cert_expiry
+
 
 
 
