@@ -31,11 +31,11 @@ status_alle_umweltsensoren:
     - sensor.esp32_02_temperature
     - sensor.esp32_03_temperature
     - sensor.aeotec_zw100_multisensor_6_temperature
-    - sensor.temperatur_esp8266_02
+    - sensor.esp8266_02_temperature
     - sensor.temperatur_esp8266_01
     - sensor.temperatur_esp8266_03
     - sensor.aeotec_zw100_multisensor_6_relative_humidity
-    - sensor.luftfeuchtigkeit_esp8266_02
+    - sensor.esp8266_02_humidity
     - sensor.luftfeuchtigkeit_esp8266_01
     - sensor.luftfeuchtigkeit_esp8266_03
     - sensor.esp32_02_humidity

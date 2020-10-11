@@ -1,4 +1,3 @@
-purge_interval: 1
 purge_keep_days: 30
 db_url: !secret mysql_db_path_local
 include:
@@ -20,12 +19,12 @@ include:
     #temperature etc
     - sensor.aeotec_zw100_multisensor_6_temperature
     - sensor.temperatur_esp8266_01
-    - sensor.temperatur_esp8266_02
+    - sensor.esp8266_02_temperature
     - sensor.temperatur_esp8266_03
     - sensor.esp8266_06_temperature
     - sensor.esp8266_06_humidity
     - sensor.luftfeuchtigkeit_esp8266_01
-    - sensor.luftfeuchtigkeit_esp8266_02
+    - sensor.esp8266_02_humidity
     - sensor.luftfeuchtigkeit_esp8266_03
     #custom sensor average
     # - sensor.avg_temp_outside_esp_1day
