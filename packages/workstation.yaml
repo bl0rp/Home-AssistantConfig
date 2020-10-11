@@ -1,0 +1,16 @@
+##############################################################
+### Packages / Workstation Data                            ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+homeassistant:
+
+
+sensor:
+#combined wattage for Workstation, Monitors, Speakers
+  - platform: template
+    sensors:
+      workstation_wattage_complete:
+        value_template: "{{ ((states('sensor.sonoff01_momentane_leistung'))|float + (states('sensor.sonoff02_momentane_leistung'))|float +  (states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power'))|float) |round(0) }}"
+        friendly_name: 'Gesamtverbrauch'
+        unit_of_measurement: "W"
