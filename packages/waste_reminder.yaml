@@ -33,13 +33,11 @@ sensor:
   - platform: template
     sensors:
       cal_alert_time_waste:
-        entity_id: sensor.time
         value_template: >-
           {{ (as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time) - as_timestamp(now()) )|int }}
   - platform: template
     sensors:
       cal_alert_time_waste_gelbersack:
-        entity_id: sensor.time
         value_template: >-
           {{ (as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time) - as_timestamp(now()) )|int }}
 # show next calendar entry
@@ -58,7 +56,16 @@ sensor:
 
 
 automation:
-
+#update tempalte sensors
+  - alias: 'waste_template_sensors_update'
+    trigger:
+      - platform: time_pattern
+        minutes: '/2'
+    action:
+      - service: homeassistant.update_entity
+        entity_id: sensor.cal_alert_time_waste
+      - service: homeassistant.update_entity
+        entity_id: sensor.cal_alert_time_waste_gelbersack
 #Restmüll 12h
   - alias: waste_alert_12h
     initial_state: true
@@ -84,26 +91,6 @@ automation:
           message: >
               {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
           notification_id: "waste_alert_12h"
-#Restmüll heute
-  - alias: waste_alert_today
-    initial_state: true
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.cal_alert_time_waste
-        below: 100
-        above: 200
-    action:
-      - service: notify.pushbullet
-        data_template:
-          title: 'Erinnerung Müllabfuhr HEUTE'
-          message: >
-              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
-      - service: notify.pushbullet_traude
-        data_template:
-          title: 'Erinnerung Müllabfuhr HEUTE'
-          message: >
-              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
-
 
 
 
@@ -132,22 +119,3 @@ automation:
           message: >
               {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird morgen abgeholt!
           notification_id: "waste_alert_12h"
-#gelber sack heute
-  - alias: waste_alert_gelb_today
-    initial_state: true
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.cal_alert_time_waste_gelbersack
-        below: 100
-        above: 200
-    action:
-      - service: notify.pushbullet
-        data_template:
-          title: 'Erinnerung Gelber Sack HEUTE'
-          message: >
-              {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird heute abgeholt!
-      - service: notify.pushbullet_traude
-        data_template:
-          title: 'Erinnerung Gelber Sack HEUTE'
-          message: >
-              {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird heute abgeholt!

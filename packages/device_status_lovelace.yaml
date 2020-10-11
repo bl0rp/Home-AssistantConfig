@@ -494,7 +494,6 @@ sensor:
   - platform: template
     sensors:
       clients_online:
-        entity_id: sensor.time
         unit_of_measurement: '#'
         value_template: >-
             {%- for d in states.device_tracker if d.state == 'home' -%}

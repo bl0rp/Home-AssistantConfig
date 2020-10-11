@@ -223,7 +223,7 @@ automation:
         entity_id: device_tracker.user_devices_phone_christoph
         to: 'not_home'
         for:
-          minutes: 5
+          minutes: 15
       # - platform: state
       #   entity_id: sensor.tasker_home
       #   to: 'not_home'

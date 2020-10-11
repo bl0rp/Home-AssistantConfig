@@ -5,10 +5,6 @@
 homeassistant:
 
 
-
-
-
-
 #################
 ### automation ##
 #################
@@ -25,7 +21,7 @@ automation:
         from: '0'
         to: '8'
       - platform: state
-        entity_id: binary_sensor.esp8266_02_pir
+        entity_id: binary_sensor.esp8266_02_motion
         from: 'off'
         to: 'on'
       - platform: state
@@ -95,4 +91,3 @@ automation:
           message: >
              {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
              Obacht: Der Comnputer wurde angeschaltet
-

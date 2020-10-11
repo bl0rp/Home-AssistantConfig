@@ -20,7 +20,7 @@ homeassistant:
       friendly_name: 'TTS Cache löschen'
       icon: mdi:shredder
     sensor.last_commit:
-      icon: mdi:github-box
+      icon: mdi:github
     sensor.last_backup:
       icon: mdi:backup-restore
 

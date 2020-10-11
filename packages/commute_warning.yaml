@@ -51,57 +51,46 @@ sensor:
   - platform: template
     sensors:
       next_calendar_work_location:
-        entity_id: sensor.time
         value_template: "{{state_attr('calendar.drk_stgt', 'location')}}"
       next_calendar_main_location:
-        entity_id: sensor.time
         value_template: "{{state_attr('calendar.cvoid12_googlemail_com', 'location')}}"
 
 #Next event in xx min
       next_calendar_work_start_time_in_60min:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < 60*60 %}true{% else %}false{% endif %}"
         friendly_name: "Nächstes Event in 60 Minuten"
       next_calendar_work_start_time_in_75min:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < 75*60 %}true{% else %}false{% endif %}"
         friendly_name: "Nächstes Event in 75 Minuten"
 
 
 #any location without traffic
       next_calendar_event_work_with_input_select_time_nef:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( states('input_number.eintreffzeit_nef') |int * 60) %}true{% else %}false{% endif %}"
         friendly_name: "NEF Slider"
       next_calendar_event_work_with_input_select_time_rtw:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( states('input_number.eintreffzeit_rtw') |int * 60 )  %}true{% else %}false{% endif %}"
         friendly_name: "RTW Slider"
       next_calendar_event_work_with_input_select_time_generell:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( states('input_number.eintreffzeit_generell') |int * 60 )  %}true{% else %}false{% endif %}"
         friendly_name: "Generell Slider"
 
 
 #destination rw2
       next_calendar_event_work_with_input_select_time_nef_and_traffic_rw2:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( (states('input_number.eintreffzeit_nef') |int * 60) + (states('sensor.waze_zuhause_rw2')|int *60)) %}true{% else %}false{% endif %}"
         friendly_name: "NEF Slider and Traffic RW2"
 
       next_calendar_event_work_with_input_select_time_rtw_rw2:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( (states('input_number.eintreffzeit_rtw') |int * 60) + (states('sensor.waze_zuhause_rw2')|int *60)) %}true{% else %}false{% endif %}"
         friendly_name: "RTW Slider and Traffic RW2"
 
 #destination hrw
       next_calendar_event_work_with_input_select_time_nef_and_traffic_hrw:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( (states('input_number.eintreffzeit_nef') |int * 60) + (states('sensor.waze_zuhause_hrw')|int *60)) %}true{% else %}false{% endif %}"
         friendly_name: "NEF Slider and Traffic HRW"
 
       next_calendar_event_work_with_input_select_time_rtw_hrw:
-        entity_id: sensor.time
         value_template: "{% if (as_timestamp(states.calendar.drk_stgt.attributes.start_time) - as_timestamp(states.sensor.date_time.last_updated)) < ( (states('input_number.eintreffzeit_rtw') |int * 60) + (states('sensor.waze_zuhause_hrw')|int *60)) %}true{% else %}false{% endif %}"
         friendly_name: "RTW Slider and Traffic HRW"
 

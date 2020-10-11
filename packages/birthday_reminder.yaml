@@ -21,7 +21,6 @@ sensor:
   - platform: template
     sensors:
       cal_alert_time_birthday:
-        entity_id: sensor.date_time
         value_template: >-
           {{ (as_timestamp(states.calendar.contacts.attributes.start_time) - as_timestamp(now()) )|int }}
 
@@ -29,7 +28,6 @@ sensor:
   - platform: template
     sensors:
       next_birthday:
-        entity_id: sensor.date_time
         value_template: >-
           {{(as_timestamp(states.calendar.contacts.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.contacts.attributes.message|replace("hat Geburtstag", "")}}
 
