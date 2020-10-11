@@ -14,10 +14,10 @@ homeassistant:
       friendly_name: Uptime
     sensor.ha_uptime_human:
       friendly_name: HA Uptime
-      icon: mdi:timer
+      icon: mdi:timer-outline
     sensor.server_uptime:
       friendly_name: Server Uptime
-      icon: mdi:timer
+      icon: mdi:timer-outline
     sensor.cpu_temperature:
       friendly_name: CPU Temperatur
       icon: mdi:thermometer
@@ -209,6 +209,10 @@ sensor:
 
   - platform: cpuspeed
 ### Calculating human readable uptime
+
+##fritzbox bandwidth data
+  - platform: fritzbox_netmonitor
+    host: !secret router_ip
 
   - platform: command_line
     name: host_uptime_in_seconds
