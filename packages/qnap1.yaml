@@ -33,6 +33,7 @@ sensor:
     username: !secret qnap_user
     password: !secret qnap_pw
     nics: eth0
+    timeout: 30
     monitored_conditions:
       - status
       - cpu_temp
