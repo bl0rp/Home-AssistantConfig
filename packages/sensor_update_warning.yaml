@@ -23,7 +23,6 @@ sensor:
   - platform: template
     sensors:
       phonebatt_watch:
-        entity_id: sensor.time
         value_template: "{% if as_timestamp(states.sensor.date_time.last_updated) - as_timestamp(states.sensor.tasker_pixel4xl_battery.last_updated) > 120*60 %}true{% else %}false{% endif %}"
 
 
