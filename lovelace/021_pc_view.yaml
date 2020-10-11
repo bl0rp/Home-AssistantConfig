@@ -60,6 +60,27 @@ cards:
     - type: horizontal-stack
       cards:
       - type: gauge
+        name: Gesamtverbrauch
+        unit: 'W'
+        entity: sensor.workstation_wattage_complete
+        max: 400
+        severity:
+          green: 0
+          yellow: 200
+          red: 400
+      - type: gauge
+        name: Radiator
+        unit: '°C'
+        entity: sensor.esp32_7_temp
+        min: 20
+        max: 60
+        severity:
+          green: 0
+          yellow: 32
+          red: 50
+    - type: horizontal-stack
+      cards:
+      - type: gauge
         name: Workstation
         unit: 'W'
         entity: sensor.sonoff02_momentane_leistung
@@ -69,11 +90,9 @@ cards:
           yellow: 100
           red: 300
       - type: gauge
-        name: Radiator
-        unit: '°C'
-        entity: sensor.esp32_7_temp
-        min: 20
-        max: 60
+        name: Boxen
+        unit: 'W'
+        entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
         severity:
           green: 0
           yellow: 32

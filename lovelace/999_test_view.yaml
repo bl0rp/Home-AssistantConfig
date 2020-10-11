@@ -9,7 +9,35 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
-
+    - type: 'custom:love-lock-card'
+      title: Lounge
+      popup: timeout
+      cards:
+        - entity: light.schlafzimmer
+          name: Lounge Lamp
+          type: light
+    - type: custom:search-card
+      max_results: 20
+    - type: entities
+      title: Scripts
+      show_header_toggle: false
+      entities:
+      - entity: script.nma_test
+        name: Feuer!
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: all_input_select
+      filter:
+        include:
+          - domain: input_select
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: all_nextcloud
+      filter:
+        include:
+          - entity_id: "sensor.nextcloud*"
     - type: markdown
       title: Markdown Test
       content: >

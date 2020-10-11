@@ -60,7 +60,8 @@ cards:
         secondary_info: last-changed
       - type: section
         label: Innentemperatur
-      - entity: sensor.temperatur_esp8266_02
+      - entity: sensor.esp8266_02_temperature
+        name: ELW Regal
         secondary_info: last-changed
       - entity: sensor.aeotec_zw100_multisensor_6_temperature
         secondary_info: last-changed
@@ -74,7 +75,7 @@ cards:
         items:
           - sensor.esp32_02_humidity
           - sensor.esp32_03_humidity
-          - sensor.luftfeuchtigkeit_esp8266_02
+          - sensor.esp8266_02_humidity
           - sensor.aeotec_zw100_multisensor_6_relative_humidity
           - sensor.esp8266_06_humidity
       - type: section
@@ -82,7 +83,7 @@ cards:
       - type: custom:hui-history-graph-card
         hours_to_show: 24
         entities:
-         - entity: sensor.temperatur_esp8266_02
+         - entity: sensor.esp8266_02_temperature
            name: Regal
          - entity: sensor.aeotec_zw100_multisensor_6_temperature
            name: Flur
@@ -95,7 +96,7 @@ cards:
           - entity: sensor.aeotec_zw100_multisensor_6_temperature
             name: Flur
           - entity: sensor.esp8266_06_temperature
-          - entity: sensor.temperatur_esp8266_02
+          - entity: sensor.esp8266_02_temperature
             name: Regal
         show:
           show_legend: true
@@ -119,7 +120,7 @@ cards:
       - entity: sensor.multisensor1_motion
         name: ELW Flur
         secondary_info: last-changed
-      - entity: binary_sensor.esp8266_02_pir
+      - entity: binary_sensor.esp8266_02_motion
         name: ELW
         secondary_info: last-changed
       - entity: binary_sensor.esp32_01_door_state

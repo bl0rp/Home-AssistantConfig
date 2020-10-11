@@ -38,6 +38,9 @@ cards:
           secondary_info: last-changed
         - entity: sensor.esp8266_03_motion
           secondary_info: last-changed
+        - entity: binary_sensor.esp8266_06_motion
+          secondary_info: last-changed
+          name: ELW Klo
 
 - type: vertical-stack
   cards:
@@ -253,7 +256,7 @@ cards:
               - entity: sensor.esp8266_02_status_var
                 secondary_info: last-changed
                 name: 'Uptime'
-              - entity: sensor.temperatur_esp8266_02
+              - entity: sensor.esp8266_02_temperature
                 secondary_info: last-changed
                 name: 'Temperatur'
               - entity: sensor.esp8266_02_motion
@@ -284,12 +287,15 @@ cards:
               - entity: binary_sensor.esp8266_06_status
                 name: Status
                 secondary_info: last-changed
+              - entity: binary_sensor.esp8266_06_motion
+                secondary_info: last-changed
+                name: Bewegungsmelder
               - entity: sensor.esp8266_06_rssi
                 icon: 'mdi:access-point-network'
                 name: Signalstärke
                 secondary_info: last-changed
               - entity: sensor.esp8266_06_uptime_format
-                icon: 'mdi:timer'
+                icon: 'mdi:timer-outline'
                 name: Uptime
               - entity: sensor.esp8266_06_temperature
                 name: Temperatur
@@ -316,4 +322,4 @@ cards:
                 secondary_info: last-changed
               - entity: sensor.esp8266_06_uptime_format
                 name: Uptime
-                icon: 'mdi:timer'
+                icon: 'mdi:timer-outline'

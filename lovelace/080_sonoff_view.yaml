@@ -14,7 +14,7 @@ cards:
         - type: entities
           entities:
             - entity: sensor.sonoff_latest_release
-              icon: mdi:github-box
+              icon: mdi:github
               name: "Letzte Version"
             - type: custom:fold-entity-row
               head:

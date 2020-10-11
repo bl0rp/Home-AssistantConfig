@@ -94,7 +94,7 @@ cards:
       title: SSL Zertifikate
       show_header_toggle: false
       entities:
-      - entity: sensor.nullx_cert_expiry
+      - entity: sensor.cert_expiry_0x711_de
         name: "0x711.de"
-      - entity: sensor.cvoid_cert_expiry
+      - entity: sensor.cert_expiry_cvoid_de
         name: "cvoid.de"

@@ -22,7 +22,7 @@ cards:
         secondary_info: last-changed
       - type: section
         label: Innentemperatur ELW
-      - entity: sensor.temperatur_esp8266_02
+      - entity: sensor.esp8266_02_temperature
         secondary_info: last-changed
         name: Schlafzimmer
       - entity: sensor.aeotec_zw100_multisensor_6_temperature
@@ -67,16 +67,17 @@ cards:
       show_header_toggle: false
       entities:
             - type: section
-            - sensor.yr_temperature
-            - sensor.dark_sky_temperature
-            - sensor.yr_humidity
-            - sensor.dark_sky_humidity
-            - sensor.yr_cloudiness
+            - entity: weather.home
+              name: met.no
+            - entity: weather.dark_sky
+              name: DarkSky
             - sensor.dark_sky_cloud_coverage
-            - sensor.yr_precipitation
             - sensor.dark_sky_precip_intensity
             - sensor.dark_sky_precip_probability
 
     - type: custom:weather-card
       entity: weather.dark_sky
       name: DarkSky
+    - type: custom:weather-card
+      entity: weather.home
+      name: met.no
