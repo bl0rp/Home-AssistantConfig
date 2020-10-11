@@ -9,7 +9,7 @@ homeassistant:
       friendly_name: 'Status'
     sensor.qnap1_uptime:
       friendly_name: 'Uptime'
-      icon: mdi:timer
+      icon: mdi:timer-outline
     sensor.qnap1_free_space_datavol1:
       friendly_name: 'Freier Speicherplatz'
     sensor.qnap1_cpu_temperature:
@@ -50,11 +50,9 @@ sensor:
     sensors:
       #uptime from qnap1.status
       qnap1_uptime:
-        entity_id: sensor.time
         value_template: "{{ states.sensor.qnap1_status.attributes.Uptime }}"
 #SMART report
       qnap1_smart_status:
-        entity_id: sensor.time
         value_template: >-
           {% if is_state("sensor.qnap1_smart_status_drive_0_1", "OK") and
                 is_state("sensor.qnap1_smart_status_drive_0_2", "OK") and
@@ -68,6 +66,5 @@ sensor:
           {%- endif %}
 #calculate GB to GiB
       qnap1_free_space_datavol1_gib:
-        entity_id: sensor.time
         unit_of_measurement: 'GiB'
         value_template: "{{ states('sensor.qnap1_free_space_datavol1') |multiply(0.93132257461548) |round(2) }}"
