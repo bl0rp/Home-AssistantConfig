@@ -210,7 +210,7 @@ automation:
 
           Multisensor: {{ states.sensor.aeotec_zw100_multisensor_6_temperature.state}}°C
 
-          ESP: {{ states.sensor.temperatur_esp8266_02.state}}°C"
+          ESP: {{ states.sensor.esp8266_02_temperature.state}}°C"
         keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
 
   - alias: telegram_replay_temp_wohnzimmer
