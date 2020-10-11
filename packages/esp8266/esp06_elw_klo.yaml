@@ -3,6 +3,14 @@
 ## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config
 ################################################################
 homeassistant:
+  customize:
+    sensor.esp8266_06_temperature:
+      icon: mdi:thermometer
+      friendly_name: Temperatur ELW Klo
+
+    sensor.esp8266_06_humidity:
+      icon: mdi:water-percent
+      friendly_name: Luftfeuchtigkeit ELW Klo
 
 
 
