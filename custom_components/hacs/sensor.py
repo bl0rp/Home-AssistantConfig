@@ -1,11 +1,12 @@
 """Sensor platform for HACS."""
 # pylint: disable=unused-argument
 from homeassistant.helpers.entity import Entity
-from .hacsbase import Hacs as hacs
-from .const import DOMAIN, VERSION, NAME_SHORT
+
+from custom_components.hacs.const import DOMAIN, NAME_SHORT, VERSION
+from custom_components.hacs.share import get_hacs
 
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_entities, _discovery_info=None):
     """Setup sensor platform."""
     async_add_entities([HACSSensor()])
 
@@ -27,6 +28,7 @@ class HACSDevice(Entity):
             "manufacturer": "hacs.xyz",
             "model": "",
             "sw_version": VERSION,
+            "type": "service",
         }
 
 
@@ -40,6 +42,7 @@ class HACSSensor(HACSDevice):
 
     async def async_update(self):
         """Update the sensor."""
+        hacs = get_hacs()
         if hacs.system.status.background_task:
             return
 
@@ -48,7 +51,7 @@ class HACSSensor(HACSDevice):
         for repository in hacs.repositories:
             if (
                 repository.pending_upgrade
-                and repository.category in hacs.common.categories
+                and repository.data.category in hacs.common.categories
             ):
                 self.repositories.append(repository)
         self._state = len(self.repositories)
@@ -83,17 +86,14 @@ class HACSSensor(HACSDevice):
     @property
     def device_state_attributes(self):
         """Return attributes for the sensor."""
-        data = []
+        repositories = []
         for repository in self.repositories:
-            data.append(
+            repositories.append(
                 {
-                    "name": repository.information.full_name,
+                    "name": repository.data.full_name,
                     "display_name": repository.display_name,
-                    "installed version": repository.display_installed_version,
-                    "available version": repository.display_available_version,
+                    "installed_version": repository.display_installed_version,
+                    "available_version": repository.display_available_version,
                 }
             )
-        return {
-            "repositories": data,
-            "attribution": "It is expected to see [object Object] here, for more info see https://hacs.xyz/docs/basic/sensor",
-        }
+        return {"repositories": repositories}
