@@ -31,7 +31,7 @@ input_select:
       - Flur Aus
   tuerlicht:
     name: Wie lange soll das Türlicht brennen?
-    icon: mdi:timer
+    icon: mdi:timer-outline
     options:
      - 5
      - 15
