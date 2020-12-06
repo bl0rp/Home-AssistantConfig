@@ -16,7 +16,7 @@ shell_command:
   kill_nmap: 'pkill -f nmap'
 
 automation:
-  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
+  - alias: kill_nmap_zombie_process
     initial_state: True
     trigger:
       - platform: event
