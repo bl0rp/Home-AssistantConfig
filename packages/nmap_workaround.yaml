@@ -1,0 +1,34 @@
+########################################################################
+## Packages / nmap fix                                                ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+#See https://github.com/home-assistant/core/issues/33281
+
+#################
+### automation ##
+#################
+
+system_log:
+  fire_event: true
+
+shell_command:
+  kill_nmap: 'pkill -f nmap'
+
+automation:
+  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
+    initial_state: True
+    trigger:
+      - platform: event
+        event_type: system_log_event
+        event_data:
+          level: WARNING
+          name: homeassistant.components.device_tracker
+    condition:
+        - condition: template
+          value_template: >-
+            {{ "Updating device list from legacy took longer than the scheduled scan
+            interval" in trigger.event.data.message[0] }}
+    action:
+      - service: shell_command.kill_nmap
+        data: {}
