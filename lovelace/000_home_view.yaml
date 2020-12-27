@@ -94,7 +94,21 @@ cards:
       title: SSL Zertifikate
       show_header_toggle: false
       entities:
-      - entity: sensor.cert_expiry_0x711_de
-        name: "0x711.de"
-      - entity: sensor.cert_expiry_cvoid_de
-        name: "cvoid.de"
+      - type: section
+        label: '0x711'
+      - type: divider
+      - entity: sensor.cert_expiry_timestamp_0x711_de
+        name: Ablaufzeitpunkt
+      - entity: sensor.cert_expiry_timestamp_0x711_de_short
+        name: Ablaufdatum
+      - entity: sensor.ssl_cert_expiry_days_0x711_de
+        name: Resttage
+      - type: section
+        label: cvoid
+      - type: divider
+      - entity: sensor.cert_expiry_timestamp_cvoid_de
+        name: Ablaufzeitpunkt
+      - entity: sensor.cert_expiry_timestamp_cvoid_de_short
+        name: Ablaufdatum
+      - entity: sensor.ssl_cert_expiry_days_cvoid_de
+        name: Resttage

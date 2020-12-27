@@ -1,0 +1,103 @@
+##############################################################
+### Packages / Certification renewal and valid days        ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+homeassistant:
+
+#host setup
+sensor:
+  - platform: cert_expiry
+    host: 0x711.de
+
+  - platform: cert_expiry
+    host: cvoid.de
+
+#template sensor for remaining days
+  - platform: template
+    sensors:
+      ssl_cert_expiry_days_0x711_de:
+        friendly_name: 'Resttage 0x711.de'
+        value_template: >
+          {{ ((as_timestamp(states('sensor.cert_expiry_timestamp_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:check
+          {% else %}
+            mdi:alert-octagram
+          {% endif %}
+        unit_of_measurement: 'Tage'
+      ssl_cert_expiry_days_cvoid_de:
+        friendly_name: 'Resttage cvoid.de'
+        value_template: >
+          {{ ((as_timestamp(states('sensor.cert_expiry_timestamp_cvoid_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_cvoid_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:check
+          {% else %}
+            mdi:alert-octagram
+          {% endif %}
+        unit_of_measurement: 'Tage'
+
+#template sensor for shortened timestamp
+
+      cert_expiry_timestamp_0x711_de_short:
+        friendly_name: 'Ablaufdatum 0x711.de'
+        value_template: >
+          {{ as_timestamp(states('sensor.cert_expiry_timestamp_0x711_de'))|timestamp_custom('%d.%m.%Y') }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:certificate
+          {% else %}
+            mdi:certificate-outline
+          {% endif %}
+      cert_expiry_timestamp_cvoid_de_short:
+        friendly_name: 'Ablaufdatum cvoid.de'
+        value_template: >
+          {{ as_timestamp(states('sensor.cert_expiry_timestamp_cvoid_de'))|timestamp_custom('%d.%m.%Y') }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_cvoid_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:certificate
+          {% else %}
+            mdi:certificate-outline
+          {% endif %}
+
+
+
+automation:
+  - alias: "0x_cert_expiry_alarm"
+    initial_state: True
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.ssl_cert_expiry_days_0x711_de.state|float < 14}}'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.ssl_cert_expiry_days_0x711_de') != 'unknown' }}"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_0x711_de.state}} Tagen ab!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: 0x711.de SSL Certification'
+          message:  '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_0x711_de.state}} Tagen ab!'
+
+  - alias: "cvoid_cert_expiry_alarm"
+    initial_state: True
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.ssl_cert_expiry_days_cvoid_de.state|float < 14}}'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.ssl_cert_expiry_days_cvoid_de') != 'unknown' }}"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_cvoid_de.state}} Tagen ab!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: cvoid.de SSL Certification'
+          message: '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für cvoid.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_cvoid_de.state}} Tagen ab!'
