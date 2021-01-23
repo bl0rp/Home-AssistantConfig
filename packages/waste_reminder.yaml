@@ -7,13 +7,10 @@
 homeassistant:
   customize:
     sensor.next_waste:
-      friendly_name: "Nächste Leerung Mülltonnen"
+      friendly_name: "Nächste Abholung"
       icon: mdi:delete-empty
     automation.waste_alert_12h:
       friendly_name: "Benachrichtigung Mülltonnen Morgen"
-      icon: mdi:delete-empty
-    automation.waste_alert_today:
-      friendly_name: "Benachrichtigung Mülltonnen Heute"
       icon: mdi:delete-empty
 
 
@@ -39,7 +36,7 @@ sensor:
 
 
 automation:
-#update tempalte sensors
+#update template sensors
   - alias: 'waste_template_sensors_update'
     trigger:
       - platform: time_pattern

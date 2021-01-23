@@ -53,6 +53,7 @@ cards:
         - type: section
         - entity: script.1og_lampen_an
         - entity: script.1og_lampen_aus
+
     - type: glance
       entities:
         - entity: switch.sonoff11
@@ -78,7 +79,6 @@ cards:
       entities:
         - type: section
         - entity: sensor.next_waste
-        - entity: sensor.next_waste_gelbersack
     - type: history-graph
       title: 'Innentemperatur (Woche)'
       hours_to_show: 168
