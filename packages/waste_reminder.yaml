@@ -9,21 +9,13 @@ homeassistant:
     sensor.next_waste:
       friendly_name: "Nächste Leerung Mülltonnen"
       icon: mdi:delete-empty
-    sensor.next_waste_gelbersack:
-      friendly_name: "Nächste Abholung Gelber Sack"
-      icon: mdi:sack
     automation.waste_alert_12h:
       friendly_name: "Benachrichtigung Mülltonnen Morgen"
       icon: mdi:delete-empty
     automation.waste_alert_today:
       friendly_name: "Benachrichtigung Mülltonnen Heute"
       icon: mdi:delete-empty
-    automation.waste_alert_gelb_12h:
-      friendly_name: "Benachrichtigung Gelber Sack Morgen"
-      icon: mdi:delete-empty
-    automation.waste_alert_gelb_today:
-      friendly_name: "Benachrichtigung Gelber Sack Heute"
-      icon: mdi:delete-empty
+
 
 
 
@@ -35,22 +27,13 @@ sensor:
       cal_alert_time_waste:
         value_template: >-
           {{ (as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time) - as_timestamp(now()) )|int }}
-  - platform: template
-    sensors:
-      cal_alert_time_waste_gelbersack:
-        value_template: >-
-          {{ (as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time) - as_timestamp(now()) )|int }}
+
 # show next calendar entry
   - platform: template
     sensors:
       next_waste:
         value_template: >-
           {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
-  - platform: template
-    sensors:
-      next_waste_gelbersack:
-        value_template: >-
-          {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }}
 
 
 
@@ -64,8 +47,7 @@ automation:
     action:
       - service: homeassistant.update_entity
         entity_id: sensor.cal_alert_time_waste
-      - service: homeassistant.update_entity
-        entity_id: sensor.cal_alert_time_waste_gelbersack
+
 #Restmüll 12h
   - alias: waste_alert_12h
     initial_state: true
@@ -90,32 +72,4 @@ automation:
           title: "Erinnerung Müllabfuhr Morgen"
           message: >
               {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
-          notification_id: "waste_alert_12h"
-
-
-
-#gelber sack 12h
-  - alias: waste_alert_gelb_12h
-    initial_state: true
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.cal_alert_time_waste_gelbersack
-        below: 50400
-        above: 50200
-    action:
-      - service: notify.pushbullet
-        data_template:
-          title: 'Erinnerung Gelber Sack Morgen'
-          message: >
-              {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird morgen abgeholt!
-      - service: notify.pushbullet_traude
-        data_template:
-          title: 'Erinnerung Gelber Sack Morgen'
-          message: >
-              {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird morgen abgeholt!
-      - service: persistent_notification.create
-        data_template:
-          title: "Erinnerung Gelber Sack Morgen"
-          message: >
-              {{(as_timestamp(states.calendar.gelber_sack_abholtermine.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} Gelber Sack wird morgen abgeholt!
           notification_id: "waste_alert_12h"
