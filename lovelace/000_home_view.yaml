@@ -104,6 +104,15 @@ cards:
       - entity: sensor.ssl_cert_expiry_days_0x711_de
         name: Resttage
       - type: section
+        label: 'mirror 0x711'
+      - type: divider
+      - entity: sensor.cert_expiry_timestamp_mirror_0x711_de
+        name: Ablaufzeitpunkt
+      - entity: sensor.cert_expiry_timestamp_mirror_0x711_de_short
+        name: Ablaufdatum
+      - entity: sensor.ssl_cert_expiry_days_mirror_0x711_de
+        name: Resttage
+      - type: section
         label: cvoid
       - type: divider
       - entity: sensor.cert_expiry_timestamp_cvoid_de

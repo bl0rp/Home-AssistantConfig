@@ -14,6 +14,25 @@ cards:
         secondary_info: last-changed
       - entity: sensor.esp32_03_temperature
         secondary_info: last-changed
+      - type: custom:mini-graph-card
+        hours_to_show: 72
+        hour24: true
+        entities:
+          - entity: sensor.dark_sky_temperature
+            name: DarkSky
+          - entity: sensor.esp32_02_temperature
+            name: Eingang
+          - entity: sensor.esp32_03_temperature
+            name: Carport
+        show:
+          show_legend: true
+          fill: false
+          labels: true
+          name: false
+          state: false
+          icon: false
+          average: true
+          extrema: true
       - type: section
         label: Innentemperatur Erster Stock
       - entity: sensor.temperatur_esp8266_01
@@ -29,18 +48,8 @@ cards:
         secondary_info: last-changed
         name: Flur
       - type: section
-      - type: custom:hui-history-graph-card
-        title: 'Außentemperatur'
-        hours_to_show: 24
-        entities:
-         - entity: sensor.dark_sky_temperature
-           name: Internet
-         - entity: sensor.esp32_02_temperature
-           name: Haupteingang
-         - entity: sensor.esp32_03_temperature
-           name: Carport
-         - entity: sensor.avg_temp_outside_esp_1day
-           name: Durchschnitt
+
+
   - type: vertical-stack
     cards:
     - type: iframe

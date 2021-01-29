@@ -159,10 +159,6 @@ cards:
         secondary_info: last-changed
         name: Christoph Bluetooth ELW
         icon: 'mdi:bluetooth'
-      - sensor.battery_level_2
-      - device_tracker.pixel_4_xl
-      - entity: sensor.wifi_connection
-        secondary_info: last-changed
       - type: section
       - entity: input_select.christoph_status
       - type: section

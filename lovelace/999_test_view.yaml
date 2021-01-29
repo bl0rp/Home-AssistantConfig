@@ -17,7 +17,7 @@ cards:
           name: Schlafzimmer
           type: light
     - type: custom:search-card
-      max_results: 20
+      max_results: 50
     - type: entities
       title: Scripts
       show_header_toggle: false
@@ -82,6 +82,34 @@ cards:
       - entity: automation.notify_calendar_event_time_to_leave_without_traffic
       - entity: automation.notify_calendar_event_time_to_leave_rw2_nef_with_traffic
         name: Traffic NEF Slider RW2
+
+    - type: entities
+      title: esp32_6*
+      show_header_toggle: false
+      entities:
+        - type: section
+
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.esp32_06*
+                options:
+                  secondary_info: last-changed
+              - entity_id: binary_sensor.esp32_06*
+                options:
+                  secondary_info: entity-id
+              - entity_id: switch.esp32_06*
+                options:
+                  secondary_info: entity-id
+    - type: history-graph
+      title: 'esp32_6 Spannung'
+      entities:
+        - sensor.esp32_06_voltage
+    - type: custom:mini-graph-card
+      entities:
+       - sensor.esp32_06_voltage
 
     - break
     - type: custom:auto-entities

@@ -56,6 +56,17 @@ cards:
             color: "#d35400"
           - value: 45
             color: "#c0392b"
+    - type: entities
+      title: Control
+      show_header_toggle: False
+      entities:
+        - entity: script.my_computer_suspend
+          name: Suspend
+          icon: mdi:sleep
+        - entity: script.my_computer_shutdown
+          name: Shutdown
+          icon: mdi:power
+
     - break
     - type: horizontal-stack
       cards:

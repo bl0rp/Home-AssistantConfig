@@ -321,9 +321,9 @@ cards:
           - entity: sensor.packets_out_eno1
           - entity: sensor.network_in_eno1
           - entity: sensor.network_out_eno1
-   
- 
-                  
+
+
+
 
     - type: conditional
       conditions:
@@ -340,8 +340,8 @@ cards:
                 entities:
                       - type: section
                       - entity: binary_sensor.network_storage_qnap1
-      
- 
+
+
     - type: conditional
       conditions:
         - entity: binary_sensor.network_storage_qnap1
@@ -430,7 +430,9 @@ cards:
           label: Docker Container
         items:
         - entity: switch.watchtower
+        - entity: switch.yacht
         - entity: switch.portainer
+        - entity: switch.mosquitto
         - entity: switch.grafana
         - entity: switch.influx
         - entity: switch.tasmoadmin
