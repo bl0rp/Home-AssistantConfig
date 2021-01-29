@@ -10,6 +10,9 @@ sensor:
     host: 0x711.de
 
   - platform: cert_expiry
+    host: mirror.0x711.de
+
+  - platform: cert_expiry
     host: cvoid.de
 
 #template sensor for remaining days
@@ -26,6 +29,21 @@ sensor:
             mdi:alert-octagram
           {% endif %}
         unit_of_measurement: 'Tage'
+
+  - platform: template
+    sensors:
+      ssl_cert_expiry_days_mirror_0x711_de:
+        friendly_name: 'Resttage mirror.0x711.de'
+        value_template: >
+          {{ ((as_timestamp(states('sensor.cert_expiry_timestamp_mirror_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_mirror_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:check
+          {% else %}
+            mdi:alert-octagram
+          {% endif %}
+        unit_of_measurement: 'Tage'
+
       ssl_cert_expiry_days_cvoid_de:
         friendly_name: 'Resttage cvoid.de'
         value_template: >
@@ -50,6 +68,18 @@ sensor:
           {% else %}
             mdi:certificate-outline
           {% endif %}
+
+      cert_expiry_timestamp_mirror_0x711_de_short:
+        friendly_name: 'Ablaufdatum 0x711.de'
+        value_template: >
+          {{ as_timestamp(states('sensor.cert_expiry_timestamp_mirror_0x711_de'))|timestamp_custom('%d.%m.%Y') }}
+        icon_template: >-
+          {% if ((as_timestamp(states('sensor.cert_expiry_timestamp_mirror_0x711_de')) - as_timestamp(states.sensor.date.last_updated)) / 86400) | int > 31 %}
+            mdi:certificate
+          {% else %}
+            mdi:certificate-outline
+          {% endif %}
+
       cert_expiry_timestamp_cvoid_de_short:
         friendly_name: 'Ablaufdatum cvoid.de'
         value_template: >
@@ -82,6 +112,26 @@ automation:
         data:
           title: 'HomeAssistant: 0x711.de SSL Certification'
           message:  '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für 0x711.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_0x711_de.state}} Tagen ab!'
+
+  - alias: "mirror_0x_cert_expiry_alarm"
+    initial_state: True
+    trigger:
+      platform: template
+      value_template: '{{ states.sensor.ssl_cert_expiry_days_mirror_0x711_de.state|float < 14}}'
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.ssl_cert_expiry_days_mirror_0x711_de') != 'unknown' }}"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für mirror.0x711.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_mirror_0x711_de.state}} Tagen ab!'
+      - service: notify.email
+        data:
+          title: 'HomeAssistant: mirror.0x711.de SSL Certification'
+          message:  '{{ states.sensor.date_time.state }}: Das SSL Zertifikat für mirror.0x711.de läuft in weniger als {{ states.sensor.ssl_cert_expiry_days_mirror_0x711_de.state}} Tagen ab!'
+
 
   - alias: "cvoid_cert_expiry_alarm"
     initial_state: True
