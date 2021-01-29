@@ -293,7 +293,7 @@ sensor:
 ###### Local HA Release
   - platform: command_line
     scan_interval: 3600
-    command: "/home/homeassistant/homeassistant_venv_3.7/bin/hass --version"
+    command: "/home/homeassistant/homeassistant_venv_3.8/bin/hass --version"
     name: HA_release_local
 
 ###### CUSTOM HA/Version
@@ -394,7 +394,16 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.disk_use_percent
-      above: 70.0
+      above: 85.0
+    condition:
+    - condition: template
+      value_template: >
+        {% if states.automation.hdd_alarm.last_triggered is not none %}
+          {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.hdd_alarm.attributes.last_triggered) | int > 3600 %} true {% else %} false
+          {% endif %}
+        {% else %}
+        false
+        {% endif %}
     action:
       - service: notify.pushbullet
         data:
