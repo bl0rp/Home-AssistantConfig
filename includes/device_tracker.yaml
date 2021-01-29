@@ -1,6 +1,4 @@
 - platform: nmap_tracker
   hosts: 192.168.0.0/24
-  scan_options: "--host-timeout 5s --privileged -sP"
+  scan_options: " --host-timeout 5s --privileged -sn"
   home_interval: 10
-  exclude:
-    - !secret hass_ip

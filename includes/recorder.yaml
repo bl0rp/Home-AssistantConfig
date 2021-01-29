@@ -8,7 +8,6 @@ include:
     - media_player
     - device_tracker
   entities:
-    - sensor.katzenklappe
     #dryer/washer sensor
     - sensor.washer_state
     - sensor.dryer_state
@@ -205,5 +204,6 @@ include:
     - sensor.esp32_4_pressure
 
 
-
+    - sensor.esp32_06_voltage
+    
     - sensor.esp32_7_temp

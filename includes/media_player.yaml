@@ -2,8 +2,3 @@
   - platform: kodi
     host: !secret mediapi_ip
     port: 80
-
-#Spotify
-  - platform: spotify
-    client_id: !secret spotify_client
-    client_secret: !secret spotify_secret
