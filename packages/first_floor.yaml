@@ -119,6 +119,8 @@ automation:
       - service: switch.turn_off
         entity_id: switch.sonoff10
 
+
+
 #############
 ### script ##
 #############
