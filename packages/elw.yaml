@@ -84,10 +84,10 @@ automation:
     initial_state: True
     trigger:
         - platform: state
-          entity_id: input_boolean.chrisbluetooth
+          entity_id: input_boolean.chrishome
           to: 'off'
           for:
-            minutes: 15
+            minutes: 30
     action:
       - service: switch.turn_off
         entity_id: switch.sonoff07
