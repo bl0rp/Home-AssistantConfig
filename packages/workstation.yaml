@@ -4,9 +4,19 @@
 ##############################################################
 
 homeassistant:
-
+#iotlink
+binary_sensor:
+  - platform: mqtt
+    name: "alekto"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    value_template: "{{ value }}"
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: "connectivity"
+    qos: 1
 
 sensor:
+
 #combined wattage for Workstation, Monitors, Speakers
   - platform: template
     sensors:
@@ -14,3 +24,334 @@ sensor:
         value_template: "{{ ((states('sensor.sonoff01_momentane_leistung'))|float + (states('sensor.sonoff02_momentane_leistung'))|float +  (states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power'))|float) |round(0) }}"
         friendly_name: 'Gesamtverbrauch'
         unit_of_measurement: "W"
+#iotlink
+
+  - platform: mqtt
+    name: "alekto - Current User"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/system/current-user"
+    unit_of_measurement: ''
+    icon: mdi:account
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - Idle Time"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/system/idle-time"
+    unit_of_measurement: 'seconds'
+    icon: mdi:timer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - CPU Usage"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/cpu/usage"
+    unit_of_measurement: '%'
+    icon: mdi:speedometer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - RAM Usage"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/memory/usage"
+    unit_of_measurement: '%'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - RAM Available"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/memory/available"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - RAM Used"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/memory/used"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - RAM Total"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/memory/total"
+    unit_of_measurement: 'MB'
+    icon: mdi:memory
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+
+
+
+  - platform: mqtt
+    name: "alekto - HDD Usage (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/drive-usage"
+    unit_of_measurement: '%'
+    icon: mdi:chart-donut
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Total Size (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/total-size"
+    unit_of_measurement: 'GB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Total Free Space (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/total-free-space"
+    unit_of_measurement: 'GB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Free Space (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/available-free-space"
+    unit_of_measurement: 'GB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Used Space (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/used-space"
+    unit_of_measurement: 'GB'
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Format (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/drive-format"
+    unit_of_measurement: ''
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - HDD Label (C)"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/hard-drive/c/volume-label"
+    unit_of_measurement: ''
+    icon: mdi:harddisk
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - Network IPv4"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/network/0/ipv4"
+    unit_of_measurement: ''
+    icon: mdi:lan
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - Network IPv6"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/network/0/ipv6"
+    unit_of_measurement: ''
+    icon: mdi:lan
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - Network Speed"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/network/0/speed"
+    unit_of_measurement: 'Mbps'
+    icon: mdi:speedometer
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+  - platform: mqtt
+    name: "alekto - Network Wired"
+    state_topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/network/0/wired"
+    unit_of_measurement: ''
+    icon: mdi:ethernet
+    value_template: "{{ value }}"
+    availability_topic: "iotlink/workgroup/desktop-2rk64hg/lwt"
+    payload_available: "ON"
+    payload_not_available: "OFF"
+    qos: 1
+
+camera:
+  - platform: mqtt
+    name: "alekto - Screen 0"
+    topic: "iotlink/workgroup/desktop-2rk64hg/windows-monitor/stats/display/0/screen"
+
+switch:
+  - platform: template
+    switches:
+      my_computer:
+        friendly_name: "alekto"
+        value_template: "{{ is_state('binary_sensor.alekto', 'on') }}"
+        turn_on:
+          service: script.my_computer_wake
+        turn_off:
+          service: script.my_computer_shutdown
+        icon_template: mdi:laptop
+
+script:
+  my_computer_wake:
+    alias: "alekto - Wake"
+    sequence:
+      - service: wake_on_lan.send_magic_packet
+        data:
+          mac: !secret alekto_mac_mqtt
+
+  my_computer_shutdown:
+    alias: "alekto - Shutdown"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/shutdown"
+          payload: ""
+
+  my_computer_suspend:
+    alias: "alekto - Suspend"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/suspend"
+          payload: ""
+
+  my_computer_hibernate:
+    alias: "alekto - Hibernate"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/hibernate"
+          payload: ""
+
+  my_computer_reboot:
+    alias: "alekto - Reboot"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/reboot"
+          payload: ""
+
+  my_computer_lock:
+    alias: "alekto - Lock"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/lock"
+          payload: ""
+
+  my_computer_logoff:
+    alias: "alekto - Logoff"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/logoff"
+          payload: ""
+
+  my_computer_vol_mute:
+    alias: "alekto - Toggle Mute"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/volume/mute"
+          payload: ""
+
+  my_computer_vol_max:
+    alias: "alekto - Vol Max"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/volume/set"
+          payload: "100"
+
+  my_computer_displays_on:
+    alias: "alekto - Displays ON"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/displays/on"
+          payload: ""
+
+  my_computer_displays_off:
+    alias: "alekto - Displays OFF"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/displays/off"
+          payload: ""
+
+  my_computer_refresh:
+    alias: "alekto - Refresh"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/refresh"
+          payload: ""
+
+  my_computer_notify:
+    alias: "alekto - Notify"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/notify"
+          payload: '{ "title": "My Notification Title", "message": "This is an example of notification using IOT Link", "launchParams": "toast://open/https://iotlink.gitlab.io" }'
+
+  my_computer_run_chrome:
+    alias: "alekto - Run Chrome"
+    sequence:
+      - service: mqtt.publish
+        data:
+          topic: "iotlink/workgroup/desktop-2rk64hg/commands/run"
+          payload: '{ "command": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", "args": "https://iotlink.gitlab.io", "path": "C:\\Program Files (x86)\\Google\\Chrome\\Application", "user": "", "visible": true, "fallback": true }'
