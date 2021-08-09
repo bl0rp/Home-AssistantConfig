@@ -28,7 +28,8 @@ automation:
 ###
 # Turn on Automation before next sunset
 ###
-  - alias: Restart der Automations vor Sonnenuntergang
+  - alias: "restart_automations_before_next_sunset"
+    id: restart_automations_before_next_sunset
     initial_state: true
     trigger:
       platform: time
@@ -44,6 +45,8 @@ automation:
 ###
 
   - alias: "first_floor_lights_on_dusk_brightness"
+    id: first_floor_lights_on_dusk_brightness
+    trace:
     trigger:
       - platform: numeric_state
         entity_id: sensor.esp32_13_brightness_bh1750
@@ -115,6 +118,7 @@ automation:
 ###
 
   - alias: "first_floor_lamp_living_room_on"
+    id: first_floor_lamp_living_room_on
     initial_state: false
     trigger:
       - platform: state
