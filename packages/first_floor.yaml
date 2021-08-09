@@ -14,9 +14,7 @@ homeassistant:
 
 
 
-#############
-#  sensors  #
-#############
+
 
 ###
 #See Sensor Package esp8266_01 and esp8266_03#
@@ -28,16 +26,87 @@ homeassistant:
 
 automation:
 ###
-# Turn on Automation at sunset
+# Turn on Automation before next sunset
 ###
-  - alias: Restart der Automations bei Sonnenuntergang
-    initial_state: True
+  - alias: Restart der Automations vor Sonnenuntergang
+    initial_state: true
     trigger:
-      platform: sun
-      event: sunset
+      platform: time
+      at: "15:00:00"
     action:
       - service: automation.turn_on
-        entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
+        entity_id: automation.first_floor_lights_on_dusk_brightness
+
+#Esszimmer on/off
+
+###
+# on at sunset
+###
+
+  - alias: "first_floor_lights_on_dusk_brightness"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_13_brightness_bh1750
+        below: 275
+      - platform: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: 2
+    condition:
+      - condition: time
+        before: "22:00:00"
+        after: "16:00:00"
+      - condition: numeric_state
+        entity_id: sensor.esp32_13_brightness_bh1750
+        below: 275
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: 2
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unknown' }}"
+
+    action:
+      - service: switch.turn_on
+        target:
+          entity_id: switch.sonoff09
+      - service: switch.turn_on
+        target:
+          entity_id: switch.sonoff10
+      - service: switch.turn_on
+        target:
+          entity_id: switch.sonoff11
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} Lampen an im 1OG
+            Lux Wiga: {{ states('sensor.esp32_13_brightness_bh1750') }}
+            elevation: {{ state_attr('sun.sun', 'elevation') }}
+            dusk: {{as_timestamp(states.sun.sun.attributes.next_dusk)|timestamp_custom('%H:%M:%S')}}
+            sunset: {{as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom('%H:%M:%S')}}
+      - service: automation.turn_off
+        entity_id: automation.first_floor_lights_on_dusk_brightness
+      - service: automation.turn_on
+        entity_id: automation.first_floor_lamp_living_room_on
+
+###
+# off at 22:00
+###
+
+  - alias: "Lampe Esszimmer um 22 Uhr ausschalten"
+    initial_state: true
+    trigger:
+      - platform: time_pattern
+        hours: 22
+        minutes: 00
+        seconds: 00
+    action:
+      - service: switch.turn_off
+        entity_id: switch.sonoff09
+      - service: switch.turn_off
+        entity_id: switch.sonoff10
+      - service: switch.turn_off
+        entity_id: switch.sonoff11
 
 #Stehlampe on/off
 
@@ -45,32 +114,28 @@ automation:
 # on after 1st movement
 ###
 
-  - alias: 1 OG Stehlampe bei erster Bewegung nach Sonnenuntergang anschalten
-    initial_state: False
+  - alias: "first_floor_lamp_living_room_on"
+    initial_state: false
     trigger:
       - platform: state
         entity_id: sensor.esp8266_01_pir
         from: '0'
         to: '1'
-    condition:
-      - condition: state
-        entity_id: sun.sun
-        state: "below_horizon"
     action:
       - service: switch.turn_on
         entity_id: switch.sonoff12
       - service: automation.turn_off
-        entity_id: automation.1_og_stehlampe_bei_erster_bewegung_nach_sonnenuntergang_anschalten
-      # - service: notify.pushbullet
-      #   data_template:
-      #     message: >
-      #        {{ states.sensor.date_time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
+        entity_id: automation.first_floor_lamp_living_room_on
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ states.sensor.date_time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
 
 
 # off at 11 pm
 
   - alias: "Stehlampe um 23 Uhr ausschalten"
-    initial_state: True
+    initial_state: true
     trigger:
       - platform: time_pattern
         hours: 23
@@ -80,44 +145,8 @@ automation:
       - service: switch.turn_off
         entity_id: switch.sonoff12
 
-#Esszimmer on/off
-
-###
-# on at sunset
-###
-
-  - alias: "Lampe Esszimmer anschalten nach Sonnenuntergang"
-    initial_state: True
-    trigger:
-      - platform: sun
-        event: sunset
-    action:
-      - service: switch.turn_on
-        entity_id: switch.sonoff11
-      - service: switch.turn_on
-        entity_id: switch.sonoff09
-      - service: switch.turn_on
-        entity_id: switch.sonoff10
 
 
-###
-# off at 22:00
-###
-
-  - alias: "Lampe Esszimmer um 22 Uhr ausschalten"
-    initial_state: True
-    trigger:
-      - platform: time_pattern
-        hours: 22
-        minutes: 00
-        seconds: 00
-    action:
-      - service: switch.turn_off
-        entity_id: switch.sonoff11
-      - service: switch.turn_off
-        entity_id: switch.sonoff09
-      - service: switch.turn_off
-        entity_id: switch.sonoff10
 
 
 
