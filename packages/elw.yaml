@@ -7,6 +7,7 @@ homeassistant:
 ####################################
 ### automation lights auto on/off ##
 ####################################
+
 #welcome home Automation
 automation:
   - alias: turn_on_lights_when_coming_home
@@ -51,8 +52,6 @@ automation:
       - delay: '{{ states.input_select.tuerlicht.state | int }}'
       - service: scene.turn_on
         entity_id: scene.flur_aus
-
-
 #enable automation when leaving
   - alias: enable_automation_coming_home
     initial_state: on
@@ -65,6 +64,8 @@ automation:
     action:
       - service: automation.turn_on
         entity_id: automation.turn_on_lights_when_coming_home
+
+
 
 
 #disable lights when leaving
@@ -101,3 +102,37 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.sonoff07
+
+#dark in the elw
+  - alias: "elw_dusk_brightness"
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_12_brightness_bh1750_long
+        below: 5
+      - platform: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: 4
+    condition:
+      - condition: time
+        before: "22:00:00"
+        after: "16:00:00"
+      - condition: numeric_state
+        entity_id: sun.sun
+        attribute: elevation
+        below: 4
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+    action:
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ELW DARK
+            LDR: {{ states('sensor.esp32_12_brightness_ldr') }}
+            Long: {{ states('sensor.esp32_12_brightness_bh1750_long') }}
+            Short: {{ states('sensor.esp32_12_brightness_bh1750_short') }}
+            elevation: {{ state_attr('sun.sun', 'elevation') }}
+            dusk: {{as_timestamp(states.sun.sun.attributes.next_dusk)|timestamp_custom('%H:%M:%S')}}
+            sunset: {{as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom('%H:%M:%S')}}

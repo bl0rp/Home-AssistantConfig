@@ -1,0 +1,69 @@
+title: game_view
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 10
+path: game
+icon: mdi:controller-classic
+cards:
+- type: entities
+  title: "Aktuelle Leistung"
+  entities:
+  - type: custom:layout-card
+    layout: horizontal
+    cards:
+      - type: gauge
+        name: Gesamtverbrauch
+        unit: 'W'
+        entity: sensor.workstation_wattage_complete
+        max: 400
+        severity:
+          green: 0
+          yellow: 200
+          red: 400
+      - type: gauge
+        name: Radiator
+        unit: '°C'
+        entity: sensor.esp32_07_temp
+        min: 20
+        max: 60
+        severity:
+          green: 0
+          yellow: 32
+          red: 50
+      - type: gauge
+        name: Workstation
+        unit: 'W'
+        entity: sensor.sonoff02_momentane_leistung
+        max: 300
+        severity:
+          green: 0
+          yellow: 100
+          red: 300
+      - type: gauge
+        name: CO2
+        unit: 'ppm'
+        entity: sensor.esp32_06_co2
+        max: 1200
+        severity:
+          green: 0
+          yellow: 500
+          red: 1000
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+      - type: entities
+        title: Innentemperatur
+        entities:
+          - entity: sensor.esp32_06_temperature_scd
+            name: Schreibtisch
+          - entity: sensor.esp8266_02_temperature
+            name: Regal
+      - type: entities
+        title: Außentemperatur
+        entities:
+          - entity: sensor.esp32_02_temperature
+            name: Haupteingang
+          - entity: sensor.esp32_03_temperature
+            name: Carport
+- type: custom:layout-break

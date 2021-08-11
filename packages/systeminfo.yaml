@@ -144,13 +144,7 @@ group:
      - automation.speedtest_alarm
 
 
-speedtestdotnet:
-  scan_interval:
-    minutes: 15
-  monitored_conditions:
-    - ping
-    - download
-    - upload
+
 
 fastdotcom:
   scan_interval:
@@ -210,9 +204,7 @@ sensor:
   - platform: cpuspeed
 ### Calculating human readable uptime
 
-##fritzbox bandwidth data
-  - platform: fritzbox_netmonitor
-    host: !secret router_ip
+
 
   - platform: command_line
     name: host_uptime_in_seconds
@@ -418,7 +410,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-      above: 65.0
+      above: 69.0
     action:
       - service: notify.pushbullet
         data:

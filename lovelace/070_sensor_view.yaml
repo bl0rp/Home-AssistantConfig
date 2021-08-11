@@ -22,8 +22,17 @@ cards:
             name: Wintergarten
           - entity: sensor.esp8266_07_status_var
             name: MQTT2RF
-          - entity: sensor.esp8266_06_status_var
+          - entity: sensor.esp8266_06_uptime_human
             name: ELW Klo
+    - type: custom:auto-entities
+      card:
+        type: entities
+        title: esphome version
+        show_header_toggle: false
+      filter:
+        include:
+          - entity_id: "sensor.esp*_version"
+
     - type: custom:vertical-stack-in-card
       title: 'Status aller Bewegungsmelder'
       cards:
@@ -42,8 +51,23 @@ cards:
           - entity: binary_sensor.esp8266_06_motion
             secondary_info: last-changed
             name: ELW Klo
+    - type: custom:vertical-stack-in-card
+      title: 'Letzte Änderung Bewegungsmelder'
+      cards:
+        - type: entities
+          entities:
+          - type: custom:auto-entities
+            card:
+              type: entities
+            filter:
+              include:
+                - domain: binary_sensor
+                  attributes:
+                    device_class: motion
+            sort:
+              method: last_changed
+              count: 5
 
-    - break
     - type: custom:vertical-stack-in-card
       title: 'Ohne Netzanschluss'
       cards:
@@ -151,7 +175,41 @@ cards:
                   name: Benachrichtigung OTA Online
                 - entity: automation.esp32_03_update_warning
                   name: No Update
-    - break
+
+#esp32_09 epaper display
+        - type: custom:vertical-stack-in-card
+          title: 'EPaper Display'
+          cards:
+          - type: entities
+            entities:
+
+
+            - entity: binary_sensor.esp32_09_status
+              secondary_info: last-changed
+            - type: custom:fold-entity-row
+              head:
+                type: section
+                label: Details
+              items:
+                - entity: sensor.esp32_09_rssi
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp32_09_ota_status
+                - entity: binary_sensor.esp32_09_status
+                  name: Status
+                - entity: switch.esp32_09_switch_ota
+                  name: OTA Mode
+                - entity: switch.esp32_09_restart
+                  name: Restart
+                - entity: switch.esp32_09_shutdown
+                  name: Shutdown
+                - entity: sensor.esp32_09_battery
+                - entity: sensor.esp32_09_battery_state
+                - entity: automation.benachrichtigung_batterie_esp32_09
+                - entity: automation.esp32_09_ota_online
+                  name: Benachrichtigung OTA Online
+                - entity: automation.esp32_09_update_warning
+                  name: No Update
+
     - type: custom:vertical-stack-in-card
       title: 'Netzanschluss'
       cards:
@@ -295,8 +353,7 @@ cards:
                 - entity: binary_sensor.esp8266_06_status
                   secondary_info: last-changed
                   name: 'Status'
-                - entity: sensor.esp8266_06_uptime_format
-                  icon: 'mdi:timer-outline'
+                - entity: sensor.esp8266_06_uptime_human
                   name: Uptime
                 - entity: sensor.esp8266_06_temperature
                   name: Temperatur
@@ -311,9 +368,14 @@ cards:
                     label: Details
                   items:
                     - entity: sensor.esp8266_06_rssi
-                      icon: 'mdi:access-point-network'
+                      show_state: false
+                      type: 'custom:multiple-entity-row'
                       name: Signalstärke
-                      secondary_info: last-changed
+                      entities:
+                        - entity: sensor.esp8266_06_rssi
+                          name: RSSI
+                        - entity: sensor.esp8266_06_wifi_quality
+                          name: Qualität
                     - entity: sensor.esp8266_06_humidity
                       name: Luftfeuchtigkeit
                       icon: mdi:water-percent
@@ -333,5 +395,66 @@ cards:
               show_header_toggle: false
               entities:
                 - entity: binary_sensor.esp8266_06_status
+                  secondary_info: last-changed
+                  name: 'Status'
+#esp32_04 ELW Serverraum
+        - type: custom:vertical-stack-in-card
+          title: 'ELW Serverraum'
+          cards:
+#online
+
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.esp32_04_status
+                state: "on"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp32_04_status
+                  secondary_info: last-changed
+                  name: 'Status'
+                - entity: sensor.esp32_04_uptime_human
+                  name: Uptime
+                - entity: sensor.esp32_04_temperature
+                  name: Temperatur
+                  secondary_info: last-changed
+                - entity: binary_sensor.esp32_04_motion
+                  secondary_info: last-changed
+                  name: Bewegungsmelder
+
+                - type: custom:fold-entity-row
+                  head:
+                    type: section
+                    label: Details
+                  items:
+                    - entity: sensor.esp32_04_rssi
+                      show_state: false
+                      type: 'custom:multiple-entity-row'
+                      name: Signalstärke
+                      entities:
+                        - entity: sensor.esp32_04_rssi
+                          name: RSSI
+                        - entity: sensor.esp32_04_wifi_quality
+                          name: Qualität
+                    - entity: sensor.esp32_04_humidity
+                      name: Luftfeuchtigkeit
+                      icon: mdi:water-percent
+                    - entity: switch.esp32_04_shutdown
+                      name: Ausschalten
+                      icon: mdi:power
+                    - entity: switch.esp32_04_restart
+                      name: Neustart
+                      icon: mdi:restart
+#offline
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.esp32_04_status
+                state: "off"
+            card:
+              type: entities
+              show_header_toggle: false
+              entities:
+                - entity: binary_sensor.esp32_04_status
                   secondary_info: last-changed
                   name: 'Status'

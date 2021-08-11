@@ -14,10 +14,109 @@ homeassistant:
       icon: mdi:delete-empty
 
 
-
+waste_collection_schedule:
+  sources:
+    - name: stuttgart_de
+      args:
+        street: !secret waste_collection_schedule_street
+        streetnr: !secret waste_collection_schedule_streetnr
 
 
 sensor:
+  - platform: waste_collection_schedule
+    name: waste_collection_upcoming_value_days_true_altpapier
+    details_format: upcoming
+    add_days_to: True
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - Altpapier
+  - platform: waste_collection_schedule
+    name: waste_collection_upcoming_value_days_true_restmuell
+    details_format: upcoming
+    add_days_to: True
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - Restmüll
+  - platform: waste_collection_schedule
+    name: waste_collection_upcoming_value_days_true_biomuell
+    details_format: upcoming
+    add_days_to: True
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - Biomüll
+  - platform: waste_collection_schedule
+    name: waste_collection_upcoming_value_days_true_gelbersack
+    details_format: upcoming
+    add_days_to: True
+    value_template: '{% if value.daysTo == 0 %}Heute{% elif value.daysTo == 1 %}Morgen{% else %}in {{value.daysTo}} Tagen{% endif %}'
+    types:
+      - Gelber Sack
+
+  - platform: waste_collection_schedule
+    name: restmuell_date
+    value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - Restmüll
+  - platform: waste_collection_schedule
+    name: restmuell_collection
+    value_template: '{{value.daysTo}}'
+    types:
+      - Restmüll
+
+  - platform: waste_collection_schedule
+    name: altpapier_date
+    value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - Altpapier
+  - platform: waste_collection_schedule
+    name: altpapier_collection
+    value_template: '{{value.daysTo}}'
+    types:
+      - Altpapier
+
+  - platform: waste_collection_schedule
+    name: gelbersack_date
+    value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - Gelber Sack
+  - platform: waste_collection_schedule
+    name: gelbersack_collection
+    value_template: '{{value.daysTo}}'
+    types:
+      - Gelber Sack
+
+  - platform: waste_collection_schedule
+    name: biomuell_date
+    value_template: '{{value.date.strftime("%d.%m.%Y")}}'
+    types:
+      - Biomüll
+  - platform: waste_collection_schedule
+    name: biomuell_collection
+    value_template: '{{value.daysTo}}'
+    types:
+      - Biomüll
+
+  - platform: waste_collection_schedule
+    name: abfallkalender_altpapier_date
+    value_template: '{{value.daysTo}}|{{value.date}}'
+    types:
+      - Altpapier
+  - platform: waste_collection_schedule
+    name: abfallkalender_gelbersack_date
+    value_template: '{{value.daysTo}}|{{value.date}}'
+    types:
+      - Gelber Sack
+  - platform: waste_collection_schedule
+    name: abfallkalender_restmuell_date
+    value_template: '{{value.daysTo}}|{{value.date}}'
+    types:
+      - Restmüll
+  - platform: waste_collection_schedule
+    name: abfallkalender_biomuell_date
+    value_template: '{{value.daysTo}}|{{value.date}}'
+    types:
+      - Biomüll
+
 #template sensor for calc. unixtime -> automation
   - platform: template
     sensors:
@@ -58,7 +157,7 @@ automation:
         data_template:
           title: 'Erinnerung Müllabfuhr Morgen'
           message: >
-              {{(as_timestamp(states. calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
+              {{(as_timestamp(states.calendar.abfallwirtschaft_stuttgart.attributes.start_time))|timestamp_custom('%d.%m.%Y') }} {{states.calendar.abfallwirtschaft_stuttgart.attributes.message|replace ('01-wöchentl.','')|replace ('02-wöchentl.','')|replace ('03-wöchentl.','')}}
       - service: notify.pushbullet_traude
         data_template:
           title: 'Erinnerung Müllabfuhr Morgen'

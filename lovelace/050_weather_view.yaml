@@ -65,6 +65,10 @@ cards:
       show_header_toggle: false
       entities:
         - type: section
+        - type: 'custom:sun-card'
+          darkMode: true
+          timeFormat: '24h'
+          language: de
         - entity: sensor.sunstate
         - entity: sensor.sun_next_setting
         - entity: sensor.sun_next_rising

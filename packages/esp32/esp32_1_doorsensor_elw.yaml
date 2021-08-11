@@ -46,7 +46,8 @@ binary_sensor:
     state_topic: "esp32_1/status"
     payload_on: "online"
     payload_off: "offline"
-
+    device_class: connectivity
+    
   - platform: mqtt
     name: "esp32_01_ota_status"
     state_topic: "esp32_1/ota_mode_status"
@@ -191,6 +192,10 @@ automation:
 
     action:
     - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Türsensor ELW (ESP #1)!
+    - service: notify.sensor_watch_log
       data_template:
         message: >
           {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Türsensor ELW (ESP #1)!

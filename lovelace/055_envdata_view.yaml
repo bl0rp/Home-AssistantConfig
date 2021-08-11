@@ -1,0 +1,273 @@
+title: Umweltdaten
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 10
+path: envdata
+icon: mdi:earth
+cards:
+- type: entities
+  title: ESP32#6 Schreibtisch
+  entities:
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+      - type: entities
+        title: Stats
+        show_header_toggle: true
+        entities:
+          - entity: sensor.esp32_06_uptime_human
+            name: Uptime
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Details
+            items:
+              - entity: sensor.esp32_06_uptime
+              - entity: sensor.esp32_06_ip
+              - entity: sensor.esp32_06_rssi
+              - entity: sensor.esp32_06_version
+              - entity: switch.esp32_06_shutdown
+              - entity: switch.esp32_06_restart
+
+      - type: entities
+        title: Sensordata
+        entities:
+          - type: section
+            label: Temp./luftfeucht./CO2
+          - entity: sensor.air_quality_elw
+          - entity: sensor.esp32_06_co2
+            name: CO2
+          - entity: sensor.esp32_06_temperature_scd
+            name: Temperatur
+          - entity: sensor.esp32_06_humidity_scd
+            name: Luftfeuchtigkeit
+
+
+
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 30
+            entities:
+             - entity: sensor.esp32_06_temperature_scd
+               name: Temp. (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#0752f2"
+              - value: 22
+                color: "#fc9700"
+              - value: 24
+                color: "#d30000"
+              - value: 35
+                color: "#d30000"
+
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 100
+            line_color: blue
+            entities:
+             - entity: sensor.esp32_06_humidity_scd
+               name: Luftfeuchtigkeit (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+
+
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 2000
+            entities:
+             - entity: sensor.esp32_06_co2
+               name: CO2 (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 800
+                color: "#46d300"
+              - value: 1100
+                color: "#fc9700"
+              - value: 1200
+                color: "#d30000"
+              - value: 2000
+                color: "#d30000"
+
+- type: custom:layout-break
+- type: entities
+  title: ESP8266#2 Regal
+  entities:
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+      - type: entities
+        title: Stats
+        show_header_toggle: true
+        entities:
+          - entity: sensor.esp8266_02_uptime_human
+            name: Uptime
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Details
+            items:
+              - entity: sensor.esp8266_02_uptime
+              - entity: sensor.esp8266_02_ip
+              - entity: sensor.esp8266_02_rssi
+              - entity: sensor.esp8266_02_version
+              - entity: switch.esp8266_02_shutdown
+              - entity: switch.esp8266_02_restart
+      - type: entities
+        title: Sensordata
+        entities:
+          - type: section
+            label: Temp./Luftfeucht.
+          - entity: sensor.esp8266_02_temperature
+          - entity: sensor.esp8266_02_humidity
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 30
+            entities:
+             - entity: sensor.esp8266_02_temperature
+               name: Temp. (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#0752f2"
+              - value: 22
+                color: "#fc9700"
+              - value: 24
+                color: "#d30000"
+              - value: 35
+                color: "#d30000"
+
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 100
+            lower_bound: 0
+            line_color: blue
+            entities:
+             - entity: sensor.esp8266_02_humidity
+               name: Luftfeuchtigkeit (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+- type: custom:layout-break
+- type: entities
+  title: ESP8266#6 Toilette
+  entities:
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+      - type: entities
+        title: Stats
+        show_header_toggle: true
+        entities:
+          - entity: sensor.esp8266_06_uptime_human
+            name: Uptime
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Details
+            items:
+              - entity: sensor.esp8266_06_uptime
+              - entity: sensor.esp8266_06_ip
+              - entity: sensor.esp8266_06_rssi
+              - entity: sensor.esp8266_06_version
+              - entity: switch.esp8266_06_shutdown
+              - entity: switch.esp8266_06_restart
+      - type: entities
+        title: Sensordata
+        entities:
+          - type: section
+            label: Temp./Luftfeucht.
+          - entity: sensor.esp8266_06_temperature
+          - entity: sensor.esp8266_06_humidity
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 30
+            entities:
+             - entity: sensor.esp8266_06_temperature
+               name: Temp. (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 18
+                color: "#0752f2"
+              - value: 24
+                color: "#d30000"
+              - value: 35
+                color: "#d30000"
+
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 100
+            lower_bound: 0
+            line_color: blue
+            entities:
+             - entity: sensor.esp8266_06_humidity
+               name: Luftfeuchtigkeit (24h)
+            show:
+              labels: true
+              icon: true
+              name: true
+              average: true
+              extrema: true

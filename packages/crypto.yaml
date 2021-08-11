@@ -1,0 +1,151 @@
+########################################################################
+## Packages / BTC                                                     ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+
+
+### https://smarthomepursuits.com/how-to-track-crypto-prices-in-home-assistant/ ###
+##BTC ADDITIONAL SENSORS
+##crypto_btc_holdings replace value_template with the amount of BTC you are holding
+##crypto_btc_acb replace value_template with how much fiat you have invested to purchase the BTC above
+sensor:
+  - platform: template
+    sensors:
+       crypto_btc_holdings:
+        value_template: "0.123456"
+        friendly_name: 'btc - Holdings'
+        unit_of_measurement: "BTC"
+  - platform: template
+    sensors:
+       crypto_btc_acb:
+        value_template: "1234.56"
+        friendly_name: 'btc - ACB'
+        unit_of_measurement: "€"
+  - platform: template
+    sensors:
+       crypto_btc_value:
+        value_template: "{{ (states('sensor.btc') | float * states('sensor.crypto_btc_holdings') | float) | round(2) }}"
+        friendly_name: 'btc - Value'
+        unit_of_measurement: "€"
+rest:
+  - resource: https://api.nomics.com/v1/currencies/ticker?key=e2bcf4f2a574b319f389f1eb5b65a0de50de8f2b&ids=BTC,ETH,DOGE&interval=1h,1d,7d,30d&per-page=100&page=1&sort=first_priced_at&convert=EUR
+    scan_interval: 10
+    sensor:
+   ### BTC
+      - name: "btc"
+        json_attributes_path: "$.[0]"
+        value_template: '{{ value_json[0].price | round(4) }}'
+        unit_of_measurement: "EUR"
+        json_attributes:
+          - name
+          - symbol
+          - price
+          - logo_url
+          - rank
+          - high
+          - high_timestamp
+          - market_cap
+          - first_trade
+      - name: "btc_1hr"
+        json_attributes_path: "$.[0].1h"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[0]["1h"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "btc_1d"
+        json_attributes_path: "$.[0].1d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[0]["1d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "btc_7d"
+        json_attributes_path: "$.[0].7d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[0]["7d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "btc_30d"
+        json_attributes_path: "$.[0].30d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[0]["30d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+       ### ETH
+      - name: "eth"
+        json_attributes_path: "$.[1]"
+        value_template: '{{ value_json[1].price | round(4) }}'
+        unit_of_measurement: "EUR"
+        json_attributes:
+          - name
+          - symbol
+          - price
+          - logo_url
+          - rank
+          - high
+          - high_timestamp
+          - market_cap
+          - first_trade
+      - name: "eth_1hr"
+        json_attributes_path: "$.[1].1h"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[1]["1h"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "eth.1d"
+        json_attributes_path: "$.[1].1d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[1]["1d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "eth.7d"
+        json_attributes_path: "$.[1].7d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[1]["7d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "eth.30d"
+        json_attributes_path: "$.[1].30d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[1]["30d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+       ### DOGE
+      - name: "doge"
+        json_attributes_path: "$.[2]"
+        value_template: '{{ value_json[2].price | round(4) }}'
+        unit_of_measurement: "EUR"
+        json_attributes:
+          - name
+          - symbol
+          - price
+          - logo_url
+          - rank
+          - high
+          - high_timestamp
+          - market_cap
+          - first_trade
+      - name: "doge_1hr"
+        json_attributes_path: "$.[2].1h"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[2]["1h"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "doge.1d"
+        json_attributes_path: "$.[2].1d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[2]["1d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "doge.7d"
+        json_attributes_path: "$.[2].7d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[2]["7d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct
+      - name: "doge.30d"
+        json_attributes_path: "$.[2].30d"
+        unit_of_measurement: "EUR"
+        value_template: '{{ value_json[2]["30d"]["price_change"] | round(4) }}'
+        json_attributes:
+          - price_change_pct

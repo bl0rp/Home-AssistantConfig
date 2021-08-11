@@ -1,0 +1,104 @@
+########################################################################
+## Packages / Light Transition Alarm                                  ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+
+
+#############
+### Sensor ##
+#############
+sensor:
+  - platform: template
+    sensors:
+        next_alarm:
+          value_template: "{{ states('sensor.p4xl_nachster_wecker')  }}"
+          attribute_templates:
+            alarm_time: >-
+              {{ as_timestamp(states('sensor.next_alarm')) | timestamp_custom('%H:%M') }}
+            minutes_left: >-
+              {% set dummy = states("sensor.time") %}
+              {{((states('sensor.next_alarm')|as_timestamp|int - now()|as_timestamp|int)/60)|int}}
+            text_time_left: >-
+              {% set time = state_attr('sensor.next_alarm','minutes_left') %}
+              {% set hours = ((time | int /  60) | string).split('.')[0] %}
+              {% set minutes = time | int % 60 %}
+              {{hours}} Stunden {{minutes}} Minuten
+            next_alarm_localtime: >-
+              {% set day = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"] %}
+              {{ as_timestamp(states('sensor.next_alarm')) | timestamp_custom(day[now().weekday()] ~ ' %d.%m. %H:%M') }}
+
+#################
+### automation ##
+#################
+
+automation:
+
+#notification about all sensors when not home
+### Thanks 2 @brahmafear (initial version)
+  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.aeotec_zw100_multisensor_6_burglar
+        from: '0'
+        to: '8'
+      - platform: state
+        entity_id: binary_sensor.esp8266_02_motion
+        from: 'off'
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.esp32_01_door_state
+        from: 'off'
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: 'input_boolean.chrishome'
+          state: 'off'
+        - condition: template
+          value_template: >
+            {% if states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.last_triggered is not none %}
+              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.attributes.last_triggered) | int > 60 %} true {% else %} false
+              {% endif %}
+            {% else %}
+            false
+            {% endif %}
+    action:
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
+             Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!
+
+#############
+### script ##
+#############
+script:
+
+# light Transition script
+  sunrise_wake_up:
+    alias: Sunrise wake-up
+    sequence:
+    - variables:
+        start_temp: 500
+        end_temp: 380
+        duration_mins: 30
+    - service: light.turn_on
+      data:
+        color_temp: '{{ start_temp }}'
+        brightness: 1
+      entity_id: light.nightstand_light
+    - delay: '1'
+    - repeat:
+        count: '{{ duration_mins }}'
+        sequence:
+        - service: light.turn_on
+          data:
+            brightness: '{{ (repeat.index / duration_mins * 255) | int }}'
+            color_temp: '{{ (start_temp + repeat.index / duration_mins * (end_temp -
+              start_temp)) | int }}'
+          entity_id: light.nightstand_light
+        - delay: '60'
+    mode: single

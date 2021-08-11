@@ -12,7 +12,7 @@ homeassistant:
 
 #Turn on/off the ESP / Automations  while using the Computer
 automation:
-  - alias: auto_on_lcd
+  - alias: boot_esp10_via_switch_on
     initial_state: true
     trigger:
       platform: state
@@ -20,15 +20,17 @@ automation:
         - sensor.sonoff02_use
       to: 'Ja'
       for:
-        seconds: 30
+        seconds: 15
     action:
       - service: switch.turn_on
         entity_id: switch.11001_a
       - service: automation.turn_on
-        entity_id: automation.nuc_load_to_led
+        entity_id: automation.nuc_load_to_esp32_10_led
+      - service: automation.turn_on
+        entity_id: automation.co2_value_to_esp32_10_led2
 
 
-  - alias: auto_off_lcd
+  - alias: shutdown_esp10_via_switch_off
     initial_state: true
     trigger:
       platform: state
@@ -38,51 +40,54 @@ automation:
       for:
         seconds: 15
     action:
-      - service: switch.turn_off
-        entity_id: switch.rote_led
-      - service: switch.turn_off
-        entity_id: switch.gelbe_led
-      - service: switch.turn_off
-        entity_id: switch.gruene_led
+      - service: automation.turn_off
+        entity_id: automation.nuc_load_to_esp32_10_led
+      - service: automation.turn_off
+        entity_id: automation.co2_value_to_esp32_10_led2
+      - service: light.turn_off
+        entity_id: light.esp32_10_led
+      - service: light.turn_off
+        entity_id: light.esp32_10_led2
       - service: switch.turn_on
-        entity_id: switch.esp8266_led_oled_shutdown
-      - service: switch.turn_on
-        entity_id: switch.esp8266_lcd_shutdown
+        entity_id: switch.esp32_10_shutdown
       - delay: 00:00:05
       - service: switch.turn_off
         entity_id: switch.11001_a
-      - service: automation.turn_off
-        entity_id: automation.nuc_load_to_led
 
-  - alias: nuc_load_to_led
-    initial_state: False
+
+  - alias: nuc_load_to_esp32_10_led
+    initial_state: false
     trigger:
       - platform: state
         entity_id: sensor.load_1m
     action:
-      - service_template: >-
-          {% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.2 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.gruene_led
-
-      - service_template: >-
-          {% if 0.2 <= trigger.to_state.state|float < 0.6 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.gelbe_led
-
-      - service_template: >-
-          {% if 0.6 <= trigger.to_state.state|float < 30.0 %}
-            switch.turn_on
-          {% else %}
-            switch.turn_off
-          {% endif %}
-        data:
-          entity_id: switch.rote_led
+      - service: light.turn_on
+        data_template:
+          entity_id: light.esp32_10_led
+          transition: 3
+          brightness_pct: 40
+          color_name: "{% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 0.8 %}
+              green
+            {% elif 0.8 <= trigger.to_state.state|float < 1.6  %}
+              gold
+            {% else %}
+              red
+            {% endif %}"
+  - alias: co2_value_to_esp32_10_led2
+    initial_state: false
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_06_co2
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.esp32_10_led2
+          transition: 3
+          brightness_pct: 40
+          color_name: "{% if 0 <= trigger.to_state.state|float and  trigger.to_state.state|float < 500 %}
+              blue
+            {% elif 500 <= trigger.to_state.state|float < 800  %}
+              burlywood
+            {% else %}
+              fuchsia
+            {% endif %}"

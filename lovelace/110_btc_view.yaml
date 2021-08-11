@@ -1,0 +1,523 @@
+title: btc
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 20
+path: btc
+icon: mdi:bitcoin
+cards:
+- type: custom:layout-card
+  layout: vertical
+  cards:
+
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+          - type: custom:vertical-stack-in-card
+            cards:
+              - type: entities
+                entities:
+                  - type: custom:template-entity-row
+                    entity: sensor.btc
+                    name: '{{ state_attr(config.entity, ''name'') }}'
+                    secondary: '{{ state_attr(config.entity, ''symbol'') }}'
+                    image: '{{ state_attr(config.entity, ''logo_url'') }}'
+                    state: €{{ state_attr(config.entity, 'price') | round(2) }}
+                  - type: custom:template-entity-row
+                    entity: sensor.btc
+                    name: Hoch
+                    icon: mdi:currency-eur
+                    state: €{{ state_attr(config.entity, 'high') | round (2)}}
+                    secondary: >-
+                      {{ as_timestamp(state_attr(config.entity, 'high_timestamp')) |
+                      timestamp_custom('%d-%m-%Y %H:%M ') }}
+                  - type: custom:template-entity-row
+                    entity: sensor.btc
+                    name: Rang
+                    icon: mdi:chart-line
+                    state: '{{ state_attr(config.entity, ''rank'') }}'
+                    secondary: €{{"{:,}".format(state_attr(config.entity, 'market_cap')|int)}}
+                  - type: custom:mini-graph-card
+                    hours_to_show: 3
+                    points_per_hour: 60
+                    hour24: true
+                    show:
+                      icon: false
+                      name: false
+                    entities:
+                      - entity: sensor.btc
+          - type: entities
+            entities:
+              - entity: sensor.btc_1hr
+                name: Stunde
+                type: custom:template-entity-row
+                state: €{{ states(config.entity) | round(2) }}
+                secondary: >-
+                  {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                  round(4) }}%
+                icon: |
+                  {% if states(config.entity) | float > 0 %}
+                     mdi:arrow-up-bold
+                  {% elif states(config.entity) | float < 0 %}
+                     mdi:arrow-down-bold
+                  {% else %}
+                     mdi:arrow-right-bold
+                  {% endif %}
+                card_mod:
+                  style: |
+                    {% if states(config.entity) | float > 450 %}
+                       :host {
+                         --paper-item-icon-color: green;
+                         color: green
+                       }
+                    {% elif states(config.entity) | float < 0 %}
+                       :host {
+                         --paper-item-icon-color: red;
+                         color: red
+                       }
+                    {% else %}
+                       :host {
+                         --paper-item-icon-color: white;
+                         color: white
+                       }
+                    {% endif %}
+              - entity: sensor.btc_1d
+                name: Tag
+                type: custom:template-entity-row
+                state: €{{ states(config.entity) | round(2) }}
+                secondary: >-
+                  {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                  round(4) }}%
+                icon: |
+                  {% if states(config.entity) | float > 0 %}
+                     mdi:arrow-up-bold
+                  {% elif states(config.entity) | float < 0 %}
+                     mdi:arrow-down-bold
+                  {% else %}
+                     mdi:arrow-right-bold
+                  {% endif %}
+                card_mod:
+                  style: |
+                    {% if states(config.entity) | float > 0 %}
+                       :host {
+                         --paper-item-icon-color: green;
+                         color: green
+                       }
+                    {% elif states(config.entity) | float < 0 %}
+                       :host {
+                         --paper-item-icon-color: red;
+                         color: red
+                       }
+                    {% else %}
+                       :host {
+                         --paper-item-icon-color: white;
+                         color: white
+                       }
+                    {% endif %}
+              - entity: sensor.btc_7d
+                name: Woche
+                type: custom:template-entity-row
+                state: €{{ states(config.entity) | round(2) }}
+                secondary: >-
+                  {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                  round(4) }}%
+                icon: |
+                  {% if states(config.entity) | float > 0 %}
+                     mdi:arrow-up-bold
+                  {% elif states(config.entity) | float < 0 %}
+                     mdi:arrow-down-bold
+                  {% else %}
+                     mdi:arrow-right-bold
+                  {% endif %}
+                card_mod:
+                  style: |
+                    {% if states(config.entity) | float > 0 %}
+                       :host {
+                         --paper-item-icon-color: green;
+                         color: green
+                       }
+                    {% elif states(config.entity) | float < 0 %}
+                       :host {
+                         --paper-item-icon-color: red;
+                         color: red
+                       }
+                    {% else %}
+                       :host {
+                         --paper-item-icon-color: white;
+                         color: white
+                       }
+                    {% endif %}
+              - entity: sensor.btc_30d
+                name: Monat
+                type: custom:template-entity-row
+                state: €{{ states(config.entity) | round(2) }}
+                secondary: >-
+                  {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                  round(4) }}%
+                icon: |
+                  {% if states(config.entity) | float > 0 %}
+                     mdi:arrow-up-bold
+                  {% elif states(config.entity) | float < 0 %}
+                     mdi:arrow-down-bold
+                  {% else %}
+                     mdi:arrow-right-bold
+                  {% endif %}
+                card_mod:
+                  style: |
+                    {% if states(config.entity) | float > 0 %}
+                       :host {
+                         --paper-item-icon-color: green;
+                         color: green
+                       }
+                    {% elif states(config.entity) | float < 0 %}
+                       :host {
+                         --paper-item-icon-color: red;
+                         color: red
+                       }
+                    {% else %}
+                       :host {
+                         --paper-item-icon-color: white;
+                         color: white
+                       }
+                    {% endif %}
+- type: custom:layout-break
+- type: custom:layout-card
+  layout: vertical
+  cards:
+        - type: custom:vertical-stack-in-card
+          cards:
+            - type: entities
+              entities:
+                - type: custom:template-entity-row
+                  entity: sensor.eth
+                  name: '{{ state_attr(config.entity, ''name'') }}'
+                  secondary: '{{ state_attr(config.entity, ''symbol'') }}'
+                  image: '{{ state_attr(config.entity, ''logo_url'') }}'
+                  state: €{{ state_attr(config.entity, 'price') | round(2) }}
+                - type: custom:template-entity-row
+                  entity: sensor.eth
+                  name: Hoch
+                  icon: mdi:currency-eur
+                  state: €{{ state_attr(config.entity, 'high') | round (2)}}
+                  secondary: >-
+                    {{ as_timestamp(state_attr(config.entity, 'high_timestamp')) |
+                    timestamp_custom('%d-%m-%Y %H:%M ') }}
+                - type: custom:template-entity-row
+                  entity: sensor.eth
+                  name: Rang
+                  icon: mdi:chart-line
+                  state: '{{ state_attr(config.entity, ''rank'') }}'
+                  secondary: €{{"{:,}".format(state_attr(config.entity, 'market_cap')|int)}}
+                - type: custom:mini-graph-card
+                  hours_to_show: 3
+                  points_per_hour: 60
+                  show:
+                    icon: false
+                    name: false
+                  entities:
+                    - entity: sensor.eth
+        - type: entities
+          entities:
+            - entity: sensor.eth_1hr
+              name: Stunde
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                    {% else %}
+                       :host {
+                         --paper-item-icon-color: white;
+                         color: white
+                       }
+                  {% endif %}
+            - entity: sensor.eth_1d
+              name: Tag
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+            - entity: sensor.eth_7d
+              name: Woche
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+            - entity: sensor.eth_30d
+              name: Monat
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+- type: custom:layout-break
+- type: custom:layout-card
+  layout: vertical
+  cards:
+        - type: custom:vertical-stack-in-card
+          cards:
+            - type: entities
+              entities:
+                - type: custom:template-entity-row
+                  entity: sensor.doge
+                  name: '{{ state_attr(config.entity, ''name'') }}'
+                  secondary: '{{ state_attr(config.entity, ''symbol'') }}'
+                  image: '{{ state_attr(config.entity, ''logo_url'') }}'
+                  state: €{{ state_attr(config.entity, 'price') | round(2) }}
+                - type: custom:template-entity-row
+                  entity: sensor.doge
+                  name: Hoch
+                  icon: mdi:currency-eur
+                  state: €{{ state_attr(config.entity, 'high') | round (2)}}
+                  secondary: >-
+                    {{ as_timestamp(state_attr(config.entity, 'high_timestamp')) |
+                    timestamp_custom('%d-%m-%Y %H:%M ') }}
+                - type: custom:template-entity-row
+                  entity: sensor.doge
+                  name: Rang
+                  icon: mdi:chart-line
+                  state: '{{ state_attr(config.entity, ''rank'') }}'
+                  secondary: €{{"{:,}".format(state_attr(config.entity, 'market_cap')|int)}}
+                - type: custom:mini-graph-card
+                  hours_to_show: 3
+                  points_per_hour: 60
+                  show:
+                    icon: false
+                    name: false
+                  entities:
+                    - entity: sensor.doge
+        - type: entities
+          entities:
+            - entity: sensor.doge_1hr
+              name: Stunde
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+            - entity: sensor.doge_1d
+              name: Tag
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+            - entity: sensor.doge_7d
+              name: Woche
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+            - entity: sensor.doge_30d
+              name: Monat
+              type: custom:template-entity-row
+              state: €{{ states(config.entity) | round(2) }}
+              secondary: >-
+                {{ state_attr(config.entity, 'price_change_pct')  | multiply(100) |
+                round(4) }}%
+              icon: |
+                {% if states(config.entity) | float > 0 %}
+                   mdi:arrow-up-bold
+                {% elif states(config.entity) | float < 0 %}
+                   mdi:arrow-down-bold
+                {% else %}
+                   mdi:arrow-right-bold
+                {% endif %}
+              card_mod:
+                style: |
+                  {% if states(config.entity) | float > 0 %}
+                     :host {
+                       --paper-item-icon-color: green;
+                       color: green
+                     }
+                  {% elif states(config.entity) | float < 0 %}
+                     :host {
+                       --paper-item-icon-color: red;
+                       color: red
+                     }
+                  {% else %}
+                     :host {
+                       --paper-item-icon-color: white;
+                       color: white
+                     }
+                  {% endif %}
+- type: custom:layout-break

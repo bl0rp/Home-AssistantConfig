@@ -1,0 +1,43 @@
+########################################################################
+## Packages / ESP32 customize                                         ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+  customize:
+#rename status: binary
+##esp32
+    binary_sensor.esp32_01_status:
+      friendly_name: "esp32 #01 Türe ELW"
+    binary_sensor.esp32_02_status:
+      friendly_name: "esp32 #02 Haupteingang"
+    binary_sensor.esp32_03_status:
+      friendly_name: "esp32 #03 Carport"
+    binary_sensor.esp32_04_status:
+      friendly_name: "esp32 #04 Serverraum"
+    binary_sensor.esp32_05_status:
+      friendly_name: "esp32 #05 kA"
+    binary_sensor.esp32_06_status:
+      friendly_name: "esp32 #06 Schreibtisch ELW CO2 "
+    binary_sensor.esp32_07_status:
+      friendly_name: "esp32 #07 Radiator WKS dsb"
+    binary_sensor.esp32_08_status:
+      friendly_name: "esp32 #08 kA"
+    binary_sensor.esp32_09_status:
+      friendly_name: "esp32 #09 EPaper"
+    binary_sensor.esp32_10_status:
+      friendly_name: "esp32 #10 Schreibtisch ELW OLED"
+    binary_sensor.esp32_11_status:
+      friendly_name: "esp32 #11 NN"
+    binary_sensor.esp32_12_status:
+      friendly_name: "esp32 #12 ELW Schreibtisch Lux Button"
+    binary_sensor.esp32_13_status:
+      friendly_name: "esp32 #13 Wintergarten Lux "
+    binary_sensor.esp32_14_status:
+      friendly_name: "esp32 #14 kA"
+    binary_sensor.esp32_15_status:
+      friendly_name: "esp32 #15 kA"
+##esp82
+    binary_sensor.esp8266_02_status:
+      friendly_name: "esp8266 #02 ELW Regal Temp/Motion"
+    binary_sensor.esp8266_06_status:
+      friendly_name: "esp8266 #06 ELW Klo Temp/Motion"

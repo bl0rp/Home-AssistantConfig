@@ -15,7 +15,37 @@ cards:
     #     - entity: binary_sensor.aeotec_zw100_multisensor_6_sensor
     #       name: Bla
     #       secondary_info: last-changed
+    - type: entities
+      title: esp32_06*
+      show_header_toggle: false
+      entities:
+        - type: section
 
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - entity_id: sensor.*esp32_06*
+                options:
+                  secondary_info: last-changed
+        - type: custom:auto-entities
+          card:
+            type: entities
+          filter:
+            include:
+              - device: /esp32_9/
+                options:
+                  secondary_info: last-changed
+
+    - type: custom:mini-graph-card
+      entities:
+       - sensor.esp32_06_co2
+       - sensor.esp32_06_temperature_scd
+      align_icon: left
+      align_state: center
+      show:
+        fill: false
     - type: entities
       title: fritzbox*
       show_header_toggle: false
@@ -71,7 +101,7 @@ cards:
 
 
     - type: entities
-      title: esp32_7*
+      title: esp32_07*
       show_header_toggle: false
       entities:
         - type: section
@@ -81,13 +111,13 @@ cards:
             type: entities
           filter:
             include:
-              - entity_id: sensor.esp32_7*
+              - entity_id: sensor.esp32_07*
                 options:
                   secondary_info: last-changed
-              - entity_id: binary_sensor.esp32_7*
+              - entity_id: binary_sensor.esp32_07*
                 options:
                   secondary_info: entity-id
-              - entity_id: switch.esp32_7*
+              - entity_id: switch.esp32_07*
                 options:
                   secondary_info: entity-id
     - break
@@ -113,7 +143,7 @@ cards:
                   secondary_info: entity-id
     - break
     - type: entities
-      title: esp32_4*
+      title: esp32_04*
       show_header_toggle: false
       entities:
         - type: section
@@ -123,16 +153,16 @@ cards:
             type: entities
           filter:
             include:
-              - entity_id: sensor.*esp32_4*
+              - entity_id: sensor.*esp32_04*
                 options:
                   secondary_info: last-changed
-              - entity_id: binary_sensor.*esp32_4*
+              - entity_id: binary_sensor.*esp32_04*
                 options:
                   secondary_info: entity-id
-              - entity_id: switch.*esp32_4*
+              - entity_id: switch.*esp32_04*
                 options:
                   secondary_info: entity-id
-              - entity_id: device_tracker.*esp32_4*
+              - entity_id: device_tracker.*esp32_04*
                 options:
                   secondary_info: entity-id
     - type: entities
@@ -248,7 +278,7 @@ cards:
           title: Temp WaKue
           min: 22.0
           max: 50.0
-          entity: sensor.esp32_7_temp
+          entity: sensor.esp32_07_temp
           severity:
           - value: 22.0
             hue: '100'

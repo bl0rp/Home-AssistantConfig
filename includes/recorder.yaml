@@ -8,6 +8,25 @@ include:
     - media_player
     - device_tracker
   entities:
+
+
+
+    #monitor_docker
+    - sensor.docker_1cpu
+    - sensor.docker_memory
+    - sensor.docker_memory_percent
+    #Car
+    - sensor.gti_combustion_range
+    - binary_sensor.gti_doors_locked
+    - sensor.gti_fuel_level
+    - sensor.gti_last_trip_average_fuel_consumption
+    - sensor.gti_last_trip_average_speed
+    - sensor.gti_last_trip_duration
+    - sensor.gti_last_trip_length
+    - sensor.gti_odometer
+    - sensor.gti_outside_temperature
+    - binary_sensor.gti_vehicle_moving
+
     #dryer/washer sensor
     - sensor.washer_state
     - sensor.dryer_state
@@ -17,6 +36,7 @@ include:
     - sensor.clients_online
     #temperature etc
     - sensor.aeotec_zw100_multisensor_6_temperature
+    - sensor.aeotec_zw100_multisensor_6_luminance
     - sensor.temperatur_esp8266_01
     - sensor.esp8266_02_temperature
     - sensor.temperatur_esp8266_03
@@ -34,47 +54,22 @@ include:
     # - sensor.avg_temp_inside_elw_7day
     # - sensor.avg_free_space_qnap_1y
 
-    #garmin data
-
-    - sensor.active_kilocalories
-    - sensor.active_time
-    - sensor.activity_stress_duration
-    - sensor.average_spo2
-    - sensor.avg_stress_level
-    - sensor.awake_duration
-    - sensor.bmr_kilocalories
-    - sensor.body_battery_charged
-    - sensor.body_battery_drained
-    - sensor.body_battery_highest
-    - sensor.body_battery_lowest
-    - sensor.body_battery_most_recent
-    - sensor.burned_kilocalories
-    - sensor.daily_step_goal
-    - sensor.floors_ascended
-    - sensor.floors_ascended_goal
-    - sensor.floors_descended
-    - sensor.high_stress_duration
-    - sensor.highest_respiration
-    - sensor.latest_respiration
-    - sensor.latest_spo2
-    - sensor.low_stress_duration
-    - sensor.lowest_respiration
-    - sensor.lowest_spo2
-    - sensor.max_heart_rate
-    - sensor.max_stress_level
-    - sensor.medium_stress_duration
-    - sensor.min_heart_rate
-    - sensor.rest_stress_duration
-    - sensor.resting_heart_rate
-    - sensor.sedentary_time
-    - sensor.sleep_duration
-    - sensor.sleeping_time
-    - sensor.total_distance_mtr
-    - sensor.total_kilocalories
-    - sensor.total_steps
-    - sensor.total_stress_duration
-    - sensor.uncat_stress_duration
-
+#crypto data -> package crypto_btc
+    - sensor.btc
+    - sensor.btc_1hr
+    - sensor.btc_1d
+    - sensor.btc_7d
+    - sensor.btc_30d
+    - sensor.eth
+    - sensor.eth_1hr
+    - sensor.eth_1d
+    - sensor.eth_7d
+    - sensor.eth_30d
+    - sensor.doge
+    - sensor.doge_1hr
+    - sensor.doge_1d
+    - sensor.doge_7d
+    - sensor.doge_30d
 
 
     #internet weather
@@ -147,14 +142,26 @@ include:
     - sensor.sonoff08_momentane_leistung
 
 
-
-
-
-
-
-
     #gas price
-    - sensor.tankstelle_super
+    - sensor.tankerkoenig_aral_tankstelle_e5
+    - sensor.tankerkoenig_aral_tankstelle_e5_2
+    - sensor.tankerkoenig_aral_tankstelle_e5_3
+    - sensor.tankerkoenig_aral_tankstelle_e5_4
+    - sensor.tankerkoenig_avia_tankstelle_e5
+    - sensor.tankerkoenig_bft_leinfelden_e5
+    - sensor.tankerkoenig_esso_tankstelle_e5
+    - sensor.tankerkoenig_esso_tankstelle_e5_2
+    - sensor.tankerkoenig_esso_tankstelle_e5_3
+    - sensor.tankerkoenig_jet_stuttgart_industriestr_38_e5
+    - sensor.tankerkoenig_miedtank_autopark_gmbh_e5
+    - sensor.tankerkoenig_shell_leinfelden_echterdingen_stuttgarter_str_6_e5
+    - sensor.tankerkoenig_shell_stuttgart_burgstallstr_122_e5
+    - sensor.tankerkoenig_shell_stuttgart_epplestr_90_96_e5
+    - sensor.tankerkoenig_shell_stuttgart_hechinger_str_33_e5
+    - sensor.tankerkoenig_shell_stuttgart_industriestr_58_e5
+    - sensor.tankerkoenig_shell_stuttgart_karl_kloss_str_18_e5
+    - sensor.tankerkoenig_stuttgart_epplestrasse_55_e5
+    - sensor.tankerkoenig_t_stuttgart_e5
     #travel time
     - sensor.waze_zuhause_hrw
     - sensor.waze_zuhause_rw2
@@ -186,24 +193,31 @@ include:
     #esp32
     - sensor.esp32_01_battery
     - sensor.esp32_01_rssi
-
     - sensor.esp32_02_battery
     - sensor.esp32_02_humidity
     - sensor.esp32_02_temperature
     - sensor.esp32_02_rssi
-
     - sensor.esp32_03_battery
     - sensor.esp32_03_humidity
     - sensor.esp32_03_temperature
     - sensor.esp32_03_pressure
     - sensor.esp32_03_rssi
+    - sensor.esp32_04_humidity
+    - sensor.esp32_04_temperature
+    - sensor.esp32_04_pressure
+    - sensor.esp32_07_temp
+#esp32_6 scd
 
+    - sensor.esp32_06_co2
+    - sensor.esp32_06_humidity_scd
+    - sensor.esp32_06_temperature_scd
+#esp32_9 epaper
+    - sensor.esp32_09_battery
+#esp32_10
 
-    - sensor.esp32_4_humidity
-    - sensor.esp32_4_temperature
-    - sensor.esp32_4_pressure
-
-
-    - sensor.esp32_06_voltage
-    
-    - sensor.esp32_7_temp
+#esp32_13
+    - sensor.esp32_13_brightness_bh1750
+#esp32_12
+    - sensor.esp32_12_brightness_ldr
+    - sensor.esp32_12_brightness_bh1750_long
+    - sensor.esp32_12_brightness_bh1750_short

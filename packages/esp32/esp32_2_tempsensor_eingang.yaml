@@ -38,6 +38,7 @@ binary_sensor:
     state_topic: "esp32_2/status"
     payload_on: "online"
     payload_off: "offline"
+    device_class: connectivity
 
   - platform: mqtt
     name: "esp32_02_ota_status"
@@ -200,6 +201,10 @@ automation:
 
     action:
     - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Temperatur Haupteingang (ESP #2)!
+    - service: notify.sensor_watch_log
       data_template:
         message: >
           {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: Temperatur Haupteingang (ESP #2)!

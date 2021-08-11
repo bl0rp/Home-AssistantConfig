@@ -13,10 +13,7 @@ cards:
         - type: entities
           show_header_toggle: false
           entities:
-          - type: section
-        - type: entities
-          entities:
-            - entity: input_select.load_graph
+          - entity: input_select.load_graph
 
         - type: conditional
           conditions:
@@ -188,8 +185,10 @@ cards:
           - type: section
           - entity: sensor.speedtest_ping
           - entity: sensor.speedtest_download
+            secondary_info: last-changed
           - entity: sensor.speedtest_upload
           - entity: sensor.fast_com_download
+            secondary_info: last-changed
           - type: section
         - type: entities
           entities:
@@ -257,13 +256,13 @@ cards:
                 name: Fast.com Down
 
 
-    - break
+
     - type: entities
       title: Systemstatus
       show_header_toggle: false
       entities:
         - type: section
-        - entity: automation.nuc_load_to_led
+        - entity: automation.nuc_load_to_esp32_10_led
           name: Load 2 LED?
           icon: mdi:led-variant-outline
         - entity: sensor.host_uptime_human
@@ -382,7 +381,7 @@ cards:
 
 
 
-    - break
+
     - type: entities
       title: Servicestatus
       show_header_toggle: false
@@ -402,8 +401,9 @@ cards:
         - entity: automation.sshd_alarm
         - entity: automation.tor_alarm
         - entity: automation.speedtest_alarm
-        - entity: automation.alert_when_a_critical_container_goes_offline
+        - entity: automation.container_alert_offline
           name: Container Alarm
+          icon: mdi:ferry
       - type: section
       - type: custom:auto-entities
         show_empty: false
@@ -423,16 +423,3 @@ cards:
         filter:
           include:
             - state: "stopped"
-
-      - type: custom:fold-entity-row
-        head:
-          type: section
-          label: Docker Container
-        items:
-        - entity: switch.watchtower
-        - entity: switch.yacht
-        - entity: switch.portainer
-        - entity: switch.mosquitto
-        - entity: switch.grafana
-        - entity: switch.influx
-        - entity: switch.tasmoadmin

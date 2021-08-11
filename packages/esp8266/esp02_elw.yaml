@@ -30,7 +30,7 @@ sensor:
         friendly_name: "ESP8266 02 Status"
         value_template: >-
            {%- if is_state('binary_sensor.esp8266_02_status', 'on') -%}
-             Online! Uptime: {{ states.sensor.esp8266_02_uptime_format.state }}
+             Online! Uptime: {{ states.sensor.esp8266_02_uptime_human.state }}
            {%- else -%}
              Node offline!
            {%- endif -%}
@@ -41,43 +41,7 @@ sensor:
             mdi:server-network-off
           {% endif %}
 
-      esp8266_02_uptime_format:
-        friendly_name: Uptime esp8266_02
-        value_template: >-
-           {% if states('binary_sensor.esp8266_02_status') | lower == "off" %}
-             Node offline
-           {% else %}
-           {% macro human_time(seconds) -%}
-             {%- set seconds = seconds|int -%}
-             {%- set comma = joiner(', ') -%}
-             {%- set intervals = {
-               'weeks': 60 * 60 * 24 * 7,
-               'days': 60 * 60 * 24,
-               'hours': 60 * 60,
-               'minutes': 60,
-               'seconds': 1,
-             } -%}
 
-              {%- set weeks = seconds // intervals.weeks -%}
-              {%- set seconds = seconds % intervals.weeks -%}
-              {{- comma() ~ weeks ~ 'w' if weeks -}}
-
-              {%- set days = seconds // intervals.days -%}
-              {%- set seconds = seconds % intervals.days -%}
-              {{- comma() ~ days ~ 'd' if days -}}
-
-              {%- set hours = seconds // intervals.hours -%}
-              {%- set seconds = seconds % intervals.hours -%}
-              {{- comma() ~ hours ~ 'h' if hours -}}
-
-              {%- set minutes = seconds // intervals.minutes -%}
-              {{- comma() ~ minutes ~ 'm' if minutes -}}
-
-              {%- set seconds = seconds % intervals.minutes -%}
-              {{- comma() ~ seconds ~ 's' if seconds -}}
-            {%- endmacro %}
-            {{ human_time(states.sensor.esp8266_02_uptime_2.state | int   ) }}
-            {% endif %}
 
 
       esp8266_02_motion:

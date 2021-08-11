@@ -1,0 +1,228 @@
+title: car
+type: custom:vertical-layout
+layout:
+  width: 400
+  max_cols: 10
+path: car
+icon: mdi:car
+cards:
+#START VW CAR IMAGE
+- type: picture-elements
+  image: /local/passat.png
+  elements:
+    - type: image
+      entity: switch.gti_climatisation
+      image: /local/blank.png
+      style:
+        top: 39.5%
+        left: 55%
+        width: 43%
+      state_image:
+        "on": /local/passat_heat.png
+    - type: image
+      entity: binary_sensor.gti_external_power
+      image: /local/blank.png
+      style:
+        top: 62.8%
+        left: 21.2%
+        width: 43%
+      state_image:
+        "on": /local/passatcharging.png
+    - type: image
+      entity: binary_sensor.gti_parking_light
+      image: /local/blank.png
+      style:
+        top: 66.8%
+        left: 37.2%
+        width: 37%
+      state_image:
+        "on": /local/passat_light.png
+    - type: image
+      entity: lock.gti_doors_locked
+      image: /local/blank.png
+      style:
+        top: 42.3%
+        left: 57%
+        width: 2%
+      state_image:
+        locked: /local/blink.g
+    - type: state-icon
+      entity: lock.gti_doors_locked
+      style:
+        top: 87%
+        left: 4
+    - type: state-icon
+      entity: switch.gti_climatisation
+      hold_action: toggle
+      style:
+        top: 87%
+        left: 5
+    - type: state-icon
+      entity: switch.gti_window_heater
+      hold_action: toggle
+      style:
+        top: 87%
+        left: 6
+    - type: state-icon
+      entity: switch.gti_charging
+      style:
+        top: 87%
+        left: 8
+    - type: state-label
+      entity: sensor.gti_battery_level
+      style:
+        top: 96%
+        left: 8
+    - type: state-icon
+      entity: sensor.gti_fuel_level
+      style:
+        top: 87%
+        left: 9
+    - type: state-label
+      entity: sensor.gti_fuel_level
+      style:
+        top: 96%
+        left: 92%
+
+- type: custom:search-card
+  max_results: 50
+- type: markdown
+  content: >-
+    {% for entity in  expand('group.all_monitored_gas_stations') |
+    sort(attribute='state') | map(attribute='entity_id') | map('string')  | list
+    %}
+     {{state_attr(entity, "station_name")}}
+      ## {{states(entity) }} €
+      ---
+    {% endfor%}
+
+
+- type: custom:layout-break
+- type: markdown
+  content: >-
+    {% for entity in  (expand('group.all_monitored_gas_stations')| sort(attribute='state')| map(attribute='entity_id')| map('string')| list)[0:5] %}
+    #### {{state_attr(entity, "brand")}} {{state_attr(entity, "street")}}
+      {{states(entity) }}€/l Total: {{((50-(50/100) * ((states.sensor.gti_fuel_level.state)|float)) * (states(entity) |float )) |round(2) }}€
+
+    {% endfor%}
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Tankstellen
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: sensor.tankerkoenig*
+
+- type: custom:layout-break
+
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Tankstellen Sort
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: sensor.tankerkoenig*
+  sort:
+    method: 'state'
+    numeric: true
+    count: 5
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Tankstellen Sort Reverse
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: sensor.tankerkoenig*
+  sort:
+    method: 'state'
+    numeric: true
+    reverse: true
+    count: 5
+- type: 'custom:tankerkoenig-card'
+  name: Benzinpreise
+  show:
+    - e5
+  show_closed: true
+  show_header: true
+  stations:
+    - name: Seerosenstr.
+      brand: T
+      e5: sensor.tankerkoenig_t_stuttgart_e5
+    - name: Handwerkstr.
+      brand: Miedtank
+      e5: sensor.tankerkoenig_miedtank_autopark_gmbh_e5
+    - name: Hauptstr.
+      brand: ARAL
+      e5: sensor.tankerkoenig_aral_tankstelle_e5
+    - name: Robert-Koch-Str.
+      brand: ARAL
+      e5: sensor.tankerkoenig_aral_tankstelle_e5_2
+    - name: Vaihinger Str.
+      brand: ARAL
+      e5: sensor.tankerkoenig_aral_tankstelle_e5_3
+    - name: Plieninger Str.
+      brand: ARAL
+      e5: sensor.tankerkoenig_aral_tankstelle_e5_4
+    - name: Am Wallgraben
+      brand: Avia
+      e5: sensor.tankerkoenig_avia_tankstelle_e5
+    - name: Leinfelden
+      brand: bft
+      e5: sensor.tankerkoenig_bft_leinfelden_e5
+    - name: Hauptstr.
+      brand: Esso
+      e5: sensor.tankerkoenig_esso_tankstelle_e5
+    - name: Rotenwald Str.
+      brand: Esso
+      e5: sensor.tankerkoenig_esso_tankstelle_e5_2
+    - name: Schelmenwasenstr.
+      brand: Esso
+      e5: sensor.tankerkoenig_esso_tankstelle_e5_3
+    - name: Industriestr.
+      brand: Jet
+      e5: sensor.tankerkoenig_jet_stuttgart_industriestr_38_e5
+    - name: Echterdingen
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_leinfelden_echterdingen_stuttgarter_str_6_e5
+    - name: Burgstallstr.
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_stuttgart_burgstallstr_122_e5
+    - name: Epplestr.
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_stuttgart_epplestr_90_96_e5
+    - name: Hechingerstr.
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_stuttgart_hechinger_str_33_e5
+    - name: Industriestr.
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_stuttgart_industriestr_58_e5
+    - name: Karl-Kloß-Str.
+      brand: Shell
+      e5: sensor.tankerkoenig_shell_stuttgart_karl_kloss_str_18_e5
+    - name: Epplestr.
+      brand: OMV
+      e5: sensor.tankerkoenig_stuttgart_epplestrasse_55_e5
+
+- type: custom:layout-break
+- type: entities
+  entities:
+    - entity: binary_sensor.gti_doors_locked
+      name: Golf
+      secondary_info: last-changed
+    - entity: binary_sensor.gti_trunk_closed
+      name: Kofferraum
+      secondary_info: last-changed
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: gti
+    show_header_toggle: false
+  filter:
+    include:
+      - name: "Bedroom *"
+      - entity_id: "sensor.gti*"
+      - entity_id: "binary_sensor.gti*"
+      - entity_id: "switch.gti*"

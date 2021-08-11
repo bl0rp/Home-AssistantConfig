@@ -1,0 +1,190 @@
+###########################################################################################################
+## Packages / monitor_docker                                                                             ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config                                               ##
+## Inspired by:                                                                                          ##
+## https://github.com/ualex73/monitor_docker                                                             ##
+###########################################################################################################
+homeassistant:
+  customize:
+    switch.docker_grafana:
+      friendly_name: Grafana
+      icon: mdi:chart-areaspline
+
+    switch.docker_influxdb2:
+      friendly_name: "InfluxDB"
+      icon: mdi:database
+
+    switch.docker_portainer:
+      friendly_name: Portainer
+      icon: mdi:cog-refresh
+
+    switch.docker_watchtower:
+      friendly_name: "Watchtower"
+      icon: mdi:binoculars
+
+    switch.docker_diun_diun_metis_1:
+      friendly_name: "Diun"
+      icon: mdi:binoculars
+
+    switch.docker_tasmoadmin:
+      friendly_name: "TasmoAdmin"
+      icon: mdi:power-socket-eu
+
+    switch.docker_yacht:
+      friendly_name: "Yacht"
+      icon: mdi:ferry
+
+    switch.docker_mqtt:
+      friendly_name: "Mosquitto"
+      icon: mdi:transmission-tower
+
+    switch.docker_sftp_sftp_1:
+      friendly_name: "SFTP"
+      icon: mdi:download
+
+    switch.docker_heimdall:
+      friendly_name: "Heimdall"
+      icon: mdi:card-search-outline
+
+    switch.unifi_controller_latest:
+      friendly_name: "Unifi"
+      icon: mdi:access-point-network
+
+    switch.docker_wud:
+      friendly_name: "WUD"
+      icon: mdi:update
+
+    switch.docker_librespeed:
+      friendly_name: "LibreSpeed"
+      icon: mdi:send-clock
+
+    sensor.docker_librespeed_network_total_down:
+      friendly_name: "LibreSpeed"
+    sensor.docker_unifi_controller_latest_network_total_down:
+      friendly_name: "Unifi"
+    sensor.docker_mqtt_network_total_down:
+      friendly_name: "Mosquitto"
+    sensor.docker_grafana_network_total_down:
+      friendly_name: "Grafana"
+    sensor.docker_influxdb2_network_total_down:
+      friendly_name: "InfluxDB"
+    sensor.docker_diun_diun_metis_1_network_total_down:
+      friendly_name: "Diun"
+    sensor.docker_portainer_network_total_down:
+      friendly_name: "Portainer"
+    sensor.docker_heimdall_network_total_down:
+      friendly_name: "Heimdall"
+    sensor.docker_watchtower_network_total_down:
+      friendly_name: "Watchtower"
+    sensor.docker_tasmoadmin_network_total_down:
+      friendly_name: "TasmoAdmin"
+    sensor.docker_yacht_network_total_down:
+      friendly_name: "Yacht"
+    sensor.docker_wud_network_total_down:
+      friendly_name: "WUD"
+
+    sensor.docker_librespeed_network_total_up:
+      friendly_name: "LibreSpeed"
+    sensor.docker_unifi_controller_latest_network_total_up:
+      friendly_name: "Unifi"
+    sensor.docker_mqtt_network_total_up:
+      friendly_name: "Mosquitto"
+    sensor.docker_grafana_network_total_up:
+      friendly_name: "Grafana"
+    sensor.docker_influxdb2_network_total_up:
+      friendly_name: "InfluxDB"
+    sensor.docker_diun_diun_metis_1_network_total_up:
+      friendly_name: "Diun"
+    sensor.docker_portainer_network_total_up:
+      friendly_name: "Portainer"
+    sensor.docker_heimdall_network_total_up:
+      friendly_name: "Heimdall"
+    sensor.docker_watchtower_network_total_up:
+      friendly_name: "Watchtower"
+    sensor.docker_tasmoadmin_network_total_up:
+      friendly_name: "TasmoAdmin"
+    sensor.docker_yacht_network_total_up:
+      friendly_name: "Yacht"
+    sensor.docker_wud_network_total_up:
+      friendly_name: "WUD"
+
+    sensor.docker_librespeed_memory:
+      friendly_name: "LibreSpeed"
+    sensor.docker_unifi_controller_latest_memory:
+      friendly_name: "Unifi"
+    sensor.docker_mqtt_memory:
+      friendly_name: "Mosquitto"
+    sensor.docker_grafana_memory:
+      friendly_name: "Grafana"
+    sensor.docker_influxdb2_memory:
+      friendly_name: "InfluxDB"
+    sensor.docker_diun_diun_metis_1_memory:
+      friendly_name: "Diun"
+    sensor.docker_portainer_memory:
+      friendly_name: "Portainer"
+    sensor.docker_heimdall_memory:
+      friendly_name: "Heimdall"
+    sensor.docker_watchtower_memory:
+      friendly_name: "Watchtower"
+    sensor.docker_tasmoadmin_memory:
+      friendly_name: "TasmoAdmin"
+    sensor.docker_yacht_memory:
+      friendly_name: "Yacht"
+    sensor.docker_wud_memory:
+      friendly_name: "WUD"
+
+monitor_docker:
+  - name: Docker
+    monitored_conditions:
+      - version
+      - containers_total
+      - containers_running
+      - containers_paused
+      - containers_stopped
+      - containers_1cpu_percentage
+      - containers_memory
+      - containers_memory_percentage
+      - images
+      - state
+      - status
+      - health
+      - uptime
+      - 1cpu_percentage
+      - memory
+      - memory_percentage
+      - network_total_up
+      - network_total_down
+
+automation:
+
+  - alias: container_alert_offline
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: switch.docker_grafana, switch.docker_influxdb2, switch.docker_portainer, switch.docker_watchtower, switch.docker_diun_diun_metis_1, switch.docker_tasmoadmin, switch.docker_yacht, switch.docker_mqtt, switch.docker_heimdall, switch.unifi_controller_latest, switch.docker_wud, switch.docker_librespeed
+        to: 'off'
+        for:
+          minutes: 1
+    condition:
+      condition: and
+      conditions:
+        # Only send this once per hour
+        - condition: template
+          value_template: >
+            {% if states.automation.container_alert_offline.last_triggered is not none %}
+              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.container_alert_offline.attributes.last_triggered) | int > 3600 %} true {% else %} false
+              {% endif %}
+            {% else %}
+            false
+            {% endif %}
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: 'Docker container for {{ trigger.to_state.name }} is not running. Please check the status of this container as some features may stop functioning.'
+          title: Container Alert
+      - service: persistent_notification.create
+        data_template:
+          notification_id: offline_container
+          title: Container Offline
+          message: >
+            Docker container for {{ trigger.to_state.name }} is not running.

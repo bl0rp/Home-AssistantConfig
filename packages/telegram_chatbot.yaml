@@ -36,7 +36,7 @@ automation:
         target: !secret telegram_chat_id_christoph
         disable_notification: true
         message: "Commands..."
-        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate"]
+        keyboard: ["/status", "/test", "/benzin", "/temp", "/weather", "/homestate"]
 
 
 ## menu
@@ -52,24 +52,8 @@ automation:
       data_template:
         target: "{{ trigger.event.data.user_id }}"
         message: "Commands..."
-        keyboard: ["/status", "/test", "/temp", "/weather", "/homestate", "/routerreset"]
-## router reset
-  - alias: 'telegram_router_reset'
-    initial_state: on
-    trigger:
-      platform: event
-      event_type: telegram_command
-      event_data:
-        command: '/routerreset'
-    action:
-      - service: telegram_bot.send_message
-        data_template:
-          target: "{{ trigger.event.data.user_id }}"
-          message: >
-              Router wird neugestartet!
-          keyboard: ["/menu"]
-      - service: script.turn_on
-        entity_id: script.reset_router
+        keyboard: ["/status", "/benzin", "/test", "/temp", "/weather", "/homestate"]
+
 
 #home state
   - alias: 'telegram_homestate'
@@ -260,4 +244,21 @@ automation:
 
            {{ states.sensor.esp32_03_temperature.attributes.friendly_name }}: {{ states.sensor.esp32_03_temperature.state}}°C"
         keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]
+#ghasprice
+  - alias: 'telegram_replay_gasprice'
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/benzin'
+    action:
+      service: telegram_bot.send_message
+      data_template:
+        target: "{{ trigger.event.data.user_id }}"
+        message: >
+          {% for entity in  (expand('group.all_monitored_gas_stations')| sort(attribute='state')| map(attribute='entity_id')| map('string')| list)[0:5] %}
 
+          {{state_attr(entity, "brand")}} {{state_attr(entity, "street")}} {{states(entity) }}€ Total: {{((50-(50/100) * ((states.sensor.gti_fuel_level.state)|float)) * (states(entity) |float )) |round(2) }}€ {% endfor%}
+
+        keyboard: ["/menu"]

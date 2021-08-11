@@ -1,0 +1,340 @@
+title: waste
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 10
+path: waste
+icon: mdi:delete
+cards:
+
+- type: entities
+  title: Einfach
+  show_header_toggle: false
+  entities:
+    - entity: sensor.waste_collection_upcoming_value_days_true_biomuell
+      name: Biomüll
+      icon: mdi:food-apple
+    - entity: sensor.waste_collection_upcoming_value_days_true_restmuell
+      name: Restmüll
+      icon: mdi:delete-empty
+    - entity: sensor.waste_collection_upcoming_value_days_true_altpapier
+      name: Altpapier
+      icon: mdi:newspaper-variant-multiple
+    - entity: sensor.waste_collection_upcoming_value_days_true_gelbersack
+      name: Gelber Sack
+      icon: mdi:sack
+
+- type: entities
+  title: Einfach Farbe
+  show_header_toggle: false
+  entities:
+    - entity: sensor.waste_collection_upcoming_value_days_true_biomuell
+      name: Biomüll
+      type: custom:template-entity-row
+      state: "{{ states(config.entity)  }}"
+      icon: mdi:food-apple
+      card_mod:
+        style: |
+          {% if states(config.entity) == "Heute" %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) == "Morgen" %}
+             :host {
+               --paper-item-icon-color: yellow;
+               color: yellow
+             }
+          {% else %}
+             :host {
+             }
+          {% endif %}
+    - entity: sensor.waste_collection_upcoming_value_days_true_restmuell
+      name: Restmüll
+      type: custom:template-entity-row
+      state: "{{ states(config.entity)  }}"
+      icon: mdi:delete-empty
+      card_mod:
+        style: |
+          {% if states(config.entity) == "Heute" %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) == "Morgen" %}
+             :host {
+               --paper-item-icon-color: yellow;
+               color: yellow
+             }
+          {% else %}
+             :host {
+             }
+          {% endif %}
+    - entity: sensor.waste_collection_upcoming_value_days_true_altpapier
+      name: Altpapier
+      type: custom:template-entity-row
+      state: "{{ states(config.entity)  }}"
+      icon: mdi:newspaper-variant-multiple
+      card_mod:
+        style: |
+          {% if states(config.entity) == "Heute" %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) == "Morgen" %}
+             :host {
+               --paper-item-icon-color: yellow;
+               color: yellow
+             }
+          {% else %}
+             :host {
+             }
+          {% endif %}
+    - entity: sensor.waste_collection_upcoming_value_days_true_gelbersack
+      name: Gelber Sack
+      type: custom:template-entity-row
+      state: "{{ states(config.entity)  }}"
+      icon: mdi:sack
+      card_mod:
+        style: |
+          {% if states(config.entity) == "Heute" %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) == "Morgen" %}
+             :host {
+               --paper-item-icon-color: yellow;
+               color: yellow
+             }
+          {% else %}
+             :host {
+             }
+          {% endif %}
+
+- type: custom:layout-break
+#bio
+- type: entities
+  title: Multiline
+  show_header_toggle: false
+  entities:
+    - type: 'custom:template-entity-row'
+      entity: sensor.abfallkalender_biomuell_date
+      style: >
+        .secondary {
+          font-size:12px;
+        }
+        .pointer {
+          {% set dateto = states('sensor.abfallkalender_biomuell_date').split('|')[0] %}
+          {% if dateto == '0' %}
+            --paper-item-icon-color: #c93636 !important;
+          {% elif dateto == '1' %}
+            --paper-item-icon-color: #eff542 !important;
+          {% endif %}
+        }
+      icon: 'mdi:food-apple'
+      name: Biomüll
+      state: >
+        {% set dateto =
+        states('sensor.abfallkalender_biomuell_date').split('|')[0] %} {% if
+        dateto == '0' %}
+          Heute
+        {% elif dateto == '1' %}
+          Morgen
+        {% else %}
+          in {{ dateto }} Tagen
+        {% endif %}
+      condition: >
+        {% if states('sensor.abfallkalender_biomuell_date') != '' %}
+          true
+        {% endif %}
+      secondary: >
+        {% set datum = as_timestamp(states('sensor.abfallkalender_biomuell_date').split('|')[1]) %}
+        {% if datum|timestamp_custom('%a') == 'Mon' %}Montag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Tue' %}Dienstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Wed' %}Mittwoch{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Thu' %}Donnerstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Fri' %}Freitag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sat' %}Samstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sun' %}Sonntag{% endif -%}
+        {{ datum|timestamp_custom(' %d.%m.%Y') }}
+#rest
+    - type: 'custom:template-entity-row'
+      entity: sensor.abfallkalender_restmuell_date
+      style: >
+        .secondary {
+          font-size:12px;
+        }
+        .pointer {
+          {% set dateto = states('sensor.abfallkalender_restmuell_date').split('|')[0] %}
+          {% if dateto == '0' %}
+            --paper-item-icon-color: #c93636 !important;
+          {% elif dateto == '1' %}
+            --paper-item-icon-color: #eff542 !important;
+          {% endif %}
+        }
+      icon: 'mdi:delete-empty'
+      name: Restmüll
+      state: >
+        {% set dateto =
+        states('sensor.abfallkalender_restmuell_date').split('|')[0] %} {% if
+        dateto == '0' %}
+          Heute
+        {% elif dateto == '1' %}
+          Morgen
+        {% else %}
+          in {{ dateto }} Tagen
+        {% endif %}
+      condition: >
+        {% if states('sensor.abfallkalender_restmuell_date') != '' %}
+          true
+        {% endif %}
+      secondary: >
+        {% set datum = as_timestamp(states('sensor.abfallkalender_restmuell_date').split('|')[1]) %}
+        {% if datum|timestamp_custom('%a') == 'Mon' %}Montag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Tue' %}Dienstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Wed' %}Mittwoch{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Thu' %}Donnerstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Fri' %}Freitag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sat' %}Samstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sun' %}Sonntag{% endif -%}
+        {{ datum|timestamp_custom(' %d.%m.%Y') }}
+#papier
+    - type: 'custom:template-entity-row'
+      entity: sensor.abfallkalender_altpapier_date
+      style: >
+        .secondary {
+          font-size:12px;
+        }
+        .pointer {
+          {% set dateto = states('sensor.abfallkalender_altpapier_date').split('|')[0] %}
+          {% if dateto == '0' %}
+            --paper-item-icon-color: #c93636 !important;
+          {% elif dateto == '1' %}
+            --paper-item-icon-color: #eff542 !important;
+          {% endif %}
+        }
+      icon: 'mdi:newspaper-variant-multiple'
+      name: Altpapier
+      state: >
+        {% set dateto =
+        states('sensor.abfallkalender_altpapier_date').split('|')[0] %} {% if
+        dateto == '0' %}
+          Heute
+        {% elif dateto == '1' %}
+          Morgen
+        {% else %}
+          in {{ dateto }} Tagen
+        {% endif %}
+      condition: >
+        {% if states('sensor.abfallkalender_altpapier_date') != '' %}
+          true
+        {% endif %}
+      secondary: >
+        {% set datum = as_timestamp(states('sensor.abfallkalender_altpapier_date').split('|')[1]) %}
+        {% if datum|timestamp_custom('%a') == 'Mon' %}Montag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Tue' %}Dienstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Wed' %}Mittwoch{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Thu' %}Donnerstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Fri' %}Freitag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sat' %}Samstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sun' %}Sonntag{% endif -%}
+        {{ datum|timestamp_custom(' %d.%m.%Y') }}
+#gelbersack
+    - type: 'custom:template-entity-row'
+      entity: sensor.abfallkalender_gelbersack_date
+      style: >
+        .secondary {
+          font-size:12px;
+        }
+        .pointer {
+          {% set dateto = states('sensor.abfallkalender_gelbersack_date').split('|')[0] %}
+          {% if dateto == '0' %}
+            --paper-item-icon-color: #c93636 !important;
+          {% elif dateto == '1' %}
+            --paper-item-icon-color: #eff542 !important;
+          {% endif %}
+        }
+      icon: 'mdi:sack'
+      name: Gelber Sack
+      state: >
+        {% set dateto =
+        states('sensor.abfallkalender_gelbersack_date').split('|')[0] %} {% if
+        dateto == '0' %}
+          Heute
+        {% elif dateto == '1' %}
+          Morgen
+        {% else %}
+          in {{ dateto }} Tagen
+        {% endif %}
+      condition: >
+        {% if states('sensor.abfallkalender_gelbersack_date') != '' %}
+          true
+        {% endif %}
+      secondary: >
+        {% set datum = as_timestamp(states('sensor.abfallkalender_gelbersack_date').split('|')[1]) %}
+        {% if datum|timestamp_custom('%a') == 'Mon' %}Montag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Tue' %}Dienstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Wed' %}Mittwoch{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Thu' %}Donnerstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Fri' %}Freitag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sat' %}Samstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sun' %}Sonntag{% endif -%}
+        {{ datum|timestamp_custom(' %d.%m.%Y') }}
+
+
+
+
+- type: entities
+  title: Multirow
+  show_header_toggle: false
+  entities:
+    - entity: sensor.biomuell_date
+      icon: 'mdi:food-apple'
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Biomüll
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.biomuell_collection
+          name: Abholung in
+          unit: Tage(n)
+        - entity: sensor.biomuell_date
+          name: Datum
+    - entity: sensor.restmuell_date
+      icon: 'mdi:delete-empty'
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Restmüll
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.restmuell_collection
+          name: Abholung in
+          unit: Tage(n)
+        - entity: sensor.restmuell_date
+          name: Datum
+    - entity: sensor.altpapier_date
+      icon: 'mdi:newspaper-variant-multiple'
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Altpapier
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.altpapier_collection
+          name: Abholung in
+          unit: Tage(n)
+        - entity: sensor.altpapier_date
+          name: Datum
+    - entity: sensor.gelbersack_date
+      icon: 'mdi:sack'
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Gelber Sack
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.gelbersack_collection
+          name: Abholung in
+          unit: Tage(n)
+        - entity: sensor.gelbersack_date
+          name: Datum

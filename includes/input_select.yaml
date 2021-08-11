@@ -1,0 +1,16 @@
+  esp:
+    name: Welcher esp?
+    icon: mdi:chip
+    options:
+      - esp32_1
+      - esp32_2
+      - esp32_3
+      - esp32_04
+      - esp32_5
+      - esp32_6
+      - esp32_7
+      - esp32_8
+      - esp32_9
+      - esp32_10
+      - esp32_11
+      - esp32_12

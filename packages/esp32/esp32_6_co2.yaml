@@ -1,0 +1,77 @@
+########################################################################
+## Packages / ESP32 #6                                                ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+#############
+#  sensors  #
+#############
+sensor:
+  - platform: template
+    sensors:
+      air_quality_elw:
+        friendly_name: "Luftqualität (ELW)"
+        value_template: >-
+          {% set ppm = states('sensor.esp32_06_co2') | int(default=-1) %}
+          {% if ppm > 0 %}
+            {% if ppm < 600 %} Gut
+            {% elif ppm < 1000 %} Mäßig
+            {% elif ppm < 9999 %} Schlecht
+            {% endif %}
+          {% else %} Nicht verfügbar
+          {% endif %}
+        icon_template: >-
+          {% set ppm = states('sensor.esp32_06_co2') | int(default=-1) %}
+          {% if ppm > 0 %}
+            {% if ppm < 600 %} mdi:emoticon-happy-outline
+            {% elif ppm < 1000 %} mdi:emoticon-neutral-outline
+            {% elif ppm < 9999 %} mdi:emoticon-dead-outline
+            {% endif %}
+          {% else %} mdi:alert-outline
+          {% endif %}
+      air_quality_elw_detail:
+        friendly_name: "Luftqualität (ELW)"
+        value_template: >-
+          {% set ppm = states('sensor.esp32_06_co2') | int(default=-1) %}
+          {% if ppm > 0 %}
+            {% if ppm < 600 %} Gut {{states('sensor.esp32_06_co2')}} ppm
+            {% elif ppm < 1000 %} Mäßig {{states('sensor.esp32_06_co2')}} ppm
+            {% elif ppm < 9999 %} Schlecht {{states('sensor.esp32_06_co2')}} ppm
+            {% endif %}
+          {% else %} Nicht verfügbar
+          {% endif %}
+        icon_template: >-
+          {% set ppm = states('sensor.esp32_06_co2') | int(default=-1) %}
+          {% if ppm > 0 %}
+            {% if ppm < 600 %} mdi:emoticon-happy-outline
+            {% elif ppm < 1000 %} mdi:emoticon-neutral-outline
+            {% elif ppm < 9999 %} mdi:emoticon-dead-outline
+            {% endif %}
+          {% else %} mdi:alert-outline
+          {% endif %}
+
+
+automation:
+  - alias: ventilation_warning_elw
+    initial_state: True
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.esp32_06_co2
+      above: 999.0
+    condition:
+    - condition: template
+      value_template: >
+        {% if states.automation.ventilation_warning_elw.last_triggered is not none %}
+          {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.ventilation_warning_elw.attributes.last_triggered) | int > 3600 %} true {% else %} false
+          {% endif %}
+        {% else %}
+        false
+        {% endif %}
+    - condition: state
+      entity_id: "input_boolean.chrishome"
+      state: "on"
+    action:
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ELW lüften! ({{ states('sensor.esp32_06_co2') }} ppm)

@@ -1,151 +1,356 @@
 title: test
+type: custom:vertical-layout
+layout:
+  width: 400
+  max_cols: 10
 path: test
 icon: mdi:test-tube
-panel: true
 cards:
+- type: statistics-graph
+  title: 'My Graph'
+  days_to_show: 30
+  entities:
+    - entity: sensor.esp8266_02_temperature
+      name: Regal
+- type: entities
+  entities:
+    - entity: sensor.esp8266_01_motion
+      secondary_info: last-changed
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: esphome status online
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: "binary_sensor.esp*_status"
+        options:
+          secondary_info: last-changed
+    exclude:
+      - entity_id: "binary_sensor.esp*_ota_status"
+      - state: "off"
+  sort:
+    method: name
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: esphome status offline
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: "binary_sensor.esp*_status"
+        options:
+          secondary_info: last-changed
+    exclude:
+      - entity_id: "binary_sensor.esp*_ota_status"
+      - state: "on"
+  sort:
+    method: name
 
 
 
-- type: custom:layout-card
-  layout: vertical
-  cards:
-    - type: 'custom:love-lock-card'
-      title: Lounge
-      popup: timeout
-      cards:
-        - entity: light.schlafzimmer
-          name: Schlafzimmer
-          type: light
-    - type: custom:search-card
-      max_results: 50
-    - type: entities
-      title: Scripts
-      show_header_toggle: false
-      entities:
-      - entity: script.nma_test
-        name: Feuer!
+
+- type: entities
+  title: alarm
+  show_header_toggle: false
+  entities:
+    - entity: sensor.p4xl_nachster_wecker
+    - entity: sensor.next_alarm
+    - entity: sensor.next_alarm
+      name: minutes_left
+      type: attribute
+      attribute: minutes_left
+      icon: mdi:alarm-light
+    - entity: sensor.next_alarm
+      name: text_time_left
+      type: attribute
+      attribute: text_time_left
+    - entity: sensor.next_alarm
+      name: next_alarm_localtime
+      type: attribute
+      attribute: next_alarm_localtime
+    - entity: sensor.next_alarm
+      name: alarm_time
+      type: attribute
+      attribute: alarm_time
+- type: entities
+  title: LUX
+  show_header_toggle: false
+  entities:
+    - sensor.esp32_12_brightness_ldr
+    - entity: sensor.esp32_12_brightness_bh1750_long
+      name: "ESP12 long"
+      secondary_info: last-changed
+    - entity: sensor.esp32_12_brightness_bh1750_short
+      name: "ESP 12 short"
+      secondary_info: last-changed
+    - entity: sensor.esp32_13_brightness_bh1750
+      name: "ESP 13 short normal wiga"
+      secondary_info: last-changed
+    - entity: sun.sun
+      name: elevation
+      type: attribute
+      attribute: elevation
+      secondary_info: last-changed
+    - entity: sensor.esp32_06_co2
+      name: CO2
+      type: custom:template-entity-row
+      state: "{{ states(config.entity) | round(2) }} ppm"
+      icon: |
+        {% if states(config.entity) | float > 800 %}
+           mdi:emoticon-dead-outline
+        {% elif states(config.entity) | float < 550 %}
+           mdi:emoticon-happy-outline
+        {% else %}
+           mdi:emoticon-neutral-outline
+        {% endif %}
+      card_mod:
+        style: |
+          {% if states(config.entity) | float > 800 %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) | float < 550 %}
+             :host {
+               --paper-item-icon-color: green;
+
+             }
+          {% else %}
+             :host {
+               --paper-item-icon-color: yellow;
+               color: yellow
+             }
+          {% endif %}
+
+
+
+
+
+
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: ESP online
+    show_header_toggle: false
+  filter:
+    include:
+      - name: "Bedroom *"
+      - entity_id: "binary_sensor.esp*_status"
+    exclude:
+      - state: "off"
+      - state: "unavailable"
+
+
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: ESP offline
+    show_header_toggle: false
+  filter:
+    include:
+      - name: "Bedroom *"
+      - entity_id: "binary_sensor.esp*_status"
+    exclude:
+      - state: "on"
+      - entity_id: "*ota*"
+
+
+
+- type: custom:auto-entities
+  show_empty: false
+  card:
+    type: entities
+    title: Lights on
+    show_header_toggle: false
+  filter:
+    include:
+      - domain: light
+    exclude:
+      - state: "off"
+      - state: "unavailable"
+
+- type: entities
+  title: auto-entities
+  show_header_toggle: false
+  entities:
+
     - type: custom:auto-entities
       card:
         type: entities
-        title: all_input_select
+        title: Phones
+        show_header_toggle: false
       filter:
         include:
-          - domain: input_select
+          - device: /esp/
+
+    - input_select.esp
     - type: custom:auto-entities
       card:
         type: entities
-        title: all_switch
+        title: Selected ESP
+        show_header_toggle: false
       filter:
-        include:
-          - domain: switch
-    - type: custom:auto-entities
-      card:
-        type: entities
-        title: all_nextcloud
-      filter:
-        include:
-          - entity_id: "sensor.nextcloud*"
-    - type: markdown
-      title: Markdown Test
-      content: >
-        # 1 Normal
-          Normal
-        ## 2 Italic
-          *Italic*
-        ### 3 Bold
-          **BOLD**
+        template: "{{ states('input_select.esp') }}"
 
-    - type: markdown
-      title: Markdown 2
-      content: >
-        # 1 Normal
-          Normal
-        # 2 Italic
-          *Italic*
-        # 3 Bold
-        ---
-          **BOLD**
-    - break
-    - type: entities
-      title: Calendar Bla
-      show_header_toggle: false
-      entities:
-      - entity: input_number.eintreffzeit_rtw
-        name: RTW
-      - entity: input_number.eintreffzeit_nef
-        name: NEF
-      - entity: input_number.eintreffzeit_generell
-        name: Generell
-      - entity: sensor.next_calendar_work_location
-      - entity: sensor.next_calendar_main_location
-      - entity: automation.notify_next_calendar_event
-      - entity: automation.notify_calendar_event_time_to_leave_without_traffic
-      - entity: automation.notify_calendar_event_time_to_leave_rw2_nef_with_traffic
-        name: Traffic NEF Slider RW2
 
-    - type: entities
-      title: esp32_6*
-      show_header_toggle: false
-      entities:
-        - type: section
 
-        - type: custom:auto-entities
-          card:
-            type: entities
-          filter:
-            include:
-              - entity_id: sensor.esp32_06*
-                options:
-                  secondary_info: last-changed
-              - entity_id: binary_sensor.esp32_06*
-                options:
-                  secondary_info: entity-id
-              - entity_id: switch.esp32_06*
-                options:
-                  secondary_info: entity-id
-    - type: history-graph
-      title: 'esp32_6 Spannung'
-      entities:
-        - sensor.esp32_06_voltage
-    - type: custom:mini-graph-card
-      entities:
-       - sensor.esp32_06_voltage
+- type: custom:layout-break
+- type: entities
+  title: Mixed
+  show_header_toggle: false
+  entities:
+    - binary_sensor.esp32_12_status
+    - binary_sensor.esp32_10_status
+    - sensor.esp32_12_uptime
+    - sensor.esp32_12_uptime_human
+    - sensor.esp32_10_uptime
+    - sensor.esp32_10_uptime_human
+    - light.schlafzimmer
+    - switch.11011_b
+    - sensor.esp32_12_poti
+    - sensor.esp32_12_brightness
+    - sensor.esp32_12_brightness_ldr_volt
+    - automation.esp32_12_poti_to_light_brightness
+    - switch.esp32_12_shutdown
+    - switch.esp32_12_restart
+    - sensor.esp32_13_wifi_quality
+    - sensor.esp32_13_uptime_human
+    - sensor.temperatur_esp8266_03
+    - light.esp32_12_led
+    - light.esp32_10_led
+    - light.esp32_10_led2
+- type: custom:layout-break
 
-    - break
-    - type: custom:auto-entities
-      card:
-        type: entities
-        title: ZWAVE
-      filter:
-        include:
-          - domain: zwave
-            options:
-              secondary_info: last-changed
-    - break
-    - type: custom:mini-graph-card
-      entities:
-        - entity: sensor.esp32_02_temperature
-          aggregate_func: max
-          name: Maximum Eingang
-          color: #e74c3c
-        - entity: sensor.esp32_02_temperature
-          aggregate_func: min
-          name: Min
-        - entity: sensor.esp32_02_temperature
-          aggregate_func: avg
-          name: Avg
-          color: green
-        - entity: sensor.esp32_03_temperature
-          aggregate_func: max
-          name: Max
-          color: #e74c3c
-        - entity: sensor.esp32_03_temperature
-          aggregate_func: min
-          name: Min
-        - entity: sensor.esp32_03_temperature
-          aggregate_func: avg
-          name: Avg
-          color: green
-      name: Temp outside daily (last week)
-      hours_to_show: 168
-      group_by: date
+
+
+- type: custom:layout-break
+- type: custom:search-card
+  max_results: 50
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Pixel4XL
+    show_header_toggle: false
+  filter:
+    include:
+      - name: "Bedroom *"
+      - entity_id: "sensor.p4xl*"
+    exclude:
+      - state: "off"
+      - state: "unavailable"
+      - state: "unknown"
+
+
+- type: entities
+  title: Mixed
+  show_header_toggle: false
+  entities:
+    - type: 'custom:template-entity-row'
+      entity: sensor.abfallkalender_gelbersack_date
+      style: >
+        .secondary {
+          font-size:12px;
+        }
+        .pointer {
+          {% set dateto = states('sensor.abfallkalender_gelbersack_date').split('|')[0] %}
+          {% if dateto == '0' %}
+            --paper-item-icon-color: #c93636 !important;
+          {% elif dateto == '1' %}
+            --paper-item-icon-color: #eff542 !important;
+          {% endif %}
+        }
+      icon: 'mdi:sack'
+      name: Gelber Sack
+      state: >
+        {% set dateto =
+        states('sensor.abfallkalender_gelbersack_date').split('|')[0] %} {% if
+        dateto == '0' %}
+          Heute
+        {% elif dateto == '1' %}
+          Morgen
+        {% else %}
+          in {{ dateto }} Tagen
+        {% endif %}
+      condition: >
+        {% if states('sensor.abfallkalender_gelbersack_date') != '' %}
+          true
+        {% endif %}
+      secondary: >
+        {% set datum = as_timestamp(states('sensor.abfallkalender_gelbersack_date').split('|')[1]) %}
+        {% if datum|timestamp_custom('%a') == 'Mon' %}Montag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Tue' %}Dienstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Wed' %}Mittwoch{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Thu' %}Donnerstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Fri' %}Freitag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sat' %}Samstag{% endif -%}
+        {% if datum|timestamp_custom('%a') == 'Sun' %}Sonntag{% endif -%}
+        {{ datum|timestamp_custom(' %d.%m.%Y') }}
+    - entity: sensor.esp8266_02_temperature
+      name: ELW Regal
+      type: custom:template-entity-row
+      state: "{{ states(config.entity) | round(2) }} °C"
+      secondary: >
+        Vor {{ relative_time(states[config.entity].last_changed)|replace ('minutes','Minuten')|replace ('minute','Minute')|replace ('seconds','Sekunden')  }}
+
+      icon: |
+        {% if states(config.entity) | float > 23 %}
+           mdi:thermometer-alert
+        {% elif states(config.entity) | float < 21 %}
+           mdi:thermometer-chevron-down
+        {% else %}
+           mdi:thermometer
+        {% endif %}
+      card_mod:
+        style: |
+          {% if states(config.entity) | float > 23 %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) | float < 21 %}
+             :host {
+               --paper-item-icon-color: blue;
+               color: blue
+             }
+          {% else %}
+             :host {
+               --paper-item-icon-color: green;
+               color: green
+             }
+          {% endif %}
+    - entity: sensor.esp8266_02_temperature
+      name: ELW Regal
+      type: custom:template-entity-row
+      state: "{{ states(config.entity) | round(2) }} °C"
+      secondary: "The light is {{ states('light.flur') }}"
+
+      icon: |
+        {% if states(config.entity) | float > 23 %}
+           mdi:thermometer-alert
+        {% elif states(config.entity) | float < 21 %}
+           mdi:thermometer-chevron-down
+        {% else %}
+           mdi:thermometer
+        {% endif %}
+      card_mod:
+        style: |
+          {% if states(config.entity) | float > 23 %}
+             :host {
+               --paper-item-icon-color: red;
+               color: red
+             }
+          {% elif states(config.entity) | float < 21 %}
+             :host {
+               --paper-item-icon-color: blue;
+               color: blue
+             }
+          {% else %}
+             :host {
+               --paper-item-icon-color: green;
+               color: green
+             }
+          {% endif %}
+    - entity: sensor.esp8266_02_temperature
+      name: ELW Regal
+      secondary_info: last-changed

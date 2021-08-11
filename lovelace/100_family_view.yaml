@@ -33,7 +33,6 @@ cards:
             - sensor.next_birthday
             - automation.birthday_alert_today
 
-    - break
 
     - type: custom:vertical-stack-in-card
       title: 'Fahrzeit'
@@ -58,4 +57,3 @@ cards:
             - entity: sensor.waze_stuttgart_berlin
               name: Berlin
               icon: mdi:city-variant
-    - break

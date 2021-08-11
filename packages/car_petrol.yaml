@@ -1,0 +1,40 @@
+##############################################################
+### Packages / Car & Petrol                                ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+
+
+homeassistant:
+
+tankerkoenig:
+  api_key: !secret tankerkoenig_api_key
+  fuel_types:
+    - "e5"
+  radius: 5
+  scan_interval: "0:10:01"
+  show_on_map: true
+
+group:
+  all_monitored_gas_stations:
+    icon: mdi:fuel
+    name: Tankstellen
+    entities:
+      - sensor.tankerkoenig_aral_tankstelle_e5
+      - sensor.tankerkoenig_aral_tankstelle_e5_2
+      - sensor.tankerkoenig_aral_tankstelle_e5_3
+      - sensor.tankerkoenig_aral_tankstelle_e5_4
+      - sensor.tankerkoenig_avia_tankstelle_e5
+      - sensor.tankerkoenig_bft_leinfelden_e5
+      - sensor.tankerkoenig_esso_tankstelle_e5
+      - sensor.tankerkoenig_esso_tankstelle_e5_2
+      - sensor.tankerkoenig_esso_tankstelle_e5_3
+      - sensor.tankerkoenig_jet_stuttgart_industriestr_38_e5
+      - sensor.tankerkoenig_miedtank_autopark_gmbh_e5
+      - sensor.tankerkoenig_shell_leinfelden_echterdingen_stuttgarter_str_6_e5
+      - sensor.tankerkoenig_shell_stuttgart_burgstallstr_122_e5
+      - sensor.tankerkoenig_shell_stuttgart_epplestr_90_96_e5
+      - sensor.tankerkoenig_shell_stuttgart_hechinger_str_33_e5
+      - sensor.tankerkoenig_shell_stuttgart_industriestr_58_e5
+      - sensor.tankerkoenig_shell_stuttgart_karl_kloss_str_18_e5
+      - sensor.tankerkoenig_stuttgart_epplestrasse_55_e5
+      - sensor.tankerkoenig_t_stuttgart_e5

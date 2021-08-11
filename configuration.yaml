@@ -30,17 +30,9 @@ lovelace:
     #https://github.com/custom-cards/vertical-stack-in-card
     - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
       type: js
-    #https://github.com/thomasloven/lovelace-auto-entities/blob/master/auto-entities.js
-    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
-      type: js
     #https://github.com/thomasloven/lovelace-fold-entity-row/blob/master/fold-entity-row.js
     - url: /hacsfiles/lovelace-fold-entity-row/fold-entity-row.js
-      type: js
-  #https://github.com/thomasloven/lovelace-toggle-lock-entity-row
-    - url: /hacsfiles/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
-      type: js
-    - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
-      type: js
+      type: module
     - url: /hacsfiles/weather-card/weather-card.js
       type: module
     - url: /hacsfiles/lovelace-home-feed-card/lovelace-home-feed-card.js
@@ -53,7 +45,28 @@ lovelace:
       type: module
     - url: /hacsfiles/power-usage-card-regex/power-usage-card-regex.js
       type: module
-
+    - url: /hacsfiles/lovelace-template-entity-row/template-entity-row.js
+      type: module
+    - url: /hacsfiles/lovelace-card-mod/card-mod.js
+      type: module
+    - url: /hacsfiles/restriction-card/restriction-card.js
+      type: module
+    - url: /hacsfiles/slider-button-card/slider-button-card.js
+      type: module
+    - url: /hacsfiles/uptime-card/uptime-card.js
+      type: module
+    - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
+      type: module
+    - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
+      type: module
+    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+      type: module
+    - url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
+      type: module
+    - url: /hacsfiles/tankerkoenig-card/tankerkoenig-card.js
+      type: module
+    - url: /hacsfiles/apexcharts-card/apexcharts-card.js
+      type: module
 
 http:
   ssl_certificate: /home/homeassistant/sslcert/fullchain.pem
@@ -69,7 +82,7 @@ hacs:
   token: !secret github_token_hacs
 
 
-breaking_changes:
+
 
 #discovery:
 mobile_app:
@@ -86,7 +99,31 @@ history:
 map:
 
 influxdb:
-  host: 127.0.0.1
+  api_version: 2
+  ssl: false
+  host: 192.168.0.27
+  port: 8086
+  token: !secret influx2_token
+  organization: !secret influx2_org
+  bucket: home_assistant
+  tags:
+    source: HA
+  tags_attributes:
+    - friendly_name
+  default_measurement: units
+  exclude:
+    entity_globs:
+      - automation.*
+      - camera.*
+      - device_tracker.*
+      - media_player.*
+      - remote*
+      - scene.*
+      - script.*
+      - zone.*
+    domains:
+      - persistent_notification
+      - person
 
 logbook:
 person:
@@ -110,11 +147,7 @@ google:
   client_id: !secret google_client_id
   client_secret: !secret google_secret
 
-wemo:
-  discovery: false
-  static:
-    - !secret wemo1_ip
-    - !secret wemo2_ip
+
 nextcloud:
   url: !secret nextcloud_url
   username: !secret nextcloud_user
@@ -143,3 +176,9 @@ script: !include_dir_merge_named scripts/
 sensor: !include_dir_merge_list sensors/
 tts: !include includes/tts.yaml
 zone: !include includes/zone.yaml
+#wake_on_lan
+wake_on_lan:
+#Spotify
+spotify:
+  client_id: !secret spotify_client
+  client_secret: !secret spotify_secret

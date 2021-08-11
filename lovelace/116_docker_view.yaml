@@ -1,0 +1,378 @@
+title: docker
+type: custom:vertical-layout
+layout:
+  width: 400
+  max_cols: 10
+path: docker
+icon: mdi:docker
+cards:
+- type: glance
+  title: Daemon
+  entities:
+    - entity: sensor.docker_version
+      name: Version
+    - entity: sensor.docker_containers_total
+      name: Total
+    - entity: sensor.docker_containers_running
+      name: Running
+    - entity: sensor.docker_containers_stopped
+      name: Stopped
+
+
+- type: glance
+  title: Stats
+  entities:
+    - entity: sensor.docker_1cpu
+      name: CPU
+    - entity: sensor.docker_memory
+      name: Memory
+    - entity: sensor.docker_memory_percent
+      name: memory (%)
+
+- type: custom:apexcharts-card
+  graph_span: 24h
+  all_series_config:
+    stroke_width: 1
+    opacity: 0.3
+    type: area
+  yaxis:
+    - id: first
+      apex_config:
+        tickAmount: 5
+        title:
+          text: "%"
+  series:
+    - entity: sensor.docker_1cpu
+      type: area
+      name: CPU
+      yaxis_id: first
+      color: red
+    - entity: sensor.docker_memory_percent
+      type: area
+      name: Memory
+      yaxis_id: first
+      color: blue
+
+
+- type: custom:layout-break
+- type: grid
+  title: "Management"
+  columns: 5
+  square: false
+  cards:
+    - type: custom:slider-button-card
+      entity: switch.docker_portainer
+      name: Portainer
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_yacht
+      name: Yacht
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_wud
+      name: WUD
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_diun_diun_metis_1
+      name: Diun
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_watchtower
+      name: Watchtower
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+- type: grid
+  title: "Network Services"
+  columns: 5
+  square: false
+  cards:
+    - type: custom:slider-button-card
+      entity: switch.docker_mqtt
+      name: Mosquitto MQTT
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_unifi_controller_latest
+      name: Unifi
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_tasmoadmin
+      name: TasmoAdmin
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_sftp_sftp_1
+      name: SFTP
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+- type: grid
+  title: "Database & Graph"
+  columns: 5
+  square: false
+  cards:
+    - type: custom:slider-button-card
+      entity: switch.docker_influxdb2
+      name: InfluxDB
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_grafana
+      name: Grafana
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+- type: grid
+  title: "Services"
+  columns: 5
+  square: false
+  cards:
+    - type: custom:slider-button-card
+      entity: switch.docker_heimdall
+      name: Heimdall
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_whoogle
+      name: Whoogle
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
+      entity: switch.docker_librespeed
+      name: LibreSpeed
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+- type: custom:layout-break
+- type: entities
+  title: Network
+  show_header_toggle: false
+  entities:
+    - entity: sensor.docker_librespeed_network_total_up
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: LibreSpeed
+      icon: mdi:wan
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.docker_librespeed_network_total_up
+          name: TX
+        - entity: sensor.docker_librespeed_network_total_down
+          name: RX
+    - entity: sensor.docker_unifi_controller_latest_network_total_up
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Unifi
+      icon: mdi:wan
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.docker_unifi_controller_latest_network_total_up
+          name: TX
+        - entity: sensor.docker_unifi_controller_latest_network_total_down
+          name: RX
+    - entity: sensor.docker_mqtt_network_total_up
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Mosquitto MQTT
+      icon: mdi:wan
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.docker_mqtt_network_total_up
+          name: TX
+        - entity: sensor.docker_mqtt_network_total_down
+          name: RX
+    - entity: sensor.docker_influxdb2_network_total_up
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: InfluxDB
+      icon: mdi:wan
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.docker_influxdb2_network_total_up
+          name: TX
+        - entity: sensor.docker_influxdb2_network_total_down
+          name: RX
+    - entity: sensor.docker_grafana_network_total_up
+      show_state: false
+      type: 'custom:multiple-entity-row'
+      name: Grafana
+      icon: mdi:wan
+      secondary_info: last-changed
+      entities:
+        - entity: sensor.docker_grafana_network_total_up
+          name: TX
+        - entity: sensor.docker_grafana_network_total_down
+          name: RX
+
+- type: custom:auto-entities
+  card:
+    type: entities
+    title: Memory Usage
+    show_header_toggle: false
+  filter:
+    include:
+      - entity_id: "sensor.docker_*_memory"
+    exclude:
+      - state: "unavailable"
+      - state: "unknown"
+  sort:
+    method: state
+    numeric: true
+    reverse: true
+    count: 5

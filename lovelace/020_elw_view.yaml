@@ -12,39 +12,36 @@ cards:
       - entity: input_select.elw_scene
       - entity: input_select.tuerlicht
       - entity: automation.motion_zwave_sunset_flur_dimlight
-    - type: horizontal-stack
+    - type: grid
+      columns: 2
+      square: false
       cards:
-        - type: light
+        - type: custom:slider-button-card
           entity: light.schlafzimmer
-        - type: light
+          icon:
+            show: true
+            icon: mdi:globe-light
+            use_state_color: true
+        - type: custom:slider-button-card
           entity: light.flur
-    - type: glance
-      entities:
-        - entity: switch.11011_a
-          name: Bett
-          tap_action:
-            action: toggle
-        - entity: switch.11001_c
-          name: Nachttisch
-          tap_action:
-            action: toggle
-
-        - entity: switch.11011_b
+          icon:
+            show: true
+            icon: mdi:wall-sconce-round
+            use_state_color: true
+    - type: grid
+      columns: 3
+      square: false
+      cards:
+        - type: custom:slider-button-card
+          entity: switch.11011_a
+        - type: custom:slider-button-card
+          entity: switch.11001_c
+        - type: custom:slider-button-card
+          entity: switch.11011_b
           name: Schreibtisch
-          tap_action:
-            action: toggle
-    - type: glance
-      entities:
-        - entity: switch.wemoswitch1
-          name: Stehlampe
-          icon: mdi:floor-lamp-dual
-          tap_action:
-            action: toggle
-        - entity: switch.wemoswitch2
-          name: NN
-          icon: mdi:help
-          tap_action:
-            action: toggle
+
+
+
 
 - type: vertical-stack
   cards:
@@ -59,7 +56,68 @@ cards:
       - entity: sensor.esp32_03_temperature
         secondary_info: last-changed
       - type: section
-        label: Innentemperatur
+        label: Innentemperatur & Luftqualität
+      - entity: sensor.esp32_06_co2
+        name: CO2
+        type: custom:template-entity-row
+        state: "{{ states(config.entity) | round(2) }} ppm"
+        icon: |
+          {% if states(config.entity) | float > 800 %}
+             mdi:emoticon-dead-outline
+          {% elif states(config.entity) | float < 550 %}
+             mdi:emoticon-happy-outline
+          {% else %}
+             mdi:emoticon-neutral-outline
+          {% endif %}
+        card_mod:
+          style: |
+            {% if states(config.entity) | float > 800 %}
+               :host {
+                 --paper-item-icon-color: red;
+                 color: red
+               }
+            {% elif states(config.entity) | float < 550 %}
+               :host {
+                 --paper-item-icon-color: green;
+                 color: green
+               }
+            {% else %}
+               :host {
+                 --paper-item-icon-color: yellow;
+                 color: yellow
+               }
+            {% endif %}
+      - entity: sensor.esp8266_02_temperature
+        name: ELW Regal
+        type: custom:template-entity-row
+        state: "{{ states(config.entity) | round(2) }} °C"
+        secondary: "{{ relative_time(states[config.entity].last_changed) }}"
+        icon: |
+          {% if states(config.entity) | float > 23 %}
+             mdi:thermometer-alert
+          {% elif states(config.entity) | float < 21 %}
+             mdi:thermometer-chevron-down
+          {% else %}
+             mdi:thermometer
+          {% endif %}
+        card_mod:
+          style: |
+            {% if states(config.entity) | float > 23 %}
+               :host {
+                 --paper-item-icon-color: red;
+                 color: red
+               }
+            {% elif states(config.entity) | float < 21 %}
+               :host {
+                 --paper-item-icon-color: blue;
+                 color: blue
+               }
+            {% else %}
+               :host {
+                 --paper-item-icon-color: green;
+                 color: green
+               }
+            {% endif %}
       - entity: sensor.esp8266_02_temperature
         name: ELW Regal
         secondary_info: last-changed
@@ -84,7 +142,11 @@ cards:
         hours_to_show: 24
         entities:
          - entity: sensor.esp8266_02_temperature
-           name: Regal
+           type: column
+           name: Office Humidity
+           group_by:
+             func: avg
+             duration: 30min
          - entity: sensor.aeotec_zw100_multisensor_6_temperature
            name: Flur
          - entity: sensor.esp8266_06_temperature

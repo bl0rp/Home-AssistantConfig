@@ -1,0 +1,26 @@
+########################################################################
+## Packages / ESP32 #12                                               ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+automation:
+###adjust brightness according to potentiometer
+  - id: esp32_12_poti_to_light_brightness
+    alias: esp32_12_poti_to_light_brightness
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_12_brightness
+    condition:
+      condition: and
+      conditions:
+          - condition: template
+            value_template: "{{ states('sensor.esp32_12_brightness') != 'unavailable' }}"
+          - condition: template
+            value_template: "{{ states('sensor.esp32_12_brightness') != 'unknown' }}"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.schlafzimmer
+        data_template:
+          brightness_pct: '{{ states.sensor.esp32_12_brightness.state | round(0) }}'

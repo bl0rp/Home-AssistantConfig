@@ -1,80 +1,97 @@
 title: pc_view
-icon: mdi:desktop-tower-monitor
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 10
 path: pc
-panel: true
+icon: mdi:desktop-tower-monitor
 cards:
-
 - type: custom:layout-card
   layout: vertical
   cards:
-    - type: entities
-      title: Leistung (Tag)
-      show_header_toggle: False
-      entities:
-      - type: section
-        label: Workstation
+- type: entities
+  title: Workstation (Tag)
+  entities:
+  - type: section
+    label: Leistung
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 300
+            entities:
+             - entity: sensor.sonoff02_momentane_leistung
+               name: Watt (24h)
+               show_state: false
+            show:
+              labels: true
+              icon: false
+              name: false
+              state: false
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 100
+                color: "#fc9700"
+              - value: 200
+                color: "#d30000"
+              - value: 350
+                color: "#d30000"
+  - type: section
+    label: Temperatur Radiator
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+          - type: custom:mini-graph-card
+            hours_to_show: 24
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 40
+            lower_bound: 18
+            entities:
+             - entity: sensor.esp32_07_temp
+               name: Radiator (24h)
+            show:
+              labels: true
+              icon: false
+              name: false
+              state: false
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 20
+                color: "#fc9700"
+              - value: 30
+                color: "#d30000"
+              - value: 40
+                color: "#d30000"
+- type: custom:layout-break
 
-      - type: custom:mini-graph-card
-        hours_to_show: 12
-        hour24: true
-        entities:
-          - sensor.sonoff02_momentane_leistung
-        show:
-          labels: true
-          name: false
-          state: false
-          icon: false
-          average: false
-          extrema: true
-          graph: line
-        color_thresholds:
-          - value: 40
-            color: "#7ef542"
-          - value: 100
-            color: "#d35400"
-          - value: 200
-            color: "#c0392b"
-      - type: section
-        label: Temperatur Radiator
-
-      - type: custom:mini-graph-card
-        hours_to_show: 12
-        hour24: true
-        entities:
-          - sensor.esp32_7_temp
-        show:
-          labels: true
-          name: false
-          state: false
-          icon: false
-          average: true
-          extrema: true
-        color_thresholds:
-          - value: 20
-            color: "#7ef542"
-          - value: 40
-            color: "#d35400"
-          - value: 45
-            color: "#c0392b"
-    - type: entities
-      title: Control
-      show_header_toggle: False
-      entities:
-        - entity: script.my_computer_suspend
-          name: Suspend
-          icon: mdi:sleep
-        - entity: script.my_computer_shutdown
-          name: Shutdown
-          icon: mdi:power
-
-    - break
-    - type: horizontal-stack
-      cards:
+- type: entities
+  title: "Aktuelle Leistung"
+  entities:
+  - type: custom:layout-card
+    layout: horizontal
+    cards:
       - type: gauge
         name: Gesamtverbrauch
         unit: 'W'
         entity: sensor.workstation_wattage_complete
         max: 400
+        needle: true
         severity:
           green: 0
           yellow: 200
@@ -82,20 +99,20 @@ cards:
       - type: gauge
         name: Radiator
         unit: '°C'
-        entity: sensor.esp32_7_temp
+        entity: sensor.esp32_07_temp
         min: 20
         max: 60
+        needle: true
         severity:
           green: 0
           yellow: 32
           red: 50
-    - type: horizontal-stack
-      cards:
       - type: gauge
         name: Workstation
         unit: 'W'
         entity: sensor.sonoff02_momentane_leistung
         max: 300
+        needle: true
         severity:
           green: 0
           yellow: 100
@@ -108,111 +125,107 @@ cards:
           green: 0
           yellow: 32
           red: 50
-
-
-
-
-
-    #sonoff02
-    - type: conditional
-      conditions:
-        - entity: switch.11001_a
-          state: "off"
-      card:
-        type: entities
-        title: 'ESP Hauptschalter'
-        show_header_toggle: false
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+      - type: entities
+        title: Steuerung
         entities:
           - entity: switch.11001_a
-            name: "Status"
-    - type: conditional
-      conditions:
-        - entity: switch.11001_a
-          state: "on"
-      card:
-        type: entities
-        entities:
-          - type: custom:vertical-stack-in-card
-            title: 'ESP Hauptschalter'
-            cards:
 
-              - type: entities
-                entities:
-                  - entity: switch.11001_a
-                    type: custom:toggle-lock-entity-row
-                  - type: custom:fold-entity-row
-                    head:
-                      type: section
-                      label: Details
-                    items:
-                      - entity: sensor.esp32_7_uptime_format
-                        name: Radiator
-                      - entity: sensor.esp8266_04_uptime_human
-                        name: OLED
-                        icon: mdi:server-network
+          - type: custom:hui-conditional-card
+            conditions:
+              - entity: switch.11001_a
+                state: "on"
+            card:
+              type: entities
+              entities:
+                - entity: sensor.esp32_07_uptime_human
+                  name: Radiator
+                - entity: sensor.esp32_10_uptime_human
+                  name: OLED
+                  icon: mdi:clock-start
+                - type: custom:fold-entity-row
+                  head:
+                    type: section
+                    label: Restart
+                  items:
+                    - entity: switch.esp32_07_restart
+                      name: Radiator
+                    - entity: switch.esp32_10_restart
+                      name: OLED
 
-    - type: entities
-      title: Stromverbrauch (Woche)
-      show_header_toggle: False
-      entities:
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.sonoff02_momentane_leistung
-        name: Maximale Leistung
-        hours_to_show: 168
-        hour24: true
-        aggregate_func: max
-        group_by: date
-        show:
-          graph: bar
 
-    - break
-    - type: entities
-      title: Leistung (Woche)
-      show_header_toggle: False
-      entities:
-      - type: section
-        label: Workstation
 
-      - type: custom:mini-graph-card
-        hours_to_show: 168
-        hour24: true
-        entities:
-          - sensor.sonoff02_momentane_leistung
-        show:
-          labels: true
-          name: false
-          state: false
-          icon: false
-          average: false
-          extrema: true
-          graph: line
-        color_thresholds:
-          - value: 40
-            color: "#7ef542"
-          - value: 100
-            color: "#d35400"
-          - value: 200
-            color: "#c0392b"
-      - type: section
-        label: Temperatur Radiator
+- type: custom:layout-break
 
-      - type: custom:mini-graph-card
-        hours_to_show: 168
-        hour24: true
-        entities:
-          - sensor.esp32_7_temp
-        show:
-          labels: true
-          name: false
-          state: false
-          icon: false
-          average: true
-          extrema: true
-        color_thresholds:
-          - value: 20
-            color: "#7ef542"
-          - value: 40
-            color: "#d35400"
-          - value: 45
-            color: "#c0392b"
+
+- type: entities
+  title: Workstation (Woche)
+  entities:
+  - type: section
+    label: Leistung
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+          - type: custom:mini-graph-card
+            hours_to_show: 168
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 300
+            entities:
+             - entity: sensor.sonoff02_momentane_leistung
+               name: Watt (24h)
+            show:
+              labels: true
+              icon: false
+              name: false
+              state: false
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 100
+                color: "#fc9700"
+              - value: 200
+                color: "#d30000"
+              - value: 350
+                color: "#d30000"
+  - type: section
+    label: Temperatur Radiator
+  - type: custom:layout-card
+    layout: vertical
+    cards:
+          - type: custom:mini-graph-card
+            hours_to_show: 168
+            hour24: true
+            points_per_hour: 10
+            align_header: center
+            align_icon: state
+            align_state: center
+            upper_bound: 40
+            lower_bound: 18
+            entities:
+             - entity: sensor.esp32_07_temp
+               name: Radiator (24h)
+            show:
+              labels: true
+              icon: false
+              name: false
+              state: false
+              average: true
+              extrema: true
+            color_thresholds:
+              - value: 10
+                color: "#00ff00"
+              - value: 20
+                color: "#fc9700"
+              - value: 30
+                color: "#d30000"
+              - value: 40
+                color: "#d30000"
+- type: custom:layout-break

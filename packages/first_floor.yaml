@@ -46,7 +46,7 @@ automation:
 
   - alias: "first_floor_lights_on_dusk_brightness"
     id: first_floor_lights_on_dusk_brightness
-    trace:
+
     trigger:
       - platform: numeric_state
         entity_id: sensor.esp32_13_brightness_bh1750
@@ -87,11 +87,10 @@ automation:
             elevation: {{ state_attr('sun.sun', 'elevation') }}
             dusk: {{as_timestamp(states.sun.sun.attributes.next_dusk)|timestamp_custom('%H:%M:%S')}}
             sunset: {{as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom('%H:%M:%S')}}
-      - service: automation.turn_off
-        entity_id: automation.first_floor_lights_on_dusk_brightness
       - service: automation.turn_on
         entity_id: automation.first_floor_lamp_living_room_on
-
+      - service: automation.turn_off
+        entity_id: automation.first_floor_lights_on_dusk_brightness
 ###
 # off at 22:00
 ###
@@ -128,27 +127,36 @@ automation:
     action:
       - service: switch.turn_on
         entity_id: switch.sonoff12
-      - service: automation.turn_off
-        entity_id: automation.first_floor_lamp_living_room_on
       - service: notify.pushbullet
         data_template:
           message: >
              {{ states.sensor.date_time.state }} {{ trigger.to_state.attributes.friendly_name }} hat das erste Mal nach Sonnenuntergang ausgelöst und die Stehlampe wurde angeschaltet!
+      - service: automation.turn_off
+        entity_id: automation.first_floor_lamp_living_room_on
 
+# off 20m after last movement
 
-# off at 11 pm
-
-  - alias: "Stehlampe um 23 Uhr ausschalten"
+  - alias: "first_floor_lamp_living_room_off"
+    id: first_floor_lamp_living_room_off
     initial_state: true
     trigger:
-      - platform: time_pattern
-        hours: 23
-        minutes: 00
-        seconds: 00
+      - platform: state
+        entity_id: sensor.esp8266_01_pir
+        from: '1'
+        to: '0'
+        for:
+          minutes: 20
+    condition:
+      - condition: time
+        after: "22:00:00"
+        before: "01:00:00"
     action:
       - service: switch.turn_off
         entity_id: switch.sonoff12
-
+      - service: notify.pushbullet
+        data_template:
+          message: >
+             {{ states.sensor.date_time.state }}  letze bewergung vor 20 min und lampe aus
 
 
 

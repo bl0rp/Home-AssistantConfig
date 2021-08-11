@@ -27,8 +27,8 @@ cards:
       - entity: script.update_ha
       - entity: script.clear_log
       - entity: script.clear_tts_cache
-        type: custom:toggle-lock-entity-row
-    - break
+
+
 
     - type: entities
       title: "Serverraum"
@@ -36,11 +36,11 @@ cards:
       entities:
       - entity: sensor.sonoff04_momentane_leistung
         name: Stromverbrauch
-      - entity: sensor.esp32_4_temperature
+      - entity: sensor.esp32_04_temperature
         name: Temperatur
       - entity: input_number.light_serverroom
         icon: mdi:spotlight-beam
-      - entity: binary_sensor.esp32_4_motion
+      - entity: binary_sensor.esp32_04_motion
         name: PIR
         secondary_info: last-changed
       - type: custom:fold-entity-row
@@ -48,11 +48,11 @@ cards:
           type: section
           label: Sensordaten
         items:
-          - entity: sensor.esp32_4_pressure
+          - entity: sensor.esp32_04_pressure
             name: Luftdruck
-          - entity: sensor.esp32_4_humidity
+          - entity: sensor.esp32_04_humidity
             name: Luftfeuchtigkeit
-          - entity: sensor.esp32_4_uptime_format
+          - entity: sensor.esp32_04_uptime_format
             name: Uptime ESP
 
       - type: section
@@ -61,7 +61,7 @@ cards:
         hours_to_show: 24
         hour24: true
         entities:
-          - entity: sensor.esp32_4_temperature
+          - entity: sensor.esp32_04_temperature
             name: Temperatur
           - entity: sensor.sonoff04_momentane_leistung
             name: Leistung
@@ -76,7 +76,7 @@ cards:
           extrema: true
           y_axis: secondary
 
-    - break
+
 
     - type: entities
       title: "Version & Backup"

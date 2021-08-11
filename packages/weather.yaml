@@ -161,6 +161,26 @@ sensor:
       sun_next_rising:
         value_template: '{% if states.sun.sun %}{{ ((as_timestamp(states.sun.sun.attributes.next_rising)) | timestamp_local) [11:19] }}{% endif %}'
 
+  - platform: template
+    sensors:
+      period_of_day:
+        friendly_name: 'period of the day'
+        value_template: >-
+          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+            Sonnenuntergang
+          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+            Sonnenaufgang
+          {% elif (states.sun.sun.attributes.elevation) < 0 %}
+            Nacht
+          {% else %}
+            Tag
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sun.sun', 'above_horizon') %}
+            mdi:weather-sunny
+          {% else %}
+            mdi:weather-night
+          {% endif %}
 
 
 ###############
@@ -178,3 +198,68 @@ script:
         message: >
            Nächster Sonnenuntergang: {{ states.sensor.sun_next_setting.state }}
            Nächster Sonnenaufgang: {{ states.sensor.sun_next_rising.state }}
+## thanks 2 RobC
+
+input_boolean:
+  sunset:
+    name: Sonnenuntergang
+    initial: on
+    icon: mdi:weather-sunset-down
+  dark:
+    name: Dämmerung
+    initial: on
+    icon: mdi:theme-light-dark
+
+automation:
+- alias: set_sunset_boolean
+  initial_state: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 1.5
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 1.5
+    - platform: time
+      at: "22:30:00"
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: automation_reloaded
+  action:
+    - choose:
+        - conditions:
+            - condition: time
+              after: "12:00:00"
+              before: "22:30:00"
+            - condition: numeric_state
+              entity_id: sun.sun
+              attribute: elevation
+              below: 1.5
+          sequence:
+            - entity_id: input_boolean.sunset
+              service: homeassistant.turn_on
+      default:
+        - entity_id: input_boolean.sunset
+          service: homeassistant.turn_off
+
+- alias: set_dark_boolean
+  initial_state: true
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      below: 6.0
+    - platform: numeric_state
+      entity_id: sun.sun
+      attribute: elevation
+      above: 6.0
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: automation_reloaded
+  action:
+    - entity_id: input_boolean.dark
+      service: homeassistant.turn_{{ 'on' if state_attr('sun.sun', 'elevation')|float < 6.0 else 'off' }}

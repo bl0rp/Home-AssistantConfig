@@ -1,0 +1,234 @@
+########################################################################
+## Packages / ESP32 #9                                                ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+#############
+#  sensors  #
+#############
+binary_sensor:
+
+  - platform: mqtt
+    name: "esp32_09_status"
+    state_topic: "esp32_9/status"
+    payload_on: "online"
+    payload_off: "offline"
+    device_class: connectivity
+
+  - platform: mqtt
+    name: "esp32_09_ota_status"
+    state_topic: "esp32_9/ota_mode_status"
+    payload_on: "active"
+    payload_off: "disabled"
+
+
+sensor:
+
+
+#wifi signal strength
+  - platform: mqtt
+    name: "esp32_09_rssi"
+    state_topic: "esp32_9/sensor/esp32_9_rssi/state"
+    qos: 0
+    unit_of_measurement: "dB"
+#battery value
+  - platform: mqtt
+    name: "esp32_09_battery"
+    state_topic: "esp32_9/sensor/esp32_9_voltage/state"
+    unit_of_measurement: "V"
+    qos: 0
+    force_update: true
+
+
+#############
+#  switch   #
+#############
+switch:
+  - platform: mqtt
+    name: "esp32_09_shutdown"
+    state_topic: esp32_9/switch/esp32_9_shutdown/state
+    command_topic: esp32_9/switch/esp32_9_shutdown/command
+    availability_topic: "esp32_9/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: mqtt
+    name: "esp32_09_restart"
+    state_topic: esp32_9/switch/esp32_9_restart/state
+    command_topic: esp32_9/switch/esp32_9_restart/command
+    availability_topic: "esp32_9/status"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "online"
+    state_off: "offline"
+
+  - platform: template
+    switches:
+      esp32_09_switch_ota:
+        value_template: "{{ is_state('binary_sensor.esp32_09_ota_status', 'on') }}"
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_9/ota_mode"
+              payload: "ON"
+              retain: true
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "esp32_9/sleep_mode"
+              payload: "ON"
+          - service: mqtt.publish
+            data:
+              topic: "esp32_9/ota_mode"
+              payload: ""
+              retain: true
+
+
+
+
+
+automation:
+### send sensor data retained to epaper topic
+  - id: publish_esp32_02_sensor_data_to_epaper
+    alias: publish_esp32_02_sensor_data_to_epaper
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_02_temperature
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/eingang"
+          retain: true
+          payload: "{{ states('sensor.esp32_02_temperature') }}"
+
+
+
+  - id: publish_esp32_03_sensor_data_to_epaper
+    alias: publish_esp32_03_sensor_data_to_epaper
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp32_03_temperature
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/carport"
+          retain: true
+          payload: "{{ states('sensor.esp32_03_temperature') }}"
+
+## outside temp last updated
+  - id: publish_esp32_02_03_sensor_data_last_update_to_epaper
+    alias: publish_esp32_02_03_sensor_data_last_update_to_epaper
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.esp32_09_status
+        from: "off"
+        to: "on"
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/eingang_zeit"
+          retain: true
+          payload: "{{ ((as_timestamp(now()) - as_timestamp(states.sensor.esp32_02_temperature.last_changed)) / 60) | round(0) }} min"
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/carport_zeit"
+          retain: true
+          payload: "{{ ((as_timestamp(now()) - as_timestamp(states.sensor.esp32_03_temperature.last_changed)) / 60) | round(0) }} min"
+
+
+  - id: publish_esp8266_02_sensor_data_to_epaper
+    alias: publish_esp8266_02_sensor_data_to_epaper
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp8266_02_temperature
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/regal"
+          retain: true
+          payload: "{{ states('sensor.esp8266_02_temperature') }}"
+  - id: publish_esp8266_06_sensor_data_to_epaper
+    alias: publish_esp8266_06_sensor_data_to_epaper
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id: sensor.esp8266_06_temperature
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "hass2epaper/klo"
+          retain: true
+          payload: "{{ states('sensor.esp8266_06_temperature') }}"
+
+
+
+### automation battery empty
+  - alias: benachrichtigung_batterie_esp32_09
+    initial_state: True
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_09_battery
+        below: 3.3
+
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state != nan }}"
+    action:
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} EPaper (ESP #9) Batteriealarm und Shutdown!
+      - service: switch.turn_on
+        entity_id: switch.esp32_09_shutdown
+
+  - alias: esp32_09_ota_online
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_09_status
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+        - condition: state
+          entity_id: 'binary_sensor.esp32_09_ota_status'
+          state: 'on'
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} ESP #9 Online and in OTA Mode!
+
+  - alias: esp32_09_update_warning
+    initial_state: 'on'
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.esp32_09_status
+        to: 'off'
+        for:
+          minutes: 65
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{% if trigger.from_state and trigger.to_state %} True {% else %} False {% endif %}"
+
+    action:
+    - service: notify.telegram_christoph
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: EPaper (ESP #9)!
+    - service: notify.sensor_watch_log
+      data_template:
+        message: >
+          {{ now().strftime('%d.%m.%Y %H:%M:%S') }} No Update: EPaper (ESP #9)!
