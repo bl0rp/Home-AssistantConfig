@@ -1,0 +1,59 @@
+##############################################################
+### Packages / sonoff_stromzaehler_1                       ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+### https://github.com/mihalski/homeassistant-config       ###
+##############################################################
+
+homeassistant:
+
+  customize:
+#integration
+    sensor.stromzaehler_1_mt175_total_in:
+      friendly_name: "Stromverbrauch 1OG kWh"
+    sensor.stromzaehler_1_mt175_power_curr:
+      friendly_name: "Stromverbrauch 1OG W"
+
+#template/custom
+    sensor.stromzaehler_1_mt175_total_in_kwh:
+      icon: mdi:finance
+    sensor.stromzaehler_1_mt175_power_curr_w:
+      icon: mdi:power-socket-de
+
+
+sensor:
+  - platform: template
+    sensors:
+      stromzaehler_1_mt175_total_in_kwh:
+        friendly_name: "sonoff_stromzaehler_1_kwh"
+        value_template: "{{ states('sensor.stromzaehler_1_mt175_total_in')|float|abs }}"
+        unit_of_measurement: kWh
+        device_class: energy
+        attribute_templates:
+          last_reset: '1970-01-01T00:00:00+00:00'
+          state_class: 'measurement'
+
+  - platform: template
+    sensors:
+      stromzaehler_1_mt175_power_curr_w:
+        friendly_name: "sonoff_stromzaehler_1_w"
+        value_template: "{{ states('sensor.stromzaehler_1_mt175_power_curr')|float|abs }}"
+        unit_of_measurement: W
+        device_class: power
+        attribute_templates:
+          last_reset: '1970-01-01T00:00:00+00:00'
+          state_class: 'measurement'
+
+
+utility_meter:
+  mt175_haus_daily_energy:
+    source: sensor.stromzaehler_1_mt175_total_in_kwh
+    cycle: daily
+  mt175_haus_weekly_energy:
+    source: sensor.stromzaehler_1_mt175_total_in_kwh
+    cycle: weekly
+  mt175_haus_monthly_energy:
+    source: sensor.stromzaehler_1_mt175_total_in_kwh
+    cycle: monthly
+  mt175_haus_yearly_energy:
+    source: sensor.stromzaehler_1_mt175_total_in_kwh
+    cycle: yearly
