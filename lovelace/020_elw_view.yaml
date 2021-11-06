@@ -190,8 +190,8 @@ cards:
       - type: section
       - entity: person.christoph
         secondary_info: last-changed
-      - entity: sensor.tasker_pixel4xl_battery
-        name: Pixel4XL
+      - entity: sensor.pixel_6_pro_battery_level
+        name: Pixel 6 Pro
         secondary_info: last-changed
       - entity: input_boolean.laundry_notify_christoph
       - type: section
@@ -202,13 +202,13 @@ cards:
         icon: 'mdi:map-marker-circle'
         name: Christoph Status
         secondary_info: last-changed
-      - entity: device_tracker.nmap_tracker_f0_5c_77_f1_28_22
+      - entity: device_tracker.nmap_tracker_58_24_29_db_3f_49
         secondary_info: last-changed
         name: Christoph via nmap/unifi
         icon: 'mdi:wifi'
-      - entity: device_tracker.p4xl
+      - entity: device_tracker.p6pro
         secondary_info: last-changed
-        name: GPSLogger Pixel4XL
+        name: GPSLogger Pixel6Pro
         icon: 'mdi:radar'
       - entity: input_boolean.chrisbluetooth
         secondary_info: last-changed

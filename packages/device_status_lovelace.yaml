@@ -35,10 +35,7 @@ homeassistant:
     binary_sensor.chrishome_template:
       friendly_name: Christoph
 
-#GPSLogger
-    device_tracker.p4xl:
-      friendly_name: GPSLogger Pixel4 XL
-      icon: mdi:radar
+
 #network
     device_tracker.network_ap_ddwrt:
       friendly_name: "WiFi AP DD-WRT"
@@ -322,7 +319,7 @@ homeassistant:
 group:
   device_tracker_complete:
     entities:
-      - device_tracker.p4xl
+      - device_tracker.p6pro
       - device_tracker.network_ap_ddwrt
       - device_tracker.network_ap_gateway
       - device_tracker.network_ap_unifi_elw
@@ -367,8 +364,8 @@ group:
 #use sensors for devices and device_tracker for people (home vs online)
   device_tracker_christoph:
     entities:
-      - device_tracker.p4xl
-      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
+      - device_tracker.p6pro
+      - device_tracker.nmap_tracker_58_24_29_db_3f_49
       - binary_sensor.user_devices_computer_chris_macbook
       - binary_sensor.user_devices_computer_chris_workstation
 
