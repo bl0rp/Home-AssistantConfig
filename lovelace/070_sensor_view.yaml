@@ -12,7 +12,7 @@ cards:
       cards:
         - type: entities
           entities:
-          - entity: sensor.multisensor1_battery
+          - entity: sensor.zwave_multisensor_6_elw_battery_level
             name: Multisensor Z-Wave
           - entity: sensor.esp8266_01_status_var
             name: Wohnzimmer
@@ -32,13 +32,16 @@ cards:
       filter:
         include:
           - entity_id: "sensor.esp*_version"
+      sort:
+        method: 'name'
+
 
     - type: custom:vertical-stack-in-card
       title: 'Status aller Bewegungsmelder'
       cards:
         - type: entities
           entities:
-          - entity: sensor.multisensor1_motion
+          - entity: binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
             secondary_info: last-changed
             name: 'ELW Flur'
           - entity: sensor.esp8266_02_motion
@@ -90,6 +93,8 @@ cards:
               items:
                 - entity: sensor.esp32_01_rssi
                   secondary_info: last-changed
+                - entity: sensor.esp32_01_wifi_quality
+                  secondary_info: last-changed
                 - entity: binary_sensor.esp32_01_ota_status
                 - entity: binary_sensor.esp32_01_status
                   name: Status
@@ -97,6 +102,7 @@ cards:
                   name: OTA Mode
                 - entity: sensor.esp32_01_battery
                 - entity: sensor.esp32_01_battery_state
+                - entity: sensor.esp32_01_version
                 - entity: automation.benachrichtigung_batterie_esp32_01
                 - entity: automation.esp32_01_ota_online
                   name: Benachrichtigung OTA Online

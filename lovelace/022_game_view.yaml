@@ -34,7 +34,7 @@ cards:
       - type: gauge
         name: Workstation
         unit: 'W'
-        entity: sensor.sonoff02_momentane_leistung
+        entity: sensor.sonoff_02_energy_power
         max: 300
         severity:
           green: 0

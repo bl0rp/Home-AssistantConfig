@@ -27,14 +27,14 @@ automation:
       - condition: template
         value_template: "{{ is_state('input_boolean.chrishome', 'on') }}"
       - condition: template
-        value_template: "{{ is_state('switch.sonoff13', 'off') }}"
+        value_template: "{{ is_state('switch.sonoff_13', 'off') }}"
     action:
       - service: switch.turn_on
         data:
           entity_id: switch.esp32_04_led
       - service: switch.turn_on
         data:
-          entity_id: switch.sonoff13
+          entity_id: switch.sonoff_13
 
   - id: turn_off_light_serverroom_when_home
     alias: turn_off_light_serverroom_when_home
@@ -45,11 +45,11 @@ automation:
           seconds: "{{ states('input_number.light_serverroom')|int }}"
     condition:
       - condition: template
-        value_template: "{{ is_state('switch.sonoff13', 'on') }}"
+        value_template: "{{ is_state('switch.sonoff_13', 'on') }}"
     action:
       - service: switch.turn_off
         data:
           entity_id: switch.esp32_04_led
       - service: switch.turn_off
         data:
-          entity_id: switch.sonoff13
+          entity_id: switch.sonoff_13

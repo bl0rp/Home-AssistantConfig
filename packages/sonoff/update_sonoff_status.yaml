@@ -6,63 +6,62 @@
 ##############################################################
 homeassistant:
   customize:
-
-    sensor.sonoff01_sw_version:
+    sensor.sonoff_01_sw_version:
       friendly_name: "Sonoff #01 Version"
       icon: mdi:counter
-    sensor.sonoff02_sw_version:
+    sensor.sonoff_02_sw_version:
       friendly_name: "Sonoff #02 Version"
       icon: mdi:counter
-    sensor.sonoff03_sw_version:
+    sensor.sonoff_03_sw_version:
       friendly_name: "Sonoff #03 Version"
       icon: mdi:counter
-    sensor.sonoff04_sw_version:
+    sensor.sonoff_04_sw_version:
       friendly_name: "Sonoff #04 Version"
       icon: mdi:counter
-    sensor.sonoff05_sw_version:
+    sensor.sonoff_05_sw_version:
       friendly_name: "Sonoff #05 Version"
       icon: mdi:counter
-    sensor.sonoff06_sw_version:
+    sensor.sonoff_06_sw_version:
       friendly_name: "Sonoff #06 Version"
       icon: mdi:counter
-    sensor.sonoff07_sw_version:
+    sensor.sonoff_07_sw_version:
       friendly_name: "Sonoff #07 Version"
       icon: mdi:counter
-    sensor.sonoff08_sw_version:
+    sensor.sonoff_08_sw_version:
       friendly_name: "Sonoff #08 Version"
       icon: mdi:counter
-    sensor.sonoff09_sw_version:
+    sensor.sonoff_09_sw_version:
       friendly_name: "Sonoff #09 Version"
       icon: mdi:counter
-    sensor.sonoff10_sw_version:
+    sensor.sonoff_10_sw_version:
       friendly_name: "Sonoff #10 Version"
       icon: mdi:counter
-    sensor.sonoff11_sw_version:
+    sensor.sonoff_11_sw_version:
       friendly_name: "Sonoff #11 Version"
       icon: mdi:counter
-    sensor.sonoff12_sw_version:
+    sensor.sonoff_12_sw_version:
       friendly_name: "Sonoff #12 Version"
       icon: mdi:counter
-    sensor.sonoff13_sw_version:
+    sensor.sonoff_13_sw_version:
       friendly_name: "Sonoff #13 Version"
       icon: mdi:counter
 #group file for auto-entity filter
 group:
   sonoff_sw_version:
     entities:
-      - sensor.sonoff01_sw_version
-      - sensor.sonoff02_sw_version
-      - sensor.sonoff03_sw_version
-      - sensor.sonoff04_sw_version
-      - sensor.sonoff05_sw_version
-      - sensor.sonoff06_sw_version
-      - sensor.sonoff07_sw_version
-      - sensor.sonoff08_sw_version
-      - sensor.sonoff09_sw_version
-      - sensor.sonoff10_sw_version
-      - sensor.sonoff11_sw_version
-      - sensor.sonoff12_sw_version
-      - sensor.sonoff13_sw_version
+      - sensor.sonoff_01_sw_version
+      - sensor.sonoff_02_sw_version
+      - sensor.sonoff_03_sw_version
+      - sensor.sonoff_04_sw_version
+      - sensor.sonoff_05_sw_version
+      - sensor.sonoff_06_sw_version
+      - sensor.sonoff_07_sw_version
+      - sensor.sonoff_08_sw_version
+      - sensor.sonoff_09_sw_version
+      - sensor.sonoff_10_sw_version
+      - sensor.sonoff_11_sw_version
+      - sensor.sonoff_12_sw_version
+      - sensor.sonoff_13_sw_version
 
 #get alle sonoff information upon hass boot
 automation:
@@ -82,19 +81,19 @@ automation:
       trigger:
         platform: state
         entity_id:
-          - binary_sensor.switch_sonoff_sonoff01
-          - binary_sensor.switch_sonoff_sonoff02
-          - binary_sensor.switch_sonoff_sonoff03
-          - binary_sensor.switch_sonoff_sonoff04
-          - binary_sensor.switch_sonoff_sonoff05
-          - binary_sensor.switch_sonoff_sonoff06
-          - binary_sensor.switch_sonoff_sonoff07
-          - binary_sensor.switch_sonoff_sonoff08
-          - binary_sensor.switch_sonoff_sonoff09
-          - binary_sensor.switch_sonoff_sonoff10
-          - binary_sensor.switch_sonoff_sonoff11
-          - binary_sensor.switch_sonoff_sonoff12
-          - binary_sensor.switch_sonoff_sonoff13
+          - binary_sensor.switch_sonoff_sonoff_01
+          - binary_sensor.switch_sonoff_sonoff_02
+          - binary_sensor.switch_sonoff_sonoff_03
+          - binary_sensor.switch_sonoff_sonoff_04
+          - binary_sensor.switch_sonoff_sonoff_05
+          - binary_sensor.switch_sonoff_sonoff_06
+          - binary_sensor.switch_sonoff_sonoff_07
+          - binary_sensor.switch_sonoff_sonoff_08
+          - binary_sensor.switch_sonoff_sonoff_09
+          - binary_sensor.switch_sonoff_sonoff_10
+          - binary_sensor.switch_sonoff_sonoff_11
+          - binary_sensor.switch_sonoff_sonoff_12
+          - binary_sensor.switch_sonoff_sonoff_13
         from: 'off'
         to: 'on'
       mode: queued
@@ -125,11 +124,11 @@ automation:
             - condition: template
               value_template: "{{ states('sensor.sonoff_latest_release_raw') != '' }}"
             - condition: template
-              value_template: "{{ states('sensor.sonoff01_sw_version') != 'unknown' }}"
+              value_template: "{{ states('sensor.sonoff_01_sw_version') != 'unknown' }}"
             - condition: template
-              value_template: "{{ states('sensor.sonoff01_sw_version') != '' }}"
+              value_template: "{{ states('sensor.sonoff_01_sw_version') != '' }}"
             - condition: template
-              value_template: "{{ states('sensor.sonoff_latest_release') != states('sensor.sonoff01_sw_version')}}"
+              value_template: "{{ states('sensor.sonoff_latest_release') != states('sensor.sonoff_01_sw_version')}}"
       action:
         - service: notify.pushbullet
           data_template:
@@ -150,92 +149,92 @@ script:
 #binary_sensor for every device
 binary_sensor:
   - platform: mqtt
-    name: sonoff01_state
-    state_topic: "tele/sonoff01/LWT"
+    name: sonoff_01_state
+    state_topic: "tele/sonoff_01/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff02_state
-    state_topic: "tele/sonoff02/LWT"
+    name: sonoff_02_state
+    state_topic: "tele/sonoff_02/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff03_state
-    state_topic: "tele/sonoff03/LWT"
+    name: sonoff_03_state
+    state_topic: "tele/sonoff_03/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff04_state
-    state_topic: "tele/sonoff04/LWT"
+    name: sonoff_04_state
+    state_topic: "tele/sonoff_04/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff05_state
-    state_topic: "tele/sonoff05/LWT"
+    name: sonoff_05_state
+    state_topic: "tele/sonoff_05/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff06_state
-    state_topic: "tele/sonoff06/LWT"
+    name: sonoff_06_state
+    state_topic: "tele/sonoff_06/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff07_state
-    state_topic: "tele/sonoff07/LWT"
+    name: sonoff_07_state
+    state_topic: "tele/sonoff_07/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff08_state
-    state_topic: "tele/sonoff08/LWT"
+    name: sonoff_08_state
+    state_topic: "tele/sonoff_08/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff09_state
-    state_topic: "tele/sonoff09/LWT"
+    name: sonoff_09_state
+    state_topic: "tele/sonoff_09/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff10_state
-    state_topic: "tele/sonoff10/LWT"
+    name: sonoff_10_state
+    state_topic: "tele/sonoff_10/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff11_state
-    state_topic: "tele/sonoff11/LWT"
+    name: sonoff_11_state
+    state_topic: "tele/sonoff_11/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff12_state
-    state_topic: "tele/sonoff12/LWT"
+    name: sonoff_12_state
+    state_topic: "tele/sonoff_12/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
 
   - platform: mqtt
-    name: sonoff13_state
-    state_topic: "tele/sonoff13/LWT"
+    name: sonoff_13_state
+    state_topic: "tele/sonoff_13/LWT"
     payload_on: "Online"
     payload_off: "Offline"
     device_class: connectivity
@@ -258,215 +257,133 @@ sensor:
     sensors:
       sonoff_latest_release:
         value_template: >-
-          {{ states.sensor.sonoff_latest_release_raw.state |replace ('v','')  }}
+          {{ states('sensor.sonoff_latest_release_raw') |replace ('v','')  }}
+  - platform: template
+    sensors:
+      sonoff_01_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_01_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_02_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_02_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_03_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_03_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_04_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_04_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_05_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_05_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_06_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_06_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_07_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_07_firmware_version')|replace ('(tasmota)','')  }}
+  - platform: template
+    sensors:
+      sonoff_08_firmware_version:
+        value_template: >-
+          {{ states('sensor.sonoff_08_firmware_version')|replace ('(tasmota)','')  }}
 
-  #ipv4 sonoff
+
+
+
+
+
   - platform: mqtt
-    name: "sonoff01 IPv4"
-    state_topic: "stat/sonoff01/STATUS5"
+    name: "sonoff_09 IPv4"
+    state_topic: "stat/sonoff_09/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff01/LWT"
+    availability_topic: "tele/sonoff_09/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff02 IPv4"
-    state_topic: "stat/sonoff02/STATUS5"
+    name: "sonoff_10 IPv4"
+    state_topic: "stat/sonoff_10/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff02/LWT"
+    availability_topic: "tele/sonoff_10/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff03 IPv4"
-    state_topic: "stat/sonoff03/STATUS5"
+    name: "sonoff_11 IPv4"
+    state_topic: "stat/sonoff_11/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff03/LWT"
+    availability_topic: "tele/sonoff_11/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff04 IPv4"
-    state_topic: "stat/sonoff04/STATUS5"
+    name: "sonoff_12 IPv4"
+    state_topic: "stat/sonoff_12/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff04/LWT"
+    availability_topic: "tele/sonoff_12/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff05 IPv4"
-    state_topic: "stat/sonoff05/STATUS5"
+    name: "sonoff_13 IPv4"
+    state_topic: "stat/sonoff_13/STATUS5"
     value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff05/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff06 IPv4"
-    state_topic: "stat/sonoff06/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff06/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff07 IPv4"
-    state_topic: "stat/sonoff07/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff07/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff08 IPv4"
-    state_topic: "stat/sonoff08/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff08/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff09 IPv4"
-    state_topic: "stat/sonoff09/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff09/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff10 IPv4"
-    state_topic: "stat/sonoff10/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff10/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff11 IPv4"
-    state_topic: "stat/sonoff11/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff11/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff12 IPv4"
-    state_topic: "stat/sonoff12/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff12/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff13 IPv4"
-    state_topic: "stat/sonoff13/STATUS5"
-    value_template: "{{ value_json.StatusNET.IPAddress }}"
-    availability_topic: "tele/sonoff13/LWT"
+    availability_topic: "tele/sonoff_13/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   #SW Version
 
-  - platform: mqtt
-    name: "sonoff01 sw version"
-    state_topic: "stat/sonoff01/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(tasmota)','')  }}"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
+
 
   - platform: mqtt
-    name: "sonoff02 sw version"
-    state_topic: "stat/sonoff02/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version |replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff02/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff03 sw version"
-    state_topic: "stat/sonoff03/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','')  }}"
-    availability_topic: "tele/sonoff03/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff04 sw version"
-    state_topic: "stat/sonoff04/STATUS2"
+    name: "sonoff_09 sw version"
+    state_topic: "stat/sonoff_09/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff04/LWT"
+    availability_topic: "tele/sonoff_09/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff05 sw version"
-    state_topic: "stat/sonoff05/STATUS2"
+    name: "sonoff_10 sw version"
+    state_topic: "stat/sonoff_10/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff05/LWT"
+    availability_topic: "tele/sonoff_10/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff06 sw version"
-    state_topic: "stat/sonoff06/STATUS2"
+    name: "sonoff_11 sw version"
+    state_topic: "stat/sonoff_11/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff06/LWT"
+    availability_topic: "tele/sonoff_11/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff07 sw version"
-    state_topic: "stat/sonoff07/STATUS2"
+    name: "sonoff_12 sw version"
+    state_topic: "stat/sonoff_12/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff07/LWT"
+    availability_topic: "tele/sonoff_12/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
   - platform: mqtt
-    name: "sonoff08 sw version"
-    state_topic: "stat/sonoff08/STATUS2"
+    name: "sonoff_13 sw version"
+    state_topic: "stat/sonoff_13/STATUS2"
     value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff08/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff09 sw version"
-    state_topic: "stat/sonoff09/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff09/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff10 sw version"
-    state_topic: "stat/sonoff10/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff10/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff11 sw version"
-    state_topic: "stat/sonoff11/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff11/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff12 sw version"
-    state_topic: "stat/sonoff12/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff12/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff13 sw version"
-    state_topic: "stat/sonoff13/STATUS2"
-    value_template: "{{ value_json['StatusFWR'].Version|replace ('(tasmota)','') }}"
-    availability_topic: "tele/sonoff13/LWT"
+    availability_topic: "tele/sonoff_13/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"

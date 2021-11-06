@@ -44,3 +44,11 @@
 
   - platform: alexa_media
     name: alexa_media
+
+
+
+  - name: divoom
+    platform: divoom
+    mac: "11:75:58:4D:35:7A"
+    device_type: "pixoo"
+    media_directory: "pixelart"

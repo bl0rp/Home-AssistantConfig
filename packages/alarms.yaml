@@ -12,13 +12,14 @@ automation:
 
 #notification about all sensors when not home
 ### Thanks 2 @brahmafear (initial version)
-  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
+  - alias: all_motion_sensors_elw_alarm
+    id: all_motion_sensors_elw_alarm
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.aeotec_zw100_multisensor_6_burglar
-        from: '0'
-        to: '8'
+        entity_id: binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
+        from: 'off'
+        to: 'on'
       - platform: state
         entity_id: binary_sensor.esp8266_02_motion
         from: 'off'
@@ -35,8 +36,8 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.last_triggered is not none %}
-              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.attributes.last_triggered) | int > 60 %} true {% else %} false
+            {% if states.automation.all_motion_sensors_elw_alarm.last_triggered is not none %}
+              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.all_motion_sensors_elw_alarm.attributes.last_triggered) | int > 60 %} true {% else %} false
               {% endif %}
             {% else %}
             false
@@ -73,7 +74,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff02_use
+        entity_id: sensor.sonoff_02_use
         to: 'Ja'
         for:
           minutes: 1

@@ -17,7 +17,7 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - sensor.sonoff02_use
+        - sensor.sonoff_02_use
       to: 'Ja'
       for:
         seconds: 15
@@ -35,7 +35,7 @@ automation:
     trigger:
       platform: state
       entity_id:
-        - sensor.sonoff02_use
+        - sensor.sonoff_02_use
       to: 'Nein'
       for:
         seconds: 15

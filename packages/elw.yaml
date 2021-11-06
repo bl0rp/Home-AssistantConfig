@@ -4,23 +4,34 @@
 ########################################################################
 homeassistant:
 
+### input_boolean based on brightness
+input_boolean:
+  elw_dark:
+    icon: mdi:brightness-4
+    name: Dunkel?
+  elw_dark_light_automation_triggered:
+    name: automation_auto_lights_on_treiggerd
 ####################################
 ### automation lights auto on/off ##
 ####################################
 
-#welcome home Automation
+#welcome home  tts automation
+
+
 automation:
-  - alias: turn_on_lights_when_coming_home
-    initial_state: off
+  - alias: turn_on_lights_when_coming_home_and_door_opens
+    mode: single
+    max_exceeded: silent
+    id: turn_on_lights_when_coming_home_and_door_opens
+    initial_state: on
     trigger:
       - platform: state
-        entity_id: input_boolean.chrishome
+        entity_id: binary_sensor.esp32_01_door_state
         to: 'on'
+    condition:
+      - condition: template
+        value_template: "{{ as_timestamp(now()) - as_timestamp(states.input_boolean.chrishome.last_changed) <= 300 }}"
     action:
-      - wait_template: "{{ states.binary_sensor.esp32_01_door_state.state == 'on' }}"
-      - service: automation.turn_off
-        entity_id: automation.turn_on_lights_when_coming_home
-      - delay: '00:00:20'
       - service: notify.alexa_media
         data_template:
           data:
@@ -40,32 +51,7 @@ automation:
              "Sei gegrüßt " + person,
              "und willkommen zu hause " + person
              ] |random }}
-
-      - condition: or
-        conditions:
-          - condition: template
-            value_template: "{{ states.sun.sun.state == 'below_horizon' }}"
-      - service: scene.turn_on
-        entity_id: scene.elw_relax
-      - service: scene.turn_on
-        entity_id: scene.flur_relax
-      - delay: '{{ states.input_select.tuerlicht.state | int }}'
-      - service: scene.turn_on
-        entity_id: scene.flur_aus
-#enable automation when leaving
-  - alias: enable_automation_coming_home
-    initial_state: on
-    trigger:
-      - platform: state
-        entity_id: input_boolean.chrishome
-        to: 'off'
-        for:
-          minutes: 1
-    action:
-      - service: automation.turn_on
-        entity_id: automation.turn_on_lights_when_coming_home
-
-
+      - delay: 300
 
 
 #disable lights when leaving
@@ -80,6 +66,8 @@ automation:
     action:
       - service: scene.turn_on
         entity_id: scene.elw_aus
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.elw_dark_light_automation_triggered
 #switch chargers on/off when not_home/home
   - alias: 'disable_charger_sonoff_when_not_home'
     initial_state: True
@@ -91,9 +79,10 @@ automation:
             minutes: 30
     action:
       - service: switch.turn_off
-        entity_id: switch.sonoff07
+        entity_id: switch.sonoff_07
 
   - alias: 'enable_charger_sonoff_when_home'
+    id: enable_charger_sonoff_when_home
     initial_state: True
     trigger:
         - platform: state
@@ -101,10 +90,10 @@ automation:
           to: 'on'
     action:
       - service: switch.turn_on
-        entity_id: switch.sonoff07
-
+        entity_id: switch.sonoff_07
 #dark in the elw
   - alias: "elw_dusk_brightness"
+    id: elw_dusk_brightness
     trigger:
       - platform: numeric_state
         entity_id: sensor.esp32_12_brightness_bh1750_long
@@ -112,11 +101,11 @@ automation:
       - platform: numeric_state
         entity_id: sun.sun
         attribute: elevation
-        below: 4
+        below: 3
     condition:
       - condition: time
-        before: "22:00:00"
         after: "16:00:00"
+        before: "22:00:00"
       - condition: numeric_state
         entity_id: sun.sun
         attribute: elevation
@@ -136,3 +125,98 @@ automation:
             elevation: {{ state_attr('sun.sun', 'elevation') }}
             dusk: {{as_timestamp(states.sun.sun.attributes.next_dusk)|timestamp_custom('%H:%M:%S')}}
             sunset: {{as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom('%H:%M:%S')}}
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.elw_dark
+  - alias: "elw_dawn_brightness"
+    id: elw_dawn_brightness
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.esp32_12_brightness_bh1750_long
+        above: 5
+      - platform: numeric_state
+        entity_id: sensor.esp32_12_brightness_ldr
+        above: 20
+    condition:
+      - condition: time
+        after: "06:00:00"
+        before: "12:00:00"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+      - condition: state
+        entity_id:
+          - switch.11011_b
+        state: "off"
+    action:
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.elw_dark
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.elw_dark_light_automation_triggered
+
+#turn on lights based on motion and it's dark
+  - alias: "elw_lights_on_motion_dark"
+    id: elw_lights_on_motion_dark
+    mode: single
+    max_exceeded: silent
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
+        to: "on"
+      - platform: state
+        entity_id: binary_sensor.esp8266_02_motion
+        to: "on"
+      - platform: state
+        entity_id: binary_sensor.esp8266_06_motion
+        to: "on"
+    condition:
+      - condition: time
+        after: "16:00:00"
+        before: "08:00:00"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+      - condition: state
+        entity_id:
+          - input_boolean.chrisbluetooth
+          - input_boolean.elw_dark
+        state: "on"
+      - condition: state
+        entity_id:
+          - input_boolean.elw_dark_light_automation_triggered
+        state: "off"
+    action:
+      - service: notify.telegram_christoph
+        data_template:
+          message: >
+            {{ now().strftime('%d.%m.%Y %H:%M:%S') }} licht an in der ELW
+      - service: scene.turn_on
+        entity_id: scene.elw_relax
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.elw_dark_light_automation_triggered
+
+  - alias: motion_zwave_sunset_flur_dimlight
+    id: motion_zwave_sunset_flur_dimlight
+    initial_state: on
+    trigger:
+      platform: state
+      entity_id: binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
+      from: 'off'
+      to: 'on'
+    condition:
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: "on"
+      - condition: state
+        entity_id: input_boolean.elw_dark
+        state: "on"
+      - condition: state
+        entity_id: light.flur
+        state: "off"
+    action:
+      - service: scene.turn_on
+        entity_id: scene.flur_relax
+      - delay: '{{ states.input_select.tuerlicht.state | int }}'
+      - service: scene.turn_on
+        entity_id: scene.flur_aus

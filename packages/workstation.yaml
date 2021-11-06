@@ -9,6 +9,6 @@ sensor:
   - platform: template
     sensors:
       workstation_wattage_complete:
-        value_template: "{{ ((states('sensor.sonoff01_momentane_leistung'))|float + (states('sensor.sonoff02_momentane_leistung'))|float +  (states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power'))|float) |round(0) }}"
+        value_template: "{{ ((states('sensor.sonoff_01_energy_power'))|float + (states('sensor.sonoff_02_energy_power'))|float +  (states('sensor.zwave_fibaro_mpd_1_power'))|float) |round(0) }}"
         friendly_name: 'Gesamtverbrauch'
         unit_of_measurement: "W"

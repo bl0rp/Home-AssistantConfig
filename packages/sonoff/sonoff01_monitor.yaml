@@ -1,123 +1,71 @@
 ##############################################################
-### Packages / sonoff01                                     ###
+### Packages / sonoff_01                                    ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
-### Thanks to cnrd                                         ###
-### https://github.com/cnrd                                ###
-### Inspired by mihalski                                   ###
 ### https://github.com/mihalski/homeassistant-config       ###
 ##############################################################
 
 homeassistant:
 
   customize:
-    switch.sonoff01:
+#integration
+    switch.sonoff_01:
       friendly_name: Monitore
       icon: mdi:monitor-multiple
-    sensor.sonoff01_momentane_leistung:
-      friendly_name: Aktuelle Leistung
-      icon: mdi:power-plug
-    sensor.sonoff01_spannung:
-      friendly_name: Spannung
-      icon: mdi:flash
-    sensor.sonoff01_stromstaerke:
+
+    sensor.sonoff_01_energy_current:
       friendly_name: Stromstärke
-      icon: mdi:flash
-    sensor.sonoff01_ipv4:
-      friendly_name: IPv4 Sonoff 1
-      icon: mdi:server-network
-    sensor.sonoff01_max_load:
-      friendly_name: Maximale Leistung
-      icon: mdi:fire
-    sensor.sonoff01_kosten_heute:
-      friendly_name: Kosten Heute
-      icon: mdi:currency-eur
-    sensor.sonoff01_kosten_gestern:
-      friendly_name: Kosten Gestern
-      icon: mdi:currency-eur
-    sensor.sonoff01_kosten_gesamt:
-      friendly_name: Gesamtkosten
-      icon: mdi:currency-eur
-    sensor.sonoff01_verbrauch_heute:
-      friendly_name: Vebrauch Heute
+    sensor.sonoff_01_energy_power:
+      friendly_name: Leistung
+      icon: mdi:power-plug
+    sensor.sonoff_01_energy_voltage:
+      friendly_name: Spannung
+
+    sensor.sonoff_01_energy_today:
+      friendly_name: Verbrauch (Heute)
       icon: mdi:chart-line
-    sensor.sonoff01_verbrauch_gestern:
-      friendly_name: Vebrauch Gestern
+    sensor.sonoff_01_energy_yesterday:
+      friendly_name: Verbrauch (Gestern)
       icon: mdi:chart-line
-    sensor.sonoff01_gesamtverbrauch:
-      friendly_name: Gesamtverbrauch
+    sensor.sonoff_01_energy_total:
+      friendly_name: Monitore
       icon: mdi:chart-line
-    sensor.sonoff01_uptime:
+
+
+
+    sensor.sonoff_01_firmware_version:
+      friendly_name: "Sonoff #01 Version"
+      icon: mdi:counter
+    sensor.sonoff_01_ip:
+      friendly_name: IPv4
+    sensor.sonoff_01_rssi:
+      friendly_name: Signalqualität
+    sensor.sonoff_01_uptime:
       friendly_name: Laufzeit
       icon: mdi:clock-fast
-    script.del_sonoff01_power_log:
-      friendly_name: Maximale Leistung zurücksetzen
+#template/custom
+    sensor.sonoff_01_kosten_heute:
+      icon: mdi:currency-eur
+    sensor.sonoff_01_kosten_gestern:
+      icon: mdi:currency-eur
+    sensor.sonoff_01_kosten_gesamt:
+      icon: mdi:currency-eur
+
+    sensor.sonoff_01_max_load:
+      friendly_name: Max. Leistung
+      icon: mdi:fire
+    script.del_sonoff_01_power_log:
+      friendly_name: Max. Leistung zurücksetzen
       icon: mdi:eraser
-
-
 
 
 sensor:
 
-### Readsensor:
+### uptime sensor
   - platform: mqtt
-    name: "sonoff01 Momentane Leistung"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Power }}"
-    unit_of_measurement: "W"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 Verbrauch Heute"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Today }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 Verbrauch Gestern"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Yesterday }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 Gesamtverbrauch"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Total }}"
-    unit_of_measurement: "kWh"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 Spannung"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Voltage }}"
-    unit_of_measurement: "V"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 Stromstaerke"
-    state_topic: "tele/sonoff01/SENSOR"
-    value_template: "{{ value_json.ENERGY.Current }}"
-    unit_of_measurement: "A"
-    availability_topic: "tele/sonoff01/LWT"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-
-  - platform: mqtt
-    name: "sonoff01 uptime"
-    state_topic: "tele/sonoff01/STATE"
+    name: "sonoff_01_uptime"
+    state_topic: "tele/sonoff_01/STATE"
     value_template: "{{ value_json.Uptime }}"
-    availability_topic: "tele/sonoff01/LWT"
+    availability_topic: "tele/sonoff_01/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
@@ -125,83 +73,80 @@ sensor:
 
   - platform: template
     sensors:
-      sonoff01_kosten_heute:
+      sonoff_01_kosten_heute:
         friendly_name: Kosten Heute
         unit_of_measurement: "€"
         value_template: >-
-          {{ states.sensor.sonoff01_verbrauch_heute.state  | multiply(0.2657) | round(2) }}
+          {{ states.sensor.sonoff_01_energy_today.state  | multiply(0.2657) | round(2) }}
 
-      sonoff01_kosten_gestern:
+      sonoff_01_kosten_gestern:
         friendly_name: Kosten Gestern
         unit_of_measurement: "€"
         value_template: >-
-          {{ states.sensor.sonoff01_verbrauch_gestern.state  | multiply(0.2657) | round(2) }}
+          {{ states.sensor.sonoff_01_energy_yesterday.state  | multiply(0.2657) | round(2) }}
 
-      sonoff01_kosten_gesamt:
+      sonoff_01_kosten_gesamt:
         friendly_name: Gesamtkosten
         unit_of_measurement: "€"
         value_template: >-
-          {{ states('sensor.sonoff01_gesamtverbrauch')| multiply(0.2657) | round(2) }}
+          {{ states('sensor.sonoff_01_energy_total')  | multiply(0.2657) | round(2) }}
 
+      sonoff_01_kosten_gesamt_startzeit:
+        friendly_name: Gesamtkosten
+        value_template: >-
+          {{ as_timestamp(states('sensor.sonoff_01_energy_totalstarttime')) | timestamp_custom('%d.%m.%y') }}
 ### Usage sensor for other scripts/automations
 
-      sonoff01_use:
+      sonoff_01_use:
         friendly_name: "Vebraucher aktiv?"
-        value_template: "{% if states('sensor.sonoff01_momentane_leistung') | int > 20 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.sonoff01_momentane_leistung') | int > 20 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.sonoff_01_energy_power') | int > 1 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.sonoff_01_energy_power') | int > 1 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
 
 ### Reading the highest value in the power log file ( see automation)
 
   - platform: command_line
-    name: 'sonoff01_max_load'
-    command: "grep -E '[0-9]+' /home/homeassistant/log/sonoff01/power.txt| sort -rn | head -n 1"
+    name: 'sonoff_01_max_load'
+    command: "grep -E '[0-9]+' /home/homeassistant/log/sonoff_01/power.txt| sort -rn | head -n 1"
     unit_of_measurement: "W"
     scan_interval: 15
 
 ### log power to the logfile
 
 notify:
-    - name: sonoff01_power_log
+    - name: sonoff_01_power_log
       platform: file
-      filename: /home/homeassistant/log/sonoff01/power.txt
+      filename: /home/homeassistant/log/sonoff_01/power.txt
 
-### main switch on/off
 
-switch:
-  - platform: mqtt
-    name: "sonoff01"
-    state_topic: "stat/sonoff01/POWER1"
-    command_topic: "cmnd/sonoff01/POWER1"
-    availability_topic: "tele/sonoff01/LWT"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    payload_available: "Online"
-    payload_not_available: "Offline"
-    retain: false
 
 
 ### Record all power levels to a file (see notify)
 automation:
-  - alias: sonoff01 Load logfile
+  - alias: sonoff_01 Load logfile
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff01_momentane_leistung
+
+        entity_id: sensor.sonoff_01_energy_power
     mode: queued
     action:
-      - service: notify.sonoff01_power_log
+      - service: notify.sonoff_01_power_log
         data_template:
           message: >
-            {{ states.sensor.sonoff01_momentane_leistung.state }}
+            {{ states.sensor.sonoff_01_energy_power.state }}
+
+
+
+
 
 ### Delete the logfile (reset the maximum power sensor)
 
 script:
-  del_sonoff01_power_log:
+  del_sonoff_01_power_log:
      sequence:
-       - service: shell_command.del_sonoff01_power_log
+       - service: shell_command.del_sonoff_01_power_log
+
 
 shell_command:
-  del_sonoff01_power_log: rm /home/homeassistant/log/sonoff01/power.txt && touch /home/homeassistant/log/sonoff01/power.txt && chown -R -v homeassistant:homeassistant /home/homeassistant/log/sonoff01/power.txt
+  del_sonoff_01_power_log: rm /home/homeassistant/log/sonoff_01/power.txt && touch /home/homeassistant/log/sonoff_01/power.txt && chown -R -v homeassistant:homeassistant /home/homeassistant/log/sonoff_01/power.txt

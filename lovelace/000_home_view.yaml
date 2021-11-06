@@ -34,7 +34,7 @@ cards:
       title: "Serverraum"
       show_header_toggle: false
       entities:
-      - entity: sensor.sonoff04_momentane_leistung
+      - entity: sensor.sonoff_04_energy_power
         name: Stromverbrauch
       - entity: sensor.esp32_04_temperature
         name: Temperatur
@@ -63,7 +63,7 @@ cards:
         entities:
           - entity: sensor.esp32_04_temperature
             name: Temperatur
-          - entity: sensor.sonoff04_momentane_leistung
+          - entity: sensor.sonoff_04_energy_power
             name: Leistung
         show:
           show_legend: true

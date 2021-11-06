@@ -1,1 +1,20 @@
-[]
+- id: '1628709460562'
+  alias: Wake-up light alarm with sunrise effect
+  description: ''
+  use_blueprint:
+    path: sbyx/wake-up-light-alarm-with-sunrise-effect.yaml
+    input:
+      light_entity: light.esp32_12_led
+      timestamp_sensor: sensor.p4xl_nachster_wecker
+      check_entity: input_boolean.chrisbluetooth
+      sunrise_duration: 10
+- id: '1628709654008'
+  alias: blamuhkuh
+  description: blamuhkuh
+  use_blueprint:
+    path: homeassistant/motion_light.yaml
+    input:
+      motion_entity: binary_sensor.esp8266_02_motion
+      light_target:
+        device_id: c69351d296c6e0095c0970a17d84b774
+      no_motion_wait: 5

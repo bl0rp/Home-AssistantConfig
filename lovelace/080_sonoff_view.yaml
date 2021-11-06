@@ -42,34 +42,34 @@ cards:
   title: 'WKS'
   hours_to_show: 24
   entities:
-   - entity: sensor.sonoff01_momentane_leistung
+   - entity: sensor.sonoff_01_
      name: Monitore
-   - entity: sensor.sonoff02_momentane_leistung
+   - entity: sensor.sonoff_02_momentane_leistung
      name: WKS
 - type: history-graph
   title: 'Waschküche'
   hours_to_show: 24
   entities:
-   - entity: sensor.sonoff03_momentane_leistung
+   - entity: sensor.sonoff_03_momentane_leistung
      name: Waschmaschine
-   - entity: sensor.sonoff05_momentane_leistung
+   - entity: sensor.sonoff_05_momentane_leistung
      name: Trockner
 - type: custom:layout-break
-#sonoff01
+#sonoff_01
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff01_state
+    - entity: binary_sensor.sonoff_01_state
       state: "off"
   card:
     type: entities
     title: '#1 Monitore'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff01_state
+      - entity: binary_sensor.sonoff_01_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff01_state
+    - entity: binary_sensor.sonoff_01_state
       state: "on"
   card:
     type: entities
@@ -77,46 +77,53 @@ cards:
       - type: custom:vertical-stack-in-card
         title: '#1 Monitore'
         cards:
+
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff01
-                row: true
-              - entity: sensor.sonoff01_ipv4
-              - entity: sensor.sonoff01_uptime
-              - entity: sensor.sonoff01_use
-              - entity: sensor.sonoff01_momentane_leistung
+              - entity: switch.sonoff_01
+              - entity: sensor.sonoff_01_ip
+              - entity: sensor.sonoff_01_uptime
+              - entity: sensor.sonoff_01_use
+              - entity: sensor.sonoff_01_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff01_spannung
-                  - entity: sensor.sonoff01_stromstaerke
-                  - entity: sensor.sonoff01_max_load
-                  - entity: sensor.sonoff01_verbrauch_heute
-                  - entity: sensor.sonoff01_verbrauch_gestern
-                  - entity: sensor.sonoff01_gesamtverbrauch
-                  - entity: sensor.sonoff01_kosten_heute
-                  - entity: sensor.sonoff01_kosten_gestern
-                  - entity: sensor.sonoff01_kosten_gesamt
-                  - entity: script.del_sonoff01_power_log
-#sonoff02
+                  - entity: sensor.sonoff_01_energy_voltage
+                  - entity: sensor.sonoff_01_energy_current
+                  - entity: sensor.sonoff_01_max_load
+                  - entity: sensor.sonoff_01_energy_today
+                  - entity: sensor.sonoff_01_energy_yesterday
+                  - entity: sensor.sonoff_01_energy_total
+                  - entity: sensor.sonoff_01_kosten_heute
+                  - entity: sensor.sonoff_01_kosten_gestern
+                  - entity: sensor.sonoff_01_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_01_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_01_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_01_power_log
+#sonoff_02
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff02_state
+    - entity: binary_sensor.sonoff_02_state
       state: "off"
   card:
     type: entities
     title: '#2 Workstation'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff02_state
+      - entity: binary_sensor.sonoff_02_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff02_state
+    - entity: binary_sensor.sonoff_02_state
       state: "on"
   card:
     type: entities
@@ -127,44 +134,50 @@ cards:
 
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff02
-                row: true
-              - entity: sensor.sonoff02_ipv4
-              - entity: sensor.sonoff02_uptime
-              - entity: sensor.sonoff02_use
-              - entity: sensor.sonoff02_momentane_leistung
+              - entity: switch.sonoff_02
+              - entity: sensor.sonoff_02_ip
+              - entity: sensor.sonoff_02_uptime
+              - entity: sensor.sonoff_02_use
+              - entity: sensor.sonoff_02_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff02_spannung
-                  - entity: sensor.sonoff02_stromstaerke
-                  - entity: sensor.sonoff02_max_load
-                  - entity: sensor.sonoff02_verbrauch_heute
-                  - entity: sensor.sonoff02_verbrauch_gestern
-                  - entity: sensor.sonoff02_gesamtverbrauch
-                  - entity: sensor.sonoff02_kosten_heute
-                  - entity: sensor.sonoff02_kosten_gestern
-                  - entity: sensor.sonoff02_kosten_gesamt
-                  - entity: script.del_sonoff02_power_log
-#sonoff03
+                  - entity: sensor.sonoff_02_energy_voltage
+                  - entity: sensor.sonoff_02_energy_current
+                  - entity: sensor.sonoff_02_max_load
+                  - entity: sensor.sonoff_02_energy_today
+                  - entity: sensor.sonoff_02_energy_yesterday
+                  - entity: sensor.sonoff_02_energy_total
+                  - entity: sensor.sonoff_02_kosten_heute
+                  - entity: sensor.sonoff_02_kosten_gestern
+                  - entity: sensor.sonoff_02_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_02_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_02_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_02_power_log
+#sonoff_03
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff03_state
+    - entity: binary_sensor.sonoff_03_state
       state: "off"
   card:
     type: entities
     title: '#3 Waschmaschine'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff03_state
+      - entity: binary_sensor.sonoff_03_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff03_state
+    - entity: binary_sensor.sonoff_03_state
       state: "on"
   card:
     type: entities
@@ -175,93 +188,105 @@ cards:
 
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff03
-                row: true
-              - entity: sensor.sonoff03_ipv4
-              - entity: sensor.sonoff03_uptime
-              - entity: sensor.sonoff03_use
-              - entity: sensor.sonoff03_momentane_leistung
+              - entity: switch.sonoff_03
+              - entity: sensor.sonoff_03_ip
+              - entity: sensor.sonoff_03_uptime
+              - entity: sensor.sonoff_03_use
+              - entity: sensor.sonoff_03_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff03_spannung
-                  - entity: sensor.sonoff03_stromstaerke
-                  - entity: sensor.sonoff03_max_load
-                  - entity: sensor.sonoff03_verbrauch_heute
-                  - entity: sensor.sonoff03_verbrauch_gestern
-                  - entity: sensor.sonoff03_gesamtverbrauch
-                  - entity: sensor.sonoff03_kosten_heute
-                  - entity: sensor.sonoff03_kosten_gestern
-                  - entity: sensor.sonoff03_kosten_gesamt
-                  - entity: script.del_sonoff03_power_log
+                  - entity: sensor.sonoff_03_energy_voltage
+                  - entity: sensor.sonoff_03_energy_current
+                  - entity: sensor.sonoff_03_max_load
+                  - entity: sensor.sonoff_03_energy_today
+                  - entity: sensor.sonoff_03_energy_yesterday
+                  - entity: sensor.sonoff_03_energy_total
+                  - entity: sensor.sonoff_03_kosten_heute
+                  - entity: sensor.sonoff_03_kosten_gestern
+                  - entity: sensor.sonoff_03_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_03_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_03_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_03_power_log
 - type: custom:layout-break
-#sonoff04
+#sonoff_04
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff04_state
+    - entity: binary_sensor.sonoff_04_state
       state: "off"
   card:
     type: entities
-    title: '#4 Serverroom'
+    title: '#4 Serverraum'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff04_state
+      - entity: binary_sensor.sonoff_04_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff04_state
+    - entity: binary_sensor.sonoff_04_state
       state: "on"
   card:
     type: entities
     entities:
       - type: custom:vertical-stack-in-card
-        title: '#4 Serverroom'
+        title: '#4 Serverraum'
         cards:
 
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff04
-                row: true
-              - entity: sensor.sonoff04_ipv4
-              - entity: sensor.sonoff04_uptime
-              - entity: sensor.sonoff04_use
-              - entity: sensor.sonoff04_momentane_leistung
+              - entity: switch.sonoff_04
+              - entity: sensor.sonoff_04_ip
+              - entity: sensor.sonoff_04_uptime
+              - entity: sensor.sonoff_04_use
+              - entity: sensor.sonoff_04_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff04_spannung
-                  - entity: sensor.sonoff04_stromstaerke
-                  - entity: sensor.sonoff04_max_load
-                  - entity: sensor.sonoff04_verbrauch_heute
-                  - entity: sensor.sonoff04_verbrauch_gestern
-                  - entity: sensor.sonoff04_gesamtverbrauch
-                  - entity: sensor.sonoff04_kosten_heute
-                  - entity: sensor.sonoff04_kosten_gestern
-                  - entity: sensor.sonoff04_kosten_gesamt
-                  - entity: script.del_sonoff04_power_log
-#sonoff05
+                  - entity: sensor.sonoff_04_energy_voltage
+                  - entity: sensor.sonoff_04_energy_current
+                  - entity: sensor.sonoff_04_max_load
+                  - entity: sensor.sonoff_04_energy_today
+                  - entity: sensor.sonoff_04_energy_yesterday
+                  - entity: sensor.sonoff_04_energy_total
+                  - entity: sensor.sonoff_04_kosten_heute
+                  - entity: sensor.sonoff_04_kosten_gestern
+                  - entity: sensor.sonoff_04_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_04_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_04_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_04_power_log
+#sonoff_05
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff05_state
+    - entity: binary_sensor.sonoff_05_state
       state: "off"
   card:
     type: entities
     title: '#5 Trockner'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff05_state
+      - entity: binary_sensor.sonoff_05_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff05_state
+    - entity: binary_sensor.sonoff_05_state
       state: "on"
   card:
     type: entities
@@ -272,44 +297,50 @@ cards:
 
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff05
-                row: true
-              - entity: sensor.sonoff05_ipv4
-              - entity: sensor.sonoff05_uptime
-              - entity: sensor.sonoff05_use
-              - entity: sensor.sonoff05_momentane_leistung
+              - entity: switch.sonoff_05
+              - entity: sensor.sonoff_05_ip
+              - entity: sensor.sonoff_05_uptime
+              - entity: sensor.sonoff_05_use
+              - entity: sensor.sonoff_05_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff05_spannung
-                  - entity: sensor.sonoff05_stromstaerke
-                  - entity: sensor.sonoff05_max_load
-                  - entity: sensor.sonoff05_verbrauch_heute
-                  - entity: sensor.sonoff05_verbrauch_gestern
-                  - entity: sensor.sonoff05_gesamtverbrauch
-                  - entity: sensor.sonoff05_kosten_heute
-                  - entity: sensor.sonoff05_kosten_gestern
-                  - entity: sensor.sonoff05_kosten_gesamt
-                  - entity: script.del_sonoff05_power_log
-#sonoff06
+                  - entity: sensor.sonoff_05_energy_voltage
+                  - entity: sensor.sonoff_05_energy_current
+                  - entity: sensor.sonoff_05_max_load
+                  - entity: sensor.sonoff_05_energy_today
+                  - entity: sensor.sonoff_05_energy_yesterday
+                  - entity: sensor.sonoff_05_energy_total
+                  - entity: sensor.sonoff_05_kosten_heute
+                  - entity: sensor.sonoff_05_kosten_gestern
+                  - entity: sensor.sonoff_05_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_05_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_05_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_05_power_log
+#sonoff_06
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff06_state
+    - entity: binary_sensor.sonoff_06_state
       state: "off"
   card:
     type: entities
     title: '#6 MPD'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff06_state
+      - entity: binary_sensor.sonoff_06_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff06_state
+    - entity: binary_sensor.sonoff_06_state
       state: "on"
   card:
     type: entities
@@ -317,47 +348,54 @@ cards:
       - type: custom:vertical-stack-in-card
         title: '#6 MPD'
         cards:
+
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff06
-                row: true
-              - entity: sensor.sonoff06_ipv4
-              - entity: sensor.sonoff06_uptime
-              - entity: sensor.sonoff06_use
-              - entity: sensor.sonoff06_momentane_leistung
+              - entity: switch.sonoff_06
+              - entity: sensor.sonoff_06_ip
+              - entity: sensor.sonoff_06_uptime
+              - entity: sensor.sonoff_06_use
+              - entity: sensor.sonoff_06_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff06_spannung
-                  - entity: sensor.sonoff06_stromstaerke
-                  - entity: sensor.sonoff06_max_load
-                  - entity: sensor.sonoff06_verbrauch_heute
-                  - entity: sensor.sonoff06_verbrauch_gestern
-                  - entity: sensor.sonoff06_gesamtverbrauch
-                  - entity: sensor.sonoff06_kosten_heute
-                  - entity: sensor.sonoff06_kosten_gestern
-                  - entity: sensor.sonoff06_kosten_gesamt
-                  - entity: script.del_sonoff06_power_log
+                  - entity: sensor.sonoff_06_energy_voltage
+                  - entity: sensor.sonoff_06_energy_current
+                  - entity: sensor.sonoff_06_max_load
+                  - entity: sensor.sonoff_06_energy_today
+                  - entity: sensor.sonoff_06_energy_yesterday
+                  - entity: sensor.sonoff_06_energy_total
+                  - entity: sensor.sonoff_06_kosten_heute
+                  - entity: sensor.sonoff_06_kosten_gestern
+                  - entity: sensor.sonoff_06_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_06_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_06_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_06_power_log
 - type: custom:layout-break
-#sonoff07
+#sonoff_07
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff07_state
+    - entity: binary_sensor.sonoff_07_state
       state: "off"
   card:
     type: entities
     title: '#7 Nachttisch'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff07_state
+      - entity: binary_sensor.sonoff_07_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff07_state
+    - entity: binary_sensor.sonoff_07_state
       state: "on"
   card:
     type: entities
@@ -368,44 +406,50 @@ cards:
 
           - type: entities
             entities:
-              - type: 'custom:restriction-card'
-                card:
-                  entity: switch.sonoff07
-                row: true
-              - entity: sensor.sonoff07_ipv4
-              - entity: sensor.sonoff07_uptime
-              - entity: sensor.sonoff07_use
-              - entity: sensor.sonoff07_momentane_leistung
+              - entity: switch.sonoff_07
+              - entity: sensor.sonoff_07_ip
+              - entity: sensor.sonoff_07_uptime
+              - entity: sensor.sonoff_07_use
+              - entity: sensor.sonoff_07_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff07_spannung
-                  - entity: sensor.sonoff07_stromstaerke
-                  - entity: sensor.sonoff07_max_load
-                  - entity: sensor.sonoff07_verbrauch_heute
-                  - entity: sensor.sonoff07_verbrauch_gestern
-                  - entity: sensor.sonoff07_gesamtverbrauch
-                  - entity: sensor.sonoff07_kosten_heute
-                  - entity: sensor.sonoff07_kosten_gestern
-                  - entity: sensor.sonoff07_kosten_gesamt
-                  - entity: script.del_sonoff07_power_log
-#sonoff08
+                  - entity: sensor.sonoff_07_energy_voltage
+                  - entity: sensor.sonoff_07_energy_current
+                  - entity: sensor.sonoff_07_max_load
+                  - entity: sensor.sonoff_07_energy_today
+                  - entity: sensor.sonoff_07_energy_yesterday
+                  - entity: sensor.sonoff_07_energy_total
+                  - entity: sensor.sonoff_07_kosten_heute
+                  - entity: sensor.sonoff_07_kosten_gestern
+                  - entity: sensor.sonoff_07_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_07_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_07_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_07_power_log
+#sonoff_08
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff08_state
+    - entity: binary_sensor.sonoff_08_state
       state: "off"
   card:
     type: entities
     title: '#8 MPD'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff08_state
+      - entity: binary_sensor.sonoff_08_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff08_state
+    - entity: binary_sensor.sonoff_08_state
       state: "on"
   card:
     type: entities
@@ -416,43 +460,52 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff08
-              - entity: sensor.sonoff08_ipv4
-              - entity: sensor.sonoff08_uptime
-              - entity: sensor.sonoff08_use
-              - entity: sensor.sonoff08_momentane_leistung
+              - entity: switch.sonoff_08
+              - entity: sensor.sonoff_08_ip
+              - entity: sensor.sonoff_08_uptime
+              - entity: sensor.sonoff_08_use
+              - entity: sensor.sonoff_08_energy_power
               - type: custom:fold-entity-row
                 head:
                   type: section
                   label: Details
                 items:
-                  - entity: sensor.sonoff08_spannung
-                  - entity: sensor.sonoff08_stromstaerke
-                  - entity: sensor.sonoff08_max_load
-                  - entity: sensor.sonoff08_verbrauch_heute
-                  - entity: sensor.sonoff08_verbrauch_gestern
-                  - entity: sensor.sonoff08_gesamtverbrauch
-                  - entity: sensor.sonoff08_kosten_heute
-                  - entity: sensor.sonoff08_kosten_gestern
-                  - entity: sensor.sonoff08_kosten_gesamt
-                  - entity: script.del_sonoff08_power_log
+                  - entity: sensor.sonoff_08_energy_voltage
+                  - entity: sensor.sonoff_08_energy_current
+                  - entity: sensor.sonoff_08_max_load
+                  - entity: sensor.sonoff_08_energy_today
+                  - entity: sensor.sonoff_08_energy_yesterday
+                  - entity: sensor.sonoff_08_energy_total
+                  - entity: sensor.sonoff_08_kosten_heute
+                  - entity: sensor.sonoff_08_kosten_gestern
+                  - entity: sensor.sonoff_08_kosten_gesamt
+                    show_state: false
+                    type: 'custom:multiple-entity-row'
+                    name: Gesamtkosten
+                    icon: mdi:currency-eur
+                    entities:
+                      - entity: sensor.sonoff_08_kosten_gesamt
+                        name: €
+                      - entity: sensor.sonoff_08_kosten_gesamt_startzeit
+                        name: Seit
+                  - entity: script.del_sonoff_08_power_log
 
 
-#sonoff09
+#sonoff_09
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff09_state
+    - entity: binary_sensor.sonoff_09_state
       state: "off"
   card:
     type: entities
     title: '#9 Esszimmer'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff09_state
+      - entity: binary_sensor.sonoff_09_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff09_state
+    - entity: binary_sensor.sonoff_09_state
       state: "on"
   card:
     type: entities
@@ -463,25 +516,25 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff09
-              - entity: sensor.sonoff09_ipv4
-              - entity: sensor.sonoff09_uptime
+              - entity: switch.sonoff_09
+              - entity: sensor.sonoff_09_ipv4
+              - entity: sensor.sonoff_09_uptime
 - type: custom:layout-break
-#sonoff10
+#sonoff_10
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff10_state
+    - entity: binary_sensor.sonoff_10_state
       state: "off"
   card:
     type: entities
     title: '#10 Wintergarten'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff10_state
+      - entity: binary_sensor.sonoff_10_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff10_state
+    - entity: binary_sensor.sonoff_10_state
       state: "on"
   card:
     type: entities
@@ -492,25 +545,25 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff10
-              - entity: sensor.sonoff10_ipv4
-              - entity: sensor.sonoff10_uptime
+              - entity: switch.sonoff_10
+              - entity: sensor.sonoff_10_ipv4
+              - entity: sensor.sonoff_10_uptime
 
-#sonoff11
+#sonoff_11
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff11_state
+    - entity: binary_sensor.sonoff_11_state
       state: "off"
   card:
     type: entities
     title: '#11 Esszimmer Fenster'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff11_state
+      - entity: binary_sensor.sonoff_11_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff11_state
+    - entity: binary_sensor.sonoff_11_state
       state: "on"
   card:
     type: entities
@@ -521,25 +574,25 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff11
-              - entity: sensor.sonoff11_ipv4
-              - entity: sensor.sonoff11_uptime
+              - entity: switch.sonoff_11
+              - entity: sensor.sonoff_11_ipv4
+              - entity: sensor.sonoff_11_uptime
 
-#sonoff12
+#sonoff_12
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff12_state
+    - entity: binary_sensor.sonoff_12_state
       state: "off"
   card:
     type: entities
     title: '#12 Wohnzimmer Stehlampe'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff12_state
+      - entity: binary_sensor.sonoff_12_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff12_state
+    - entity: binary_sensor.sonoff_12_state
       state: "on"
   card:
     type: entities
@@ -550,25 +603,25 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff12
-              - entity: sensor.sonoff12_ipv4
-              - entity: sensor.sonoff12_uptime
+              - entity: switch.sonoff_12
+              - entity: sensor.sonoff_12_ipv4
+              - entity: sensor.sonoff_12_uptime
 
-#sonoff13
+#sonoff_13
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff13_state
+    - entity: binary_sensor.sonoff_13_state
       state: "off"
   card:
     type: entities
     title: '#13 Licht Serverraum'
     show_header_toggle: false
     entities:
-      - entity: binary_sensor.sonoff13_state
+      - entity: binary_sensor.sonoff_13_state
         name: "Status"
 - type: conditional
   conditions:
-    - entity: binary_sensor.sonoff13_state
+    - entity: binary_sensor.sonoff_13_state
       state: "on"
   card:
     type: entities
@@ -579,6 +632,6 @@ cards:
 
           - type: entities
             entities:
-              - entity: switch.sonoff13
-              - entity: sensor.sonoff13_ipv4
-              - entity: sensor.sonoff13_uptime
+              - entity: switch.sonoff_13
+              - entity: sensor.sonoff_13_ipv4
+              - entity: sensor.sonoff_13_uptime

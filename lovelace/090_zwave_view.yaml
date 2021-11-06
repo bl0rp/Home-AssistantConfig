@@ -6,36 +6,35 @@ cards:
 - type: custom:layout-card
   layout: vertical
   cards:
+
+    - type: entities
+      title: ControlPanel
+      show_header_toggle: false
+      entities:
+      - type: weblink
+        name: ZWaveJS2MQTT CP
+        url: http://192.168.0.27:8091/control-panel
     - type: entities
       title: Multisensor ELW
       show_header_toggle: false
       entities:
-      - sensor.multisensor1_battery
-      - sensor.aeotec_zw100_multisensor_6_luminance
-      - sensor.aeotec_zw100_multisensor_6_relative_humidity
-      - sensor.aeotec_zw100_multisensor_6_temperature
-      - sensor.aeotec_zw100_multisensor_6_ultraviolet
-      - sensor.multisensor1_motion
-      - binary_sensor.aeotec_zw100_multisensor_6_sensor
+      - binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
+      - binary_sensor.zwave_multisensor_6_elw_home_security_tampering_product_cover_removed
+      - binary_sensor.zwave_multisensor_6_elw_low_battery_level
+      - sensor.zwave_multisensor_6_elw_air_temperature
+      - sensor.zwave_multisensor_6_elw_humidity
+      - sensor.zwave_multisensor_6_elw_illuminance
+      - sensor.zwave_multisensor_6_elw_ultraviolet
+      - sensor.zwave_multisensor_6_elw_battery_level
 
     - type: entities
-      title: Teufel Concept C
+      title: FIBARO MPD1
       show_header_toggle: false
       entities:
-      - entity: switch.fibaro_system_fgwpef_wall_plug_gen5_switch
-        type: custom:toggle-lock-entity-row
-      - sensor.zwave_mpd1_use
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2
-      - sensor.fibaro_system_fgwpef_wall_plug_gen5_energy
-      - sensor.zwave_mpd1_kosten_gesamt
-    - type: horizontal-stack
-      cards:
-        - type: gauge
-          name: Leistung
-          unit: 'W'
-          entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
-          severity:
-            green: 0
-            yellow: 45
-            red: 150
+      - switch.zwave_fibaro_mpd_1
+      - sensor.zwave_fibaro_mpd_1_electric_consumed_w
+      - sensor.zwave_fibaro_mpd_1_electric_consumed_kwh
+      - entity: sensor.zwave_fibaro_mpd_1_power
+        secondary_info: last-changed
+      - binary_sensor.zwave_fibaro_mpd_1_power_management_over_current_detected
+      - binary_sensor.zwave_fibaro_mpd_1_power_management_over_load_detected

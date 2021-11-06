@@ -1,5 +1,5 @@
 ##############################################################
-### Packages / sonoff09                                     ###
+### Packages / sonoff_09                                     ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
 ### Thanks to cnrd                                         ###
 ### https://github.com/cnrd                                ###
@@ -10,13 +10,13 @@
 homeassistant:
 
   customize:
-    switch.sonoff09:
+    switch.sonoff_09:
       friendly_name: "Esszimmer Türe"
       icon: mdi:lamp
-    sensor.sonoff09_ipv4:
+    sensor.sonoff_09_ipv4:
       friendly_name: IPv4 Sonoff 9
       icon: mdi:server-network
-    sensor.sonoff09_uptime:
+    sensor.sonoff_09_uptime:
       friendly_name: Laufzeit
       icon: mdi:clock-fast
 
@@ -29,10 +29,10 @@ sensor:
 
 
   - platform: mqtt
-    name: "sonoff09 uptime"
-    state_topic: "tele/sonoff09/STATE"
+    name: "sonoff_09 uptime"
+    state_topic: "tele/sonoff_09/STATE"
     value_template: "{{ value_json.Uptime }}"
-    availability_topic: "tele/sonoff09/LWT"
+    availability_topic: "tele/sonoff_09/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
 
@@ -45,13 +45,13 @@ sensor:
 
 switch:
   - platform: mqtt
-    name: "sonoff09"
-    state_topic: "stat/sonoff09/POWER"
-    command_topic: "cmnd/sonoff09/POWER"
+    name: "sonoff_09"
+    state_topic: "stat/sonoff_09/POWER"
+    command_topic: "cmnd/sonoff_09/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: false
-    availability_topic: "tele/sonoff09/LWT"
+    availability_topic: "tele/sonoff_09/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"

@@ -31,14 +31,14 @@ sensor:
       device_tracker_traude_last_changed:
         friendly_name: "Traude letzte Änderung"
         value_template: >-
-          {{ as_timestamp(states.device_tracker.user_devices_phone_traude.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.device_tracker.nmap_tracker_b4_f1_da_b4_f0_93.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
   - platform: template
     sensors:
       device_tracker_ewald_last_changed:
         friendly_name: "Ewald letzte Änderung"
         value_template: >-
-          {{ as_timestamp(states.device_tracker.user_devices_phone_ewald.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.device_tracker.nmap_tracker_a4_50_46_4c_5c_33.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
   - platform: template
     sensors:
@@ -91,8 +91,8 @@ group:
     icon: mdi:account-multiple
     entities:
       - input_boolean.chrishome
-      - device_tracker.user_devices_phone_ewald
-      - device_tracker.user_devices_phone_traude
+      - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
+      - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
 
 
   familiegrpstate:
@@ -174,7 +174,7 @@ automation:
       state: 'on'
     trigger:
       # - platform: state
-      #   entity_id: device_tracker.user_devices_phone_christoph
+      #   entity_id: device_tracker.nmap_tracker_f0_5c_77_f1_28_22
       #   to: 'not_home'
       #   for:
       #     minutes: 15
@@ -213,7 +213,7 @@ automation:
     trigger:
 #nmap/unifi
       - platform: state
-        entity_id: device_tracker.user_devices_phone_christoph
+        entity_id: device_tracker.nmap_tracker_f0_5c_77_f1_28_22
         to: 'home'
 #gpslogger
       - platform: state
@@ -276,7 +276,7 @@ automation:
       - service: input_select.select_option
         data_template:
           entity_id: input_select.christoph_status
-          option: '{% if is_state("sensor.sonoff01_use", "Ja") %}Am PC{% else %}In der ELW{% endif %}'
+          option: '{% if is_state("sensor.sonoff_01_use", "Ja") %}Am PC{% else %}In der ELW{% endif %}'
 
 #input select for away
 
@@ -300,7 +300,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff01_use
+        entity_id: sensor.sonoff_01_use
         from: 'Nein'
         to: 'Ja'
     #     for:
@@ -322,7 +322,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff01_use
+        entity_id: sensor.sonoff_01_use
         from: 'Ja'
         to: 'Nein'
     #     for:
@@ -395,15 +395,15 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - device_tracker.user_devices_phone_traude
-          - device_tracker.user_devices_phone_ewald
+          - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
+          - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
         from: 'not_home'
         to: 'home'
 
       - platform: state
         entity_id:
-          - device_tracker.user_devices_phone_traude
-          - device_tracker.user_devices_phone_ewald
+          - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
+          - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
         from: 'home'
         to: 'not_home'
 

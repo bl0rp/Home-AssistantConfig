@@ -57,7 +57,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff03_use
+        entity_id: sensor.sonoff_03_use
         from: 'Nein'
         to: 'Ja'
         for:
@@ -70,7 +70,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff03_use
+        entity_id: sensor.sonoff_03_use
         from: 'Ja'
         to: 'Nein'
         for:
@@ -136,7 +136,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff05_use
+        entity_id: sensor.sonoff_05_use
         from: 'Nein'
         to: 'Ja'
         for:
@@ -149,7 +149,7 @@ automation:
     initial_state: True
     trigger:
       - platform: state
-        entity_id: sensor.sonoff05_use
+        entity_id: sensor.sonoff_05_use
         from: 'Ja'
         to: 'Nein'
         for:

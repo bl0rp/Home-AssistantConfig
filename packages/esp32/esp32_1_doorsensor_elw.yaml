@@ -38,40 +38,53 @@ homeassistant:
 binary_sensor:
   - platform: mqtt
     name: esp32_01_door_state
-    state_topic: "esp32_1/binary_sensor/door/state"
+    state_topic: "esp32_01/binary_sensor/door/state"
     device_class: door
 
   - platform: mqtt
     name: "esp32_01_status"
-    state_topic: "esp32_1/status"
+    state_topic: "esp32_01/status"
     payload_on: "online"
     payload_off: "offline"
     device_class: connectivity
-    
+
   - platform: mqtt
     name: "esp32_01_ota_status"
-    state_topic: "esp32_1/ota_mode_status"
+    state_topic: "esp32_01/ota_mode_status"
     payload_on: "active"
     payload_off: "disabled"
 
 sensor:
   - platform: mqtt
     name: "esp32_01_battery"
-    state_topic: "esp32_1/sensor/esp32_1_voltage/state"
+    state_topic: "esp32_01/sensor/esp32_01_voltage/state"
     unit_of_measurement: "V"
     qos: 0
 
   - platform: mqtt
     name: "esp32_01_rssi"
-    state_topic: "esp32_1/sensor/esp32_1_rssi/state"
+    state_topic: "esp32_01/sensor/esp32_01_rssi/state"
     qos: 0
     unit_of_measurement: "dB"
 
   - platform: mqtt
     name: "esp32_01_ip"
-    state_topic: "esp32_1/sensor/esp32_1_ip/state"
-    availability_topic: "esp32_1/status"
+    state_topic: "esp32_01/sensor/esp32_01_ip/state"
     qos: 0
+
+  - platform: mqtt
+    name: "esp32_01_version"
+    icon: mdi:new-box
+    state_topic: "esp32_01/sensor/esp32_01_version/state"
+    qos: 0
+
+  - platform: mqtt
+    name: "esp32_01_wifi_quality"
+    unit_of_measurement: "%"
+    icon: mdi:wifi
+    state_topic: "esp32_01/sensor/esp32_01_wifi_quality/state"
+    qos: 0
+
 
   - platform: template
     sensors:
@@ -87,9 +100,9 @@ sensor:
 switch:
   - platform: mqtt
     name: "esp32_01_shutdown"
-    state_topic: esp32_1/switch/esp32_1_shutdown/state
-    command_topic: esp32_1/switch/esp32_1_shutdown/command
-    availability_topic: "esp32_1/status"
+    state_topic: esp32_01/switch/esp32_01_shutdown/state
+    command_topic: esp32_01/switch/esp32_01_shutdown/command
+    availability_topic: "esp32_01/status"
     payload_on: "ON"
     payload_off: "OFF"
     state_on: "online"
@@ -97,9 +110,9 @@ switch:
 
   - platform: mqtt
     name: "esp32_01_restart"
-    state_topic: esp32_1/switch/esp32_1_restart/state
-    command_topic: esp32_1/switch/esp32_1_restart/command
-    availability_topic: "esp32_1/status"
+    state_topic: esp32_01/switch/esp32_01_restart/state
+    command_topic: esp32_01/switch/esp32_01_restart/command
+    availability_topic: "esp32_01/status"
     payload_on: "ON"
     payload_off: "OFF"
     state_on: "online"
@@ -112,17 +125,17 @@ switch:
         turn_on:
           - service: mqtt.publish
             data:
-              topic: "esp32_1/ota_mode"
+              topic: "esp32_01/ota_mode"
               payload: "ON"
               retain: true
         turn_off:
           - service: mqtt.publish
             data:
-              topic: "esp32_1/sleep_mode"
+              topic: "esp32_01/sleep_mode"
               payload: "ON"
           - service: mqtt.publish
             data:
-              topic: "esp32_1/ota_mode"
+              topic: "esp32_01/ota_mode"
               payload: ""
               retain: true
 

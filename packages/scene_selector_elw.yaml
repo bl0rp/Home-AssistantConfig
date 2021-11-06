@@ -120,28 +120,3 @@ automation:
       entity_id: input_select.tuerlicht
       data_template:
         option: "{{ states('sensor.current_timer_tuerlicht_elw_set')| title}}"
-
-
-  - alias: motion_zwave_sunset_flur_dimlight
-    initial_state: on
-    trigger:
-      platform: state
-      entity_id: sensor.aeotec_zw100_multisensor_6_burglar
-      from: '0'
-      to: '8'
-    condition:
-      - condition: state
-        entity_id: sun.sun
-        state: "below_horizon"
-      - condition: state
-        entity_id: input_boolean.chrisbluetooth
-        state: "on"
-      - condition: state
-        entity_id: light.flur
-        state: "off"
-    action:
-      - service: scene.turn_on
-        entity_id: scene.flur_relax
-      - delay: '{{ states.input_select.tuerlicht.state | int }}'
-      - service: scene.turn_on
-        entity_id: scene.flur_aus

@@ -56,20 +56,20 @@ cards:
 
     - type: glance
       entities:
-        - entity: switch.sonoff11
+        - entity: switch.sonoff_11
           tap_action:
             action: toggle
-        - entity: switch.sonoff09
+        - entity: switch.sonoff_09
           tap_action:
             action: toggle
 
     - type: glance
       entities:
-        - entity: switch.sonoff12
+        - entity: switch.sonoff_12
 
           tap_action:
             action: toggle
-        - entity: switch.sonoff10
+        - entity: switch.sonoff_10
 
           tap_action:
             action: toggle

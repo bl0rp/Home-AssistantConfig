@@ -178,6 +178,22 @@ cards:
           action: toggle
         mode: custom
     - type: custom:slider-button-card
+      entity: switch.docker_zwavejs2mqtt
+      name: Z-Wave
+      slider:
+        direction: left-right
+        background: gradient
+        toggle_on_click: true
+        force_square: true
+      icon:
+        use_state_color: true
+        tap_action:
+          action: more-info
+      action_button:
+        tap_action:
+          action: toggle
+        mode: custom
+    - type: custom:slider-button-card
       entity: switch.docker_tasmoadmin
       name: TasmoAdmin
       slider:

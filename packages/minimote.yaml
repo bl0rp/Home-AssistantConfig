@@ -1,7 +1,7 @@
-################################################################
-## Packages / Z-Wave Minimote
-## Thanks 2 @dale3h
-################################################################
+######################################################################################
+## Packages / Z-Wave Aeon Labs Minimote                                             ##
+## https://community.home-assistant.io/t/aeon-labs-minimote-with-zwave-js/280131/30 ##
+######################################################################################
 
 ################################################
 ## Customize
@@ -66,10 +66,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 2
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 2
     action:
       - service: scene.turn_on
         entity_id: scene.elw_aus
@@ -78,10 +79,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 1
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 1
     action:
       - service: scene.turn_on
         entity_id: scene.elw_relax
@@ -90,10 +92,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 4
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 4
     action:
       - service: notify.alexa_media
         data_template:
@@ -115,10 +118,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 3
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 3
     action:
       - service: switch.toggle
         entity_id: switch.11001_a
@@ -128,10 +132,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 6
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 6
     action:
       - service: notify.pushbullet
         data_template:
@@ -150,10 +155,11 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 5
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 5
     action:
       - service: notify.alexa_media
         data_template:
@@ -169,27 +175,38 @@ automation:
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 8
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 8
     action:
-      - service: media_player.toggle
-        entity_id: media_player.yamaha_receiver
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+              Knopf 4 lang
 
 
   - alias: Minimote Button 4 Pressed
     initial_state: True
     trigger:
       platform: event
-      event_type: zwave.scene_activated
+      event_type: zwave_js_value_notification
       event_data:
-        node_id: 6
-        scene_id: 7
+        node_id: 7
+        device_id: 610b85ddd775d054214f9203649fc6c2
+        value: 7
     action:
-      - service: switch.toggle
-        entity_id: switch.receiver_source_pc
-
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: announce
+          target: media_player.christophs_echo_dot
+          message: >
+              Knopf 4 kurz
 
 
 

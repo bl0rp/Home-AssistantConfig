@@ -26,7 +26,7 @@ cards:
             align_state: center
             upper_bound: 300
             entities:
-             - entity: sensor.sonoff02_momentane_leistung
+             - entity: sensor.sonoff_02_energy_power
                name: Watt (24h)
                show_state: false
             show:
@@ -57,7 +57,7 @@ cards:
             align_header: center
             align_icon: state
             align_state: center
-            upper_bound: 40
+            upper_bound: 46
             lower_bound: 18
             entities:
              - entity: sensor.esp32_07_temp
@@ -110,7 +110,7 @@ cards:
       - type: gauge
         name: Workstation
         unit: 'W'
-        entity: sensor.sonoff02_momentane_leistung
+        entity: sensor.sonoff_02_energy_power
         max: 300
         needle: true
         severity:
@@ -120,7 +120,7 @@ cards:
       - type: gauge
         name: Boxen
         unit: 'W'
-        entity: sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+        entity: sensor.zwave_fibaro_mpd_1_power
         severity:
           green: 0
           yellow: 32
@@ -177,7 +177,7 @@ cards:
             align_state: center
             upper_bound: 300
             entities:
-             - entity: sensor.sonoff02_momentane_leistung
+             - entity: sensor.sonoff_02_energy_power
                name: Watt (24h)
             show:
               labels: true
@@ -207,7 +207,7 @@ cards:
             align_header: center
             align_icon: state
             align_state: center
-            upper_bound: 40
+            upper_bound: 46
             lower_bound: 18
             entities:
              - entity: sensor.esp32_07_temp

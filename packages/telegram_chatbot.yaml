@@ -192,7 +192,7 @@ automation:
         target: "{{ trigger.event.data.user_id }}"
         message: "Temperatur ELW:
 
-          Multisensor: {{ states.sensor.aeotec_zw100_multisensor_6_temperature.state}}°C
+          Multisensor: {{ states.sensor.zwave_multisensor_6_elw_air_temperature.state}}°C
 
           ESP: {{ states.sensor.esp8266_02_temperature.state}}°C"
         keyboard: ["/temp_elw", "/temp_wohnzimmer", "/temp_wintergarten", "/temp_aussen", "/menu"]

@@ -72,13 +72,13 @@ automation:
     action:
       - service: switch.turn_on
         target:
-          entity_id: switch.sonoff09
+          entity_id: switch.sonoff_09
       - service: switch.turn_on
         target:
-          entity_id: switch.sonoff10
+          entity_id: switch.sonoff_10
       - service: switch.turn_on
         target:
-          entity_id: switch.sonoff11
+          entity_id: switch.sonoff_11
       - service: notify.telegram_christoph
         data_template:
           message: >
@@ -104,11 +104,11 @@ automation:
         seconds: 00
     action:
       - service: switch.turn_off
-        entity_id: switch.sonoff09
+        entity_id: switch.sonoff_09
       - service: switch.turn_off
-        entity_id: switch.sonoff10
+        entity_id: switch.sonoff_10
       - service: switch.turn_off
-        entity_id: switch.sonoff11
+        entity_id: switch.sonoff_11
 
 #Stehlampe on/off
 
@@ -126,7 +126,7 @@ automation:
         to: '1'
     action:
       - service: switch.turn_on
-        entity_id: switch.sonoff12
+        entity_id: switch.sonoff_12
       - service: notify.pushbullet
         data_template:
           message: >
@@ -152,7 +152,7 @@ automation:
         before: "01:00:00"
     action:
       - service: switch.turn_off
-        entity_id: switch.sonoff12
+        entity_id: switch.sonoff_12
       - service: notify.pushbullet
         data_template:
           message: >
@@ -174,20 +174,20 @@ script:
   1og_lampen_an:
     sequence:
        - service: switch.turn_on
-         entity_id: switch.sonoff11
+         entity_id: switch.sonoff_11
        - service: switch.turn_on
-         entity_id: switch.sonoff12
+         entity_id: switch.sonoff_12
        - service: switch.turn_on
-         entity_id: switch.sonoff09
+         entity_id: switch.sonoff_09
        - service: switch.turn_on
-         entity_id: switch.sonoff10
+         entity_id: switch.sonoff_10
   1og_lampen_aus:
     sequence:
        - service: switch.turn_off
-         entity_id: switch.sonoff11
+         entity_id: switch.sonoff_11
        - service: switch.turn_off
-         entity_id: switch.sonoff12
+         entity_id: switch.sonoff_12
        - service: switch.turn_off
-         entity_id: switch.sonoff09
+         entity_id: switch.sonoff_09
        - service: switch.turn_off
-         entity_id: switch.sonoff10
+         entity_id: switch.sonoff_10

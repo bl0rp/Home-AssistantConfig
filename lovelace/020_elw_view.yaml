@@ -121,7 +121,8 @@ cards:
       - entity: sensor.esp8266_02_temperature
         name: ELW Regal
         secondary_info: last-changed
-      - entity: sensor.aeotec_zw100_multisensor_6_temperature
+      - entity: sensor.zwave_multisensor_6_elw_air_temperature
+        name: Flur
         secondary_info: last-changed
       - entity: sensor.esp8266_06_temperature
         name: ELW Klo
@@ -129,33 +130,25 @@ cards:
       - type: custom:fold-entity-row
         head:
           type: section
-          label: Luftfeuchtugkeit
+          label: Luftfeuchtigkeit
         items:
-          - sensor.esp32_02_humidity
-          - sensor.esp32_03_humidity
-          - sensor.esp8266_02_humidity
-          - sensor.aeotec_zw100_multisensor_6_relative_humidity
-          - sensor.esp8266_06_humidity
+          - entity: sensor.esp32_02_humidity
+            name: Haupteingang
+          - entity: sensor.esp32_03_humidity
+            name: Carport
+          - entity: sensor.esp8266_02_humidity
+            name: Regal
+          - entity: sensor.zwave_multisensor_6_elw_humidity
+            name: Flur
+          - entity: sensor.esp8266_06_humidity
+            name: Klo
       - type: section
         label: Graph
-      - type: custom:hui-history-graph-card
-        hours_to_show: 24
-        entities:
-         - entity: sensor.esp8266_02_temperature
-           type: column
-           name: Office Humidity
-           group_by:
-             func: avg
-             duration: 30min
-         - entity: sensor.aeotec_zw100_multisensor_6_temperature
-           name: Flur
-         - entity: sensor.esp8266_06_temperature
-           name: Klo
       - type: custom:mini-graph-card
-        hours_to_show: 24
+        hours_to_show: 72
         hour24: true
         entities:
-          - entity: sensor.aeotec_zw100_multisensor_6_temperature
+          - entity: sensor.zwave_multisensor_6_elw_air_temperature
             name: Flur
           - entity: sensor.esp8266_06_temperature
           - entity: sensor.esp8266_02_temperature
@@ -176,10 +169,10 @@ cards:
       show_header_toggle: false
       entities:
       - type: section
-      - entity: automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw
+      - entity: automation.all_motion_sensors_elw_alarm
         name: Alarme
         icon: 'mdi:alarm-bell'
-      - entity: sensor.multisensor1_motion
+      - entity: binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection
         name: ELW Flur
         secondary_info: last-changed
       - entity: binary_sensor.esp8266_02_motion
@@ -209,7 +202,7 @@ cards:
         icon: 'mdi:map-marker-circle'
         name: Christoph Status
         secondary_info: last-changed
-      - entity: device_tracker.user_devices_phone_christoph
+      - entity: device_tracker.nmap_tracker_f0_5c_77_f1_28_22
         secondary_info: last-changed
         name: Christoph via nmap/unifi
         icon: 'mdi:wifi'
@@ -223,6 +216,7 @@ cards:
         icon: 'mdi:bluetooth'
       - type: section
       - entity: input_select.christoph_status
+      - entity: input_boolean.elw_dark
       - type: section
       - type: call-service
         icon: mdi:battery-charging-40

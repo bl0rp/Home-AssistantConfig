@@ -6,12 +6,59 @@ layout:
 path: test
 icon: mdi:test-tube
 cards:
+- type: entities
+  entities:
+    - entity: sensor.stromzaehler_1_esp32_temperature
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_ip
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_mt175_power_curr
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_mt175_total_in
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_rssi
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_signal
+      secondary_info: last-changed
+    - entity: device_tracker.unifi_94_b9_7e_42_85_78_default
+      secondary_info: last-changed
+    - entity: sensor.rx_4
+      secondary_info: last-changed
+    - entity: sensor.tx_4
+      secondary_info: last-changed
+    - entity: sensor.uptime_9
+    - entity: sensor.stromzaehler_1_mt175_total_in
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_mt175_power_curr
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_mt175_total_in_kwh
+      secondary_info: last-changed
+    - entity: sensor.stromzaehler_1_mt175_power_curr_w
+      secondary_info: last-changed
+- type: statistics-graph
+  title: 'My Graph'
+  days_to_show: 120
+  entities:
+    - entity: sensor.stromzaehler_1_mt175_power_curr_w
+      name: Hausverbrauch
+- type: statistics-graph
+  title: 'My Graph'
+  days_to_show: 120
+  entities:
+    - entity: sensor.esp8266_02_temperature
+      name: Regal
+- type: statistics-graph
+  title: 'My Graph'
+  days_to_show: 1
+  entities:
+    - entity: sensor.sonoff_02_energy_today
+      name: WKS
 - type: statistics-graph
   title: 'My Graph'
   days_to_show: 30
   entities:
-    - entity: sensor.esp8266_02_temperature
-      name: Regal
+    - entity: sensor.esp32_07_temp
+      name: WKS Radiator
 - type: entities
   entities:
     - entity: sensor.esp8266_01_motion
@@ -47,7 +94,31 @@ cards:
   sort:
     method: name
 
-
+- type: entities
+  entities:
+    - switch.sonoff_08
+    - sensor.sonoff_08_energy_apparentpower
+    - sensor.sonoff_08_energy_current
+    - sensor.sonoff_08_energy_factor
+    - sensor.sonoff_08_energy_power
+    - sensor.sonoff_08_energy_reactivepower
+    - sensor.sonoff_08_energy_today
+    - sensor.sonoff_08_energy_total
+    - sensor.sonoff_08_energy_totalstarttime
+    - sensor.sonoff_08_energy_voltage
+    - sensor.sonoff_08_energy_yesterday
+    - sensor.sonoff_08_firmware_version
+    - sensor.sonoff_08_ip
+    - sensor.sonoff_08_last_restart_time
+    - sensor.sonoff_08_mqtt_connect_count
+    - sensor.sonoff_08_rssi
+    - sensor.sonoff_08_restart_reason
+    - sensor.sonoff_08_ssid
+    - sensor.sonoff_08_signal
+    - sensor.sonoff_08_wifi_connect_count
+    - sensor.sonoff8_2236_rx
+    - sensor.sonoff8_2236_tx
+    - sensor.sonoff08_2236_uptime
 
 
 - type: entities

@@ -31,65 +31,92 @@ sensor:
 #################
 ### automation ##
 #################
-
 automation:
-
-#notification about all sensors when not home
-### Thanks 2 @brahmafear (initial version)
-  - alias: Benachrichtigung aller Bewegunsgmelder in der ELW
+  - alias: alarm_lights_alarm_phone
+    id: alarm_lights_alarm_phone
     initial_state: True
     trigger:
-      - platform: state
-        entity_id: sensor.aeotec_zw100_multisensor_6_burglar
-        from: '0'
-        to: '8'
-      - platform: state
-        entity_id: binary_sensor.esp8266_02_motion
-        from: 'off'
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.esp32_01_door_state
-        from: 'off'
-        to: 'on'
+      - platform: numeric_state
+        entity_id: sensor.next_alarm
+        attribute: minutes_left
+        below: 1
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: 'input_boolean.chrishome'
-          state: 'off'
-        - condition: template
-          value_template: >
-            {% if states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.last_triggered is not none %}
-              {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.benachrichtigung_aller_bewegunsgmelder_in_der_elw.attributes.last_triggered) | int > 60 %} true {% else %} false
-              {% endif %}
-            {% else %}
-            false
-            {% endif %}
+      - condition: state
+        entity_id: input_boolean.chrisbluetooth
+        state: "on"
     action:
-      - service: notify.telegram_christoph
+      - service: light.turn_on
+        data:
+          brightness_pct: 100
+          kelvin: 6500
+        target:
+          entity_id: light.schlafzimmer
+      - service: light.turn_on
+        data:
+          color_name: red
+          effect: Fast Pulse
+        target:
+          entity_id: light.esp32_12_led
+      - service: telegram_bot.send_message
         data_template:
+          target: !secret telegram_chat_id_christoph
+          message: "Lichter aus?"
+          keyboard: ["/Alarme_Aus"]
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
           message: >
              {{ now().strftime('%d.%m.%Y %H:%M:%S') }}
              Obacht: {{ trigger.to_state.attributes.friendly_name }} wurde aktiviert!
-
+      - service: notify.alexa_media
+        data_template:
+          data:
+            type: tts
+          target: media_player.christophs_echo_dot
+          message: >
+             {% if now().strftime("%H")|int < 12 %}
+             Guten Morgen.
+             {% elif now().strftime("%H")|int < 18 %}
+             Guten Nachmittag.
+             {% else %}
+             Guten Abend.
+             {% endif %}
+             Der Wecker klingelt!
+  - alias: telegram_replay_alarme_aus
+    initial_state: on
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        command: '/Alarme_Aus'
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: "Jawohl"
+          keyboard: ["/menu"]
+      - service: light.turn_off
+        entity_id: light.esp32_12_led
+      - service: light.turn_off
+        entity_id: light.schlafzimmer
 #############
 ### script ##
 #############
 script:
 
 # light Transition script
-  sunrise_wake_up:
-    alias: Sunrise wake-up
+  sunrise_wake_up_esp32_12_led:
+    alias: Sunrise wake-up esp32
     sequence:
     - variables:
         start_temp: 500
-        end_temp: 380
-        duration_mins: 30
+        end_temp: 180
+        duration_mins: 60
     - service: light.turn_on
       data:
         color_temp: '{{ start_temp }}'
         brightness: 1
-      entity_id: light.nightstand_light
+      entity_id: light.esp32_12_led
     - delay: '1'
     - repeat:
         count: '{{ duration_mins }}'
@@ -97,8 +124,53 @@ script:
         - service: light.turn_on
           data:
             brightness: '{{ (repeat.index / duration_mins * 255) | int }}'
-            color_temp: '{{ (start_temp + repeat.index / duration_mins * (end_temp -
-              start_temp)) | int }}'
-          entity_id: light.nightstand_light
+            color_temp: '{{ (start_temp + repeat.index / duration_mins * (end_temp - start_temp)) | int }}'
+          entity_id: light.esp32_12_led
+        - delay: '1'
+    mode: single
+  sunrise_wake_up_esp32_12_led_pct:
+    alias: Sunrise wake-up esp32 pct
+    sequence:
+    - variables:
+        start_temp: 500
+        end_temp: 180
+        duration_mins: 60
+    - service: light.turn_on
+      data:
+        color_temp: '{{ start_temp }}'
+        brightness_pct: 1
+      entity_id: light.esp32_12_led
+    - delay: '1'
+    - repeat:
+        count: '{{ duration_mins }}'
+        sequence:
+        - service: light.turn_on
+          data:
+            brightness_pct: '{{ (repeat.index / duration_mins * 100) | int }}'
+            color_temp: '{{ (start_temp + repeat.index / duration_mins * (end_temp - start_temp)) | int }}'
+          entity_id: light.esp32_12_led
+        - delay: '60'
+    mode: single
+  sunrise_wake_up_schlafzimmer:
+    alias: Sunrise wake-up schlafzimmer
+    sequence:
+    - variables:
+        start_temp: 500
+        end_temp: 180
+        duration_mins: 15
+    - service: light.turn_on
+      data:
+        color_temp: '{{ start_temp }}'
+        brightness: 1
+      entity_id: light.schlafzimmer
+    - delay: '1'
+    - repeat:
+        count: '{{ duration_mins }}'
+        sequence:
+        - service: light.turn_on
+          data:
+            brightness: '{{ (repeat.index / duration_mins * 255) | int }}'
+            color_temp: '{{ (start_temp + repeat.index / duration_mins * (end_temp - start_temp)) | int }}'
+          entity_id: light.schlafzimmer
         - delay: '60'
     mode: single

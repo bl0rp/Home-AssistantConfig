@@ -1,2 +1,10 @@
 device_tracker.710kpny0475751:
   friendly_name: gpsloggger_chris
+sensor.stromzaehler_1_mt175_total_in:
+  unit_of_measurement: ' kWh'
+  device_class: energy
+  state_class: measurement
+  last_reset: '1970-01-01T00:00:00+00:00'
+sensor.stromzaehler_1_mt175_power_curr:
+  unit_of_measurement: ' W'
+  device_class: power

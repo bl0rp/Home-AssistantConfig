@@ -35,8 +35,8 @@ include:
     #network
     - sensor.clients_online
     #temperature etc
-    - sensor.aeotec_zw100_multisensor_6_temperature
-    - sensor.aeotec_zw100_multisensor_6_luminance
+    - sensor.zwave_multisensor_6_elw_air_temperature
+    - sensor.zwave_multisensor_6_elw_illuminance
     - sensor.temperatur_esp8266_01
     - sensor.esp8266_02_temperature
     - sensor.temperatur_esp8266_03
@@ -92,56 +92,51 @@ include:
     - sensor.qnap1_network_down_eth0
     - sensor.qnap1_network_up_eth0
     #fibaro plug stats
-    - sensor.fibaro_system_fgwpef_wall_plug_gen5_power
+    - sensor.zwave_fibaro_mpd_1_power
+    - sensor.zwave_fibaro_mpd_1_electric_consumed_kwh
+    - sensor.zwave_fibaro_mpd_1_electric_consumed_w
       #sonoff stats
 
-    - sensor.sonoff01_gesamtverbrauch
-    - sensor.sonoff02_gesamtverbrauch
-    - sensor.sonoff03_gesamtverbrauch
-    - sensor.sonoff04_gesamtverbrauch
-    - sensor.sonoff05_gesamtverbrauch
-    - sensor.sonoff06_gesamtverbrauch
-    - sensor.sonoff07_gesamtverbrauch
-    - sensor.sonoff08_gesamtverbrauch
+    - sensor.stromzaehler_1_mt175_total_in
+    - sensor.stromzaehler_1_mt175_power_curr
+    - sensor.stromzaehler_1_mt175_total_in_kwh
+    - sensor.stromzaehler_1_mt175_power_curr_w
 
-    - sensor.sonoff02_kosten_heute
-    - sensor.sonoff02_kosten_gestern
+    - sensor.sonoff_01_energy_power
+    - sensor.sonoff_02_energy_power
+    - sensor.sonoff_03_energy_power
+    - sensor.sonoff_04_energy_power
+    - sensor.sonoff_05_energy_power
+    - sensor.sonoff_06_energy_power
+    - sensor.sonoff_07_energy_power
+    - sensor.sonoff_08_energy_power
 
-    - sensor.sonoff01_kosten_gesamt
-    - sensor.sonoff01_kosten_gestern
-    - sensor.sonoff01_kosten_heute
-    - sensor.sonoff02_kosten_gesamt
-    - sensor.sonoff02_kosten_gestern
-    - sensor.sonoff02_kosten_heute
-    - sensor.sonoff03_kosten_gesamt
-    - sensor.sonoff03_kosten_gestern
-    - sensor.sonoff03_kosten_heute
-    - sensor.sonoff04_kosten_gesamt
-    - sensor.sonoff04_kosten_gestern
-    - sensor.sonoff04_kosten_heute
-    - sensor.sonoff05_kosten_gesamt
-    - sensor.sonoff05_kosten_gestern
-    - sensor.sonoff05_kosten_heute
-    - sensor.sonoff06_kosten_gesamt
-    - sensor.sonoff06_kosten_gestern
-    - sensor.sonoff06_kosten_heute
-    - sensor.sonoff07_kosten_gesamt
-    - sensor.sonoff07_kosten_gestern
-    - sensor.sonoff07_kosten_heute
-    - sensor.sonoff08_kosten_gesamt
-    - sensor.sonoff08_kosten_gestern
-    - sensor.sonoff08_kosten_heute
+    - sensor.sonoff_01_energy_total
+    - sensor.sonoff_02_energy_total
+    - sensor.sonoff_03_energy_total
+    - sensor.sonoff_04_energy_total
+    - sensor.sonoff_05_energy_total
+    - sensor.sonoff_06_energy_total
+    - sensor.sonoff_07_energy_total
+    - sensor.sonoff_08_energy_total
 
-    - sensor.sonoff01_momentane_leistung
-    - sensor.sonoff02_momentane_leistung
-    - sensor.sonoff03_momentane_leistung
-    - sensor.sonoff04_momentane_leistung
-    - sensor.sonoff05_momentane_leistung
-    - sensor.sonoff06_momentane_leistung
-    - sensor.sonoff07_momentane_leistung
-    - sensor.sonoff08_momentane_leistung
+    - sensor.sonoff_01_energy_yesterday
+    - sensor.sonoff_02_energy_yesterday
+    - sensor.sonoff_03_energy_yesterday
+    - sensor.sonoff_04_energy_yesterday
+    - sensor.sonoff_05_energy_yesterday
+    - sensor.sonoff_06_energy_yesterday
+    - sensor.sonoff_07_energy_yesterday
+    - sensor.sonoff_08_energy_yesterday
 
-
+    - sensor.sonoff_01_energy_today
+    - sensor.sonoff_02_energy_today
+    - sensor.sonoff_03_energy_today
+    - sensor.sonoff_04_energy_today
+    - sensor.sonoff_05_energy_today
+    - sensor.sonoff_06_energy_today
+    - sensor.sonoff_07_energy_today
+    - sensor.sonoff_08_energy_today
     #gas price
     - sensor.tankerkoenig_aral_tankstelle_e5
     - sensor.tankerkoenig_aral_tankstelle_e5_2

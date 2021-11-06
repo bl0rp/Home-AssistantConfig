@@ -35,14 +35,14 @@ binary_sensor:
 
   - platform: mqtt
     name: "esp32_03_status"
-    state_topic: "esp32_3/status"
+    state_topic: "esp32_03/status"
     payload_on: "online"
     payload_off: "offline"
     device_class: connectivity
 
   - platform: mqtt
     name: "esp32_03_ota_status"
-    state_topic: "esp32_3/ota_mode_status"
+    state_topic: "esp32_03/ota_mode_status"
     payload_on: "active"
     payload_off: "disabled"
 
@@ -52,34 +52,39 @@ sensor:
 #bme280 values
   - platform: mqtt
     name: "esp32_03_humidity"
-    state_topic: "esp32_3/sensor/esp32_3_humidity/state"
+    device_class: humidity
+    state_topic: "esp32_03/sensor/esp32_03_humidity/state"
     qos: 0
     unit_of_measurement: "%"
     force_update: true
 
   - platform: mqtt
     name: "esp32_03_temperature"
-    state_topic: "esp32_3/sensor/esp32_3_temperature/state"
+    device_class: temperature
+    state_topic: "esp32_03/sensor/esp32_03_temperature/state"
     qos: 0
     unit_of_measurement: "°C"
     force_update: true
 
   - platform: mqtt
     name: "esp32_03_pressure"
-    state_topic: "esp32_3/sensor/esp32_3_pressure/state"
+    device_class: pressure
+    state_topic: "esp32_03/sensor/esp32_03_pressure/state"
     qos: 0
     unit_of_measurement: "hPa"
     force_update: true
 #wifi signal strength
   - platform: mqtt
     name: "esp32_03_rssi"
-    state_topic: "esp32_3/sensor/esp32_3_rssi/state"
+    device_class: signal_strength
+    state_topic: "esp32_03/sensor/esp32_03_rssi/state"
     qos: 0
     unit_of_measurement: "dB"
 #battery value
   - platform: mqtt
     name: "esp32_03_battery"
-    state_topic: "esp32_3/sensor/esp32_3_voltage/state"
+    device_class: voltage
+    state_topic: "esp32_03/sensor/esp32_03_voltage/state"
     unit_of_measurement: "V"
     qos: 0
     force_update: true
@@ -96,9 +101,9 @@ sensor:
 switch:
   - platform: mqtt
     name: "esp32_03_shutdown"
-    state_topic: esp32_3/switch/esp32_3_shutdown/state
-    command_topic: esp32_3/switch/esp32_3_shutdown/command
-    availability_topic: "esp32_3/status"
+    state_topic: esp32_03/switch/esp32_03_shutdown/state
+    command_topic: esp32_03/switch/esp32_03_shutdown/command
+    availability_topic: "esp32_03/status"
     payload_on: "ON"
     payload_off: "OFF"
     state_on: "online"
@@ -106,9 +111,9 @@ switch:
 
   - platform: mqtt
     name: "esp32_03_restart"
-    state_topic: esp32_3/switch/esp32_3_restart/state
-    command_topic: esp32_3/switch/esp32_3_restart/command
-    availability_topic: "esp32_3/status"
+    state_topic: esp32_03/switch/esp32_03_restart/state
+    command_topic: esp32_03/switch/esp32_03_restart/command
+    availability_topic: "esp32_03/status"
     payload_on: "ON"
     payload_off: "OFF"
     state_on: "online"
@@ -121,17 +126,17 @@ switch:
         turn_on:
           - service: mqtt.publish
             data:
-              topic: "esp32_3/ota_mode"
+              topic: "esp32_03/ota_mode"
               payload: "ON"
               retain: true
         turn_off:
           - service: mqtt.publish
             data:
-              topic: "esp32_3/sleep_mode"
+              topic: "esp32_03/sleep_mode"
               payload: "ON"
           - service: mqtt.publish
             data:
-              topic: "esp32_3/ota_mode"
+              topic: "esp32_03/ota_mode"
               payload: ""
               retain: true
 

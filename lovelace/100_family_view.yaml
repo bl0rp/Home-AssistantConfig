@@ -16,9 +16,9 @@ cards:
             - entity: binary_sensor.chrishome_template
               secondary_info: last-changed
               name: Christoph
-            - entity: device_tracker.user_devices_phone_ewald
+            - entity: device_tracker.nmap_tracker_a4_50_46_4c_5c_33
               secondary_info: last-changed
-            - entity: device_tracker.user_devices_phone_traude
+            - entity: device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
               secondary_info: last-changed
 
 

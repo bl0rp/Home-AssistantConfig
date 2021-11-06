@@ -1,41 +1,9 @@
 homeassistant:
+
   customize:
-
-#Fibaro Z-Wave WallPlug 1
-    switch.fibaro_system_fgwpef_wall_plug_gen5_switch:
-      friendly_name: Verstärker
-      icon: mdi:power-plug
-    sensor.fibaro_system_fgwpef_wall_plug_gen5_power:
-      friendly_name: Aktuelle Leistung
-      icon: mdi:power-plug
-    sensor.fibaro_system_fgwpef_wall_plug_gen5_power_2:
-      friendly_name: Maximale Leistung
-      icon: mdi:power-plug
-    sensor.fibaro_system_fgwpef_wall_plug_gen5_energy:
-      friendly_name: Gesamtverbrauch
+    sensor.zwave_fibaro_mpd_1_electric_consumed_kwh:
+      friendly_name: Boxen
       icon: mdi:chart-line
-    sensor.zwave_mpd1_kosten_gesamt:
-      icon: mdi:currency-eur
-
-#Aeotec Z-Wave Multisensor
-    sensor.multisensor1_battery:
-      icon: mdi:car-battery
-    sensor.aeotec_zw100_multisensor_6_temperature:
-      friendly_name: Temperatur Z-Wave Multisensor 1
-      icon: mdi:thermometer
-    sensor.aeotec_zw100_multisensor_6_relative_humidity:
-      friendly_name: Luftfeuchtigkeit Z-Wave Multisensor 1
-      icon: mdi:water-percent
-    sensor.aeotec_zw100_multisensor_6_luminance:
-      friendly_name: Helligkeit Z-Wave Multisensor 1
-      icon: mdi:theme-light-dark
-    sensor.aeotec_zw100_multisensor_6_burglar:
-      friendly_name: Bewegsungsmelder Z-Wave Multisensor 1
-      icon: mdi:alert
-    binary_sensor.aeotec_zw100_multisensor_6_sensor:
-      friendly_name: Status Z-Wave Multisensor 1
-    sensor.aeotec_zw100_multisensor_6_ultraviolet:
-      friendly_name: UV Z-Wave Multisensor 1
 
 
 
@@ -43,37 +11,19 @@ sensor:
 ### MPD Dose
   - platform: template
     sensors:
-      zwave_mpd1_use:
+      zwave_fibaro_mpd_1_use:
         friendly_name: Gerät in Benutzung?
-        value_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
-        icon_template: "{% if states('sensor.fibaro_system_fgwpef_wall_plug_gen5_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
+        value_template: "{% if states('sensor.zwave_fibaro_mpd_1_power') | int > 0.2 %}Ja{% else %}Nein{% endif %}"
+        icon_template: "{% if states('sensor.zwave_fibaro_mpd_1_power') | int > 0.2 %}mdi:flash{% else %}mdi:flash-off{% endif %}"
 
-      zwave_mpd1_kosten_gesamt:
+      zwave_fibaro_mpd_1_kosten_gesamt:
         friendly_name: Gesamtkosten
         unit_of_measurement: "€"
         value_template: >-
-          {{ states('sensor.fibaro_system_fgwpef_wall_plug_gen5_energy')   | multiply(0.2657) | round(2) }}
+          {{ states('sensor.zwave_fibaro_mpd_1_electric_consumed_kwh')   | multiply(0.2657) | round(2) }}
 
-### Multisensor1 Battery
-  - platform: template
-    sensors:
-      multisensor1_battery:
-        value_template: >-
-           {%- if states.binary_sensor.aeotec_zw100_multisensor_6_sensor != None -%}
-             {{ states.zwave.aeotec_zw100_multisensor_6.attributes.battery_level }}
-           {%- else -%}
-             unknown
-           {%- endif -%}
-        unit_of_measurement: '%'
-        friendly_name: "Multisensor 01 Batterie"
 
-### Multisensor1 Bewegungsmelder
-  - platform: template
-    sensors:
-      multisensor1_motion:
-        friendly_name: Multisensor 01
-        value_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}Bewegung erkannt!{% else %}Keine Bewegung.{% endif %}'
-        icon_template: '{% if is_state("sensor.aeotec_zw100_multisensor_6_burglar", "8") %}mdi:alert{% else %}mdi:eye-off{% endif %}'
+
 
 ### Motion last triggered
   - platform: template
@@ -81,4 +31,4 @@ sensor:
       multisensor_motion_last_triggered:
         friendly_name: "Multisensor Motion Last Triggered"
         value_template: >-
-          {{ as_timestamp(states.sensor.multisensor1_motion.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.binary_sensor.zwave_multisensor_6_elw_home_security_motion_detection.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}

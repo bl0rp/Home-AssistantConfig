@@ -69,7 +69,7 @@ homeassistant:
       friendly_name: "HP Deskjet Büro"
       icon: mdi:printer
 #storage
-    device_tracker.network_storage_qnap1:
+    device_tracker.nmap_tracker_00_08_9b_f2_1c_a8:
       friendly_name: "Qnap 1"
       icon: mdi:nas
 #espxx, RaspberryPi
@@ -115,37 +115,32 @@ homeassistant:
     device_tracker.soc_pi3_wifi:
       friendly_name: "RaspberryPi 3 Camera"
       icon: mdi:chip
-#sonoff wemo
-    device_tracker.switch_sonoff_sonoff01:
+#sonoff
+    device_tracker.switch_sonoff_sonoff_01:
       friendly_name: "Sonoff #1"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff02:
+    device_tracker.switch_sonoff_sonoff_02:
       friendly_name: "Sonoff #2"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff03:
+    device_tracker.switch_sonoff_sonoff_03:
       friendly_name: "Sonoff #3"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff04:
+    device_tracker.switch_sonoff_sonoff_04:
       friendly_name: "Sonoff #4"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff05:
+    device_tracker.switch_sonoff_sonoff_05:
       friendly_name: "Sonoff #5"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff06:
+    device_tracker.switch_sonoff_sonoff_06:
       friendly_name: "Sonoff #6"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff07:
+    device_tracker.switch_sonoff_sonoff_07:
       friendly_name: "Sonoff #7"
       icon: mdi:power-socket-eu
-    device_tracker.switch_sonoff_sonoff08:
+    device_tracker.switch_sonoff_sonoff_08:
       friendly_name: "Sonoff #8"
       icon: mdi:power-socket-eu
-    device_tracker.switch_wemo_wemoswitch1:
-      friendly_name: "WeMo Switch #1"
-      icon: mdi:power-socket-eu
-    device_tracker.switch_wemo_wemoswitch2:
-      friendly_name: "WeMo Switch #2"
-      icon: mdi:power-socket-eu
+
 #computers, tablets
     device_tracker.user_devices_computer_chris_macbook:
       friendly_name: "Macbook Christoph"
@@ -160,10 +155,10 @@ homeassistant:
       friendly_name: "Tablet Android"
       icon: mdi:tablet-android
 #mobile phones
-    device_tracker.user_devices_phone_christoph:
+    device_tracker.nmap_tracker_f0_5c_77_f1_28_22:
       friendly_name: "Christoph (Wifi)"
       icon: mdi:wifi
-    device_tracker.user_devices_phone_ewald:
+    device_tracker.nmap_tracker_a4_50_46_4c_5c_33:
       friendly_name: "Ewald (WiFi)"
       icon: mdi:wifi
     device_tracker.user_devices_phone_jan:
@@ -175,7 +170,7 @@ homeassistant:
     device_tracker.user_devices_phone_steffi:
       friendly_name: "Steffi (WiFi)"
       icon: mdi:wifi
-    device_tracker.user_devices_phone_traude:
+    device_tracker.nmap_tracker_b4_f1_da_b4_f0_93:
       friendly_name: "Traude (Wifi)"
       icon: mdi:wifi
 
@@ -261,37 +256,32 @@ homeassistant:
     binary_sensor.soc_pi3_wifi:
       friendly_name: "RaspberryPi 3 Camera"
       icon: mdi:chip
-#sonoff wemo
-    binary_sensor.switch_sonoff_sonoff01:
+#sonoff
+    binary_sensor.switch_sonoff_sonoff_01:
       friendly_name: "Sonoff #1"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff02:
+    binary_sensor.switch_sonoff_sonoff_02:
       friendly_name: "Sonoff #2"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff03:
+    binary_sensor.switch_sonoff_sonoff_03:
       friendly_name: "Sonoff #3"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff04:
+    binary_sensor.switch_sonoff_sonoff_04:
       friendly_name: "Sonoff #4"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff05:
+    binary_sensor.switch_sonoff_sonoff_05:
       friendly_name: "Sonoff #5"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff06:
+    binary_sensor.switch_sonoff_sonoff_06:
       friendly_name: "Sonoff #6"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff07:
+    binary_sensor.switch_sonoff_sonoff_07:
       friendly_name: "Sonoff #7"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_sonoff_sonoff08:
+    binary_sensor.switch_sonoff_sonoff_08:
       friendly_name: "Sonoff #8"
       icon: mdi:power-socket-eu
-    binary_sensor.switch_wemo_wemoswitch1:
-      friendly_name: "WeMo Switch #1"
-      icon: mdi:power-socket-eu
-    binary_sensor.switch_wemo_wemoswitch2:
-      friendly_name: "WeMo Switch #2"
-      icon: mdi:power-socket-eu
+
 #computers, tablets
     binary_sensor.user_devices_computer_chris_macbook:
       friendly_name: "Macbook Christoph"
@@ -341,7 +331,7 @@ group:
       - device_tracker.network_media_player_pi2kodi
       - device_tracker.network_media_player_volumio
       - device_tracker.network_printer_hp_1og
-      - device_tracker.network_storage_qnap1
+      - device_tracker.nmap_tracker_00_08_9b_f2_1c_a8
       - device_tracker.soc_esp32_01
       - device_tracker.soc_esp32_02
       - device_tracker.soc_esp32_03
@@ -356,31 +346,29 @@ group:
       - device_tracker.soc_pi1_wifi
       - device_tracker.soc_pizero_wifi
       - device_tracker.soc_pi3_wifi
-      - device_tracker.switch_sonoff_sonoff01
-      - device_tracker.switch_sonoff_sonoff02
-      - device_tracker.switch_sonoff_sonoff03
-      - device_tracker.switch_sonoff_sonoff04
-      - device_tracker.switch_sonoff_sonoff05
-      - device_tracker.switch_sonoff_sonoff06
-      - device_tracker.switch_sonoff_sonoff07
-      - device_tracker.switch_sonoff_sonoff08
-      - device_tracker.switch_wemo_wemoswitch1
-      - device_tracker.switch_wemo_wemoswitch2
+      - device_tracker.switch_sonoff_sonoff_01
+      - device_tracker.switch_sonoff_sonoff_02
+      - device_tracker.switch_sonoff_sonoff_03
+      - device_tracker.switch_sonoff_sonoff_04
+      - device_tracker.switch_sonoff_sonoff_05
+      - device_tracker.switch_sonoff_sonoff_06
+      - device_tracker.switch_sonoff_sonoff_07
+      - device_tracker.switch_sonoff_sonoff_08
       - device_tracker.user_devices_computer_chris_macbook
       - device_tracker.user_devices_computer_chris_workstation
       - device_tracker.user_devices_computer_ipad
       - device_tracker.user_devices_computer_nexus7
-      - device_tracker.user_devices_phone_christoph
-      - device_tracker.user_devices_phone_ewald
+      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
+      - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
       - device_tracker.user_devices_phone_jan
       - device_tracker.user_devices_phone_petros
       - device_tracker.user_devices_phone_steffi
-      - device_tracker.user_devices_phone_traude
+      - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
 #use sensors for devices and device_tracker for people (home vs online)
   device_tracker_christoph:
     entities:
       - device_tracker.p4xl
-      - device_tracker.user_devices_phone_christoph
+      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
       - binary_sensor.user_devices_computer_chris_macbook
       - binary_sensor.user_devices_computer_chris_workstation
 
@@ -437,16 +425,15 @@ group:
 
   device_tracker_switch:
     entities:
-      - binary_sensor.switch_sonoff_sonoff01
-      - binary_sensor.switch_sonoff_sonoff02
-      - binary_sensor.switch_sonoff_sonoff03
-      - binary_sensor.switch_sonoff_sonoff04
-      - binary_sensor.switch_sonoff_sonoff05
-      - binary_sensor.switch_sonoff_sonoff06
-      - binary_sensor.switch_sonoff_sonoff07
-      - binary_sensor.switch_sonoff_sonoff08
-      - binary_sensor.switch_wemo_wemoswitch1
-      - binary_sensor.switch_wemo_wemoswitch2
+      - binary_sensor.switch_sonoff_sonoff_01
+      - binary_sensor.switch_sonoff_sonoff_02
+      - binary_sensor.switch_sonoff_sonoff_03
+      - binary_sensor.switch_sonoff_sonoff_04
+      - binary_sensor.switch_sonoff_sonoff_05
+      - binary_sensor.switch_sonoff_sonoff_06
+      - binary_sensor.switch_sonoff_sonoff_07
+      - binary_sensor.switch_sonoff_sonoff_08
+
 
   device_tracker_user_devices:
     entities:
@@ -456,18 +443,18 @@ group:
       - binary_sensor.user_devices_computer_nexus7
   device_tracker_user_phone:
     entities:
-      - device_tracker.user_devices_phone_christoph
-      - device_tracker.user_devices_phone_ewald
+      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
+      - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
       - device_tracker.user_devices_phone_jan
       - device_tracker.user_devices_phone_petros
       - device_tracker.user_devices_phone_steffi
-      - device_tracker.user_devices_phone_traude
+      - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
 
   device_tracker_user_phone_family:
     entities:
-      - device_tracker.user_devices_phone_christoph
-      - device_tracker.user_devices_phone_ewald
-      - device_tracker.user_devices_phone_traude
+      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
+      - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
+      - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
 
   device_tracker_user_phone_guest:
     entities:
@@ -536,7 +523,7 @@ binary_sensor:
         value_template: "{{ is_state('device_tracker.network_printer_hp_1og', 'home') }}"
         device_class: connectivity
       network_storage_qnap1:
-        value_template: "{{ is_state('device_tracker.network_storage_qnap1', 'home') }}"
+        value_template: "{{ is_state('device_tracker.nmap_tracker_00_08_9b_f2_1c_a8', 'home') }}"
         device_class: connectivity
       soc_esp32_01:
         value_template: "{{ is_state('device_tracker.soc_esp32_01', 'home') }}"
@@ -580,35 +567,29 @@ binary_sensor:
       soc_pi3_wifi:
         value_template: "{{ is_state('device_tracker.soc_pi3_wifi', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff01:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff01', 'home') }}"
+      switch_sonoff_sonoff_01:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_01', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff02:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff02', 'home') }}"
+      switch_sonoff_sonoff_02:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_02', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff03:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff03', 'home') }}"
+      switch_sonoff_sonoff_03:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_03', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff04:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff04', 'home') }}"
+      switch_sonoff_sonoff_04:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_04', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff05:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff05', 'home') }}"
+      switch_sonoff_sonoff_05:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_05', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff06:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff06', 'home') }}"
+      switch_sonoff_sonoff_06:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_06', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff07:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff07', 'home') }}"
+      switch_sonoff_sonoff_07:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_07', 'home') }}"
         device_class: connectivity
-      switch_sonoff_sonoff08:
-        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff08', 'home') }}"
-        device_class: connectivity
-      switch_wemo_wemoswitch1:
-        value_template: "{{ is_state('device_tracker.switch_wemo_wemoswitch1', 'home') }}"
-        device_class: connectivity
-      switch_wemo_wemoswitch2:
-        value_template: "{{ is_state('device_tracker.switch_wemo_wemoswitch2', 'home') }}"
+      switch_sonoff_sonoff_08:
+        value_template: "{{ is_state('device_tracker.switch_sonoff_sonoff_08', 'home') }}"
         device_class: connectivity
       user_devices_computer_chris_macbook:
         value_template: "{{ is_state('device_tracker.user_devices_computer_chris_macbook', 'home') }}"
@@ -623,10 +604,10 @@ binary_sensor:
         value_template: "{{ is_state('device_tracker.user_devices_computer_nexus7', 'home') }}"
         device_class: connectivity
       user_devices_phone_christoph:
-        value_template: "{{ is_state('device_tracker.user_devices_phone_christoph', 'home') }}"
+        value_template: "{{ is_state('device_tracker.nmap_tracker_f0_5c_77_f1_28_22', 'home') }}"
         device_class: connectivity
       user_devices_phone_ewald:
-        value_template: "{{ is_state('device_tracker.user_devices_phone_ewald', 'home') }}"
+        value_template: "{{ is_state('device_tracker.nmap_tracker_a4_50_46_4c_5c_33', 'home') }}"
         device_class: connectivity
       user_devices_phone_jan:
         value_template: "{{ is_state('device_tracker.user_devices_phone_jan', 'home') }}"
@@ -638,7 +619,7 @@ binary_sensor:
         value_template: "{{ is_state('device_tracker.user_devices_phone_steffi', 'home') }}"
         device_class: connectivity
       user_devices_phone_traude:
-        value_template: "{{ is_state('device_tracker.user_devices_phone_traude', 'home') }}"
+        value_template: "{{ is_state('device_tracker.nmap_tracker_b4_f1_da_b4_f0_93', 'home') }}"
         device_class: connectivity
 #automation
 
@@ -674,16 +655,14 @@ automation:
         - binary_sensor.soc_pi1_wifi
         - binary_sensor.soc_pizero_wifi
         - binary_sensor.soc_pi3_wifi
-        - binary_sensor.switch_sonoff_sonoff01
-        - binary_sensor.switch_sonoff_sonoff02
-        - binary_sensor.switch_sonoff_sonoff03
-        - binary_sensor.switch_sonoff_sonoff04
-        - binary_sensor.switch_sonoff_sonoff05
-        - binary_sensor.switch_sonoff_sonoff06
-        - binary_sensor.switch_sonoff_sonoff07
-        - binary_sensor.switch_sonoff_sonoff08
-        - binary_sensor.switch_wemo_wemoswitch1
-        - binary_sensor.switch_wemo_wemoswitch2
+        - binary_sensor.switch_sonoff_sonoff_01
+        - binary_sensor.switch_sonoff_sonoff_02
+        - binary_sensor.switch_sonoff_sonoff_03
+        - binary_sensor.switch_sonoff_sonoff_04
+        - binary_sensor.switch_sonoff_sonoff_05
+        - binary_sensor.switch_sonoff_sonoff_06
+        - binary_sensor.switch_sonoff_sonoff_07
+        - binary_sensor.switch_sonoff_sonoff_08
         - binary_sensor.user_devices_computer_chris_macbook
         - binary_sensor.user_devices_computer_chris_workstation
         - binary_sensor.user_devices_computer_ipad
@@ -745,16 +724,14 @@ automation:
         - binary_sensor.network_hub_echo_dot
         - binary_sensor.network_hub_tradfri
         - binary_sensor.network_storage_qnap1
-        - binary_sensor.switch_sonoff_sonoff01
-        - binary_sensor.switch_sonoff_sonoff02
-        - binary_sensor.switch_sonoff_sonoff03
-        - binary_sensor.switch_sonoff_sonoff04
-        - binary_sensor.switch_sonoff_sonoff05
-        - binary_sensor.switch_sonoff_sonoff06
-        - binary_sensor.switch_sonoff_sonoff07
-        - binary_sensor.switch_sonoff_sonoff08
-        - binary_sensor.switch_wemo_wemoswitch1
-        - binary_sensor.switch_wemo_wemoswitch2
+        - binary_sensor.switch_sonoff_sonoff_01
+        - binary_sensor.switch_sonoff_sonoff_02
+        - binary_sensor.switch_sonoff_sonoff_03
+        - binary_sensor.switch_sonoff_sonoff_04
+        - binary_sensor.switch_sonoff_sonoff_05
+        - binary_sensor.switch_sonoff_sonoff_06
+        - binary_sensor.switch_sonoff_sonoff_07
+        - binary_sensor.switch_sonoff_sonoff_08
         - binary_sensor.soc_esp8266_07
 
       from: 'on'
@@ -776,16 +753,14 @@ automation:
       platform: state
       entity_id:
 
-        - binary_sensor.switch_sonoff_sonoff01
-        - binary_sensor.switch_sonoff_sonoff02
-        - binary_sensor.switch_sonoff_sonoff03
-        - binary_sensor.switch_sonoff_sonoff04
-        - binary_sensor.switch_sonoff_sonoff05
-        - binary_sensor.switch_sonoff_sonoff06
-        - binary_sensor.switch_sonoff_sonoff07
-        - binary_sensor.switch_sonoff_sonoff08
-        - binary_sensor.switch_wemo_wemoswitch1
-        - binary_sensor.switch_wemo_wemoswitch2
+        - binary_sensor.switch_sonoff_sonoff_01
+        - binary_sensor.switch_sonoff_sonoff_02
+        - binary_sensor.switch_sonoff_sonoff_03
+        - binary_sensor.switch_sonoff_sonoff_04
+        - binary_sensor.switch_sonoff_sonoff_05
+        - binary_sensor.switch_sonoff_sonoff_06
+        - binary_sensor.switch_sonoff_sonoff_07
+        - binary_sensor.switch_sonoff_sonoff_08
 
       from: 'on'
       to: 'off'

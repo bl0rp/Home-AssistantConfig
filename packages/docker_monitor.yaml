@@ -46,7 +46,7 @@ homeassistant:
       friendly_name: "Heimdall"
       icon: mdi:card-search-outline
 
-    switch.unifi_controller_latest:
+    switch.docker_unifi_controller_latest:
       friendly_name: "Unifi"
       icon: mdi:access-point-network
 
@@ -57,6 +57,10 @@ homeassistant:
     switch.docker_librespeed:
       friendly_name: "LibreSpeed"
       icon: mdi:send-clock
+
+    switch.docker_zwavejs2mqtt:
+      friendly_name: "Z-Wave"
+      icon: mdi:z-wave
 
     sensor.docker_librespeed_network_total_down:
       friendly_name: "LibreSpeed"
@@ -82,6 +86,8 @@ homeassistant:
       friendly_name: "Yacht"
     sensor.docker_wud_network_total_down:
       friendly_name: "WUD"
+    sensor.docker_zwavejs2mqtt_network_total_down:
+      friendly_name: "Z-Wave"
 
     sensor.docker_librespeed_network_total_up:
       friendly_name: "LibreSpeed"
@@ -107,6 +113,8 @@ homeassistant:
       friendly_name: "Yacht"
     sensor.docker_wud_network_total_up:
       friendly_name: "WUD"
+    sensor.docker_zwavejs2mqtt_network_total_up:
+      friendly_name: "Z-Wave"
 
     sensor.docker_librespeed_memory:
       friendly_name: "LibreSpeed"
@@ -132,6 +140,8 @@ homeassistant:
       friendly_name: "Yacht"
     sensor.docker_wud_memory:
       friendly_name: "WUD"
+    sensor.docker_zwavejs2mqtt_memory:
+      friendly_name: "Z-Wave"
 
 monitor_docker:
   - name: Docker
@@ -161,7 +171,7 @@ automation:
     initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: switch.docker_grafana, switch.docker_influxdb2, switch.docker_portainer, switch.docker_watchtower, switch.docker_diun_diun_metis_1, switch.docker_tasmoadmin, switch.docker_yacht, switch.docker_mqtt, switch.docker_heimdall, switch.unifi_controller_latest, switch.docker_wud, switch.docker_librespeed
+        entity_id: switch.docker_grafana, switch.docker_influxdb2, switch.docker_portainer, switch.docker_watchtower, switch.docker_diun_diun_metis_1, switch.docker_zwavejs2mqtt,  switch.docker_mqtt, switch.docker_heimdall, switch.docker_unifi_controller_latest, switch.docker_librespeed
         to: 'off'
         for:
           minutes: 1
