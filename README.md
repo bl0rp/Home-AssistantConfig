@@ -23,7 +23,7 @@ System Load with HomeAssistant, various Docker Containers, autossh bridges and o
 
 ### VENV / Services
 I am running HomeAssistant in a [virtual environment](https://www.home-assistant.io/docs/installation/virtualenv/).
-The initial basic setup is documented [here](https://chris.0x711.de/index.php/2018/01/31/setting-up-home-assistant-in-a-virtual-environment-on-intel-nuc/).
+The initial basic setup is documented [here](https://chris.0x711.de/2018-01-31-setting-up-home-assistant-in-a-virtual-environment-on-intel-nuc/).
 
 ## Hardware
 HomeAssistant supports a huge and growing variety of components. See  [here](https://www.home-assistant.io/integrations) for an overview.
