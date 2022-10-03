@@ -4,12 +4,6 @@
 ##############################################################
 homeassistant:
 
-#livestream
-camera:
-  - platform: mjpeg
-    name: OctoPrint
-    still_image_url: http://192.168.0.22/webcam/?action=snapshot
-    mjpeg_url: http://192.168.0.22/webcam/?action=stream
 
 
 rest_command:
