@@ -348,14 +348,7 @@ sensor:
            {%- endmacro %}
            {{ human_time(states.sensor.ha_uptime_in_seconds.state | int ) }}
 
-###### HASS MySQL DB Size
-  - platform: sql
-    db_url: !secret mysql_db_path_local
-    queries:
-      - name: mysql_ha_size
-        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "value" FROM information_schema.tables WHERE table_schema="ha" GROUP BY table_schema;'
-        column: 'value'
-        unit_of_measurement: MiB
+
 
 
 automation:
