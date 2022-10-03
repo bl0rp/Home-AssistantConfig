@@ -1,0 +1,350 @@
+##############################################################
+### Packages / Certification renewal and valid days        ###
+### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
+##############################################################
+homeassistant:
+
+#livestream
+camera:
+  - platform: mjpeg
+    name: OctoPrint
+    still_image_url: http://192.168.0.22/webcam/?action=snapshot
+    mjpeg_url: http://192.168.0.22/webcam/?action=stream
+
+
+rest_command:
+#shutdown via api
+  octoprint_shutdown:
+    url: http://192.168.0.22/api/system/commands/core/shutdown
+    method: POST
+    headers:
+      X-Api-Key: !secret octoprint_api_key
+      content-type: application/json
+  octoprint_reboot:
+    url: http://192.168.0.22/api/system/commands/core/reboot
+    method: POST
+    headers:
+      X-Api-Key: !secret octoprint_api_key
+      content-type: application/json
+
+  octoprint_job_command:
+    url: http://192.168.0.22/api/
+    payload: '{{ payload }}'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_home:
+    url: http://192.168.0.22/api/printer/printhead
+    payload: '{"command": "home", "axes": ["x", "y", "z"]}'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_select_tool0:
+    url: http://192.168.0.22/api/printer/tool
+    payload: '{"command": "select", "targets": "tool0" }'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_nozzle_temp:
+    url: http://192.168.0.22/api/printer/tool
+    payload: '{"command": "target", "targets": {"tool0": {{ temp }} }}'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_extrude:
+    url: http://192.168.0.22/api/printer/tool
+    payload: '{"command": "extrude", "targets": {"amount": {{ filament }} }}'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_bed_temp:
+    url: http://192.168.0.22/api/printer/bed
+    payload: '{"command": "target", "target": {{ temp }} }'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+  octoprint_printer_command:
+    url: http://192.168.0.22/api/printer/command
+    payload: '{"command": "{{ cmd }}"}'
+    headers:
+        Content-Type: 'application/json'
+        X-Api-Key: !secret octoprint_api_key
+    method: POST
+
+
+#template switch for octoprint and printer
+switch:
+- platform: template
+  switches:
+    octoprint_shutdown:
+      friendly_name: octoprint Shutdown
+      value_template: "{{ is_state('switch.sonoff_06', 'on') }}"
+      turn_on:
+        - service: switch.turn_on
+          entity_id: switch.sonoff_06
+      turn_off:
+        - service: rest_command.octoprint_shutdown
+        - delay: '00:00:45'
+        - service: switch.turn_off
+          entity_id: switch.sonoff_06
+      icon_template: >-
+        {% if is_state('switch.sonoff_06', 'on') %}
+          mdi:power-plug
+        {% else %}
+          mdi:power-plug-off
+        {% endif %}        
+
+
+
+
+automation:
+  - alias: "octoprint_notification_finish"
+    id: octoprint_notification_finish
+    initial_state: True
+    trigger:
+      platform: state
+      entity_id: binary_sensor.octoprint_printing
+      from: "on"
+      to: "off"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            {{ as_timestamp(states('sensor.date_time_iso'))|timestamp_custom('%d.%m.%y %H:%M')}}: 3D Druck ist beendet!
+      - service: switch.turn_on
+        data:
+          entity_id: switch.shelly_1pm_led_printer
+      - delay: 00:00:05
+      - service: camera.snapshot 
+        data:
+         entity_id: camera.octoprint
+         filename: '/home/homeassistant/raspicam/snapshot_finish.jpg'
+      - delay: 00:00:05
+      - service: telegram_bot.send_photo
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          file: '/home/homeassistant/raspicam/snapshot_finish.jpg'
+          caption: Druck abgeschlossen!
+      - service: switch.turn_off
+        data:
+          entity_id: switch.shelly_1pm_led_printer
+
+  - alias: "octoprint_notification_halftime"
+    id: "octoprint_notification_halftime"
+    initial_state: True
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.octoprint_job_percentage
+      above: 50
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.octoprint_job_percentage') != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            {{ as_timestamp(states('sensor.date_time_iso'))|timestamp_custom('%d.%m.%y %H:%M')}}: 3D Druck zur Hälfte beendet! Kalkuliertes Ende: {{ as_timestamp(states('sensor.octoprint_estimated_finish_time')) |timestamp_custom('%d.%m.%y %H:%M')}}.
+      - service: switch.turn_on
+        data:
+          entity_id: switch.shelly_1pm_led_printer
+      - delay: 00:00:05
+      - service: camera.snapshot 
+        data:
+         entity_id: camera.octoprint
+         filename: '/home/homeassistant/raspicam/snapshot_halftime.jpg'
+      - delay: 00:00:05
+      - service: telegram_bot.send_photo
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          file: '/home/homeassistant/raspicam/snapshot_halftime.jpg'
+          caption: Hälfte gedruckt!
+      - service: switch.turn_off
+        data:
+          entity_id: switch.shelly_1pm_led_printer
+
+  - alias: "octoprint_notification_error"
+    id: "octoprint_notification_error"
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.octoprint_printing_error
+        from: 'off'
+        to: 'on'
+
+    condition:
+      - condition: template
+        value_template: "{{ states('binary_sensor.octoprint_printing_error') != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+    action:
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ as_timestamp(states('sensor.date_time_iso'))|timestamp_custom('%d.%m.%y %H:%M')}}: Achtung! Fehler am 3D Drucker!'
+
+  - alias: "octoprint_idle_shutdown"
+    id: "octoprint_idle_shutdown"
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.octoprint_current_state
+        from: 'Printing'
+        to: 'Operational'
+        for:
+          01:00:00
+
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.octoprint_current_state') != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+    action:
+      - service: switch.turn_off
+        entity_id: switch.octoprint_shutdown
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ as_timestamp(states('sensor.date_time_iso'))|timestamp_custom('%d.%m.%y %H:%M')}}: Autoshutdown 3D Drucker!'
+
+
+script:
+  octoprint_reboot:
+     sequence:
+       - service: rest_command.octoprint_reboot
+  octoprint_shutdown:
+     sequence:
+       - service: rest_command.octoprint_shutdown
+
+  
+  octoprint_cancel_print:
+    alias: octoprint Cancel
+    sequence:
+      - service: rest_command.octoprint_job_command
+        data:
+          payload: '{"command": "cancel"}'
+  
+  octoprint_change_filament:
+    alias: octoprint Filament Change
+    sequence:
+      - service: rest_command.octoprint_printer_command
+        data:
+          cmd: "M600"
+
+
+
+  octoprint_extrude_5mm:
+    alias: octoprint extrude 5mm
+    sequence:
+      - service: rest_command.octoprint_select_tool0
+      - service: rest_command.octoprint_extrude
+        data:
+          filament: "5"
+
+  octoprint_retract_5mm:
+    alias: octoprint retract 5mm
+    sequence:
+      - service: rest_command.octoprint_select_tool0
+      - service: rest_command.octoprint_extrude
+        data:
+          filament: "-5"
+  
+  octoprint_cooldown:
+    alias: octoprint cooldown
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_bed_temp
+        data:
+          temp: 0
+      - service: rest_command.octoprint_nozzle_temp
+        data:
+          temp: 0
+  
+  octoprint_home:
+    alias: octoprint Homing
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_home
+  
+  octoprint_level_bed:
+    alias: octoprint Bed Levelling
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_printer_command
+        data:
+          cmd: "G29"
+  
+  octoprint_pause_print:
+    alias: octoprint Pause
+    sequence:
+      - service: rest_command.octoprint_job_command
+        data:
+          payload: '{"command": "pause", "action": "pause"}'
+  
+  octoprint_preheat_petg:
+    alias: octoprint PETG Preheat
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_bed_temp
+        data:
+          temp: 80
+      - service: rest_command.octoprint_nozzle_temp
+        data:
+          temp: 220
+  
+  octoprint_preheat_pla:
+    alias: octoprint PLA Preheat
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_bed_temp
+        data:
+          temp: 67
+      - service: rest_command.octoprint_nozzle_temp
+        data:
+          temp: 215
+
+  octoprint_preheat_nozzle:
+    alias: octoprint nozzle Preheat
+    sequence:
+      - condition: state
+        entity_id: sensor.octoprint_current_state
+        state: 'Operational'
+      - service: rest_command.octoprint_nozzle_temp
+        data:
+          temp: 200
+  
+  octoprint_resume_print:
+    alias: octoprint Resume
+    sequence:
+      - service: rest_command.octoprint_job_command
+        data:
+          payload: '{"command": "pause", "action": "resume"}'
+  
+
