@@ -74,14 +74,7 @@ homeassistant:
     sensor.dark_sky_wind_speed:
        friendly_name: Windgeschwindigkeit (DarkSky)
 
-#################
-### Radar Map ###
-#################
 
-camera:
-  - platform: generic
-    name: RegenRadarStuttgart
-    still_image_url: https://www.niederschlagsradar.de/image.ashx?type=regioloop&regio=stg&j=&m=&d=&mi=&uhr=&bliksem=0&voor=&srt=loop1stunde
 
 
 
