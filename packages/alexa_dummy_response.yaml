@@ -7,11 +7,11 @@ homeassistant:
 
 
 sensor:
-- platform: template
-  sensors:
-      last_alexa:
-        value_template: >
-          {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
+# - platform: template
+#   sensors:
+#       last_alexa:
+#         value_template: >
+#           {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
 
 light:
   - platform: template
