@@ -31,7 +31,7 @@ sensor:
       device_tracker_traude_last_changed:
         friendly_name: "Traude letzte Änderung"
         value_template: >-
-          {{ as_timestamp(states.device_tracker.nmap_tracker_b4_f1_da_b4_f0_93.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
+          {{ as_timestamp(states.device_tracker.nmap_tracker_58_24_29_db_3f_49.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
   - platform: template
     sensors:
@@ -47,12 +47,7 @@ sensor:
         value_template: >-
           {{ as_timestamp(states.input_boolean.chrishome.last_changed)|timestamp_custom('%d.%m.%Y %H:%M:%S') }}
 
-  - platform: template
-    sensors:
-      device_tracker_christoph_verbose:
-        friendly_name: "Christoph State Update"
-        value_template: >-
-          {{ states.sensor.tasker_home.state }} via {{ states.sensor.tasker_home_connection.state }}
+
 
 #bt state from rpi zero/nuc https://github.com/andrewjfreyer/presence
 
@@ -98,7 +93,7 @@ group:
     entities:
       - input_boolean.chrishome
       - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
-      - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
+      - device_tracker.nmap_tracker_f0_5c_77_f1_28_22
 
 
   familiegrpstate:
@@ -391,14 +386,14 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
+          - device_tracker.nmap_tracker_58_24_29_db_3f_49
           - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
         from: 'not_home'
         to: 'home'
 
       - platform: state
         entity_id:
-          - device_tracker.nmap_tracker_b4_f1_da_b4_f0_93
+          - device_tracker.nmap_tracker_58_24_29_db_3f_49
           - device_tracker.nmap_tracker_a4_50_46_4c_5c_33
         from: 'home'
         to: 'not_home'
