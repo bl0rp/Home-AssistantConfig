@@ -3,7 +3,7 @@ type: custom:vertical-layout
 layout:
   width: 300
   max_cols: 10
-path: 3dprinter
+path: 3dprinter_voron
 icon: mdi:printer-3d-nozzle
 cards:
 - type: entities
