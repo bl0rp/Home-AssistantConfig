@@ -6,6 +6,7 @@ views:
   - !include lovelace/021_pc_view.yaml
   - !include lovelace/022_game_view.yaml
   - !include lovelace/023_3dprinter_view.yaml
+  - !include lovelace/024_3dprinter_mainsail_view.yaml
   - !include lovelace/025_elw_camera_view.yaml
 #  - !include lovelace/030_media_view.yaml
   - !include lovelace/040_first_floor_view.yaml
