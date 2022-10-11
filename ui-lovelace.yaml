@@ -5,6 +5,7 @@ views:
   - !include lovelace/020_elw_view.yaml
   - !include lovelace/021_pc_view.yaml
   - !include lovelace/022_game_view.yaml
+  - !include lovelace/023_3dprinter_view.yaml
   - !include lovelace/025_elw_camera_view.yaml
 #  - !include lovelace/030_media_view.yaml
   - !include lovelace/040_first_floor_view.yaml
@@ -13,6 +14,7 @@ views:
   - !include lovelace/065_network.yaml
   - !include lovelace/070_sensor_view.yaml
   - !include lovelace/080_sonoff_view.yaml
+  - !include lovelace/081_shelly_view.yaml
   - !include lovelace/090_zwave_view.yaml
   - !include lovelace/100_family_view.yaml
   - !include lovelace/105_waste_view.yaml
@@ -21,4 +23,5 @@ views:
   - !include lovelace/116_docker_view.yaml
   - !include lovelace/970_test3_view.yaml
   - !include lovelace/980_test2_view.yaml
+  - !include lovelace/998_test4_view.yaml
   - !include lovelace/999_test_view.yaml
