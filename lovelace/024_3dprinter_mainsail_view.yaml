@@ -1,0 +1,97 @@
+title: 3dprinter_mainsail_view
+type: custom:vertical-layout
+layout:
+  width: 300
+  max_cols: 10
+path: 3dprinter
+icon: mdi:printer-3d-nozzle
+cards:
+- type: entities
+  title: "Steuerung"
+  entities:
+  - type: custom:layout-card
+    layout: horizontal
+    cards:
+      - type: entities
+        entities:
+          - type: section
+            label: Beleuchtung
+          - entity: switch.shelly_1pm_led_printer
+            name: LED
+            icon: mdi:led-strip-variant
+          - entity: sensor.voron_24r2_250_nozzletemp
+
+ 
+
+
+
+- type: custom:layout-break
+- type: entities
+  title: "Statistik"
+  entities:
+  - type: custom:layout-card
+    layout: horizontal
+    cards:
+      - type: gauge
+        name: Gesamtverbrauch
+        unit: 'W'
+        entity: sensor.sonoff_06_energy_power
+        max: 400
+        severity:
+          green: 0
+          yellow: 85
+          red: 150
+      - type: entities
+        entities:
+          - type: 'custom:bar-card'
+            animation: true
+            color: '#90ee90'
+            entity: sensor.octoprint_job_percentage
+            entity_row: false
+            height: 16px
+            name: Fortschritt
+            positions:
+              icon: 'on'
+              indicator: 'on'
+              minmax: inside
+              title: outside
+            speed: 1000
+          - type: section
+            label: Status
+          - entity: sensor.octoprint_current_state
+            name: Status
+            secondary_info: last-changed
+          - type: section
+            label: Laufzeit
+          - entity: sensor.octoprint_estimated_finish_time
+            name: Fertigstellung (geschätzt)
+            secondary_info: last-changed
+          - entity: sensor.octoprint_start_time
+            name: Druckbeginn
+            secondary_info: last-changed
+          - type: section
+            label: Temperatur
+          - entity: sensor.octoprint_actual_tool0_temp
+            show_state: false
+            type: 'custom:multiple-entity-row'
+            name: Druckkopf
+            entities:
+              - entity: sensor.octoprint_actual_tool0_temp
+                name: Aktuell
+              - entity: sensor.octoprint_target_tool0_temp
+                name: Ziel
+          - entity: sensor.octoprint_actual_bed_temp
+            show_state: false
+            type: 'custom:multiple-entity-row'
+            name: Bett
+            entities:
+              - entity: sensor.octoprint_actual_bed_temp
+                name: Aktuell
+              - entity: sensor.octoprint_target_bed_temp
+                name: Ziel
+
+- type: picture-entity
+  entity: camera.octoprint
+  camera_view: live
+  show_name: false
+  show_state: false
