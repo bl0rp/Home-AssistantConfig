@@ -1,13 +1,103 @@
 ##############################################################
-### Packages / Mainsail for Voron                          ###
+### Packages / Moonraker for Voron                         ###
 ### @cvoid - https://github.com/bl0rp/Home-AssistantConfig ###
 ##############################################################
 homeassistant:
 
+input_number:
+  voron_shutdown_timer:
+    initial: 20
+    min: 10
+    max: 60
+    step: 5
+    unit_of_measurement: min
+    mode: box        
+        
+
+#template switch for raspbery pi 4 and printer
+switch:
+- platform: template
+  switches:
+    voron_shutdown:
+      friendly_name: Voron Shutdown
+      value_template: "{{ is_state('switch.shelly1pm_voron_24_250', 'on') }}"
+      turn_on:
+        - service: switch.turn_on
+          entity_id: switch.shelly1pm_voron_24_250
+      turn_off:
+        - service: rest_command.voron_24_r2_250_shutdown
+        - delay: '00:00:45'
+        - service: switch.turn_off
+          entity_id: switch.shelly1pm_voron_24_250
+      icon_template: >-
+        {% if is_state('switch.shelly1pm_voron_24_250', 'on') %}
+          mdi:power-plug
+        {% else %}
+          mdi:power-plug-off
+        {% endif %}        
+
+
+rest:
+  scan_interval: 5
+  resource_template: "http://192.168.0.28/server/files/metadata?filename={{ states(('sensor.voron_24_r2_250_current_print')) }}"
+  sensor:
+    - name: voron_24_r2_250_file_metadata
+      json_attributes_path: "$.result"
+      json_attributes:
+        - layer_height
+        - object_height
+        - thumbnails
+      value_template: "OK"
+
+camera:
+
+  - platform: generic
+    name: voron24_350_klipper_gcode_preview
+    still_image_url: >
+      {% if is_state('sensor.voron24_350_state', 'printing') %} http://remotehost/server/files/gcodes/.thumbs/{{ states(("sensor.voron24_350_current_print")) }}-250x250.png
+      {% else %} http://localhost:8123/local/placeholder.png
+      {% endif %}
+    scan_interval: 5
+    content_type: image/png
+    verify_ssl: false
+
+  - platform: generic
+    name: "voron_24_r2_250_thumbnail"
+    still_image_url: http://192.168.0.28/server/files/gcodes/{{ states("sensor.voron_24_r2_250_object_thumbnails") }}
+    verify_ssl: false
+
+  - platform: mjpeg
+    name: "voron_24_r2_250_camera"
+    still_image_url: http://192.168.0.28/webcam/?action=snapshot
+    mjpeg_url: http://192.168.0.28/webcam/?action=stream
+    verify_ssl: false
+
+rest_command:
+  voron_24_r2_250_emergency_stop:
+    url: "http://192.168.0.28/printer/emergency_stop"
+    method: post
+  voron_24_r2_250_firmware_restart:
+    url: "http://192.168.0.28/printer/firmware_restart"
+    method: post
+  voron_24_r2_250_cancel:
+    url: "http://192.168.0.28/printer/print/cancel"
+    method: post
+  voron_24_r2_250_pause:
+    url: "http://192.168.0.28/printer/print/pause"
+    method: post
+  voron_24_r2_250_resume:
+    url: "http://192.168.0.28/printer/print/resume"
+    method: post
+  voron_24_r2_250_shutdown:
+    url: "http://192.168.0.28/printer/gcode/script?script=SHUTDOWN"
+    method: post
+
+
+
 sensor:
   - platform: rest
-    name: voron_24r2_250
-    resource: "http://192.168.0.28:80/printer/objects/query?heater_bed&extruder&print_stats&toolhead&display_status&virtual_sdcard&bme280%20enclosure_fan&temperature_sensor%20Raspberry"
+    name: voron_24_r2_250_sensor
+    resource: "http://192.168.0.28/printer/objects/query?heater_bed&extruder&print_stats&toolhead&display_status&virtual_sdcard&gcode_move&filament_switch_sensor Filament"
     json_attributes_path: "$.result.status"
     json_attributes:
       - heater_bed
@@ -16,93 +106,164 @@ sensor:
       - toolhead
       - display_status
       - virtual_sdcard
-      - 'bme280 enclosure_fan'
-      - 'temperature_sensor Raspberry'
-    value_template: >-
-      {{ 'OK' if ('result' in value_json) else None }}
-      
+      - gcode_move
+    #      - "filament_switch_sensor Filament"
+    value_template: "OK"
+    force_update: true
+    scan_interval: 1
+
+  - platform: rest
+    name: voron_24_r2_250_info
+    scan_interval: 1
+    resource_template: "http://192.168.0.28/printer/info"
+    json_attributes_path: "$.result"
+    json_attributes:
+      - state_message
+      - state
+    value_template: "OK"
+
+  - platform: rest
+    scan_interval: 15
+    name: klipper_preview_path
+    resource_template: "http://192.168.0.28/server/files/metadata?filename={{ states(('sensor.voron_24_r2_250_current_print')) }}"
+    json_attributes_path: "$.result.thumbnails.[1]"
+    json_attributes:
+      - relative_path
+      - width
+      - height
+      - size
+    value_template: "OK"
+
   - platform: template
     sensors:
-      voron_24r2_250_print_preview:
-          friendly_name: 'Print Preview'
-          value_template: "{{ ['http://192.168.0.241/server/files/gcodes/.thumbs/', (states.sensor.voron_24r2_250.attributes['print_stats'].filename | replace('.gcode', '-400x300.png') | replace(' ', '%20') | string)] | join if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-  
-      voron_24r2_250_hotend_actual:
-          friendly_name: 'Hotend'
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['extruder'].temperature | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_hotend_target:
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['extruder'].target | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-          
-      voron_24r2_250_bed_target:
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['heater_bed'].target | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_bed_actual:
-          friendly_name: 'Heatbed'
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['heater_bed'].temperature | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_state:
-          friendly_name: 'Printer State'
-          icon_template: mdi:printer-3d
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['print_stats'].state if is_state('sensor.voron_24r2_250', 'OK') else 'Offline' }}"
-      
-      voron_24r2_250_current_print:
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['print_stats'].filename if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_current_progress:
-          friendly_name: 'Progress'
-          unit_of_measurement: '%'
-          icon_template: mdi:file-percent
-          value_template: "{{ (states.sensor.voron_24r2_250.attributes['display_status'].progress * 100) | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_print_time:
-          friendly_name: 'Time Elapsed'
-          icon_template: mdi:clock-start
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['print_stats'].print_duration | timestamp_custom('%H:%M:%S', 0) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_time_remaining:
-          friendly_name: 'Time Remaining'
-          icon_template: mdi:clock-end
-          value_template: "{{ (((states.sensor.voron_24r2_250.attributes['print_stats'].print_duration / states.sensor.voron_24r2_250.attributes['display_status'].progress - states.sensor.voron_24r2_250.attributes['print_stats'].print_duration) if states.sensor.voron_24r2_250.attributes['display_status'].progress > 0 else 0) | timestamp_custom('%H:%M:%S', 0)) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_eta:
-          friendly_name: 'ETA'
-          icon_template: mdi:clock-outline
-          value_template: "{{ (as_timestamp(now()) + 2 * 60 * 60 + ((states.sensor.voron_24r2_250.attributes['print_stats'].print_duration / states.sensor.voron_24r2_250.attributes['display_status'].progress - states.sensor.voron_24r2_250.attributes['print_stats'].print_duration) if states.sensor.voron_24r2_250.attributes['display_status'].progress > 0 else 0)) | timestamp_custom('%H:%M:%S', 0) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_nozzletemp:
-          friendly_name: 'Hotend Temperature'
-          icon_template: mdi:thermometer
-          value_template: "{{ [(states.sensor.voron_24r2_250.attributes['extruder'].temperature | float | round(1) | string), ' / ', (states.sensor.voron_24r2_250.attributes['extruder'].target | float | round(1) | string)] | join if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_bedtemp:
-          friendly_name: 'Heatbed Temperature'
-          icon_template: mdi:thermometer
-          value_template: "{{ [(states.sensor.voron_24r2_250.attributes['heater_bed'].temperature | float | round(1) | string), ' / ', (states.sensor.voron_24r2_250.attributes['heater_bed'].target | float | round(1) | string)] | join if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_rpi_actual:
-          friendly_name: 'Raspberry Temperature'
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['temperature_sensor Raspberry'].temperature | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_enclosure_temp:
-          friendly_name: 'Enclosure Temperature'
-          device_class: temperature
-          unit_of_measurement: '°C'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['bme280 enclosure_fan'].temperature | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-      
-      voron_24r2_250_enclosure_pressure:
-          friendly_name: 'Enclosure Pressure'
-          device_class: pressure
-          unit_of_measurement: 'hPa'
-          value_template: "{{ states.sensor.voron_24r2_250.attributes['bme280 enclosure_fan'].pressure | float | round(1) if is_state('sensor.voron_24r2_250', 'OK') else None }}"
-  
+      voron_24_r2_250_hotend_target:
+        friendly_name: "Hotend Target"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["extruder"]["target"]  | float | round(1) }}'
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon_template: mdi:thermometer
+      voron_24_r2_250_hotend_actual:
+        friendly_name: "Hotend Actual"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["extruder"]["temperature"]  | float | round(1) }}'
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon_template: mdi:thermometer
+      voron_24_r2_250_hotend_power:
+        friendly_name: "Hotend Power"
+        value_template: '{{ ((states.sensor.voron_24_r2_250_sensor.attributes["extruder"]["power"]  | float) * 100) | round(0) }}'
+        unit_of_measurement: "%"
+        icon_template: mdi:flash
+      voron_24_r2_250_bed_target:
+        friendly_name: "Bed Target"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["heater_bed"]["target"]  | float | round(1) }}'
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon_template: mdi:thermometer
+      voron_24_r2_250_bed_actual:
+        friendly_name: "Bed Actual"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["heater_bed"]["temperature"]  | float | round(1) }}'
+        device_class: temperature
+        unit_of_measurement: "°C"
+        icon_template: mdi:thermometer
+      voron_24_r2_250_bed_power:
+        friendly_name: "Bed Power"
+        value_template: '{{ ((states.sensor.voron_24_r2_250_sensor.attributes["heater_bed"]["power"]  | float) * 100) | round(0) }}'
+        unit_of_measurement: "%"
+        icon_template: mdi:flash
+      voron_24_r2_250_state:
+        friendly_name: "Printer State"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["state"]}}'
+        icon_template: >
+          {% set val =  states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["state"]  %}
+          {% if val == 'standby' %}
+            mdi:sleep
+          {% elif val == 'error' %}
+            mdi:alert-circle
+          {% elif val == 'printing' %}
+            mdi:printer-3d-nozzle
+          {% elif val == 'paused' %}
+            mdi:pause-circle
+          {% elif val == 'complete' %}
+            mdi:printer-3d
+          {% else %}
+            mdi:help-circle
+          {% endif %}
+      voron_24_r2_250_current_print:
+        friendly_name: "Current Print"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["filename"]}}'
+      voron_24_r2_250_current_progress:
+        friendly_name: "Progress"
+        value_template: '{{ ((states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["progress"])*100) | round(0, "floor") }}'
+        unit_of_measurement: "%"
+        icon_template: mdi:progress-clock
+      voron_24_r2_250_print_time:
+        friendly_name: "Time Elapsed"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["print_duration"] |timestamp_custom("%H:%M:%S", 0)}}'
+        icon_template: mdi:camera-timer
+      voron_24_r2_250_time_remaining:
+        friendly_name: "Time Remaining"
+        value_template: '{{ (((states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["print_duration"]/states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["progress"]- states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["print_duration"]) if states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["progress"]>0 else 0)) | timestamp_custom("%H:%M:%S", 0)}}'
+        icon_template: mdi:timer-sand
+      voron_24_r2_250_eta:
+        friendly_name: "ETA"
+        value_template: '{{ (as_timestamp(now())+2*60*60+((states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["print_duration"]/states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["progress"]- states.sensor.voron_24_r2_250_sensor.attributes["print_stats"]["print_duration"]) if states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["progress"]>0 else 0)) | timestamp_custom("%H:%M:%S", 0)}}'
+        icon_template: mdi:av-timer
+      voron_24_r2_250_message:
+        friendly_name: "Message"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["display_status"]["message"]}}'
+      voron_24_r2_250_layer_height:
+        friendly_name: "Layer Height"
+        value_template: '{{ states.sensor.voron_24_r2_250_file_metadata.attributes["layer_height"] | float }}'
+        unit_of_measurement: "mm"
+        icon_template: mdi:arrow-collapse-down
+      voron_24_r2_250_object_height:
+        friendly_name: "Object Height"
+        value_template: '{{ (states.sensor.voron_24_r2_250_file_metadata.attributes["object_height"] | float) - (states.sensor.voron_24_r2_250_file_metadata.attributes["layer_height"] | float) }}'
+        unit_of_measurement: "mm"
+        icon_template: mdi:arrow-expand-vertical
+      voron_24_r2_250_current_height:
+        friendly_name: "Current Height"
+        value_template: '{{ states.sensor.voron_24_r2_250_sensor.attributes["gcode_move"]["gcode_position"][2]  | float | round(2) }}'
+        unit_of_measurement: "mm"
+        icon_template: mdi:arrow-collapse-down
+      voron_24_r2_250_current_layer:
+        friendly_name: "Current Layer"
+        value_template: '{{ (states("sensor.voron_24_r2_250_current_height")|float / states("sensor.voron_24_r2_250_layer_height")|float)|round(0) }}'
+      voron_24_r2_250_total_layers:
+        friendly_name: "Total Layers"
+        value_template: '{{ (states("sensor.voron_24_r2_250_object_height")|float / states("sensor.voron_24_r2_250_layer_height")|float)|round(0) }}'
+      voron_24_r2_250_object_thumbnails:
+        friendly_name: "Object Thumbnails"
+        value_template: '{{ states.sensor.voron_24_r2_250_file_metadata.attributes["thumbnails"][2]["relative_path"] }}'
+        icon_template: mdi:image
+      voron_24_r2_250_state_message:
+        friendly_name: "State Message"
+        value_template: '{{ states.sensor.voron_24_r2_250_info.attributes["state_message"] }}'
+      voron_24_r2_250_heaters_power:
+        friendly_name: "Bed and Nozzle Power"
+        value_template: '{{ states("sensor.voron_24_r2_250_bed_power") }}% / {{ states("sensor.voron_24_r2_250_hotend_power") }}%'
+
+automation:
+  - alias: "voron_idle_shutdown"
+    id: "voron_idle_shutdown"
+    initial_state: True
+    trigger:
+      - platform: state
+        entity_id: sensor.voron_24_r2_250_state
+        to: 'complete'
+        for:
+          00:20:00
+
+    condition:
+      - condition: template
+        value_template: "{{ states('sensor.voron_24_r2_250_state') != 'unknown' }}"
+      - condition: template
+        value_template: "{{ trigger.from_state.state != 'unavailable' }}"
+    action:
+      - service: switch.turn_off
+        entity_id: switch.voron_shutdown
+      - service: telegram_bot.send_message
+        data_template:
+          target: !secret telegram_chat_id_christoph
+          message: >
+            '{{ as_timestamp(states('sensor.date_time_iso'))|timestamp_custom('%d.%m.%y %H:%M')}}: Autoshutdown Voron!'
