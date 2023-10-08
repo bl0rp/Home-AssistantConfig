@@ -51,20 +51,7 @@ rest:
 
 camera:
 
-  - platform: generic
-    name: voron24_350_klipper_gcode_preview
-    still_image_url: >
-      {% if is_state('sensor.voron24_350_state', 'printing') %} http://remotehost/server/files/gcodes/.thumbs/{{ states(("sensor.voron24_350_current_print")) }}-250x250.png
-      {% else %} http://localhost:8123/local/placeholder.png
-      {% endif %}
-    scan_interval: 5
-    content_type: image/png
-    verify_ssl: false
 
-  - platform: generic
-    name: "voron_24_r2_250_thumbnail"
-    still_image_url: http://192.168.0.28/server/files/gcodes/{{ states("sensor.voron_24_r2_250_object_thumbnails") }}
-    verify_ssl: false
 
   - platform: mjpeg
     name: "voron_24_r2_250_camera"
