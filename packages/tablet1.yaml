@@ -1,0 +1,72 @@
+########################################################################
+## Packages / Tablet1                                                 ##
+## @bl0rp - https://github.com/bl0rp/Home-Assistant-Config            ##
+########################################################################
+homeassistant:
+automation:
+
+
+  - alias: tablet1_screen_auto
+    mode: single
+    id: tablet1_screen_auto
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.multisensor_elw_wz_home_security_motion_detection
+        id: elw_tablet_motion_on
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.multisensor_elw_wz_home_security_motion_detection
+        id: elw_tablet_motion_off
+        from: 'on'
+        to: 'off'
+        for:
+          hours: 0
+          minutes: 1
+          seconds: 0
+    action:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: elw_tablet_motion_on
+            sequence:
+              - service: switch.turn_on
+                entity_id: switch.galaxy_tab_a8_screen
+          - conditions:
+              - condition: trigger
+                id: elw_tablet_motion_off
+            sequence:
+              - service: switch.turn_off
+                entity_id: switch.galaxy_tab_a8_screen
+
+
+  - alias: tablet1_battery_saver
+    mode: single
+    id: tablet1_battery_saver
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.galaxy_tab_a8_battery
+        id: elw_tablet_battery_high
+        above: 70
+      - platform: numeric_state
+        entity_id: sensor.galaxy_tab_a8_battery
+        id: elw_tablet_battery_low
+        below: 30
+
+    action:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: elw_tablet_battery_high
+            sequence:
+              - service: switch.turn_off
+                entity_id: switch.zwave_fibaro_mpd_2
+              - service: switch.turn_off
+                entity_id: switch.galaxy_tab_a8_screen
+          - conditions:
+              - condition: trigger
+                id: elw_tablet_battery_low
+            sequence:
+              - service: switch.turn_on
+                entity_id: switch.zwave_fibaro_mpd_2
+              - service: switch.turn_off
+                entity_id: switch.galaxy_tab_a8_screen
